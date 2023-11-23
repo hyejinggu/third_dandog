@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.i4.dandog;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
