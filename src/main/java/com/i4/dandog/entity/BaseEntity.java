@@ -21,6 +21,7 @@ abstract class BaseEntity {
    @Column(name = "regdate", updatable = false)
    private LocalDateTime regdate;
    
+<<<<<<< HEAD
    @CreatedDate
    @Column(name = "answer_regdate", updatable = false)
    private LocalDateTime answer_regdate;
@@ -28,4 +29,9 @@ abstract class BaseEntity {
    @LastModifiedDate
    @Column(name = "modDate")
    private LocalDateTime modDate;
+=======
+//   @LastModifiedDate
+//   @Column(name = "modDate")
+//   private LocalDateTime modDate;
+>>>>>>> shinhyejin
 }
