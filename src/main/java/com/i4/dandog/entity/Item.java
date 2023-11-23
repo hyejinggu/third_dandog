@@ -18,10 +18,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Item {
+public class Item extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int item_no;
+	
+	private String item_category;
+	private String item_name;
+	private int item_price;
+	private String oprions_size;
+	private String oprions_color;
+	private String item_desc;
+	private String item_img1;
+	private String item_img2;
+	private int item_sales_volume;
+	private int item_discount_rate;
+	private int item_stock;
+	
 	
 }
