@@ -10,11 +10,11 @@
 </head>
 <body>
 	&nbsp;<a href="member/loginForm">로그인</a>&nbsp; 
-	&nbsp;<a href="member/memberJoin">회원가입</a>&nbsp;
+	&nbsp;<a href="member/memberJoin">회원가입</a><br>
 	
-	&nbsp;<a href="member/memberJoin">상품 등록</a>&nbsp;
+	&nbsp;<a href="member/memberJoin">상품 등록</a><br>
 	
-	&nbsp;<a href="member/memberJoin">고객센터 게시글 등록</a>&nbsp;
+	&nbsp;<a href="member/memberJoin">고객센터 게시글 등록</a><br>
 	&nbsp;<a href="member/memberJoin">커뮤니티 라운지 게시글 등록</a>&nbsp;
 	&nbsp;<a href="member/memberJoin">커뮤니티 우리 동네 게시글 등록</a>&nbsp;
 
