@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Order {
+public class OrderDetail {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
