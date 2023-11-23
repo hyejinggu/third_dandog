@@ -21,6 +21,10 @@ abstract class BaseEntity {
    @Column(name = "regdate", updatable = false)
    private LocalDateTime regdate;
    
+   @CreatedDate
+   @Column(name = "answer_regdate", updatable = false)
+   private LocalDateTime answer_regdate;
+   
    @LastModifiedDate
    @Column(name = "modDate")
    private LocalDateTime modDate;

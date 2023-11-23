@@ -1,5 +1,6 @@
 package com.i4.dandog.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,20 +19,26 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Order extends BaseEntity {
+public class Notice extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int order_num;
-	private String user_id;
-	private int item_no;
-	private int total_price;
-	private String payment;
-	private String shipping_msp;
-	private String recipient_name;
-	private String recipient_phone;
-	private int post_code;
-	private String user_address1;
-	private String user_address2;
+	private int notice_seq;
+	
+	@Column(length = 100, nullable = false)
+	private String notice_title;
+	
+	@Column(length = 3000, nullable = false)
+	private String notice_content;
+	
+	@Column(length = 200)
+	private String notice_img;
+	
+	@Column(nullable = false)
+	private int notice_view;
+	
+	@Column(length = 100)
+	private String etc;
+	
 	
 }
