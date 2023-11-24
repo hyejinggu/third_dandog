@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Item Insert</title>
+
 </head>
 <body>
 	<h2>Item Insert Form</h2>

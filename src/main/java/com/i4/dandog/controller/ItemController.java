@@ -25,7 +25,15 @@ import lombok.extern.log4j.Log4j2;
 public class ItemController {
 
 	ItemService service;
+	
 
+	// ======== 상품 관리 =======
+	@GetMapping("/itemAdmin")
+	public void itemAdmin(Model model) {
+//		model.addAttribute("itemList", service.selectList());
+	}
+	
+	
 	// ======== 상품 리스트 =======
 	@GetMapping("/itemList")
 	public void itemList(Model model) {

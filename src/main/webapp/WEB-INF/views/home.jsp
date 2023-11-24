@@ -14,6 +14,7 @@
 	&nbsp;<a href="">회원가입</a><br>
 	
 	<h2>상품 관리 페이지</h2>
+	&nbsp;<a href="item/itemAdmin">상품 관리</a><br>
 	&nbsp;<a href="item/itemList">상품 목록</a><br>
 	&nbsp;<a href="item/itemInsert">상품 등록</a><br>
 	
