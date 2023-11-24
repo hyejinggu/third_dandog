@@ -18,7 +18,7 @@
 		<c:if test="${not empty requestScope.itemDetail}">
 			<tr height="40">
 				<th bgcolor="aqua">상품 번호</th>
-				<td><input type="text" value="${i.item_no}" name="${i.item_no}" readonly></td>
+				<td><input type="text" value="${i.item_no}" name="item_no" readonly></td>
 			</tr>
 			<tr height="40">
 				<th bgcolor="aqua">아이템 카테고리</th>
@@ -65,8 +65,7 @@
 			</tr>
 			<tr height="40">
 				<th bgcolor="aqua">상품 설명</th>
-				<td><textarea cols="50" rows="10" name="item_desc" value="${i.item_desc}"
-						placeholder="500자 이하"></textarea></td>
+				<td><textarea cols="50" rows="10" name="item_desc" placeholder="500자 이하">${i.item_desc}</textarea></td>
 			</tr>
 
 			<tr height="40">
