@@ -6,8 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 
 
 @Entity
-@Table
+@Table(name = "item")
 @Data
 @DynamicInsert
 // @DynamicInsert를 사용해서 아예 null값이 되었을 때 쿼리문에서 제외되도록 해야, DDL에 설정한 default값으로 잘 들어가진다.
@@ -31,7 +33,7 @@ public class Item extends BaseEntity {
 	
 	@Column(length = 10, nullable = false)
 	private String item_category;
-	
+
 	@Column(length = 50, nullable = false)
 	private String item_name;
 	
@@ -39,16 +41,16 @@ public class Item extends BaseEntity {
 	private int item_price;
 	
 	@Column(length = 10, nullable = false)
-	private String oprions_size;
+	private String options_size;
 	@Column(length = 10, nullable = false)
-	private String oprions_color;
+	private String options_color;
 	
 	@Column(length = 500, nullable = false)
 	private String item_desc;
 	
 	@Column(length = 100, nullable = false)
 	private String item_img1;
-	@Column(length = 10)
+	@Column(length = 100)
 	private String item_img2;
 	
 	// default 값이 0이어서 위에 @DynamicInsert 적용
@@ -57,6 +59,12 @@ public class Item extends BaseEntity {
 	
 	@Column(nullable = false)
 	private int item_stock;
+	
+	
+	@Transient
+	private MultipartFile uploadfileF1; // form의 Upload_File 정보를 전달받기 위한 필드
+	@Transient
+	private MultipartFile uploadfileF2; // form의 Upload_File 정보를 전달받기 위한 필드
 	
 	
 }
