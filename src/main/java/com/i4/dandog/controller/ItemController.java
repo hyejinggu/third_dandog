@@ -104,40 +104,30 @@ public class ItemController {
 
 		String uri = "redirect:itemList";
 
-		// 이미지 등록
+		// 이미지 수정
 		String realPath = "D:\\teamproject\\third_dandog\\dandog\\src\\main\\webapp\\resources\\images";
-		String file1, file2 = "resources/images/basic.jpg"; // 기본 이미지 지정
-		String file3, file4 = "resources/images/basic.jpg"; // 기본 이미지 지정
-
 		MultipartFile uploadfilef1 = entity.getUploadfileF1(); // 첫번째 상품 이미지
-		System.out.println("uploadfilef1: " + uploadfilef1);
 		if (uploadfilef1 != null && !uploadfilef1.isEmpty()) {
-			// => image_File 을 선택함 -> 저장 (저장경로: relaPath+화일명)
 			// 물리적위치 저장 (file1)
-			file1 = realPath + uploadfilef1.getOriginalFilename(); // 저장경로 완성
+			String file1 = realPath + uploadfilef1.getOriginalFilename(); // 저장경로 완성
 			uploadfilef1.transferTo(new File(file1)); // 해당경로에 저장(붙여넣기)
-			System.out.println("file1: " + file1);
 
 			// Table 저장경로 완성 (file2)
-			file2 = "resources/images/" + uploadfilef1.getOriginalFilename();
-			System.out.println("file2: " + file2);
+			String file2 = "resources/images/" + uploadfilef1.getOriginalFilename();
+			entity.setItem_img1(file2);
 		}
-		entity.setItem_img1(file2);
 
 		MultipartFile uploadfilef2 = entity.getUploadfileF2(); // 두번째 상품 이미지
 		if (uploadfilef2 != null && !uploadfilef2.isEmpty()) {
-			// => image_File 을 선택함 -> 저장 (저장경로: relaPath+화일명)
 			// 물리적위치 저장 (file1)
-			file3 = realPath + uploadfilef2.getOriginalFilename(); // 저장경로 완성
+			String file3 = realPath + uploadfilef2.getOriginalFilename(); // 저장경로 완성
 			uploadfilef2.transferTo(new File(file3)); // 해당경로에 저장(붙여넣기)
-			System.out.println("file3: " + file3);
 
 			// Table 저장경로 완성 (file2)
-			file4 = "resources/images/" + uploadfilef2.getOriginalFilename();
-			System.out.println("file4: " + file4);
+			String file4 = "resources/images/" + uploadfilef2.getOriginalFilename();
+			entity.setItem_img2(file4);
 		}
 
-		entity.setItem_img2(file4);
 
 		try {
 			log.info("insert 성공! 상품 번호: " + service.save(entity));

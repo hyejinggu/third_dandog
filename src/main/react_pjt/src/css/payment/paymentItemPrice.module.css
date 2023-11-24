@@ -1,0 +1,68 @@
+.total_product {
+    line-height: 30px;
+    margin: 20px 0 0 0;
+    font-weight: bold;
+    text-align: left;
+}
+
+.total_price {
+    width: 100%;
+    height: 200px;
+    border: 2px solid #ffa900;
+    border-radius: 8px;
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 50px;
+    margin-bottom: 20px;
+
+}
+
+.total_price .firstB_price {
+    float: left;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    display: block;
+    line-height: 45px;
+    font-size: 17px;
+}
+
+.total_price .firstB_price .product_price::after,
+.total_price .price_info .product_price::after {
+    content: "　+　";
+}
+
+.total_price .firstB_price .delivery_price::after,
+.total_price .price_info .delivery_price::after {
+    content: "　=　";
+}
+
+.total_price .price_info {
+    width: 230px;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 14px;
+}
+
+.total_price .price_info::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.total_price .price_info ul>li {
+    float: left;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+
+
+.total_price p {
+    width: 100%;
+    font-size: 14px;
+    color: gray;
+    text-align: center;
+    display: block;
+}
