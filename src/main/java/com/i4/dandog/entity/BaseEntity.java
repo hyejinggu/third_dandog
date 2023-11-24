@@ -20,15 +20,7 @@ abstract class BaseEntity {
    @CreatedDate
    @Column(name = "regdate", updatable = false)
    private LocalDateTime regdate;
-   
-   @CreatedDate
-   @Column(name = "answer_regdate", updatable = false)
-   private LocalDateTime answer_regdate;
-   
-   @CreatedDate
-   @Column(name = "withdrawal_date", updatable = false)
-   private LocalDateTime withdrawal_date;
-   
+
    
 //   @LastModifiedDate
 //   @Column(name = "modDate")
