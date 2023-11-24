@@ -5,30 +5,30 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/resources/css/itemAdmin.css">
+<link rel="stylesheet" type="text/css"
+	href="/resources/css/itemAdmin.css">
 </head>
 <body>
 	<div class="mypageWrap">
 
-		<h2 class="title">마이페이지</h2>
+		<h2 class="title">관리자 페이지</h2>
 		<div class="mypageHeader">
 			<ul>
-				<li><img src="" style=""
-					'width': '40px', height: '40px', 'padding': '5px 0' alt="" />
-					<p>적립금</p>
-					<div class="num">2,100</div></li>
-				<li><img src={ "/images/myPage/dollar.png"} alt="" />
-
-					<p>포인트</p>
-					<div class="num">300</div></li>
-				<li><img src={ "/images/myPage/coupon.png"} alt="" />
-
-					<p>쿠폰</p>
-					<div class="num">10</div></li>
-				<li><img src={ "/images/myPage/review.svg"} alt="" />
-
-					<p>후기작성</p>
-					<div class="num">2</div></li>
+				<li>
+					<p>상품 관리</p>
+				</li>
+				<li>
+					<p>주문 관리</p>
+				</li>
+				<li>
+					<p>회원 관리</p>
+				</li>
+				<li>
+					<p>고객센터 관리</p>
+				</li>
+				<li>
+					<p>커뮤니티 관리</p>
+				</li>
 			</ul>
 		</div>
 		<div class="mypageContainer">
@@ -58,21 +58,14 @@
 		</div>
 		<div class="mypageBtn">
 			<ul>
-				<li><img src={ "/images/myPage/delivery.png"} alt="" /> 배송조회</li>
-				<li><img src={ "/images/myPage/change.png"} alt="" /> 주문변경</li>
-				<li><img src={ "/images/myPage/delete.png"} alt="" /> 주문취소</li>
-				<li><img src={ "/images/myPage/change2.png"} alt="" /> 반품/교환</li>
-				<li><img src={ "/images/myPage/change3.png"} alt="" /> 회원정보
-					수정</li>
-				<li>
-					<Link to="/board"> <img src={
-					"/images/myPage/center.png"} alt="" /> 고객센터
-					</Link>
-				</li>
-
-				<li><img src={ "/images/myPage/question.png"} alt="" /> 1:1
-					문의하기</li>
-				<li><img src={ "/images/myPage/answer.png"} alt="" /> 1:1 답변확인</li>
+				<li>배송조회</li>
+				<li>주문변경</li>
+				<li>주문취소</li>
+				<li>반품/교환</li>
+				<li>회원정보 수정</li>
+				<li>고객센터</li>
+				<li>1:1 문의하기</li>
+				<li><1:1 답변확인</li>
 			</ul>
 		</div>
 
