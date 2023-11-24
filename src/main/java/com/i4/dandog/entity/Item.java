@@ -31,33 +31,24 @@ public class Item extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int item_no;
 	
-	@Column(length = 10, nullable = false)
 	private String item_category;
 
-	@Column(length = 50, nullable = false)
 	private String item_name;
 	
-	@Column(nullable = false)
 	private int item_price;
 	
-	@Column(length = 10, nullable = false)
 	private String options_size;
-	@Column(length = 10, nullable = false)
 	private String options_color;
 	
-	@Column(length = 500, nullable = false)
 	private String item_desc;
 	
-	@Column(length = 100, nullable = false)
 	private String item_img1;
-	@Column(length = 100)
 	private String item_img2;
 	
 	// default 값이 0이어서 위에 @DynamicInsert 적용
 	private int item_sales_volume;
 	private int item_discount_rate;
 	
-	@Column(nullable = false)
 	private int item_stock;
 	
 	
