@@ -1,0 +1,233 @@
+@font-face {
+  font-family: "Cafe24SsurroundAir";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.error {
+  color: red;
+  display: block;
+  margin-top: 5px;
+}
+
+.join {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 50px auto;
+  background-color: #fff;
+  height: 650px;
+  padding: 0 50px;
+  border-top: 2px solid #ffa900;
+  border-bottom: 2px solid #ffa900;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+}
+
+.active {
+  color: #ffa900;
+  font-weight: bold;
+}
+
+.title {
+  text-align: center;
+}
+
+/*==================================================================*/
+/*  layout */
+.img_container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right_contents {
+  width: 50%;
+}
+
+/*==================================================================*/
+/* 회원가입 순서 header */
+
+.right_contents {
+  height: 450px;
+}
+
+.right_contents ul {
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+  display: flex;
+  margin-bottom: 50px;
+}
+
+.right_contents fure ul>li a:hover {
+  color: #ffa900;
+}
+
+.right_contents ul>li:not(:last-child)::after {
+  content: "　>　";
+}
+
+/*==================================================================*/
+/* 회원가입 공통 스타일 */
+.required::before {
+  content: "* ";
+  color: red;
+}
+
+.right_contents figure figcaption {
+  font-size: 26px;
+  line-height: 50px;
+  color: #ffa900;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.right_contents figure table {
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.right_contents figure table tr {
+  padding: 5px 0 5px 0;
+  width: 600px;
+  display: block;
+}
+
+.right_contents figure table tr th {
+  display: flex;
+  justify-content: start;
+  width: 100%;
+}
+
+.right_contents figure table tr th label {
+  font-size: 16px;
+  color: #929292;
+  width: 100%;
+  height: 20px;
+  padding: 10px 0 5px;
+  text-align: left;
+  font-weight: normal;
+  line-height: 28px;
+}
+
+.right_contents figure table tr td {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.right_contents table tr td input,
+.right_contents table tr td select {
+  font-size: 16px;
+  color: #929292;
+  width: 100%;
+  max-width: 700px;
+  outline: none;
+  padding: 7px;
+  border-radius: 5px;
+  border: 1px solid #929292;
+  margin-right: 3px;
+}
+
+.right_contents input[type="submit"] {
+  width: 100px;
+  height: 50px;
+  border: none;
+  border: 1px solid #ffa900;
+  background-color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  float: right;
+  text-align: center;
+}
+
+.right_contents input[type="submit"]:hover {
+  transition: 0.5s;
+  background-color: #ffe344;
+}
+
+/*==================================================================*/
+/* profile */
+
+.right_contents table tr td .user_email,
+.right_contents table tr td .do_list {
+  width: 48.5%;
+}
+
+.right_contents table tr .user_birth select {
+  width: 33%;
+}
+
+/*==================================================================*/
+/* information */
+.right_contents table tr .ani_bday {
+  float: left;
+  white-space: nowrap;
+  margin: 10px 0;
+}
+
+.right_contents table tr .ani_bday input:nth-child(2) {
+  margin-left: 50px;
+}
+
+.right_contents table tr .ani_gender input[type="radio"] {
+  width: 20px;
+}
+
+.right_contents table tr .ani_gender label {
+  width: 20px;
+  white-space: nowrap;
+  flex-grow: 10;
+}
+
+/*==================================================================*/
+/* agree */
+.right_contents table tr .agree_all,
+.right_contents table tr .agree_selection {
+  margin-bottom: 20px;
+}
+
+.right_contents table tr .agree_all input[type="checkbox"],
+.right_contents table tr .agree_selection input[type="checkbox"] {
+  margin-top: 12px;
+  margin-right: 10px;
+}
+
+.right_contents table tr .agree_text {
+  width: 100%;
+  height: 120px;
+  overflow: auto;
+  padding: 15px;
+  box-sizing: border-box;
+  border: 1px solid #929292;
+  border-radius: 5px;
+}
+
+.right_contents table tr .agree_text::-webkit-scrollbar,
+.right_contents table tr .agree_all::-webkit-scrollbar {
+  width: 6px;
+}
+
+.right_contents table tr .agree_text::-webkit-scrollbar-thumb,
+.right_contents table tr .agree_all::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 8px;
+}
+
+.right_contents table tr .agree_text::-webkit-scrollbar-track,
+.right_contents table tr .agree_all::-webkit-scrollbar-track {
+  background-color: #eee;
+  border-radius: 8px;
+}

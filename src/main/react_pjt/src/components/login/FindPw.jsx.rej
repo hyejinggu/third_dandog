@@ -1,0 +1,7 @@
+diff a/react_pjt/src/components/login/FindPw.jsx b/react_pjt/src/components/login/FindPw.jsx	(rejected hunks)
+@@ -1,4 +0,4 @@
+-import "../../css/login/findpw.css";
++import "../../css/login/findPw.css";
+ 
+ const FindPw = () => {
+     return (

@@ -1,0 +1,139 @@
+.container * {
+  text-align: center;
+}
+
+.title {
+  margin: 0 0 50px 0;
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.item_sort_wrap,
+.item_wrap {
+  background-color: white;
+}
+
+/* ===== 상단 카테고리, 정렬 영역 시작 ===== */
+
+.sort * {
+  display: inline-block;
+}
+
+.sort {
+  padding: 15px;
+  border-top: #ffa900 1px solid;
+  border-bottom: #ffa900 1px solid;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sort li,
+.sort p {
+  height: 30px;
+  line-height: 30px;
+  font-weight: bold;
+  color: rgb(70, 70, 70);
+  background-color: #fffbee;
+  border: rgb(70, 70, 70) 1px solid;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
+  margin-right: 5px;
+
+  padding: 0 5px;
+  cursor: pointer;
+}
+
+/* ===== 상품 목록 영역 시작 ===== */
+
+.item_wrap {
+  padding: 30px 20px 50px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
+}
+
+.item_wrap ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item_wrap li {
+  flex: 0 0 25%;
+  margin: 50px 0;
+}
+
+.item_container {
+  display: block;
+  margin: 0 50px;
+}
+
+.normal_item {
+  position: relative;
+}
+
+.normal_item img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.normal_item img:nth-child(2) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.5s linear;
+}
+
+.normal_item:hover img:nth-child(2) {
+  opacity: 1;
+}
+
+.item_info_wrap h3 {
+  margin: 15px 0;
+}
+
+.item_info_wrap span:nth-of-type(1) {
+  color: red;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.item_info_wrap span:nth-of-type(2) {
+  color: gray;
+  text-decoration: line-through;
+  font-size: 0.8em;
+  margin: 10px 5px;
+}
+
+.item_info_wrap span:nth-of-type(3) {
+  font-weight: bold;
+}
+
+.color span {
+  display: inline-block;
+  margin: 10px 3px;
+  width: 20px;
+  height: 7px;
+  border-radius: 5px;
+}
+
+/* ===== 상품 목록 영역 끝 ===== */
+
+.search_bar {
+  display: flex;
+}
+
+.search_bar input {
+  margin: 20px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
+  border: 1px solid;
+}
+
+.search_bar span {
+  align-self: center;
+  font-size: 1.3em;
+  font-weight: bold;
+  cursor: pointer;
+}
