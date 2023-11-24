@@ -9,6 +9,13 @@ public interface ItemService {
 	// selectList
 	List<Item> selectList();
 	
+	// selectOne
+	Item selectOne(int item_no);
+	
 	// insert
 	int save(Item entity);
+	
+	// delete
+	int delete(int item_no);
+	
 }

@@ -50,7 +50,7 @@ public class Item extends BaseEntity {
 	
 	@Column(length = 100, nullable = false)
 	private String item_img1;
-	@Column(length = 10)
+	@Column(length = 100)
 	private String item_img2;
 	
 	// default 값이 0이어서 위에 @DynamicInsert 적용
