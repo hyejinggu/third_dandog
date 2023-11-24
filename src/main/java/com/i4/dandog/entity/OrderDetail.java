@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Entity
 @Table
 @Data
@@ -19,19 +18,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class OrderDetail {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int order_num; 
-	private String user_id; 
-	private int item_no; 
-	private int total_price; 
-	private String payment; 
-	private String shipping_msp; 
-	private String recipient_name; 
-	private String recipient_phone; 
-	private int post_code; 
-	private String user_address1; 
-	private String user_address2;
-	
+	private int orderDetailNo;
+	private int orderNum;
+	private int itemNo;
+	private int itemQuantity;
+	private int itemPrice;
+	private String orderState;
 }
