@@ -61,7 +61,7 @@ public class Item extends BaseEntity {
 	private int item_stock;
 	
 	
-	@Transient
+	@Transient // DB에는 따로 생성되지 않음
 	private MultipartFile uploadfileF1; // form의 Upload_File 정보를 전달받기 위한 필드
 	@Transient
 	private MultipartFile uploadfileF2; // form의 Upload_File 정보를 전달받기 위한 필드
