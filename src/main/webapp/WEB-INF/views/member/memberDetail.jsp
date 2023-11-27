@@ -10,7 +10,7 @@
 <body>
 	<h2>Member Detail</h2>
 	<table>
-		<c:if test="${not empty requestScope.memberList}">
+		<c:if test="${not empty requestScope.banana}">
 			<tr height="40">
 				<th bgcolor="Thistle">I D</th>
 				<td>${s.user_id}</td>
@@ -73,7 +73,7 @@
 			</tr> 
 			
 		</c:if>
-		<c:if test="${empty requestScope.memberList}">
+		<c:if test="${empty requestScope.banana}">
 			<tr>
 				<td colspan="7">잘못된 접근입니다.</td>
 			</tr>
