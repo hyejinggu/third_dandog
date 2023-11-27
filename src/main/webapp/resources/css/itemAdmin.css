@@ -1,28 +1,29 @@
-.mypageWrap {
+.adminPageWrap {
 	width: 100%;
 	margin-bottom: 50px;
 }
 
-.mypageWrap .title {
+.adminPageWrap .title {
 	margin-bottom: 40px;
 }
 
-.mypageHeader {
+.adminPageHeader {
 	width: 100%;
+	height: 150px;
 	background-color: #fff8d0;
 	border: #ffa900 2px solid;
 	margin-bottom: 20px;
 	border-radius: 8px;
 }
 
-.mypageHeader ul {
+.adminPageHeader ul {
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
 	padding: 0;
 }
 
-.mypageHeader ul>li {
+.adminPageHeader ul>li {
 	width: 20%;
 	padding: 20px;
 	display: flex;
@@ -31,13 +32,13 @@
 	justify-content: center;
 }
 
-.mypageWrap .mypageHeader ul>li:hover p {
+.adminPageHeader ul>li:hover a {
 	color: #e39400;
 	cursor: pointer;
     text-decoration: underline;
 }
 
-.mypageHeader ul>li p {
+.adminPageHeader ul>li a {
 	color: #ffa900;
 	font-weight: bold;
 	line-height: 30px;
@@ -46,18 +47,18 @@
 
 
 
-.mypageWrap .mypageContainer {
+.adminItemContainer {
 	width: 100%;
 }
 
-.mypageWrap .mypageContainer h2 {
+.adminItemContainer h2 {
 	width: 100%;
 	font-size: 20px;
 	padding-bottom: 10px;
 	margin-top: 50px;
 }
 
-.mypageWrap .mypageContainer ul {
+.adminItemContainer ul {
 	border-bottom: 2px solid #ffa900;
 	border-top: 2px solid #ffa900;
 	background-color: #fff;
@@ -67,7 +68,7 @@
 	height: 150px;
 }
 
-.mypageWrap .mypageContainer ul>li {
+.adminItemContainer ul>li {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -76,11 +77,11 @@
 	width: 25%;
 }
 
-.mypageWrap .mypageContainer ul>li:last-child {
+.adminItemContainer ul>li:last-child {
 	border-right: 0px;
 }
 
-.mypageWrap .mypageContainer ul>li .num, .mypageWrap .mypageContainer ul>li .point
+.adminItemContainer ul>li .num, .adminItemContainer ul>li .point
 	{
 	font-size: 25px;
 	font-weight: bold;
@@ -88,21 +89,21 @@
 	color: #cdcdcd;
 }
 
-.mypageWrap .mypageContainer ul>li .point {
+.adminItemContainer ul>li .point {
 	color: #000;
 }
 
-.mypageWrap .mypageContainer ul>li p {
+.adminItemContainer ul>li a {
 	font-weight: bold;
 }
 
-.mypageWrap .mypageBtn {
+.mypageBtn {
 	width: 100%;
 	padding: 10px;
 	margin-top: 50px;
 }
 
-.mypageWrap .mypageBtn ul>li {
+.mypageBtn ul>li {
 	width: 19%;
 	margin: 10px;
 	padding: 30px;
@@ -119,20 +120,20 @@
 	font-size: 20px;
 }
 
-.mypageWrap .mypageBtn ul>li>a {
+.mypageBtn ul>li>a {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
-.mypageWrap .mypageBtn ul>li:hover {
+.mypageBtn ul>li:hover {
 	cursor: pointer;
 	background-color: #fff8d0;
 	text-decoration: underline;
 }
 
-.mypageWrap .mypageBtn ul>li img {
+.mypageBtn ul>li img {
 	width: 50px;
 	height: 50px;
 	margin-bottom: 10px;

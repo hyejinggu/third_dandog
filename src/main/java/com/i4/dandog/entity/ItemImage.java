@@ -1,9 +1,12 @@
 package com.i4.dandog.entity;
 
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +22,10 @@ import lombok.NoArgsConstructor;
 public class ItemImage {
 	@Id
 	private int item_no;
-	
 	private String item_img;
+	
+	@Transient
+	private MultipartFile[] etcImages;
+	
 
 }

@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.i4.dandog.entity.Item;
-import com.i4.dandog.repository.ItemRepository;
+import com.i4.dandog.entity.ItemImage;
+import com.i4.dandog.repository.ItemImageRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -14,24 +14,24 @@ import lombok.extern.log4j.Log4j2;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-public class ItemServiceImpl implements ItemService {
+public class ItemImageServiceImpl implements ItemImageService {
 
-	private final ItemRepository repository;
+	private final ItemImageRepository repository;
 
 	@Override
-	public List<Item> selectList() {
+	public List<ItemImage> selectList() {
 		return repository.findAll();
 	}
 
 	@Override
-	public Item selectOne(int item_no) {
-		Optional<Item> result = repository.findById(item_no);
+	public ItemImage selectOne(int item_no) {
+		Optional<ItemImage> result = repository.findById(item_no);
     	if ( result.isPresent() ) return result.get();
     	else return null;
 	}
 
 	@Override
-	public int save(Item entity) {
+	public int save(ItemImage entity) {
 		repository.save(entity);
 		return entity.getItem_no();
 	}

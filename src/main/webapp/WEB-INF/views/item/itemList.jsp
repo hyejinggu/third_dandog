@@ -6,8 +6,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Item List</title>
+<link rel="stylesheet" type="text/css"
+	href="/resources/css/itemAdmin.css">
 </head>
 <body>
+	<h2 class="title">관리자 페이지</h2>
+	<div class="adminPageHeader">
+		<ul>
+			<li><a href="">상품 관리</a></li>
+			<li><a>주문 관리</a></li>
+			<li><a>회원 관리</a></li>
+			<li><a>고객센터 관리</a></li>
+			<li><a>커뮤니티 관리</a></li>
+		</ul>
+	</div>
+	<div class="adminItemContainer">
+		<h2>상품 관리</h2>
+		<ul>
+			<li><a href="/item/itemList">상품 목록</a></li>
+			<li><a href="/item/itemInsert">상품 등록</a></li>
+			<li><a href="/item/itemList">상품 수정</a></li>
+		</ul>
+	</div>
 	<h2>Item List</h2>
 	<c:if test="${not empty requestScope.message}">
 		<h3>${requestScope.message}</h3>
@@ -36,7 +56,7 @@
 		<c:if test="${not empty requestScope.itemList}">
 			<c:forEach var="i" items="${requestScope.itemList}">
 				<tr>
-					<td><a href="idetail?no=${i.item_no}">${i.item_no}</a></td>
+					<td><a href="itemdetail?item_no=${i.item_no}">${i.item_no}</a></td>
 					<td>${i.item_category}</td>
 					<td>${i.item_name}</td>
 					<td>${i.item_price}원</td>
@@ -50,6 +70,14 @@
 						height="70"></td>
 					<td><img alt="itemImage2" src="/${i.item_img2}" width="50"
 						height="70"></td>
+						
+					<c:forEach var="img" items="${requestScope.itemImgList}">
+						<c:if test="${i.item_no == img.item_no}">	
+							<td>
+								<img alt="itemImages" src="/${img.item_img}" width="50" height="70">
+							</td>					
+						</c:if>
+					</c:forEach>
 
 					<!-- 파일 다운로드 추가 
          				=> download 요청을 받으면 서버는 해당 파일을 찾아 response에 담아보내면, 웹브라우저가 받아 download 시켜줌 
