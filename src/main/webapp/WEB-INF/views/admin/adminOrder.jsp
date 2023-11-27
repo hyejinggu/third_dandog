@@ -26,7 +26,7 @@
 					href="orderdetail?order_detail_no=${order.order_detail_no}">${order.order_detail_no}</a></td>
 				<td>${order.order_state}</td>
 				<td><a
-					href="delete?order_detail_no=${order.order_detail_no}>">삭제</a></td>
+					href="orderdelete?order_detail_no=${order.order_detail_no}">삭제</a></td>
 			</tr>
 		</c:forEach>
 	</table>

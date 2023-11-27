@@ -52,4 +52,18 @@ public class AdminOrderController {
 		}
 		return uri;
 	}
+	
+	@GetMapping(value="/orderdelete")
+	public String mdelete(HttpSession session, OrderDetail entity) {
+		
+		String uri = "redirect:orders";
+		
+		try {
+			orderDetailService.delete(entity.getOrder_detail_no());
+		} catch (Exception e) {
+			log.info("** delete Exception => "+e.toString());
+		}
+		
+		return uri;
+	} // mdelete
 }

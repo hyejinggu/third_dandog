@@ -14,35 +14,35 @@
 	<h2>주문 목록 상세</h2>
 
 	<form action="orderupdate" method="Post">
-		<table>
+		<table border="1">
 				<tr height="40">
 					<th>주문상세번호</th>
 					<td><input type="text" name="order_detail_no"
-						value="${requestScope.orderselect.order_detail_no}" size="20" readonly></td>
+						value="${requestScope.orderselect.order_detail_no}" size="20" readonly="readonly"></td>
 				</tr>
 				
 				<tr height="40">
 					<th>주문번호</th>
 					<td><input type="text" name="order_num"
-						value="${requestScope.orderselect.order_num}" size="20" readonly></td>
+						value="${requestScope.orderselect.order_num}" size="20" disabled="disabled"></td>
 				</tr>
 				
 				<tr height="40">
 					<th>상품번호</th>
 					<td><input type="text" name="item_no"
-						value="${requestScope.orderselect.item_no}" size="20" readonly></td>
+						value="${requestScope.orderselect.item_no}" size="20" disabled="disabled"></td>
 				</tr>
 				
 				<tr height="40">
 					<th>주문수량</th>
 					<td><input type="text" name="item_quantity"
-						value="${requestScope.orderselect.item_quantity}" size="20" readonly></td>
+						value="${requestScope.orderselect.item_quantity}" size="20" disabled="disabled"></td>
 				</tr>
 				
 				<tr height="40">
 					<th>상품가격</th>
 					<td><input type="text" name="item_price"
-						value="${requestScope.orderselect.item_price}" size="20" readonly></td>
+						value="${requestScope.orderselect.item_price}" size="20" disabled="disabled"></td>
 				</tr>
 				
 				<tr height="40">
