@@ -54,14 +54,18 @@ public class Member extends BaseEntity {
 
 	private int post_code;
 
-	private int point;
-
 	private String user_address1;
 
 	private String user_address2;
 
+	
+	
 	@CreatedDate
-	@Column(name = "withdrawal_date", updatable = false)
-	private LocalDateTime withdrawal_date;
-
+	@Column(name = "withdrawal_date", updatable = false) private LocalDateTime
+	withdrawal_date;
+	
+	private int point;
+	
+	@Column(name = "regdate", updatable = false) private LocalDateTime
+	regdate;
 }
