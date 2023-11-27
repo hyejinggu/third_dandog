@@ -62,15 +62,23 @@
 				<td>${i.item_sales_volume}</td>
 			</tr>
 			<tr height="40">
-				<th bgcolor="aqua">상품 이미지1</th>
+				<th bgcolor="aqua">대표사진1</th>
 				<td>
 					<img src="/${i.item_img1}" class="select_img" width="100" height="100"><br> 
 				</td>
 			</tr>
 			<tr height="40">
-				<th bgcolor="aqua">상품 이미지2</th>
+				<th bgcolor="aqua">대표사진2</th>
 				<td>
 					<img src="/${i.item_img2}" class="select_img" width="100" height="100"><br> 
+				</td>
+			</tr>
+			<tr height="40">
+				<th bgcolor="aqua">기타 상품 사진</th>
+				<td>
+					<c:forEach var="img" items="${requestScope.itemImages}" >
+						<img src="/${img.item_img}" class="select_img" width="100" height="100"><br> 					
+					</c:forEach>
 				</td>
 			</tr>
 			

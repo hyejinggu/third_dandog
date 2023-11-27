@@ -102,6 +102,16 @@
 					<input type="file" name="uploadfileF2" id="uploadfileF2" size="20">
 				</td>
 			</tr>
+			<tr height="40">
+				<th bgcolor="aqua">기타 상품 사진</th>
+				<td>
+					<c:forEach var="img" items="${requestScope.itemImages}" >
+						<img src="/${img.item_img}" class="select_img" width="100" height="100"><br> 					
+					</c:forEach>
+					<input type="hidden" name="item_img" value="${img.item_img}" multiple>
+					<input type="file" name="etcImages" id="etcImages" multiple>
+				</td>
+			</tr>
 			
 			<tr height="40">
 				<th></th>
