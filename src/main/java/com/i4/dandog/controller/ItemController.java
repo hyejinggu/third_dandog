@@ -2,6 +2,8 @@ package com.i4.dandog.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,9 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.i4.dandog.entity.Item;
+import com.i4.dandog.entity.ItemImage;
+import com.i4.dandog.service.ItemImageService;
 import com.i4.dandog.service.ItemService;
 
 import lombok.AllArgsConstructor;
@@ -25,6 +30,7 @@ import lombok.extern.log4j.Log4j2;
 public class ItemController {
 
 	ItemService service;
+	ItemImageService iservice;
 	
 
 	// ======== 상품 관리 =======
@@ -38,6 +44,16 @@ public class ItemController {
 	@GetMapping("/itemList")
 	public void itemList(Model model) {
 		model.addAttribute("itemList", service.selectList());
+		model.addAttribute("itemImgList", iservice.selectList());
+	}
+	
+	
+	// ======== 상품 디테일 =======
+	@GetMapping("/itemdetail")
+	public String itemDetail(Item entity, Model model) {
+		model.addAttribute("itemDetail", service.selectOne(entity.getItem_no()));
+		
+		return "item/itemDetail";
 	}
 
 	
@@ -49,7 +65,8 @@ public class ItemController {
 	}
 
 	@PostMapping(value = "/insert")
-	public String insert(HttpServletRequest request, Item entity, Model model) throws IOException {
+	public String insert(HttpServletRequest request, Item entity, ItemImage imgEntity, 
+			Model model, @RequestParam("etcImages") MultipartFile[] images) throws IOException {
 
 		String uri = "item/itemInsert";
 
@@ -88,12 +105,33 @@ public class ItemController {
 
 		entity.setItem_img2(file4);
 
+		
+			
+		
+		
 		try {
 			log.info("insert 성공! 상품 번호: " + service.save(entity));
+			
 			model.addAttribute("message", "상품 등록 성공");
 		} catch (Exception e) {
 			log.info("insert Exception: " + e.toString());
 			model.addAttribute("message", "상품 등록 실패");
+		}
+		
+		
+		
+		// 그 외 기타 이미지
+		String file5 = "resources/images/basic.jpg";
+		String file6 = "resources/images/basic.jpg";
+		for (MultipartFile img : images) {
+			if (img != null && !img.isEmpty())
+				file5 = realPath + img.getOriginalFilename();
+			img.transferTo(new File(file5));
+			
+			file6 = "resources/images/" + img.getOriginalFilename();
+			imgEntity.setItem_no(entity.getItem_no());
+			imgEntity.setItem_img(file6);
+			log.info("images insert 성공! 상품 번호: " + iservice.save(imgEntity));
 		}
 
 		return uri;

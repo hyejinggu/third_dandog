@@ -83,6 +83,14 @@
 					type="file" name="uploadfileF2" id="uploadfileF2" size="20">
 				</td>
 			</tr>
+			<!-- 추가 상품 이미지 -->
+			<tr height="40">
+				<th bgcolor="aqua">상품 이미지3</th>
+				<td><img src="" class="select_img"><br> <input
+					type="file" name="etcImages" id="etcImages" multiple>
+				</td>
+			</tr>
+			
 			<tr height="40">
 				<th></th>
 				<td><input type="reset" value="취소">&nbsp;&nbsp; <input

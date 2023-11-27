@@ -9,50 +9,39 @@
 	href="/resources/css/itemAdmin.css">
 </head>
 <body>
-	<div class="mypageWrap">
+	<div class="adminPageWrap">
 
 		<h2 class="title">관리자 페이지</h2>
-		<div class="mypageHeader">
+		<div class="adminPageHeader">
 			<ul>
 				<li>
-					<p>상품 관리</p>
+					<a href = "">상품 관리</a>
 				</li>
 				<li>
-					<p>주문 관리</p>
+					<a>주문 관리</a>
 				</li>
 				<li>
-					<p>회원 관리</p>
+					<a>회원 관리</a>
 				</li>
 				<li>
-					<p>고객센터 관리</p>
+					<a>고객센터 관리</a>
 				</li>
 				<li>
-					<p>커뮤니티 관리</p>
+					<a>커뮤니티 관리</a>
 				</li>
 			</ul>
 		</div>
-		<div class="mypageContainer">
-			<h2>주문/배송조회</h2>
+		<div class="adminItemContainer">
+			<h2>상품 관리</h2>
 			<ul>
 				<li>
-					<div class="num">0</div>
-					<p>입금/결제</p>
+					<a href="/item/itemList">상품 목록</a>
 				</li>
 				<li>
-					<div class="num">0</div>
-					<p>배송중</p>
+					<a href="/item/itemInsert">상품 등록</a>
 				</li>
 				<li>
-					<div class="num">0</div>
-					<p>배송완료</p>
-				</li>
-				<li>
-					<div class="point">2</div>
-					<p>구매확정</p>
-				</li>
-				<li>
-					<div class="num">0</div>
-					<p>환불/교환</p>
+					<a href="/item/itemList">상품 수정</a>
 				</li>
 			</ul>
 		</div>

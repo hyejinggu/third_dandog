@@ -1,10 +1,14 @@
 package com.i4.dandog.entity;
 
-import javax.persistence.Column;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -50,6 +54,11 @@ public class Item extends BaseEntity {
 	private int item_discount_rate;
 	
 	private int item_stock;
+	
+	
+//    @OneToMany(targetEntity = ItemImage.class, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "item_no", referencedColumnName = "item_no")
+//    private List<ItemImage> itemImages;
 	
 	
 	@Transient // DB에는 따로 생성되지 않음
