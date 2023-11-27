@@ -25,16 +25,16 @@ public class ItemOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int orderNum;
-    private String userId;
-    private int itemNo;
-    private int totalPrice;
-    private Date orderDate;
+    private int order_num;
+    private String user_id;
+    private int item_no;
+    private int total_price;
+    private Date order_aate;
     private String payment;
-    private String shippingMsg;
-    private String recipientName;
-    private String recipientPhone;
-    private int postCode;
+    private String shipping_msg;
+    private String recipient_name;
+    private String recipient_phone;
+    private int post_code;
     private String userAddress1;
     private String userAddress2;
 }
