@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.i4.dandog.entity.Member;
 import com.i4.dandog.repository.MemberRepository;
@@ -26,8 +27,8 @@ public class MemberServiceImpl implements MemberService {
 	
 	// ** selectOne
 	@Override
-	public Member selectOne(String id) {
-		Optional<Member> result = repository.findById(id);
+	public Member selectOne(Member dto) {
+		Optional<Member> result = repository.findById(dto.getUser_id());
     	if ( result.isPresent() ) return result.get();
     	else return null;
 	}
@@ -40,10 +41,19 @@ public class MemberServiceImpl implements MemberService {
 	}
 	 
 	// ** delete
+	// ** delete
 	@Override
-	public String delete(String id) {
-		repository.deleteById(id);
-		return id; // 삭제후 key return
+	public String delete(Member dto) {
+		repository.deleteById(dto.getUser_id());
+		return dto.getUser_id(); // 삭제후 key return
 	}
+
+	// ** update
+	@Override
+	public String update(Member dto) {
+		return dto.getUser_id();
+	}
+	
+	
 	
 } //class

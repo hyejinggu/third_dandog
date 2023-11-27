@@ -21,7 +21,7 @@
 					<a>주문 관리</a>
 				</li>
 				<li>
-					<a>회원 관리</a>
+					<a href="../member/memberList">회원 관리</a>
 				</li>
 				<li>
 					<a>고객센터 관리</a>

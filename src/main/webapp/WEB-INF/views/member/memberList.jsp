@@ -1,5 +1,7 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,10 +29,13 @@
 			<th>user_address1</th>
 			<th>user_address2</th>
 			<th>point</th>
+			<th>withdrawal_date</th>
+			<th>reg date</th>
+
 			<!-- 관리자 기능 추가 -->
-			<%-- 			<c:if test="${sessionScope.loginID=='admin'}">
-				<th>Delete</th>
-			</c:if> --%>
+			<c:if test="${sessionScope.loginID=='admin'}">
+			<th>Delete</th>
+			</c:if>
 		</tr>
 		<c:if test="${not empty requestScope.memberList}">
 			<c:forEach var="s" items="${requestScope.memberList}">
@@ -52,20 +57,22 @@
 					<td>${s.user_address2}</td>
 					<td>${s.point}</td>
 					<td>${s.withdrawal_date}</td>
+					<td>${s.regdate}</td>
 					<!-- 관리자 기능 추가 -->
-					<c:if test="${sessionScope.loginID=='admin'}">
-						<td align="center"><a href="mdelete?id=${s.user_id}">삭제</a></td>
-					</c:if> 
-					<!-- Image 추가 -->
+					<td align="center"><a href="mdelete?id=${s.user_id}">삭제</a></td>
+
 
 				</tr>
 			</c:forEach>
 		</c:if>
-		<c:if test="${empty requestScope.banana}">
+		<c:if test="${empty requestScope.memberList}">
 			<tr>
 				<td colspan="7">잘못된 접근입니다.</td>
 			</tr>
 		</c:if>
 	</table>
+	<h4>
+		<a href="/home">Home으로 가기</a>
+	</h4>
 </body>
 </html>
