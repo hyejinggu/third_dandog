@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,5 +40,6 @@ public class Lounge extends BaseEntity {
 	private int lounge_likes;
 	private int lounge_hits;
 	
-	
+	@Transient
+	private MultipartFile lounge_imgf;
 }

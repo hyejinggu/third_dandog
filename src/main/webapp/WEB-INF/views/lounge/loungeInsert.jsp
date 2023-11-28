@@ -12,7 +12,7 @@
 <body>
 	<h2>lounge Insert</h2>
 
-	<form action="binsert" method="Post">
+	<form action="loungeInsert" method="Post">
 		<table>
 
 			<tr height="40">
@@ -39,7 +39,8 @@
 			</tr>
 			<tr height="40">
 				<th>이미지 첨부</th>
-				<td><textarea rows="5" cols="50" name="lounge_content"></textarea>
+				<td><img src="" class="select_img"><br> <input
+					type="file" name="lounge_imgf" id="lounge_imgf" size="20">
 				</td>
 			</tr>
 			<tr height="40">
