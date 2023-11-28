@@ -32,8 +32,8 @@ public class ItemController {
 	
 
 	// ======== 상품 관리 =======
-	@GetMapping("/itemAdmin")
-	public void itemAdmin(Model model) {
+	@GetMapping("/admin")
+	public void admin(Model model) {
 //		model.addAttribute("itemList", service.selectList());
 	}
 	

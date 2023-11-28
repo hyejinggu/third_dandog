@@ -3,13 +3,28 @@ import styles from "../../css/subpage/community_lounge.module.css";
 import PageNation from "../item/PageNation";
 import CommunityPost from "./CommunityPost";
 import SideBar from "./SideBar";
-import React, { useReducer, useState, useContext } from "react";
+import React, { useReducer, useState, useContext, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { CreatePostContext } from "./Community";
 
 const date = new Date();
 
 export default function Lounge() {
+  // // message 초기값 설정 (""로 설정)
+  // const [message, setMessage] = useState("");
+
+  // // useEffect(함수, 배열) : 컴포넌트가 화면에 나타났을 때 자동 실행
+  // useEffect(() => {
+  //   // fetch(url, options) : Http 요청 함수
+  //   fetch("/neighbor/test")
+  //     .then((response) => response.text())
+  //     .then((message) => {
+  //       setMessage(message);
+  //     });
+  // }, []);
+
+  // ==============================================================
+
   const { addedPostArray } = useContext(CreatePostContext);
 
   const arrayReducer = (state, action) => {
@@ -78,6 +93,7 @@ export default function Lounge() {
     <div id="wrap" className={styles.lounge_container}>
       <div className={styles.title}>
         <strong>
+          {/* <p>{message}</p> */}
           <NavLink to="/community/lounge">라운지</NavLink>
           <NavLink to="/community/event">이벤트</NavLink>
           <NavLink to="/community/neighborhood">우리 동네</NavLink>

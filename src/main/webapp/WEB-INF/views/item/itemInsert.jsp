@@ -6,9 +6,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Item Insert</title>
-
+<link rel="stylesheet" type="text/css"
+	href="/resources/css/itemAdmin.css">
 </head>
 <body>
+	<h2 class="title">관리자 페이지</h2>
+	<div class="adminPageHeader">
+		<ul>
+			<li><a href="/item/itemList">상품 관리</a></li>
+			<li><a>주문 관리</a></li>
+			<li><a href="../member/memberList">회원 관리</a></li>
+			<li><a>고객센터 관리</a></li>
+			<li><a href="/community/adminLounge">커뮤니티 관리</a></li>
+		</ul>
+	</div>
+	<div class="adminItemContainer">
+		<h2>상품 관리</h2>
+		<ul>
+			<li><a href="/item/itemList">상품 목록</a></li>
+			<li><a href="/item/itemInsert">상품 등록</a></li>
+		</ul>
+	</div>
 	<h2>Item Insert Form</h2>
 	<form action="insert" method="post" enctype="multipart/form-data">
 		<table>

@@ -39,6 +39,7 @@ import styles from "./css/common/common.module.css";
 function App() {
   return (
     <div className="App" id={styles.wrap}>
+      <a href="http://localhost:8080">관리자</a>
       <ScrollTop />
       <Header />
       <Routes>
