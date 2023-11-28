@@ -29,7 +29,7 @@ public class ItemOrder {
     private String user_id;
     private int item_no;
     private int total_price;
-    private Date order_aate;
+    private Date order_date;
     private String payment;
     private String shipping_msg;
     private String recipient_name;
