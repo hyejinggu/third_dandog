@@ -1,10 +1,27 @@
 import styles from "../../css/subpage/community_event.module.css";
 import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Event() {
+  // message 초기값 설정 (""로 설정)
+  const [message, setMessage] = useState("");
+
+  // useEffect(함수, 배열) : 컴포넌트가 화면에 나타났을 때 자동 실행
+  useEffect(() => {
+    axios
+      .get("/neighbor/test")
+      .then((res) => {
+        setMessage(res.data);
+        console.log(res.data);
+      })
+      .catch((res) => console.log(res));
+  }, []);
+
   return (
     <div id="wrap" className={styles.event_container}>
       <div className={styles.title}>
+        <p>{message}</p>
         <strong>
           <NavLink to="/community/lounge">라운지</NavLink>
           <NavLink to="/community/event">이벤트</NavLink>

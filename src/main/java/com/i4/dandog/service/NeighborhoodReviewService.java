@@ -9,6 +9,8 @@ public interface NeighborhoodReviewService {
 	// selectList
 	List<NeighborhoodReview> selectList();
 	
+	List<NeighborhoodReview> findByCategory(String neighbor_category);
+	
 	// selectOne
 	NeighborhoodReview selectOne(int neighbor_no);
 	

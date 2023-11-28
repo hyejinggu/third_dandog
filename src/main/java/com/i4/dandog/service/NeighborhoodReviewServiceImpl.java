@@ -23,6 +23,11 @@ public class NeighborhoodReviewServiceImpl implements NeighborhoodReviewService 
 	}
 	
 	@Override
+	public List<NeighborhoodReview> findByCategory(String neighbor_category) {
+		return repository.findByCategory(neighbor_category);
+	}
+	
+	@Override
 	public NeighborhoodReview selectOne(int neighbor_no) {
 		Optional<NeighborhoodReview> result = repository.findById(neighbor_no);
     	if ( result.isPresent() ) return result.get();
@@ -40,6 +45,8 @@ public class NeighborhoodReviewServiceImpl implements NeighborhoodReviewService 
 		repository.deleteById(neighbor_no);
 		return neighbor_no;
 	}
+	
+	
 
 	
 }
