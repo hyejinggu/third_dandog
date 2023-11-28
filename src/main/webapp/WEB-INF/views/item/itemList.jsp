@@ -13,11 +13,11 @@
 	<h2 class="title">관리자 페이지</h2>
 	<div class="adminPageHeader">
 		<ul>
-			<li><a href="">상품 관리</a></li>
+			<li><a href="/item/itemList">상품 관리</a></li>
 			<li><a>주문 관리</a></li>
-			<li><a>회원 관리</a></li>
+			<li><a href="../member/memberList">회원 관리</a></li>
 			<li><a>고객센터 관리</a></li>
-			<li><a>커뮤니티 관리</a></li>
+			<li><a href="/community/adminLounge">커뮤니티 관리</a></li>
 		</ul>
 	</div>
 	<div class="adminItemContainer">
