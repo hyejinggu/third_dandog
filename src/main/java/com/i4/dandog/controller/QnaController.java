@@ -16,7 +16,7 @@ import com.i4.dandog.service.QnaService;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor // @Autowired 를 사용하지 않아도 됨
-@RequestMapping(value="/qna") // "/board" 로 시작하는 모든 요청을 처리
+@RequestMapping(value="/qna") // "/~" 로 시작하는 모든 요청을 처리
 @Controller
 public class QnaController {
 	
@@ -63,11 +63,36 @@ public class QnaController {
 		
 	}
 	
+//	@PostMapping(value="/rinsert")
+//	public String rinsert(BoardDTO dto, Model model, RedirectAttributes rttr) {
+//		// ** 답글등록
+//		// => SQL 구문 : reply_insert, step_update
+//		// => 성공 : boardList
+//		//    실패: replyInsert 입력폼으로
+//		String uri="redirect:boardList";
+//		
+//		// => dto 의 값
+//		//   -> id, title, content : 사용가능
+//		//   -> 부모글의 root: 동일
+//		//   -> 부모글의 step, indent : 1 씩 증가
+//		dto.setStep(dto.getStep()+1);
+//		dto.setIndent(dto.getIndent()+1);
+//		if (service.rinsert(dto) > 0  ) {
+//			rttr.addFlashAttribute("message", "~ 답글등록 성공 ~");
+//		}else {
+//			uri="board/replyInsert";
+//			model.addAttribute("message", "~ 답글등록 실패! 다시 하세요 ~");
+//		}
+//		return uri;
+//	}
+	
+	
 	// ** BoardList
 	@GetMapping (value="/qnaList")
 	public void qnalist(Model model) {
-		Member member = new Member();
-		model.addAttribute("banana", service.selectList());
+		System.out.println("** QnaList **");
+		model.addAttribute("qnai", service.selectList());
+		
 	}
 	
    // ** BoardDetail
@@ -104,7 +129,7 @@ public class QnaController {
 		
 		// 3) view 처리
 		// => 글 수정화면 요청인 경우 구분
-		model.addAttribute("apple", entity);
+		model.addAttribute("qnai", entity);
 		//if (request.getParameter("jCode").equals("U"))
 		if ("U".equals(request.getParameter("jCode")))	
 			return  "qna/qnaUpdate";
@@ -145,24 +170,22 @@ public class QnaController {
 	public String qUpdate(Qna entity, Model model) {
 		
 		// => 처리결과에 따른 화면출력을 위해서 dto 의 값을 Attribute 에 보관
-		model.addAttribute("apple", entity);
+		model.addAttribute("qnai", entity);
 		String uri="qna/qnaDetail";
 		
 		// => Service 처리
-		
 		if (service.save(entity) > 0) {
 			model.addAttribute("message", "~ 글 수정 성공 ~");
 		}else {
 			model.addAttribute("message", "~ 글 수정 실패! 다시 하세요 ~");
 			uri="qna/qnaUpdate";
 		}
-		
 		return uri;
 	} // qUpdate
 	
-	// ** Board Delete: 회원탈퇴
+	// ** Board Delete: 글 삭제
 	@GetMapping(value="/qdelete")
-	public String bdelete(Qna entity, Model model, RedirectAttributes rttr) {
+	public String qdelete(Qna entity, Model model, RedirectAttributes rttr) {
 		
 		String uri = "redirect:qnaList";
 		
