@@ -26,7 +26,7 @@
 			<tr>
 				<td>${l.lounge_no}</td>
 
-				<td>${l.lounge_img}</td>
+				<td><img alt="MyImage" src="/${l.lounge_img}" width="50" height="70"></td>
 
 				<td><h4>${l.lounge_title}</h4>
 					<p>${l.lounge_content}</p></td>
@@ -41,6 +41,6 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<a href="lounge/loungeInsert">새글등록</a>
+	<a href="loungeInsert">새글등록</a>
 </body>
 </html>

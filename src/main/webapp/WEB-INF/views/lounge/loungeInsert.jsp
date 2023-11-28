@@ -12,7 +12,7 @@
 <body>
 	<h2>lounge Insert</h2>
 
-	<form action="loungeInsert" method="get">
+	<form action="loungeUpload" method="post" enctype="multipart/form-data" >
 		<table>
 
 			<tr height="40">

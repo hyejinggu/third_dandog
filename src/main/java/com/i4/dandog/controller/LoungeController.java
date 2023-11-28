@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,28 +21,33 @@ import lombok.extern.log4j.Log4j2;
 @Controller
 @Log4j2
 @AllArgsConstructor
-@RequestMapping("/lounge")
+@RequestMapping("/community")
 public class LoungeController {
 	private LoungeService loungeService;
 
-	@GetMapping
+	@GetMapping(value = "/loungelist")
 	public String getLoungeList(Model model) {
 		model.addAttribute("lounge", loungeService.getAllLounge());
 		return "lounge/lounge";
 	}
 
 	@GetMapping(value = "/loungeInsert")
-	public String loungeInsert(Lounge entity, @RequestParam("lounge_imgf") MultipartFile lounge_imgf, Model model) throws IOException {
-	    String uri = "redirect:lounge";
+	public String loungeInsert() {
+		return "lounge/loungeInsert";
+	}
+	
+	@PostMapping(value = "/loungeUpload")
+	public String loungeupload(Lounge entity, Model model) throws IOException {
+	    String uri = "redirect:loungelist";
 
-	    String realPath = "D:\\teamproject03\\DanDog\\src\\main\\webapp\\resources\\uploadImages";
-	    
+	    String realPath = "D:\\teamproject03\\DanDog\\src\\main\\webapp\\resources\\communityimages\\";
+	    MultipartFile lounge_imgf = entity.getLounge_imgf(); 
 	    if (lounge_imgf != null && !lounge_imgf.isEmpty()) {
 	        String fileName = lounge_imgf.getOriginalFilename();
-	        String filePath = realPath + File.separator + fileName;
+	        String filePath = realPath + fileName;
 	        lounge_imgf.transferTo(new File(filePath));
 	        
-	        String file2 = "resources/uploadImages/" + fileName;
+	        String file2 = "resources/communityimages/" + fileName;
 	        entity.setLounge_img(file2);
 	    }
 
