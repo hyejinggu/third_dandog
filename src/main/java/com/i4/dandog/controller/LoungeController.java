@@ -1,6 +1,7 @@
 package com.i4.dandog.controller;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +30,7 @@ public class LoungeController {
 	}
 
 	@GetMapping(value = "/loungeInsert")
-	public void loungeInsert(Lounge entity, Model model) {
+	public void loungeInsert(Lounge entity, Model model) throws IOException {
 		String uri = "redirect:lounge";
 
 		String realPath = "D:\\teamproject03\\DanDog\\src\\main\\webapp\\resources\\communityimages";

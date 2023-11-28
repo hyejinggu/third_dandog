@@ -12,7 +12,7 @@
 <body>
 	<h2>lounge Insert</h2>
 
-	<form action="loungeInsert" method="Post">
+	<form action="loungeInsert" method="get">
 		<table>
 
 			<tr height="40">
