@@ -16,7 +16,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table
+@Table(name = "Item_Order")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
