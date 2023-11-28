@@ -25,7 +25,7 @@ public class AdminOrderController {
     private OrderDetailService orderDetailService;
 
     // 주문 목록 조회
-    @GetMapping("/orders")
+    @GetMapping(value = "/orders")
     public String getOrderList(Model model) {
         model.addAttribute("orders", orderDetailService.getAllOrders());
         return "admin/adminOrder";
