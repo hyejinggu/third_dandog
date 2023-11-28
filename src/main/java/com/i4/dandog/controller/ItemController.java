@@ -2,8 +2,6 @@ package com.i4.dandog.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -52,6 +50,7 @@ public class ItemController {
 	@GetMapping("/itemdetail")
 	public String itemDetail(Item entity, Model model) {
 		model.addAttribute("itemDetail", service.selectOne(entity.getItem_no()));
+		model.addAttribute("itemImages", iservice.findByItemNo(entity.getItem_no()));
 		
 		return "item/itemDetail";
 	}
@@ -65,7 +64,7 @@ public class ItemController {
 	}
 
 	@PostMapping(value = "/insert")
-	public String insert(HttpServletRequest request, Item entity, ItemImage imgEntity, 
+	public String insert(HttpServletRequest request, Item entity,
 			Model model, @RequestParam("etcImages") MultipartFile[] images) throws IOException {
 
 		String uri = "item/itemInsert";
@@ -121,17 +120,19 @@ public class ItemController {
 		
 		
 		// 그 외 기타 이미지
-		String file5 = "resources/images/basic.jpg";
-		String file6 = "resources/images/basic.jpg";
 		for (MultipartFile img : images) {
-			if (img != null && !img.isEmpty())
-				file5 = realPath + img.getOriginalFilename();
-			img.transferTo(new File(file5));
-			
-			file6 = "resources/images/" + img.getOriginalFilename();
-			imgEntity.setItem_no(entity.getItem_no());
-			imgEntity.setItem_img(file6);
-			log.info("images insert 성공! 상품 번호: " + iservice.save(imgEntity));
+			if (img != null && !img.isEmpty()) {
+				String file5 = realPath + img.getOriginalFilename();
+				img.transferTo(new File(file5));
+				
+				String file6 = "resources/images/" + img.getOriginalFilename();
+				
+				ItemImage imgEntity = new ItemImage();
+//				imgEntity.setImage_no(0);
+				imgEntity.setItem_no(entity.getItem_no());
+				imgEntity.setItem_img(file6);
+				log.info("images insert 성공! 상품 번호: " + iservice.save(imgEntity));
+			}
 		}
 
 		return uri;
@@ -141,6 +142,7 @@ public class ItemController {
 	@GetMapping(value = "/itemupdate")
 	public String itemUpdate(Item entity, Model model) {
 		model.addAttribute("itemDetail", service.selectOne(entity.getItem_no()));
+		model.addAttribute("itemImages", iservice.findByItemNo(entity.getItem_no()));
 		
 		return "item/itemUpdate";
 	}

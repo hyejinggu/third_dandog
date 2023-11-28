@@ -24,6 +24,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Qna extends BaseEntity {
 
+	//DB에도 추가해야됨
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int qna_seq;
@@ -45,9 +47,15 @@ public class Qna extends BaseEntity {
 	private String answer_state;
 
 	private String etc;
-
+	
+	//==================================
+	private int step; // DB에도 추가하기
+	
+	private int indent; // DB에도 추가하기
+	//==================================
 	@CreatedDate
 	@Column(name = "answer_regdate", updatable = false)
 	private LocalDateTime answer_regdate;
 
+	
 }
