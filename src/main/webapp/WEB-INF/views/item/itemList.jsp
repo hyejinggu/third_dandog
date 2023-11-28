@@ -6,11 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Item List</title>
-<link rel="stylesheet" type="text/css"
-	href="/resources/css/itemAdmin.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/itemAdmin.css">
 </head>
 <body>
-	<h2 class="title">관리자 페이지</h2>
+<!-- 	<h2 class="title">관리자 페이지</h2>
 	<div class="adminPageHeader">
 		<ul>
 			<li><a href="/item/itemList">상품 관리</a></li>
@@ -19,7 +18,7 @@
 			<li><a>고객센터 관리</a></li>
 			<li><a href="/community/adminLounge">커뮤니티 관리</a></li>
 		</ul>
-	</div>
+	</div> -->
 	<div class="adminItemContainer">
 		<h2>상품 관리</h2>
 		<ul>
@@ -78,12 +77,6 @@
 							</c:if>
 						</c:forEach>
 					</td>					
-
-					<!-- 파일 다운로드 추가 
-         				=> download 요청을 받으면 서버는 해당 파일을 찾아 response에 담아보내면, 웹브라우저가 받아 download 시켜줌 
-         				=> 최종적 처리를 웹브라우저가 해주기 때문에 일반적으로 a Tag로 처리함     
-           				  (즉, 비동기 처리_Ajax 를 하지 않음, 비동기 처리에서는 response를 웹브라우저가 받지 않기 때문 ) -->
-					<%-- <td><a href="download?dnfile=${m.uploadfile}">${m.uploadfile}</a></td> --%>
 
 					<td>${i.regdate.year}-${i.regdate.monthValue}-${i.regdate.dayOfMonth}</td>
 					<%-- <td>${i.item_stock}</td> --%>

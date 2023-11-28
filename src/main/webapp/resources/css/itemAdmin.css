@@ -32,13 +32,13 @@
 	justify-content: center;
 }
 
-.adminPageHeader ul>li:hover a {
+.adminPageHeader ul>li:hover p {
 	color: #e39400;
 	cursor: pointer;
     text-decoration: underline;
 }
 
-.adminPageHeader ul>li a {
+.adminPageHeader ul>li p {
 	color: #ffa900;
 	font-weight: bold;
 	line-height: 30px;
