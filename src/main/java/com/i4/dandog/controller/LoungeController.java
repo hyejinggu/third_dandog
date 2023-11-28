@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.i4.dandog.entity.Lounge;
@@ -30,30 +31,29 @@ public class LoungeController {
 	}
 
 	@GetMapping(value = "/loungeInsert")
-	public void loungeInsert(Lounge entity, Model model) throws IOException {
-		String uri = "redirect:lounge";
+	public String loungeInsert(Lounge entity, @RequestParam("lounge_imgf") MultipartFile lounge_imgf, Model model) throws IOException {
+	    String uri = "redirect:lounge";
 
-		String realPath = "D:\\teamproject03\\DanDog\\src\\main\\webapp\\resources\\communityimages";
-		String file1, file2 = "resources/communityimages/basic.gif";
+	    String realPath = "D:\\teamproject03\\DanDog\\src\\main\\webapp\\resources\\uploadImages";
+	    
+	    if (lounge_imgf != null && !lounge_imgf.isEmpty()) {
+	        String fileName = lounge_imgf.getOriginalFilename();
+	        String filePath = realPath + File.separator + fileName;
+	        lounge_imgf.transferTo(new File(filePath));
+	        
+	        String file2 = "resources/uploadImages/" + fileName;
+	        entity.setLounge_img(file2);
+	    }
 
-		MultipartFile uploadfilef = entity.setLounge_imgf();
-		
-		if (uploadfilef != null && !uploadfilef.isEmpty()) {
-			file1 = realPath + uploadfilef.getOriginalFilename();
-			uploadfilef.transferTo(new File(file1));
-			file2 = "resources/uploadImages/" + uploadfilef.getOriginalFilename();
-		}
-		
-		entity.setLounge_img(file2);
-		
-		try {
-			loungeService.save(entity);
-		} catch (Exception e) {
-			log.info("** insert Exception => " + e.toString());
-			uri = "member/memberJoin";
-		}
+	    try {
+	        loungeService.save(entity);
+	    } catch (Exception e) {
+	        log.info("** insert Exception => " + e.toString());
+	        uri = "lounge/loungeInsert";
+	    }
 
-		return uri;
+	    return uri;
 	}
+
 
 }
