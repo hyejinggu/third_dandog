@@ -34,6 +34,43 @@
   justify-items: center;
 }
 
+/* ===== 사이드 바 ===== */
+.content_wrap {
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+  background-color: white;
+}
+
+/* 사이드 바 */
+.side_bar_wrap {
+  position: relative;
+}
+
+.side_bar {
+  margin: 100px auto;
+  width: 130px;
+  border-radius: 10px;
+  justify-self: center;
+  position: sticky;
+  top: 70px;
+  transition: margin-top ease-in-out 1s;
+}
+
+.side_bar li {
+  padding: 20px 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgb(255, 227, 68, 0.6);
+  border: #ffa900 1px solid;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.side_bar .sidebar_active {
+  background-color: #ffe344;
+}
+
 .map_wrap {
   width: 90%;
   height: 600px;

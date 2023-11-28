@@ -2,6 +2,7 @@ import Lounge from "./Lounge";
 import Event from "./Event";
 import Neighborhood from "./Neighborhood";
 import CreatePost from "./CreatePost";
+import CreateReview from "./CreateReview";
 import React, { useState, useEffect } from "react";
 
 import { Routes, Route } from "react-router-dom";
@@ -300,6 +301,7 @@ const Community = () => {
           <Route path="/event/*" element={<Event />} />
           <Route path="/neighborhood/*" element={<Neighborhood />} />
           <Route path="/createpost/" element={<CreatePost />} />
+          <Route path="/createreview/" element={<CreateReview />} />
         </Routes>
       </CreatePostContext.Provider>
     </div>
