@@ -6,32 +6,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Item Insert</title>
-<link rel="stylesheet" type="text/css"
-	href="/resources/css/itemAdmin.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/itemAdmin.css">
 </head>
 <body>
-	<h2 class="title">관리자 페이지</h2>
-	<div class="adminPageHeader">
-		<ul>
-			<li><a href="/item/itemList">상품 관리</a></li>
-			<li><a>주문 관리</a></li>
-			<li><a href="../member/memberList">회원 관리</a></li>
-			<li><a>고객센터 관리</a></li>
-			<li><a href="/community/adminLounge">커뮤니티 관리</a></li>
-		</ul>
-	</div>
 	<div class="adminItemContainer">
 		<h2>상품 관리</h2>
 		<ul>
-			<li><a href="/item/itemList">상품 목록</a></li>
-			<li><a href="/item/itemInsert">상품 등록</a></li>
+			<li><p onclick="getAdminItem()">상품 목록</p></li>
+			<li><p onclick="getItemInsert()">상품 등록</p></li>
 		</ul>
 	</div>
 	<h2>Item Insert Form</h2>
 	<form action="insert" method="post" enctype="multipart/form-data">
-		<table>
-			<tr height="40">
-				<th bgcolor="aqua">아이템 카테고리</th>
+		<table class="item_table">
+			<tr>
+				<th>아이템 카테고리</th>
 				<td><select name="item_category">
 						<option value="Snk">간식, 사료</option>
 						<option value="Toy">장난감</option>
@@ -39,18 +28,18 @@
 						<option value="Str">산책, 케어</option>
 				</select></td>
 			</tr>
-			<tr height="40">
-				<th bgcolor="aqua">상품 이름</th>
+			<tr>
+				<th>상품 이름</th>
 				<td><input type="text" id="item_name" name="item_name"
 					placeholder="50자 이하"></td>
 			</tr>
-			<tr height="40">
-				<th bgcolor="aqua">상품 가격</th>
+			<tr>
+				<th>상품 가격</th>
 				<td><input type="text" id="item_price" name="item_price"
 					placeholder="숫자만 입력"><br></td>
 			</tr>
-			<tr height="40">
-				<th bgcolor="aqua">사이즈 선택</th>
+			<tr>
+				<th>사이즈 선택</th>
 				<td><select name="options_size">
 						<option value="F">Free</option>
 						<option value="S">S</option>
@@ -58,8 +47,8 @@
 						<option value="L">L</option>
 				</select></td>
 			</tr>
-			<tr height="40">
-				<th bgcolor="aqua">컬러 선택</th>
+			<tr>
+				<th>컬러 선택</th>
 				<td><select name="options_color">
 						<option value="Bk">Black</option>
 						<option value="Wh">White</option>
@@ -73,46 +62,47 @@
 						<option value="Pk">Pink</option>
 				</select></td>
 			</tr>
-			<tr height="40">
-				<th bgcolor="aqua">상품 설명</th>
+			<tr>
+				<th>상품 설명</th>
 				<td><textarea cols="50" rows="10" name="item_desc"
 						placeholder="500자 이하"></textarea></td>
 			</tr>
 
-			<tr height="40">
-				<th bgcolor="aqua">할인율 설정</th>
+			<tr>
+				<th>할인율 설정</th>
 				<td><input type="text" name="item_discount_rate"
 					placeholder="숫자로만 입력"></td>
 			</tr>
-			<tr height="40">
-				<th bgcolor="aqua">재고 수량</th>
+			<tr>
+				<th>재고 수량</th>
 				<td><input type="text" id="item_stock" name="item_stock"
 					placeholder="숫자로만 입력"><br></td>
 			</tr>
-			<tr height="40">
-				<th bgcolor="aqua">상품 이미지1</th>
+			<tr>
+				<th>상품 이미지1</th>
 				<td><img src="" class="select_img"><br> <input
 					type="file" name="uploadfileF1" id="uploadfileF1" size="20">
 				</td>
 			</tr>
-			<tr height="40">
-				<th bgcolor="aqua">상품 이미지2</th>
+			<tr>
+				<th>상품 이미지2</th>
 				<td><img src="" class="select_img"><br> <input
 					type="file" name="uploadfileF2" id="uploadfileF2" size="20">
 				</td>
 			</tr>
 			<!-- 추가 상품 이미지 -->
-			<tr height="40">
-				<th bgcolor="aqua">상품 이미지3</th>
+			<tr>
+				<th>상품 이미지3</th>
 				<td><img src="" class="select_img"><br> <input
-					type="file" name="etcImages" id="etcImages" multiple>
-				</td>
+					type="file" name="etcImages" id="etcImages" multiple></td>
 			</tr>
-			
-			<tr height="40">
+
+			<tr>
 				<th></th>
-				<td><input type="reset" value="취소">&nbsp;&nbsp; <input
-					type="submit" value="상품 등록">&nbsp;&nbsp;</td>
+				<td>
+					<input type="reset" value="취소">
+					<input type="submit" value="상품 등록">
+				</td>
 			</tr>
 		</table>
 	</form>

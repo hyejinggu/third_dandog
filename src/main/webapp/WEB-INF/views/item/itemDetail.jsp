@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Item Detail</title>
+<script src="/resources/js/item.js"></script>
 </head>
 <body>
 	<h2>Item Detail</h2>

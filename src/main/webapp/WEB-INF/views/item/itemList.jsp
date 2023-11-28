@@ -7,31 +7,23 @@
 <meta charset="UTF-8">
 <title>Item List</title>
 <link rel="stylesheet" type="text/css" href="/resources/css/itemAdmin.css">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/resources/js/item.js"></script>
 </head>
 <body>
-<!-- 	<h2 class="title">관리자 페이지</h2>
-	<div class="adminPageHeader">
-		<ul>
-			<li><a href="/item/itemList">상품 관리</a></li>
-			<li><a>주문 관리</a></li>
-			<li><a href="../member/memberList">회원 관리</a></li>
-			<li><a>고객센터 관리</a></li>
-			<li><a href="/community/adminLounge">커뮤니티 관리</a></li>
-		</ul>
-	</div> -->
 	<div class="adminItemContainer">
 		<h2>상품 관리</h2>
 		<ul>
-			<li><a href="/item/itemList">상품 목록</a></li>
-			<li><a href="/item/itemInsert">상품 등록</a></li>
+			<li><p onclick="getAdminItem()">상품 목록</p></li>
+			<li><p onclick="getItemInsert()">상품 등록</p></li>
 		</ul>
 	</div>
 	<h2>Item List</h2>
 	<c:if test="${not empty requestScope.message}">
 		<h3>${requestScope.message}</h3>
 	</c:if>
-	<table border="1" style="width: 100%">
-		<tr bgcolor="pink">
+	<table class="item_table">
+		<tr>
 			<th>번호</th>
 			<th>카테고리</th>
 			<th>이름</th>
@@ -55,9 +47,9 @@
 		<c:if test="${not empty requestScope.itemList}">
 			<c:forEach var="i" items="${requestScope.itemList}">
 				<tr>
-					<td><a href="itemdetail?item_no=${i.item_no}">${i.item_no}</a></td>
+					<td>${i.item_no}</td>
 					<td>${i.item_category}</td>
-					<td>${i.item_name}</td>
+					<td onclick = "getItemDetail(${i.item_no})">${i.item_name}</td>
 					<td>${i.item_price}원</td>
 					<td>${i.options_size}</td>
 					<td>${i.options_color}</td>
