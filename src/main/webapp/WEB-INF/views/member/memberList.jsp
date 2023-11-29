@@ -40,8 +40,6 @@
 		<c:if test="${not empty requestScope.memberList}">
 			<c:forEach var="s" items="${requestScope.memberList}">
 				<tr>
-					<td><a href="mdetail?id=${s.user_id}">${s.user_id}</a></td>
-
 					<td>${s.user_id}</td>
 					<td>${s.user_password}</td>
 					<td>${s.user_name}</td>

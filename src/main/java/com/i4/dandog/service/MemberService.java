@@ -22,7 +22,8 @@ public interface MemberService {
 	// ** update
 	String update(Member dto);
 
-
+	// React에서 받은 데이터 처리
+    void processData(Member member);
 
 
 
