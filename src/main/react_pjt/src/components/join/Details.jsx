@@ -54,22 +54,22 @@ const Details = () => {
         newErrors.user_id = !value
           ? "아이디를 입력하세요."
           : value.length < 6 || value.length > 20
-          ? "아이디는 6~20자 사이여야 합니다."
-          : "";
+            ? "아이디는 6~20자 사이여야 합니다."
+            : "";
         break;
       case "user_password":
         newErrors.user_password = !value
           ? "비밀번호를 입력하세요."
           : value.length < 8
-          ? "비밀번호는 8자 이상이어야 합니다."
-          : "";
+            ? "비밀번호는 8자 이상이어야 합니다."
+            : "";
         break;
       case "user_password2":
         newErrors.user_password2 = !value
           ? "비밀번호를 확인하세요."
           : value !== formData.user_password
-          ? "비밀번호가 일치하지 않습니다."
-          : "";
+            ? "비밀번호가 일치하지 않습니다."
+            : "";
         break;
       default:
         break;
@@ -100,7 +100,7 @@ const Details = () => {
 
   // ================================================================================
   return (
-    <form action="#" method="post" onSubmit={handleSubmit}>
+    <form action="join" method="post" onSubmit={handleSubmit}>
       <figure>
         <table>
           <tbody>
