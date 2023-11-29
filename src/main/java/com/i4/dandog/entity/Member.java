@@ -57,6 +57,8 @@ public class Member extends BaseEntity {
 	private String user_address1;
 
 	private String user_address2;
+	
+	
 
 	
 	
@@ -64,8 +66,10 @@ public class Member extends BaseEntity {
 	@Column(name = "withdrawal_date", updatable = false) private LocalDateTime
 	withdrawal_date;
 	
-	private int point;
+	private Integer point = 1;
 	
 	@Column(name = "regdate", updatable = false) private LocalDateTime
 	regdate;
+
+
 }
