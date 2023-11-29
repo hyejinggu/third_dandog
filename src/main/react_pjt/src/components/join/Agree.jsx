@@ -1,10 +1,23 @@
 import '../../css/join/join.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 
 const Agree = () => {
+    axios
+        .get("/join/agree")
+        .then((res) => {
+            if (res.data) {
+                setAllAgreed(res.data);
+                console.log(res.data);
+            } else {
+                console.error("잘못된 응답 형식");
+            }
+        })
+        .catch((error) => console.error(error.message));
+
     const navigate = useNavigate();
     const [allAgreed, setAllAgreed] = useState(false); // 상태 변수 설정
 
