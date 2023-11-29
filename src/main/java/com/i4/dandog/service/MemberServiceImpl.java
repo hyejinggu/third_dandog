@@ -56,20 +56,10 @@ public class MemberServiceImpl implements MemberService {
 	// ** join
 	@Override
 	public void processData(Member member) {
-		// React에서 받은 데이터 처리 로직 추가
 
-		// 예를 들어, 받은 데이터를 회원 엔터티에 저장하고 저장하는 로직을 추가할 수 있습니다.
-		// 이는 실제 사용에 맞게 수정하셔야 합니다.
-
-		// 데이터베이스에 저장할 수 있도록 Member 엔터티에 필요한 필드들을 채워넣습니다.
-		Member newMember = new Member();
-		newMember.setUser_name(member.getUser_name());
-		newMember.setUser_birthday(member.getUser_birthday());
-		newMember.setUser_phonenum(member.getUser_phonenum());
-		newMember.setUser_email(member.getUser_email());
 
 		// MemberRepository를 사용하여 데이터베이스에 저장
-		repository.save(newMember);
+		repository.save(member);
 	}
 
 } // class
