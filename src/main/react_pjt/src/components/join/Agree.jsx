@@ -1,48 +1,55 @@
 import '../../css/join/join.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const Agree = () => {
     const navigate = useNavigate();
-    const [allAgreed, setAllAgreed] = useState(false); // 상태 변수 설정
+    const [required_check, setRequired_check] = useState(false); // 상태 변수 설정
+    const [choice_check, setChoice_check] = useState(false); // 상태 변수 설정
 
-    const handleAgreeAllChange = (event) => {
-        setAllAgreed(event.target.checked); // 체크 여부를 상태에 반영
-    };
+    // const handleAgreeAllChange = (event) => {
+    //     setRequired_check(event.target.checked); // 체크 여부를 상태에 반영
+    // };
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
 
-        if (!allAgreed) {
+        if (!required_check) {
             alert('(필수)모든 약관에 동의해주세요.');
             return;
         }
 
-        try {
-            const response = await axios.get("/agree/test");
+        // 데이터 배열 생성
+        const dataToSend = {
+            required_check: required_check ? 'Y' : 'N',
+            choice_check: choice_check ? 'Y' : 'N', // 또는 실제 데이터 값
+        };
 
-            // 서버로부터의 응답을 콘솔에 출력
-            console.log(response.data);
+        // 콘솔에 데이터 배열 출력
+        console.log('데이터 배열:', dataToSend);
+        navigate('/join/profile', { state: dataToSend });
 
-            // 이후의 로직 추가
-            navigate('/join/profile');
-        } catch (error) {
-            console.error('에러 발생:', error.message);
-        }
     };
 
-    const btnChecked = (event) => {
-        if (!allAgreed) {
-            alert('(필수)모든 약관에 동의해주세요.');
-        } else {
-            navigate('/join/profile');
-        }
-    };
+    // const btnChecked = (event) => {
+    //     if (!required_check) {
+    //         alert('(필수)모든 약관에 동의해주세요.');
+    //     } else {
+    //         // 데이터 배열 생성
+    //         const dataToSend = {
+    //             agreement: required_check ? 'Y' : 'N',
+    //             // 다른 데이터 필드들도 추가 가능
+    //         };
 
+    //         // 콘솔에 데이터 배열 출력
+    //         console.log('데이터 배열:', dataToSend);
+    //         navigate('/join/profile', { state: dataToSend }); // state를 수정
+
+    //     }
+    // };
     return (
 
-        <form action="join" method="post" onSubmit={handleSubmit}>
+        <form action="join" id="join_form" method="post" onSubmit={handleSubmit}>
             <figure>
 
                 <table style={{
@@ -176,13 +183,17 @@ const Agree = () => {
                             민사소송법상의 관할법원에 제기합니다. ② "몰"과 이용자간에 제기된 전자상거래 소송에는 한국법을 적용합니다. 부칙 1. 이 약관은 년 월 일부터
                             적용됩니다.
                         </td>
-                        <th className="agree_all">
-                            <input type="checkbox" id="agree_all" name="agree_all" checked={allAgreed}
-                                // 상태에 따라 체크 여부 반영
-                                onChange={handleAgreeAllChange}
-                            // 체크 변경 시 이벤트 핸들러
-                            />
-                            <label htmlFor="agree_all" className="required">(필수)모든 약관을 확인하였으며 전체 동의합니다.</label>
+                        <th className="required_check">
+                            <input
+                                type="checkbox"
+                                id="required_check"
+                                name="required_check"
+                                checked={required_check}
+                                onChange={(e) => {
+                                    setRequired_check(e.target.checked);
+                                    // 다른 로직이 필요한 경우 여기에 추가
+                                }} />
+                            <label htmlFor="required_check" className="required">(필수)모든 약관을 확인하였으며 전체 동의합니다.</label>
                         </th>
 
                     </tr>
@@ -195,14 +206,19 @@ const Agree = () => {
                             원활한 진행, 본인의사의확인, 고객 상담 및 불만처리, 상품과 경품 배송을 위한 배송지 확인 등 - 제공항목 : 구매자 이름, 전화번호, ID,
                             휴대폰번호, 이메일주소, 상품 구매정보, 상품 수취인 정보(이름, 주소, 전화번호) - 보유/이용기간 : 배송완료 후 한달
                         </td>
-                        <th className="agree_selection">
-                            <input type="checkbox" id="agree_selection" name="agree_selection" />
-                            <label htmlFor="agree_selection">(선택)모든 약관을 확인하였으며 전체 동의합니다.</label>
+                        <th className="choice_check">
+                            <input type="checkbox" id="choice_check" name="choice_check" checked={choice_check}
+                                onChange={(e) => {
+                                    setChoice_check(e.target.checked);
+                                    // 다른 로직이 필요한 경우 여기에 추가
+                                }}
+                            />
+                            <label htmlFor="choice_check">(선택)모든 약관을 확인하였으며 전체 동의합니다.</label>
                         </th>
                     </tr>
 
                 </table>
-                <input type="submit" value="Next" onClick={btnChecked} />
+                <input type="submit" value="Next" onClick={handleSubmit} />
             </figure>
         </form >
     )

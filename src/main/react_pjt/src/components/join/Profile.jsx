@@ -1,47 +1,75 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../../css/join/join.css";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [required_check, setRequired_check] = useState(true);
 
   const [formValue, setFormValue] = useState({
     user_name: "",
-    user_birth: "",
+    user_year: "",
     user_month: "",
     user_day: "",
-    user_num: "",
+    user_phonenum: "",
     user_email: "",
   });
 
+
   const [errors, setErrors] = useState({
     user_name: "",
-    user_birth: "",
-    user_num: "",
+    user_phonenum: "",
     user_email: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormValue({
-      ...formValue,
+    setFormValue((prevFormValue) => ({
+      ...prevFormValue,
       [name]: value,
-    });
+    }));
 
     // 유효성 검사 실행
     validateField(name, value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
     // 유효성 검사 실행
     if (validateForm()) {
-      // 유효성 검사 통과 시 다음 단계로 진행
-      navigate("/join/information");
+
+      // 데이터 배열 생성
+      const dataToSend = {
+        required_check: required_check ? 'Y' : 'N',
+        choice_check: location.state?.choice_check || '',  // Agree 컴포넌트에서 받아온 데이터
+        // 나머지 필드들 추가
+        user_name: formValue.user_name,
+        user_birthday: `${formValue.user_year}${formValue.user_month}${formValue.user_day}`,
+        user_phonenum: formValue.user_phonenum,
+        user_email: `${formValue.user_email}${formValue.domain_list}`
+      };
+
+      // 다음 페이지로 이동
+      console.log('데이터 배열:', dataToSend);
+      navigate("/join/information", { state: dataToSend });
+
     } else {
       alert("필수정보를 입력해주세요.");
     }
   };
+  useEffect(() => {
+    if (location.state) {
+      // 받아온 데이터와 Profile 컴포넌트의 formValue 합치기
+      setFormValue((prevFormValue) => ({
+        ...prevFormValue,
+        ...location.state,
+      }));
+    }
+  }, [location.state]);
+
 
   const validateField = (fieldName, value) => {
     const newErrors = { ...errors };
@@ -51,8 +79,8 @@ const Profile = () => {
         newErrors.user_name = !value ? "성함을 입력해주세요." : "";
         break;
 
-      case "user_num":
-        newErrors.user_num = !value
+      case "user_phonenum":
+        newErrors.user_phonenum = !value
           ? "핸드폰 번호를 입력해주세요."
           : value.length < 10 || value.length > 11
             ? "휴대폰 번호를 정확히 입력해주세요."
@@ -74,14 +102,14 @@ const Profile = () => {
     const newErrors = { ...errors };
 
     validateField("user_name", formValue.user_name);
-    validateField("user_num", formValue.user_num);
+    validateField("user_phonenum", formValue.user_phonenum);
     validateField("user_email", formValue.user_email);
 
     setErrors(newErrors);
 
     return (
       formValue.user_name !== "" &&
-      formValue.user_num !== "" &&
+      formValue.user_phonenum !== "" &&
       formValue.user_email !== "" &&
       Object.values(newErrors).every((error) => error === "")
     );
@@ -90,7 +118,7 @@ const Profile = () => {
   // ================================================================================
 
   return (
-    <form action="join" method="post" onSubmit={handleSubmit}>
+    <form action="join" id="join_form" method="post" onSubmit={handleSubmit}>
       <figure>
         <table>
           <tbody>
@@ -118,16 +146,19 @@ const Profile = () => {
 
             <tr>
               <th>
-                <label htmlFor="user_birth" className="required">
+                <label htmlFor="user_birthday" className="required">
                   생년월일
                 </label>
               </th>
-              <td className="user_birth">
-                <select className="user_year" required id="user_birth">
-                  <option disabled defaultValue>
-                    년
-                  </option>
-                  <option value="2019">2019</option>
+              <td className="user_birthday">
+                <select
+                  className="user_year"
+                  name="user_year"
+                  required
+                  onChange={handleChange}
+                  value={formValue.user_year}
+                >
+                  <option value="2019" defaultValue>2019</option>
                   <option value="2018">2018</option>
                   <option value="2017">2017</option>
                   <option value="2016">2016</option>
@@ -228,7 +259,13 @@ const Profile = () => {
                   <option value="1921">1921</option>
                   <option value="1920">1920</option>
                 </select>
-                <select className="user_month" required>
+                <select
+                  className="user_month"
+                  name="user_month"
+                  required
+                  onChange={handleChange}
+                  value={formValue.user_month}
+                >
                   <option disabled defaultValue>
                     월
                   </option>
@@ -245,7 +282,13 @@ const Profile = () => {
                   <option value="11">11</option>
                   <option value="12">12</option>
                 </select>
-                <select className="user_day" required>
+                <select
+                  className="user_day"
+                  name="user_day"
+                  required
+                  onChange={handleChange}
+                  value={formValue.user_day}
+                >
                   <option disabled defaultValue>
                     일
                   </option>
@@ -285,27 +328,27 @@ const Profile = () => {
             </tr>
             <tr>
               <th>
-                <label htmlFor="user_num" className="required">
+                <label htmlFor="user_phonenum" className="required">
                   핸드폰 번호
                 </label>
               </th>
               <td>
                 <input
                   type="tel"
-                  name="user_num"
-                  id="user_num"
+                  name="user_phonenum"
+                  id="user_phonenum"
                   placeholder="- 없이 입력해주세요"
-                  value={formValue.user_num}
+                  value={formValue.user_phonenum}
                   onChange={handleChange}
                 />
               </td>
-              {errors.user_num && (
-                <div className="error">{errors.user_num}</div>
+              {errors.user_phonenum && (
+                <div className="error">{errors.user_phonenum}</div>
               )}
             </tr>
             <tr>
               <th>
-                <label htmlFor="user_email">이메일 주소</label>
+                <label htmlFor="user_email" className="required">이메일 주소</label>
               </th>
               <td>
                 <input
@@ -317,10 +360,7 @@ const Profile = () => {
                   onChange={handleChange}
                 />
                 <select className="domain_list">
-                  <option disabled value="" defaultValue>
-                    선택
-                  </option>
-                  <option value="naver.com">naver.com</option>
+                  <option value="naver.com" defaultValue>naver.com</option>
                   <option value="hanmail.net">hanmail.net</option>
                   <option value="google.com">google.com</option>
                   <option value="nate.com">nate.com</option>

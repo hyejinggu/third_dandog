@@ -11,36 +11,35 @@ import com.i4.dandog.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
-
-
 @Service
-@RequiredArgsConstructor 
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-	
+
 	private final MemberRepository repository;
-	
+
 	// ** selectList
 	@Override
 	public List<Member> selectList() {
 		return repository.findAll();
 	}
-	
+
 	// ** selectOne
 	@Override
 	public Member selectOne(Member dto) {
 		Optional<Member> result = repository.findById(dto.getUser_id());
-    	if ( result.isPresent() ) return result.get();
-    	else return null;
+		if (result.isPresent())
+			return result.get();
+		else
+			return null;
 	}
 
 	// ** insert, update
 	@Override
 	public String save(Member entity) {
 		repository.save(entity); // 저장 또는 수정
-        return entity.getUser_id();   // 저장후 key return
+		return entity.getUser_id(); // 저장후 key return
 	}
-	 
-	// ** delete
+
 	// ** delete
 	@Override
 	public String delete(Member dto) {
@@ -53,7 +52,14 @@ public class MemberServiceImpl implements MemberService {
 	public String update(Member dto) {
 		return dto.getUser_id();
 	}
-	
-	
-	
-} //class
+
+	// ** join
+	@Override
+	public void processData(Member member) {
+
+
+		// MemberRepository를 사용하여 데이터베이스에 저장
+		repository.save(member);
+	}
+
+} // class

@@ -1,17 +1,24 @@
 package com.i4.dandog.controller;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.i4.dandog.entity.Member;
@@ -20,7 +27,7 @@ import com.i4.dandog.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-@Controller
+@RestController
 @RequestMapping("/member")
 @Log4j2 // @Log4j -> Boot 에서는 2015년 이후 지원중단
 @AllArgsConstructor // 모든 맴버변수 생성자 주입하므로 각각 @Autowired 할 필요없음
@@ -47,32 +54,55 @@ public class MemberController {
 			return "member/memberDetail";
 	} // mdetail
 
+	
+	
 	// ** MemberJoin
-	@PostMapping(value = "/join")
-	public String join(HttpServletRequest request, Member dto, Model model) throws IOException {
-		// 1. 요청분석 & Service
-		// => 성공: 로그인유도 (loginForm 으로, member/loginForm.jsp)
-		// => 실패: 재가입유도 (joinForm 으로, member/memberJoin.jsp)
-		String uri = "member/loginForm";
+    @PostMapping("/details")
+    public String join(@RequestBody Member dto, Model model)  {
+    	System.out.println("******* "+dto);
+       
+        try {
+        	service.save(dto);
+        	model.addAttribute("message", "회원가입 성공");
+        	return "성공";
+        	
+        } catch (Exception e) {
+        	log.info("insert Exception: " + e.toString());
+			model.addAttribute("message", "회원가입 실패");
+			return "실패냐!!";
+        }
+    }
+	
+	
 
-		// ** PasswordEncoder (암호화 적용)
-		dto.setUser_password(passwordEncoder.encode(dto.getUser_password()));
-
-		// ** MultipartFile ***********************
-		String realPath = request.getRealPath("/");
-		System.out.println("** ralPath => " + realPath);
-
-		// 2. Service 처리
-		/*
-		 * if (service.insert(dto) > 0) { // Transaction_Test, insert2
-		 * model.addAttribute("message", "~~ 회원가입 성공!! 로그인후 이용하세요 ~~"); } else {
-		 * model.addAttribute("message", "~~ 회원가입 실패!! 다시 하세요 ~~"); uri =
-		 * "member/memberJoin"; }
-		 */
-
-		// 3. View
-		return uri;
-	} // Join_Post
+//	@PostMapping(value = "/join")
+//	public String join(HttpServletRequest request, Member dto, Model model) throws IOException {
+//
+//		String uri = "member/loginForm";
+//
+//		try {
+//			// ** PasswordEncoder (암호화 적용)
+//			dto.setUser_password(passwordEncoder.encode(dto.getUser_password()));
+//
+//			// 2. Service 처리
+//			String savedUserId = service.save(dto);
+//
+//			if (savedUserId != null) {
+//				// 회원가입 성공 시 로그인 페이지로 이동
+//				return "redirect:/login/login";
+//			} else {
+//				System.out.println("~~ 회원가입 실패!! 다시 하세요 ~~");
+//				model.addAttribute("message", "~~ 회원가입 실패!! 다시 하세요 ~~");
+//				// 회원가입 실패 시 회원가입 페이지로 이동
+//				return "join/agree";
+//			}
+//		} catch (Exception e) {
+//			// 예외 처리: 회원가입 중에 오류 발생 시
+//			System.out.println("~~ 회원가입 중 오류 발생 ~~");
+//			model.addAttribute("message", "~~ 회원가입 중 오류 발생 ~~");
+//			return "join/agree";
+//		}
+//	}
 
 	// ** Member Update
 	@PostMapping(value = "/mupdate")

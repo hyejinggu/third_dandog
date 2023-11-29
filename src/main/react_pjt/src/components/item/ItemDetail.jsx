@@ -19,7 +19,7 @@ const ItemDetail = () => {
     setQuantity(parseInt(event.target.value)); // 수량 변경 시 상태 업데이트
   };
 
-  const [mainImage, setMainImage] = useState(selectedItem.image[1]); // 초기 메인 이미지
+  const [mainImage, setMainImage] = useState(selectedItem.item_img1); // 초기 메인 이미지
 
   const handleImageClick = (imageUrl) => {
     setMainImage(imageUrl); // 클릭한 이미지를 메인 이미지로 설정
@@ -46,7 +46,7 @@ const ItemDetail = () => {
             </div>
 
             {/* 서브 이미지들 */}
-            <div className={styles.sub_img}>
+            {/* <div className={styles.sub_img}>
               {selectedItem.image.map((imageUrl, index) => (
                 <img
                   key={index}
@@ -55,23 +55,23 @@ const ItemDetail = () => {
                   onClick={() => handleImageClick(imageUrl)} // 이미지 클릭 시 처리
                 />
               ))}
-            </div>
+            </div> */}
           </section>
           <section className={styles.info_area}>
             {/* 상품명 */}
             <div>상품명</div>
-            <div className={styles.present_pr}>{selectedItem.name}</div>
+            <div className={styles.present_pr}>{selectedItem.item_name}</div>
             {/* 판매가 */}
             <div>판매가</div>
             <div>
-              <span className={styles.sale_info}>{selectedItem.saleInfo}%</span>
+              <span className={styles.sale_info}>{selectedItem.item_discount_rate}%</span>
               <span className={styles.normal_pr}>
-                {selectedItem.normalPr.toLocaleString("ko")}원
+                {selectedItem.item_price.toLocaleString("ko")}원
               </span>
               <span className={styles.present_pr}>
                 {(
-                  selectedItem.normalPr -
-                  (selectedItem.normalPr * selectedItem.saleInfo) / 100
+                  selectedItem.item_price -
+                  (selectedItem.item_price * selectedItem.item_discount_rate) / 100
                 ).toLocaleString("ko")}
                 원
               </span>
@@ -83,22 +83,44 @@ const ItemDetail = () => {
             <div>사이즈</div>
             <div>
               <select id="option" name="sizeOption">
-                {selectedItem.sizes.map((size, index) => (
-                  <option key={index} value={size}>
-                    {size}
-                  </option>
-                ))}
+                {selectedItem.options_size === 'F' &&
+                  <option key='1' value={selectedItem.options_size}>
+                    OneSize
+                  </option>}
+                {selectedItem.options_size === 'S' &&
+                    <option key='2' value={selectedItem.options_size}>
+                      S
+                  </option>}
+                {selectedItem.options_size !== 'F' && selectedItem.options_size !== 'S' &&
+                      <option key='3' value={selectedItem.options_size}>
+                        선택없음
+                      </option>}
               </select>
             </div>
             {/* 컬러 */}
             <div>컬러</div>
             <div>
               <select id="option" name="colorOption">
-                {selectedItem.colors.map((color, index) => (
-                  <option key={index} value={color}>
-                    {color}
-                  </option>
-                ))}
+                {selectedItem.options_color === 'Br' &&
+                  <option key='1' value={selectedItem.options_color}>
+                    브라운
+                  </option>}
+                {selectedItem.options_color === 'Bk' &&
+                  <option key='2' value={selectedItem.options_color}>
+                    블랙
+                  </option>}
+                {selectedItem.options_color === 'Pk' &&
+                  <option key='3' value={selectedItem.options_color}>
+                    핑크
+                  </option>}
+                {selectedItem.options_color === 'Ye' &&
+                    <option key='4' value={selectedItem.options_color}>
+                      옐로우
+                    </option>}
+                {selectedItem.options_color !== 'Br' && selectedItem.options_color !== 'Bk' && selectedItem.options_color !== 'Pk' && selectedItem.options_color !== 'Ye' &&
+                  <option key='5' value={selectedItem.options_color}>
+                    선택없음
+                  </option>}
               </select>
             </div>
             {/* 수량 */}
@@ -148,10 +170,10 @@ const ItemDetail = () => {
             </div>
           </section>
         </div>
-        <ItemDetailSection1 selectedItem={selectedItem} />
+        {/* <ItemDetailSection1 selectedItem={selectedItem} />
         <ItemDetailSection2 selectedItem={selectedItem} />
         <ItemDetailSection3 selectedItem={selectedItem} />
-        <ItemDetailSection4 selectedItem={selectedItem} />
+        <ItemDetailSection4 selectedItem={selectedItem} /> */}
       </form>
       <RecentSeenItem />
     </div>
