@@ -23,26 +23,30 @@ public class ItemServiceImpl implements ItemService {
 
 	// 정렬
 	@Override
-	public List<Item> itemListSortedByPopular() {
-		return repository.itemListSortedByPopular();
+	public List<Item> findByOrderByItemSalesVolumeDesc() {
+		return repository.findByOrderByItemSalesVolumeDesc();
 	}
 	
 	@Override
-	public List<Item> itemListSortedByHigh() {
-		return repository.itemListSortedByHigh();
+	public List<Item> findByOrderByItemPriceDesc() {
+		return repository.findByOrderByItemPriceDesc();
 	}
 	
 	@Override
-	public List<Item> itemListSortedByLow() {
-		return repository.itemListSortedByLow();
+	public List<Item> findByOrderByItemPriceAsc() {
+		return repository.findByOrderByItemPriceAsc();
 	}
 	
 	@Override
-	public List<Item> itemListSortedByNew() {
-		return repository.itemListSortedByNew();
+	public List<Item> findByOrderByRegdate() {
+		return repository.findByOrderByRegdate();
 	}
+	
+	
 	
 	//=============================================================
+	
+	
 	
 	@Override
 	public Item selectOne(int item_no) {
@@ -63,6 +67,7 @@ public class ItemServiceImpl implements ItemService {
 		repository.deleteById(item_no);
 		return item_no;
 	}
+	
 	
 	
 	

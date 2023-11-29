@@ -24,6 +24,7 @@
 	</c:if>
 	<table class="item_table">
 		<tr>
+			<th>삭제</th>
 			<th>번호</th>
 			<th>카테고리</th>
 			<th>이름</th>
@@ -38,15 +39,12 @@
 			<th>기타 상품 사진</th>
 			<th>등록일</th>
 			<!-- <th>재고</th> -->
-			<!-- 관리자 기능 추가 -->
-			<%-- <c:if test="${sessionScope.loginID == 'admin'}"> --%>
-			<th>Update</th>
-			<th>Delete</th>
 			<%-- </c:if> --%>
 		</tr>
 		<c:if test="${not empty requestScope.itemList}">
 			<c:forEach var="i" items="${requestScope.itemList}">
 				<tr>
+					<td><input type="checkbox" name="selectedItem" value="${i.item_no}" /></td>
 					<td>${i.item_no}</td>
 					<td>${i.item_category}</td>
 					<td onclick = "getItemDetail(${i.item_no})">${i.item_name}</td>
@@ -72,10 +70,7 @@
 
 					<td>${i.regdate.year}-${i.regdate.monthValue}-${i.regdate.dayOfMonth}</td>
 					<%-- <td>${i.item_stock}</td> --%>
-					<!-- 관리자 기능 추가 -->
-					<%-- <c:if test="${sessionScope.loginID == 'admin'}"> --%>
-					<td><a href="itemupdate?item_no=${i.item_no}">수정</a></td>
-					<td><a href="itemdelete?item_no=${i.item_no}">삭제</a></td>
+					<%-- <td><a href="itemdelete?item_no=${i.item_no}">삭제</a></td> --%>
 					<%-- </c:if> --%>
 				</tr>
 			</c:forEach>
@@ -86,6 +81,12 @@
 			</tr>
 		</c:if>
 	</table>
+		<div>
+			<input type="checkbox" id="selectall" value='selectall'
+       onclick='selectAll(this)' />
+			<label for="selectall" >전체 선택</label>
+		</div>
+		<div>선택 삭제</div>
 
 	<h4>
 		<a href="/home">Home으로 가기</a>

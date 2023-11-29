@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.i4.dandog.entity.Item;
 
@@ -22,6 +23,21 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	
 	@Query("select i from Item i order by i.regdate")
 	public List<Item> itemListSortedByNew();
+	
+//    // Popular 순으로 정렬된 아이템 목록 조회
+//    List<Item> findByOrderByItemSalesVolumeDesc();
+//
+//    // 가격이 높은 순으로 정렬된 아이템 목록 조회
+//    List<Item> findByOrderByItemPriceDesc();
+//
+//    // 가격이 낮은 순으로 정렬된 아이템 목록 조회
+//    List<Item> findByOrderByItemPriceAsc();
+//
+//    // 등록일 순으로 정렬된 아이템 목록 조회
+//    List<Item> findByOrderByRegdate();
+	
+//	@Query("delete from Customer c where c.id in :ids")
+//    void deleteAllByIdInQuery(@Param("ids") List<Long> ids);
 	
 }
 
