@@ -190,7 +190,7 @@ const BoardQna = () => {
                                             <td></td>
                                             <td></td>
                                             <td colSpan="4">
-                                            {/*  */}
+                                                {/*  */}
                                                 <span>{item.answer}</span>
                                             </td>
                                         </tr>
@@ -224,7 +224,7 @@ const BoardQna = () => {
                                         )}
                                     </React.Fragment>
                                 ))
-                            )}
+                        )}
                     </tbody>
                 </table>
 

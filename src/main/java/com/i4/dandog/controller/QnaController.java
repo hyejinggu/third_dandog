@@ -63,6 +63,7 @@ public class QnaController {
 		
 	}
 	
+	
 //	@PostMapping(value="/rinsert")
 //	public String rinsert(BoardDTO dto, Model model, RedirectAttributes rttr) {
 //		// ** 답글등록

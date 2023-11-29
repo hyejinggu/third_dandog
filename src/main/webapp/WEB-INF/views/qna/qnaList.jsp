@@ -22,18 +22,8 @@
 	<c:if test="${not empty requestScope.qnai}">
 		<c:forEach var="q" items="${requestScope.qnai}">
 		<tr><td>${q.qna_seq}</td>
-			<!-- Title
-				=> 로그인 한 경우에만 글내용을 볼 수 있도록  Link 추가  
-				=> 댓글 작성후에는 indent 값에 따른 들여쓰기 기능-->
-			<td>
-				<c:if test="${q.indent>0}">
-					<c:forEach begin="1" end="${q.indent}">
-						<span>&nbsp;&nbsp;</span>
-					</c:forEach>
-					<span style="color:blue;">re..</span>
-				</c:if>
 				
-				<c:if test="${not empty sessionScope.loginID}">
+			<td><c:if test="${not empty sessionScope.loginID}">
 					<a href="qdetail?qna_seq=${q.qna_seq}">${q.qna_title}</a>
 			 	</c:if>    
 				<c:if test="${empty sessionScope.loginID}">
@@ -50,10 +40,13 @@
 	</c:if>
 </table>
 <hr>
-<!-- 로그인 한 경우에만 새글등록 가능 -->
+<!-- 로그인 한 경우에만 새글등록 가능
 <c:if test="${not empty sessionScope.loginID}">
 	&nbsp;<a href="qnaInsert">새글등록</a>&nbsp;
-</c:if>	
+</c:if>	 -->
 &nbsp;<a href="/home">Home</a>&nbsp;
+&nbsp;<a href="qna/qnaInsert">Qna등록</a>&nbsp; <!-- 테스트 후 삭제, 리액트에서 고객센터 정보받아와야함 -->
+&nbsp;<a href="qna/replyInsert">Reply등록</a>&nbsp;
+<!-- &nbsp;<span class="textlink" onclick="qna/replyInsert()">replyInsert</span>&nbsp; -->
 </body>
 </html>

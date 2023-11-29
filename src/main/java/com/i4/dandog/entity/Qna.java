@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import lombok.AllArgsConstructor;
@@ -50,9 +49,9 @@ public class Qna extends BaseEntity {
 	private String etc;
 	
 	//==================================
-	private int step; // DB에도 추가하기
+	//private int step; // DB에도 추가하기
 	
-	private int indent; // DB에도 추가하기
+	//private int indent; // DB에도 추가하기
 	//==================================
 	@LastModifiedDate
 	@Column(name = "answer_regdate")

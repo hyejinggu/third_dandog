@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.i4.dandog.entity.Member;
+import com.i4.dandog.entity.NeighborhoodReview;
 import com.i4.dandog.entity.Qna;
 import com.i4.dandog.repository.QnaRepository;
 
@@ -26,6 +27,11 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	public List<Qna> selectList() {
 		return repository.findAll();
+	}
+	
+	@Override
+	public List<Qna> findByCategory(String qna_category) {
+		return repository.findByCategory(qna_category);
 	}
 	
 	// ** selectOne

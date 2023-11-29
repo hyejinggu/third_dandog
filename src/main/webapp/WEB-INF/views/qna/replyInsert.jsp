@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>** Qna_Insert **</title>
+<title>** Qna_Reply_Insert **</title>
 <!-- <link rel="stylesheet" type="text/css" href="/resources/myLib/myStyle.css"> -->
 </head>
 <body>
-<h2>** Qna_Insert **</h2>
+<h2>** Qna_Reply_Insert **</h2>
 
 <form action="qinsert" method="Post">
 <table>
