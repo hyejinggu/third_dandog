@@ -28,8 +28,7 @@
   justify-content: space-between;
 }
 
-.sort li,
-.sort p {
+.sort li {
   height: 30px;
   line-height: 30px;
   font-weight: bold;
@@ -41,6 +40,24 @@
   margin-right: 5px;
 
   padding: 0 5px;
+  cursor: pointer;
+}
+
+.search_bar {
+  display: flex;
+}
+
+.search_bar input {
+  padding: 7px 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
+  border: 1px solid;
+}
+
+.search_bar span {
+  align-self: center;
+  font-size: 1.3em;
+  font-weight: bold;
   cursor: pointer;
 }
 
@@ -119,21 +136,16 @@
 
 /* ===== 상품 목록 영역 끝 ===== */
 
-.search_bar {
-  display: flex;
-}
-
-.search_bar input {
-  margin: 20px;
-  padding: 7px 10px;
+.item_count {
+  float: left;
+  height: 30px;
+  line-height: 30px;
+  font-weight: bold;
+  color: rgb(70, 70, 70);
+  background-color: #fffbee;
+  border: rgb(70, 70, 70) 1px solid;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
-  border: 1px solid;
-}
-
-.search_bar span {
-  align-self: center;
-  font-size: 1.3em;
-  font-weight: bold;
-  cursor: pointer;
+  margin: 20px;
+  padding: 0 5px;
 }

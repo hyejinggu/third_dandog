@@ -11,13 +11,9 @@
 <body>
 	<div class="adminItemContainer">
 		<h2>상품 관리</h2>
-		<ul>
-			<li><p onclick="getAdminItem()">상품 목록</p></li>
-			<li><p onclick="getItemInsert()">상품 등록</p></li>
-		</ul>
 	</div>
 	<h2>Item Insert Form</h2>
-	<form action="insert" method="post" enctype="multipart/form-data">
+	<form action="/item/insert" method="post" enctype="multipart/form-data">
 		<table class="item_table">
 			<tr>
 				<th>아이템 카테고리</th>
@@ -93,8 +89,9 @@
 			<!-- 추가 상품 이미지 -->
 			<tr>
 				<th>상품 이미지3</th>
-				<td><img src="" class="select_img"><br> <input
-					type="file" name="etcImages" id="etcImages" multiple></td>
+				<td>
+					<img src="" class="select_img"><br> 
+					<input type="file" name="etcImages" id="etcImages" multiple></td>
 			</tr>
 
 			<tr>

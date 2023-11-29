@@ -24,7 +24,7 @@ public class NeighborRestController {
 	NeighborhoodReviewService nservice;	
 	
 	public List<NeighborhoodReview> neighborhoodReview(@RequestParam(name = "category") String category) {
-	    System.out.println("************** " + category + "Review");
+	    System.out.println("************" + category + "Review");
 
 	    List<NeighborhoodReview> reviews;
 	    

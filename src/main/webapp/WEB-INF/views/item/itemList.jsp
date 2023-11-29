@@ -6,22 +6,37 @@
 <head>
 <meta charset="UTF-8">
 <title>Item List</title>
-<link rel="stylesheet" type="text/css" href="/resources/css/itemAdmin.css">
+<link rel="stylesheet" type="text/css"
+	href="/resources/css/itemAdmin.css">
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/resources/js/item.js"></script>
 </head>
 <body>
+<%-- 	<%@ include file="../header.jsp"%> --%>
 	<div class="adminItemContainer">
 		<h2>상품 관리</h2>
-		<ul>
-			<li><p onclick="getAdminItem()">상품 목록</p></li>
+<!-- 		<ul>
+			<li><p onclick="getItemList()">상품 목록</p></li>
 			<li><p onclick="getItemInsert()">상품 등록</p></li>
-		</ul>
+		</ul> -->
 	</div>
 	<h2>Item List</h2>
 	<c:if test="${not empty requestScope.message}">
 		<h3>${requestScope.message}</h3>
 	</c:if>
+	<form action="/item/itemList" method="get">
+		<select name="search_category">
+			<option value="all">전체</option>
+			<option value="Snk">간식, 사료</option>
+			<option value="Toy">장난감</option>
+			<option value="Liv">리빙, 패션</option>
+			<option value="Str">산책, 케어</option>
+		</select> <select name="search_feild">
+			<option value="name">상품 이름</option>
+			<option value="no">상품 번호</option>
+		</select> <input name="search_value" placeholder="검색어 입력" /> <input
+			type="submit" value="검색" onclick="searchList()" />
+	</form>
 	<table class="item_table">
 		<tr>
 			<th>삭제</th>
@@ -44,10 +59,11 @@
 		<c:if test="${not empty requestScope.itemList}">
 			<c:forEach var="i" items="${requestScope.itemList}">
 				<tr>
-					<td><input type="checkbox" name="selectedItem" value="${i.item_no}" /></td>
+					<td><input type="checkbox" name="selectedItem"
+						value="${i.item_no}" /></td>
 					<td>${i.item_no}</td>
 					<td>${i.item_category}</td>
-					<td onclick = "getItemDetail(${i.item_no})">${i.item_name}</td>
+					<td onclick="getItemDetail(${i.item_no})">${i.item_name}</td>
 					<td>${i.item_price}원</td>
 					<td>${i.options_size}</td>
 					<td>${i.options_color}</td>
@@ -59,14 +75,13 @@
 						height="70"></td>
 					<td><img alt="itemImage2" src="/${i.item_img2}" width="50"
 						height="70"></td>
-						
-					<td>
-						<c:forEach var="img" items="${requestScope.itemImgList}">
+
+					<td><c:forEach var="img" items="${requestScope.itemImgList}">
 							<c:if test="${i.item_no == img.item_no}">
-									<img alt="itemImages" src="/${img.item_img}" width="50" height="70">
+								<img alt="itemImages" src="/${img.item_img}" width="50"
+									height="70">
 							</c:if>
-						</c:forEach>
-					</td>					
+						</c:forEach></td>
 
 					<td>${i.regdate.year}-${i.regdate.monthValue}-${i.regdate.dayOfMonth}</td>
 					<%-- <td>${i.item_stock}</td> --%>
@@ -81,12 +96,11 @@
 			</tr>
 		</c:if>
 	</table>
-		<div>
-			<input type="checkbox" id="selectall" value='selectall'
-       onclick='selectAll(this)' />
-			<label for="selectall" >전체 선택</label>
-		</div>
-		<div>선택 삭제</div>
+	<div>
+		<input type="checkbox" id="selectall" value='selectall'
+			onclick='selectAll(this)' /> <label for="selectall">전체 선택</label>
+	</div>
+	<div>선택 삭제</div>
 
 	<h4>
 		<a href="/home">Home으로 가기</a>

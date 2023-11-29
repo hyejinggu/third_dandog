@@ -32,18 +32,25 @@ public class ItemController {
 	
 
 	// ======== 상품 관리 =======
-	@GetMapping("/admin")
-	public void admin(Model model) {
-//		model.addAttribute("itemList", service.selectList());
-	}
+//	@GetMapping("/admin")
+//	public void admin(Model model) {
+////		model.addAttribute("itemList", service.selectList());
+//	}
 	
 	
 	// ======== 상품 리스트 =======
 	@GetMapping("/itemList")
-	public void itemList(Model model) {
-		model.addAttribute("itemList", service.selectList());
+	public String itemList(
+            @RequestParam(name = "search_category", defaultValue = "all") String searchCategory,
+            @RequestParam(name = "search_feild", defaultValue = "name") String searchField,
+            @RequestParam(name = "search_value", defaultValue = "") String searchValue,
+            Model model) {
+		model.addAttribute("itemList", service.selectList(searchCategory, searchField, searchValue));
 		model.addAttribute("itemImgList", iservice.selectList());
+		
+		return "/item/itemList";
 	}
+	
 	
 	
 	// ======== 상품 디테일 =======
@@ -67,7 +74,7 @@ public class ItemController {
 	public String insert(HttpServletRequest request, Item entity,
 			Model model, @RequestParam("etcImages") MultipartFile[] images) throws IOException {
 
-		String uri = "item/itemInsert";
+		String uri = "redirect:/";
 
 		// 이미지 등록
 		String realPath = "D:\\teamproject\\third_dandog\\dandog\\src\\main\\webapp\\resources\\images";
@@ -105,9 +112,6 @@ public class ItemController {
 		entity.setItem_img2(file4);
 
 		
-			
-		
-		
 		try {
 			log.info("insert 성공! 상품 번호: " + service.save(entity));
 			
@@ -116,7 +120,6 @@ public class ItemController {
 			log.info("insert Exception: " + e.toString());
 			model.addAttribute("message", "상품 등록 실패");
 		}
-		
 		
 		
 		// 그 외 기타 이미지
@@ -191,6 +194,7 @@ public class ItemController {
 	
 	
 	
+	
 	// ======== 상품 삭제 =======
 	@GetMapping(value="/itemdelete")
 	public String mdelete(Item entity, Model model) {
@@ -209,6 +213,15 @@ public class ItemController {
 		
 		return uri;
 	} // mdelete
+	
+	
+	
+	// ====================================================================
+	
+	
+
+	
+	
 	
 
 }

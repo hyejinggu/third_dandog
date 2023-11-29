@@ -1,7 +1,7 @@
 "use strict"
 
 
-function getAdminItem() {
+function getItemList() {
 	let url = "/item/itemList";
 	
 	axios.get(url
@@ -13,7 +13,7 @@ function getAdminItem() {
 	
 	document.getElementById("resultArea2").innerHTML="";
 
-} // getAdminItem
+} // getItemInsert
 
 
 function getItemInsert() {
@@ -46,6 +46,30 @@ function getItemDetail(item_no) {
 
 }
 
+
+function searchList() {
+    let url = "/item/itemList";
+
+    // 폼 데이터 가져오기
+    let searchCategory = document.querySelector('[name="search_category"]').value;
+    let searchField = document.querySelector('[name="search_feild"]').value;
+    let searchValue = document.querySelector('[name="search_value"]').value;
+	
+
+    // URL에 쿼리 문자열 추가
+    url += `?search_category=${searchCategory}&search_field=${searchField}&search_value=${searchValue}`;
+
+    axios.get(url)
+        .then(response => {
+            document.getElementById("resultArea1").innerHTML = response.data;
+        })
+        .catch(err => {
+            alert("response 실패: " + err.message);
+        });
+
+	
+    document.getElementById("resultArea1").innerHTML = "";
+}
 
 
 // ========================================================================

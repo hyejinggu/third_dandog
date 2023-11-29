@@ -7,7 +7,7 @@ import com.i4.dandog.entity.Item;
 public interface ItemService {
 
 	// selectList
-	List<Item> selectList();
+	List<Item> selectList(String searchCategory, String searchField, String searchValues);
 	
 	// selectOne
 	Item selectOne(int item_no);
@@ -18,9 +18,9 @@ public interface ItemService {
 	// delete
 	int delete(int item_no);
 	
-	List<Item> findByOrderByItemSalesVolumeDesc();
-	List<Item> findByOrderByItemPriceDesc();
-	List<Item> findByOrderByItemPriceAsc();
-	List<Item> findByOrderByRegdate();
+	List<Item> findByOrderByItemSalesVolumeDesc(String inputValue);
+	List<Item> findByOrderByItemPriceDesc(String inputValue);
+	List<Item> findByOrderByItemPriceAsc(String inputValue);
+	List<Item> findByOrderByRegdate(String inputValue);
 	
 }

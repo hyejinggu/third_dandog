@@ -24,26 +24,27 @@ public class ItemRestController {
 
 	
 	// ======== 상품 리스트 =======
-	@GetMapping("/sortedList")
-	public List<Item> itemList(@RequestParam(name = "sort") String sort, Model model) {
+	@GetMapping("/toyItemList")
+	public List<Item> itemList(@RequestParam(name = "sort") String sort, 
+			@RequestParam(name = "inputValue") String inputValue, Model model) {
 	    
 		List<Item> itemList;
 
 	    switch (sort) {
 	        case "popular":
-	            itemList = service.findByOrderByItemSalesVolumeDesc();
+	            itemList = service.findByOrderByItemSalesVolumeDesc(inputValue);
 	            break;
 	        case "high":
-	            itemList = service.findByOrderByItemPriceDesc();
+	            itemList = service.findByOrderByItemPriceDesc(inputValue);
 	            break;
 	        case "low":
-	            itemList = service.findByOrderByItemPriceAsc();
+	            itemList = service.findByOrderByItemPriceAsc(inputValue);
 	            break;
 	        case "new":
-	            itemList = service.findByOrderByRegdate();
+	            itemList = service.findByOrderByRegdate(inputValue);
 	            break;
 	        default:
-	            itemList = service.selectList();
+	        	itemList = service.findByOrderByRegdate(inputValue);
 	    }
 
 	    return itemList;

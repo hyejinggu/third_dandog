@@ -17,29 +17,38 @@ public class ItemServiceImpl implements ItemService {
 	private final ItemRepository repository;
 
 	@Override
-	public List<Item> selectList() {
+	public List<Item> selectList(String searchCategory, String searchField, String searchValues_) {
+		if ("all".equals(searchCategory)) {
+			searchCategory = "";
+		} else if ("no".equals(searchField)) {
+			int searchValues = Integer.parseInt(searchValues_);
+			return repository.findByCategoryItemNo(searchCategory, searchValues);
+		} else if ("name".equals(searchField)) {
+			return repository.findByCategoryAndItemName(searchCategory, searchValues_);
+		}
+		
 		return repository.findAll();
 	}
 
 	// 정렬
 	@Override
-	public List<Item> findByOrderByItemSalesVolumeDesc() {
-		return repository.findByOrderByItemSalesVolumeDesc();
+	public List<Item> findByOrderByItemSalesVolumeDesc(String inputValue) {
+		return repository.findByOrderByItemSalesVolumeDesc(inputValue);
 	}
 	
 	@Override
-	public List<Item> findByOrderByItemPriceDesc() {
-		return repository.findByOrderByItemPriceDesc();
+	public List<Item> findByOrderByItemPriceDesc(String inputValue) {
+		return repository.findByOrderByItemPriceDesc(inputValue);
 	}
 	
 	@Override
-	public List<Item> findByOrderByItemPriceAsc() {
-		return repository.findByOrderByItemPriceAsc();
+	public List<Item> findByOrderByItemPriceAsc(String inputValue) {
+		return repository.findByOrderByItemPriceAsc(inputValue);
 	}
 	
 	@Override
-	public List<Item> findByOrderByRegdate() {
-		return repository.findByOrderByRegdate();
+	public List<Item> findByOrderByRegdate(String inputValue) {
+		return repository.findByOrderByRegdate(inputValue);
 	}
 	
 	

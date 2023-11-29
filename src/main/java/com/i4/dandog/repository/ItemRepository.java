@@ -9,35 +9,34 @@ import org.springframework.data.repository.query.Param;
 import com.i4.dandog.entity.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Integer> {
-//	@Query("SELECT item_no, item_img FROM Item i LEFT OUTER JOIN ItemImage ii on i.item_no = ii.item_no")
-//	public List<ItemImage> getAllImages();
 	
-	@Query("select i from Item i order by i.item_sales_volume desc")
-	public List<Item> itemListSortedByPopular();
+	@Query("select i from Item i where item_name like %:inputValue% order by i.item_sales_volume desc")
+	public List<Item> findByOrderByItemSalesVolumeDesc(@Param("inputValue") String inputValue);
 	
-	@Query("select i from Item i order by i.item_price desc")
-	public List<Item> itemListSortedByHigh();
+	@Query("select i from Item i where item_name like %:inputValue% order by i.item_price desc")
+	public List<Item> findByOrderByItemPriceDesc(@Param("inputValue") String inputValue);
 	
-	@Query("select i from Item i order by i.item_price")
-	public List<Item> itemListSortedByLow();
+	@Query("select i from Item i where item_name like %:inputValue% order by i.item_price")
+	public List<Item> findByOrderByItemPriceAsc(@Param("inputValue") String inputValue);
 	
-	@Query("select i from Item i order by i.regdate")
-	public List<Item> itemListSortedByNew();
+	@Query("select i from Item i where item_name like %:inputValue% order by i.regdate")
+	public List<Item> findByOrderByRegdate(@Param("inputValue") String inputValue);
 	
-//    // Popular 순으로 정렬된 아이템 목록 조회
-//    List<Item> findByOrderByItemSalesVolumeDesc();
-//
-//    // 가격이 높은 순으로 정렬된 아이템 목록 조회
-//    List<Item> findByOrderByItemPriceDesc();
-//
-//    // 가격이 낮은 순으로 정렬된 아이템 목록 조회
-//    List<Item> findByOrderByItemPriceAsc();
-//
-//    // 등록일 순으로 정렬된 아이템 목록 조회
-//    List<Item> findByOrderByRegdate();
+// ===============================================================================
 	
-//	@Query("delete from Customer c where c.id in :ids")
-//    void deleteAllByIdInQuery(@Param("ids") List<Long> ids);
+	@Query("select i from Item i where i.item_category = :searchCategory and "
+			+ "lower(i.item_name) like lower(concat('%', :searchValue, '%')) order by item_no desc")
+	List<Item> findByCategoryAndItemName(
+	        @Param("searchCategory") String searchCategory,
+	        @Param("searchValue") String searchValue
+	);
 	
+	@Query("select i from Item i where i.item_category = :searchCategory and "
+			+ "i.item_no = :searchValue order by item_no desc")
+	List<Item> findByCategoryItemNo(
+			@Param("searchCategory") String searchCategory,
+			@Param("searchValue") int searchValue
+			);
+
 }
 

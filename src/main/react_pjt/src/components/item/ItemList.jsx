@@ -9,40 +9,34 @@ const ItemList = () => {
   // ======== 상품 목록 배열 ========
   const [itemList, setItemList] = useState([]);
   const [itemSort, setItemSort] = useState("");
-  useEffect(() => {
+  const [inputValue, setInputValue] = useState("");
+
+  const onSubmit = (e) => {
+    switch (e.target.innerText) {
+      case "인기순":
+        setItemSort("popular");
+        break;
+      case "높은가격순":
+        setItemSort("high");
+        break;
+      case "낮은가격순":
+        setItemSort("low");
+        break;
+      case "신상품순":
+        setItemSort("new");
+        break;
+      default:
+        setItemSort("new");
+        break;
+    }
+    e.preventDefault();
     axios
-      .get("/item/sortedList?sort=" + itemSort)
+      .get("/item/toyItemList?sort=" + itemSort + "&inputValue=" + inputValue)
       .then((res) => {
         setItemList(res.data);
         console.log(res.data);
       })
       .catch((res) => console.log(res));
-  }, [itemSort]);
-
-  // const [inputValue, setInputValue] = useState("");
-  // // ======== 상품 정렬을 위한 reducer 함수 시작 ========
-  // const arrayReducer = (state, action) => {
-  //   switch (action.type) {
-  //     case "search":
-  //       setInputValue("");
-  //       return inputValue === ""
-  //         ? state
-  //         : itemList.filter((it) => it.name.includes(inputValue));
-
-  //     case "popular":
-  //       return [...state].sort((a, b) => b.clicked - a.clicked);
-  //     case "low":
-  //       return [...state].sort((a, b) => a.normalPr - b.normalPr);
-  //     case "high":
-  //       return [...state].sort((a, b) => b.normalPr - a.normalPr);
-  //     case "new":
-  //       return itemList;
-  //   }
-  // };
-
-  const onSubmit = (e) => {
-    e.preventDefault(); // 폼 제출 기본 동작 방지
-    // dispatch({ type: "search" });
   };
 
   // const [array, dispatch] = useReducer(arrayReducer, itemList);
@@ -62,33 +56,34 @@ const ItemList = () => {
 
       <div className={styles.sort}>
         <ul>
-          <li onClick={() => setItemSort("popular")}>인기순</li>
-          <li onClick={() => setItemSort("high")}>높은가격순</li>
-          <li onClick={() => setItemSort("low")}>낮은가격순</li>
-          <li onClick={() => setItemSort("new")}>신상품순</li>
+          <li onClick={onSubmit}>인기순</li>
+          <li onClick={onSubmit}>높은가격순</li>
+          <li onClick={onSubmit}>낮은가격순</li>
+          <li onClick={onSubmit}>신상품순</li>
         </ul>
-        <p>총 {itemList.length}개의 상품</p>
+        <div className={styles.search_bar}>
+          <form onSubmit={onSubmit}>
+            <input
+              type="text"
+              placeholder="검색"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.keyCode === 13) {
+                  onSubmit(e);
+                }
+              }}
+            />
+          </form>
+          <span onClick={onSubmit}>🔍</span>
+        </div>
       </div>
 
       <div className={styles.item_wrap}>
         <ItemInfo itemList={itemList} />
       </div>
-      <div className={styles.search_bar}>
-        <form onSubmit={onSubmit}>
-          <input
-            type="text"
-            placeholder="검색"
-            // value={inputValue}
-            // onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.keyCode === 13) {
-                onSubmit(e);
-              }
-            }}
-          />
-        </form>
-        <span onClick={onSubmit}>🔍</span>
-      </div>
+      <p className={styles.item_count}>총 {itemList.length}개의 상품</p>
+
       {/* <RecentSeenItem /> */}
       <PageNation setPage={""} />
     </div>

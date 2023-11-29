@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 
 	@GetMapping(value = { "/home" })
-	public void home(Locale locale, Model model) {
+	public String home(Locale locale, Model model) {
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate);
+		
+		return "/header";
 	}
 
 }
