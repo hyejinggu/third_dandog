@@ -6,7 +6,7 @@ const NeighborReview = ({ category }) => {
   const [neighborArray, setNeighborArray] = useState([]);
   useEffect(() => {
     axios
-      .get("/neighbor/" + category)
+      .get("/neighbor?category=" + category)
       .then((res) => {
         setNeighborArray(res.data);
         console.log(res.data);

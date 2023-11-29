@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import styles from "../../css/subpage/Itemlist.module.css";
 import React from "react";
 
-function ItemInfo({ selectedIteminfo }) {
+function ItemInfo({ itemList }) {
   return (
     <div>
       <ul>
-        {selectedIteminfo.map((item, index) => (
+        {itemList.map((i, index) => (
           <li
             key={index}
             onClick={() => {
@@ -14,43 +14,40 @@ function ItemInfo({ selectedIteminfo }) {
                 ? localStorage.setItem(
                     "recentItem",
                     JSON.stringify([
-                      item,
+                      i,
                       ...JSON.parse(localStorage.getItem("recentItem")),
                     ])
                   )
-                : localStorage.setItem("recentItem", JSON.stringify([item]));
+                : localStorage.setItem("recentItem", JSON.stringify([i]));
             }}
           >
-            <Link
-              to="/itemdetail"
-              state={{ selectedItem: selectedIteminfo[index] }}
-            >
+            <Link to="/itemdetail" state={{ item: i }}>
               <div className={styles.item_container}>
                 <div className={styles.normal_item}>
-                  <img src={item.image[0]} alt="" />
-                  <img src={item.image[1]} alt="" />
+                  <img src={i.item_img1} alt="" />
+                  <img src={i.item_img2} alt="" />
                 </div>
                 <div className={styles.item_info_wrap}>
-                  <h3>{item.name}</h3>
-                  <span>{item.saleInfo}%</span>
-                  <span>{item.normalPr.toLocaleString("ko")}원</span>
+                  <h3>{i.item_name}</h3>
+                  <span>{i.item_discount_rate}%</span>
+                  <span>{i.item_price.toLocaleString("ko")}원</span>
                   <span>
                     {(
-                      item.normalPr -
-                      (item.normalPr * item.saleInfo) / 100
+                      i.item_price -
+                      (i.item_price * i.item_discount_rate) / 100
                     ).toLocaleString("ko")}
                     원
                   </span>
                 </div>
-                <div className={styles.color}>
-                  {item.color.map((color, colorIdx) => (
+                {/* <div className={styles.color}>
+                  {i.options_color.map((color, colorIdx) => (
                     <span
                       key={colorIdx}
                       title={color}
                       style={{ backgroundColor: color }}
                     ></span>
                   ))}
-                </div>
+                </div> */}
               </div>
             </Link>
           </li>

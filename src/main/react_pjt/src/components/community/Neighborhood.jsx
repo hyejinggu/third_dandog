@@ -7,12 +7,7 @@ import React, { useState } from "react";
 import NeighborReview from "./NeighborReview";
 import NeighborMap from "./NeighborMap";
 
-const neighborSide = [
-  "beautyReview",
-  "hospitalReview",
-  "cafeReview",
-  "trainingReview",
-];
+const neighborSide = ["B", "H", "C", "T"];
 export default function Neighborhood() {
   const [category, setCategory] = useState("beautyReview");
 
