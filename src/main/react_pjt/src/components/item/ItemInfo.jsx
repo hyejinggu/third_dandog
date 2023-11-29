@@ -8,18 +8,18 @@ function ItemInfo({ itemList }) {
       <ul>
         {itemList.map((i, index) => (
           <li
-            key={index}
-            onClick={() => {
-              localStorage.getItem("recentItem")
-                ? localStorage.setItem(
-                    "recentItem",
-                    JSON.stringify([
-                      i,
-                      ...JSON.parse(localStorage.getItem("recentItem")),
-                    ])
-                  )
-                : localStorage.setItem("recentItem", JSON.stringify([i]));
-            }}
+            key={i.item_no}
+            // onClick={() => {
+            //   localStorage.getItem("recentItem")
+            //     ? localStorage.setItem(
+            //         "recentItem",
+            //         JSON.stringify([
+            //           i,
+            //           ...JSON.parse(localStorage.getItem("recentItem")),
+            //         ])
+            //       )
+            //     : localStorage.setItem("recentItem", JSON.stringify([i]));
+            // }}
           >
             <Link to="/itemdetail" state={{ item: i }}>
               <div className={styles.item_container}>
@@ -57,4 +57,4 @@ function ItemInfo({ itemList }) {
   );
 }
 
-export default React.memo(ItemInfo);
+export default ItemInfo;

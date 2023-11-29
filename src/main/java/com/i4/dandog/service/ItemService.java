@@ -18,9 +18,9 @@ public interface ItemService {
 	// delete
 	int delete(int item_no);
 	
-	List<Item> itemListSortedByPopular();
-	List<Item> itemListSortedByHigh();
-	List<Item> itemListSortedByLow();
-	List<Item> itemListSortedByNew();
+	List<Item> findByOrderByItemSalesVolumeDesc();
+	List<Item> findByOrderByItemPriceDesc();
+	List<Item> findByOrderByItemPriceAsc();
+	List<Item> findByOrderByRegdate();
 	
 }

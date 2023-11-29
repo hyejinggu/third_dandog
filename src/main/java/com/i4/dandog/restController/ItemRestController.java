@@ -31,16 +31,16 @@ public class ItemRestController {
 
 	    switch (sort) {
 	        case "popular":
-	            itemList = service.itemListSortedByPopular();
+	            itemList = service.findByOrderByItemSalesVolumeDesc();
 	            break;
 	        case "high":
-	            itemList = service.itemListSortedByHigh();
+	            itemList = service.findByOrderByItemPriceDesc();
 	            break;
 	        case "low":
-	            itemList = service.itemListSortedByLow();
+	            itemList = service.findByOrderByItemPriceAsc();
 	            break;
 	        case "new":
-	            itemList = service.itemListSortedByNew();
+	            itemList = service.findByOrderByRegdate();
 	            break;
 	        default:
 	            itemList = service.selectList();
