@@ -55,8 +55,8 @@ const Profile = () => {
         newErrors.user_num = !value
           ? "핸드폰 번호를 입력해주세요."
           : value.length < 10 || value.length > 11
-          ? "휴대폰 번호를 정확히 입력해주세요."
-          : "";
+            ? "휴대폰 번호를 정확히 입력해주세요."
+            : "";
         break;
 
       case "user_email":
@@ -90,7 +90,7 @@ const Profile = () => {
   // ================================================================================
 
   return (
-    <form action="#" method="post" onSubmit={handleSubmit}>
+    <form action="join" method="post" onSubmit={handleSubmit}>
       <figure>
         <table>
           <tbody>

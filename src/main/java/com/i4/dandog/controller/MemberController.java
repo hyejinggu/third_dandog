@@ -37,14 +37,42 @@ public class MemberController {
 	}
 
 	// ** MemberDetail
-	@GetMapping(value ="/mdetail")
+	@GetMapping(value = "/mdetail")
 	public String mdetail(HttpServletRequest request, Model model, Member dto) {
 		model.addAttribute("apple", service.selectOne(dto));
-		
-		if ( "U".equals(request.getParameter("jCode")) )
-			 return "member/memberUpdate";
-		else return "member/memberDetail";
-	} //mdetail
+
+		if ("U".equals(request.getParameter("jCode")))
+			return "member/memberUpdate";
+		else
+			return "member/memberDetail";
+	} // mdetail
+
+	// ** MemberJoin
+	@PostMapping(value = "/join")
+	public String join(HttpServletRequest request, Member dto, Model model) throws IOException {
+		// 1. 요청분석 & Service
+		// => 성공: 로그인유도 (loginForm 으로, member/loginForm.jsp)
+		// => 실패: 재가입유도 (joinForm 으로, member/memberJoin.jsp)
+		String uri = "member/loginForm";
+
+		// ** PasswordEncoder (암호화 적용)
+		dto.setUser_password(passwordEncoder.encode(dto.getUser_password()));
+
+		// ** MultipartFile ***********************
+		String realPath = request.getRealPath("/");
+		System.out.println("** ralPath => " + realPath);
+
+		// 2. Service 처리
+		/*
+		 * if (service.insert(dto) > 0) { // Transaction_Test, insert2
+		 * model.addAttribute("message", "~~ 회원가입 성공!! 로그인후 이용하세요 ~~"); } else {
+		 * model.addAttribute("message", "~~ 회원가입 실패!! 다시 하세요 ~~"); uri =
+		 * "member/memberJoin"; }
+		 */
+
+		// 3. View
+		return uri;
+	} // Join_Post
 
 	// ** Member Update
 	@PostMapping(value = "/mupdate")

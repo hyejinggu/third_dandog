@@ -6,7 +6,7 @@ const Information = () => {
 
     return (
         <div className="">
-            <form action="#" method="post">
+            <form action="join" method="post">
                 <figure>
 
                     <table>
