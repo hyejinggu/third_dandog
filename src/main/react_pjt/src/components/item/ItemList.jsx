@@ -89,7 +89,7 @@ const ItemList = () => {
         </form>
         <span onClick={onSubmit}>🔍</span>
       </div>
-      <RecentSeenItem />
+      {/* <RecentSeenItem /> */}
       <PageNation setPage={""} />
     </div>
   );
