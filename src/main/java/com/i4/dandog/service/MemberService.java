@@ -11,16 +11,16 @@ public interface MemberService {
 	List<Member> selectList();
 
 	// ** selectOne
-	Member selectOne(Member dto);
+	Member selectOne(Member entity);
 
 	// ** insert, update
-	String save(Member dto);
+	String save(Member entity);
 
 	// ** delete
-	String delete(Member dto);
+	String delete(Member entity);
 
 	// ** update
-	String update(Member dto);
+	String update(Member entity);
 
 	// React에서 받은 데이터 처리
     void processData(Member member);

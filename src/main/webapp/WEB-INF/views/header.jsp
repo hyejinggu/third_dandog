@@ -12,7 +12,7 @@
 	href="/resources/css/itemAdmin.css">
 <!-- <link rel="stylesheet" type="text/css" href="/resources/css/qnaAdmin.css"> -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script type="module" src="/resources/js/memberList.js"></script>
+<script src="/resources/js/memberList.js"></script>
 <script src="/resources/js/item.js"></script>
 <script src="/resources/js/orders.js"></script>
 <script src="/resources/js/board.js"></script>
@@ -25,9 +25,9 @@
 	<div class="adminPageHeader">
 		<ul>
 			<li>
-				<p class="textlink" onclick="getItemList()">상품 관리</p>
-				<span onclick="getItemList()">상품 목록</span>
-				<span onclick="getItemInsert()">상품 등록</span>
+				<p class="textlink" onclick="getItemList()">상품 관리</p> <span
+				onclick="getItemList()">상품 목록</span> <span onclick="getItemInsert()">상품
+					등록</span>
 			<li>
 				<p class="textlink" onclick="getAdminOrder()">주문 관리</p>
 			</li>
