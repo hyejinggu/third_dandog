@@ -1,6 +1,7 @@
 import "../../css/board/board.css";
 import { Link } from "react-router-dom";
 import React, { useState } from 'react';
+//import Creat from "./NeighborReview";
 
 // 게시판 글 목록 배열
 const BoardQna = () => {
@@ -13,60 +14,7 @@ const BoardQna = () => {
 
     // 게시판 글 목록 데이터 배열. table을 배열로 수정. const로 수정
     const boardArray = [
-        {
-            number: 6,
-            title: "상품가격 문의합니다.",
-            writer: "유유",
-            date: "2023-08-11",
-            view: "10",
-            answer: "현재 모든 상품이 세일중인가요?"
-        },
-
-        {
-            number: 5,
-            title: "내가 너무 귀여운 탓인가 상품문의",
-            writer: "오이",
-            date: "2023-07-03",
-            view: "10",
-            answer: "재질이 어떤거고 세탁은 어떻게 하나요"
-        },
-
-        {
-            number: 4,
-            title: "상품문의합니다.",
-            writer: "사이",
-            date: "2023-07-01",
-            view: "10",
-            answer: "알록달록 로프 장난감 길이가 어떻게 되나요?"
-        },
-
-        {
-            number: 3,
-            title: "간식 질문있습니다.",
-            writer: "삼이",
-            date: "2023-06-26",
-            view: "10",
-            answer: "진짜 연어 상품 원산지가 어떻게 되나요?"
-        },
-
-        {
-            number: 2,
-            title: "장난감 상품문의합니다.",
-            writer: "이삼",
-            date: "2023-06-24",
-            view: "10",
-            answer: "붕어빵 기계 장난감 크기가 어떻게 되나요?"
-        },
-
-        {
-            number: 1,
-            title: "상품문의합니다",
-            writer: "일이",
-            date: "2023-06-20",
-            view: "10",
-            answer: "장난감 코너의 애벌레야,안녕 소재가 어떻게 되나요?"
-        },
-    ];
+    ]
 
     // 검색 버튼을 누르면 필터링된 항목을 보여지게 하는 함수. boardArray 보다 앞에 위치해야 작동함.
     /* const handleSearch = (e) => {
@@ -122,6 +70,7 @@ const BoardQna = () => {
         <main>
             <div id="board">
                 <h1 className="title">고객센터</h1>
+
 
                 <div className="box_wrap">
                     <Link to="/board">
@@ -235,7 +184,9 @@ const BoardQna = () => {
                 </div>
 
                 <div className="button">
-                    <input type="submit" value="글쓰기" />
+                    <Link to="/board/createquestion">
+                        <input type="button" value="글쓰기" />
+                    </Link>
                 </div>
             </div>
         </main>

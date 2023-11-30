@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import styles from "../../css/subpage/ItemDetail.module.css";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -12,6 +13,7 @@ const ItemDetail = () => {
   const location = useLocation();
   const selectedItem = location.state.item;
 
+  console.log(selectedItem);
   // 수량 설정
   const [quantity, setQuantity] = useState(1); // 초기 수량 설정
 
@@ -25,19 +27,40 @@ const ItemDetail = () => {
     setMainImage(imageUrl); // 클릭한 이미지를 메인 이미지로 설정
   };
 
-  const handleAddToCart = () => {
-    const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-    const newItem = {
-      selectedItem: selectedItem,
-      quantity: quantity,
-    };
-    existingCart.push(newItem);
-    localStorage.setItem("cart", JSON.stringify(existingCart));
+  const cartRequest = {
+    user_id: 'admin',
+    item_no: selectedItem.item_no,
+    item_quantity: quantity
   };
+  console.log(cartRequest);
+  const handleAddToCart = () => {
+
+    axios
+      .post("/cart/add", cartRequest)
+      .then(response => {
+        alert(`response.data : ${response.data}`);
+      })
+      .catch(error => {
+        if (error.response) {
+          console.error("서버에서 오류 응답:", error.response.data);
+          console.error("Status code:", error.response.status);
+        } else if (error.request) {
+          console.error("서버로부터 응답을 받지 못했습니다.");
+        } else {
+          console.error("요청 설정 중 오류 발생:", error.message);
+        }
+        console.error("전부 에러:", error);
+      });
+  };
+
+  const present_pr = selectedItem.item_price -
+    (selectedItem.item_price * selectedItem.item_discount_rate) / 100;
+  
+  const total_price = present_pr * quantity;
 
   return (
     <div className={styles.detail_wrap}>
-      <form>
+      <form onSubmit={handleAddToCart}>
         <div className={styles.top_area}>
           <section className={styles.img_area}>
             {/* 메인 이미지 */}
@@ -88,13 +111,13 @@ const ItemDetail = () => {
                     OneSize
                   </option>}
                 {selectedItem.options_size === 'S' &&
-                    <option key='2' value={selectedItem.options_size}>
-                      S
+                  <option key='2' value={selectedItem.options_size}>
+                    S
                   </option>}
                 {selectedItem.options_size !== 'F' && selectedItem.options_size !== 'S' &&
-                      <option key='3' value={selectedItem.options_size}>
-                        선택없음
-                      </option>}
+                  <option key='3' value={selectedItem.options_size}>
+                    선택없음
+                  </option>}
               </select>
             </div>
             {/* 컬러 */}
@@ -114,9 +137,9 @@ const ItemDetail = () => {
                     핑크
                   </option>}
                 {selectedItem.options_color === 'Ye' &&
-                    <option key='4' value={selectedItem.options_color}>
-                      옐로우
-                    </option>}
+                  <option key='4' value={selectedItem.options_color}>
+                    옐로우
+                  </option>}
                 {selectedItem.options_color !== 'Br' && selectedItem.options_color !== 'Bk' && selectedItem.options_color !== 'Pk' && selectedItem.options_color !== 'Ye' &&
                   <option key='5' value={selectedItem.options_color}>
                     선택없음
@@ -128,7 +151,7 @@ const ItemDetail = () => {
             <div>
               <select
                 id="option"
-                name="quantityOption"
+                name="item_quantity"
                 value={quantity}
                 onChange={handleQuantityChange} // 수량 변경 시 처리
               >
@@ -144,10 +167,10 @@ const ItemDetail = () => {
             {/* 구매 버튼 */}
             <div>
               <Link
-                to="/payment2"
+                to="/payment"
                 state={{
                   selectedItem: selectedItem,
-                  quantity: quantity,
+                  total_price: total_price,
                 }}
               >
                 <input
@@ -170,10 +193,10 @@ const ItemDetail = () => {
             </div>
           </section>
         </div>
-        {/* <ItemDetailSection1 selectedItem={selectedItem} />
+        {/* <ItemDetailSection1 selectedItem={selectedItem} /> */}
         <ItemDetailSection2 selectedItem={selectedItem} />
         <ItemDetailSection3 selectedItem={selectedItem} />
-        <ItemDetailSection4 selectedItem={selectedItem} /> */}
+        <ItemDetailSection4 selectedItem={selectedItem} />
       </form>
       <RecentSeenItem />
     </div>
