@@ -46,7 +46,7 @@ public class MemberRestController {
         try {
             log.info("Received data from React: {}", request);
 
-            entity.setUser_password(passwordEncoder.encode(entity.getUser_password()));
+           
             memberService.processData(request);
 
             // 성공적인 응답
