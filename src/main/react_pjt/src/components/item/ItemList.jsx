@@ -2,7 +2,7 @@ import ItemInfo from "./ItemInfo";
 import RecentSeenItem from "./RecentSeenItem";
 import styles from "../../css/subpage/Itemlist.module.css";
 import PageNation from "./PageNation";
-import { useReducer, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const ItemList = () => {

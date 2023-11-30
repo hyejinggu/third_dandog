@@ -1,7 +1,7 @@
 "use strict"
 
 
-function getAdminItem() {
+/*function getAdminItem() {
 	let url = "/item/itemList";
 	
 	axios.get(url
@@ -44,7 +44,7 @@ function getItemDetail(item_no) {
 	
 	document.getElementById("resultArea2").innerHTML="";
 
-}
+}*/
 
 
 
