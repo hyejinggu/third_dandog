@@ -1,6 +1,16 @@
-import React, { useState } from 'react';
+import { Link } from "react-router-dom";
+import React, { useState, useRef, useContext } from "react";
+import axios from "axios";
 
 const CreateQuestion = () => {
+
+    const titleRef = useRef(null);
+    const contentRef = useRef(null);
+
+    const [postTitle, setPostTitle] = useState("");
+    const [postContent, setPostContent] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     // 상태 변수 정의
     const [user_id, setUser_id] = useState('');
     const [qna_Category, setQna_Category] = useState('주문/결제');

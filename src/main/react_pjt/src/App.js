@@ -29,6 +29,7 @@ import FindPw from "./components/login/FindPw";
 // 게시판
 import BoardFaq from "./components/board/BoardFaq";
 import BoardQna from "./components/board/BoardQna";
+import CreateQuestion from "./components/board/CreateQuestion";
 
 // 장바구니
 import EmptyItem from "./components/cart/EmptyItem";
@@ -68,6 +69,7 @@ function App() {
         {/* 게시판 */}
         <Route path="/board/boardfaq/" element={<BoardFaq />} />
         <Route path="/board/boardqna/" element={<BoardQna />} />
+        <Route path="/board/createquestion/" element={<CreateQuestion />} />
 
         <Route path="/agree/*" element={<Agree />} />
         <Route path="/profile/*" element={<Profile />} />
