@@ -25,8 +25,8 @@ public class MemberServiceImpl implements MemberService {
 
 	// ** selectOne
 	@Override
-	public Member selectOne(Member entity) {
-		Optional<Member> result = repository.findById(entity.getUser_id());
+	public Member selectOne(String user_id) {
+		Optional<Member> result = repository.findById(user_id);
 		if (result.isPresent())
 			return result.get();
 		else

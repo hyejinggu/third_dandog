@@ -11,9 +11,7 @@ const Header = () => {
   const [join, setJoin] = useState("회원가입");
 
   useEffect(() => {
-    const storedId = localStorage.getItem("id");
-    const storedPw = localStorage.getItem("pw");
-    if (storedId && storedPw) {
+    if (sessionStorage.getItem("loginId") != null) {
       setLogin("로그아웃");
       setJoin("마이페이지");
     }
@@ -21,8 +19,7 @@ const Header = () => {
 
   const handleLoginState = () => {
     if (login === "로그아웃") {
-      localStorage.removeItem("id");
-      localStorage.removeItem("pw");
+      sessionStorage.removeItem("loginId");
       setLogin("로그인");
       setJoin("회원가입");
       setIsModalOpen(true);
