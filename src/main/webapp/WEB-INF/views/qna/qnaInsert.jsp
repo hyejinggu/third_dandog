@@ -14,7 +14,7 @@
 <form action="qinsert" method="Post" enctype="multipart/form-data">
 <table>
 	<tr height="40"><th bgcolor="Violet">User_I D</th>
-		<td><input type="text" name="user_id" value="${sessionScope.loginID}" read only size="20"></td></tr> <!-- 로그인기능 만들면 read only 추가해야함 -->
+		<td><input type="text" name="user_id" value="${sessionScope.loginID}" readonly size="20"></td></tr> <!-- 로그인기능 만들면 read only 추가해야함 -->
 	 <tr height="40">
         <th bgcolor="Violet">Qna_Category</th>
         <td>
