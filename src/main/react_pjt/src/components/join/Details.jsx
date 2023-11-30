@@ -14,7 +14,7 @@ const Details = () => {
     ...location.state,
     user_id: "",
     user_password: "",
-    user_password2: "",
+    user_password2: ""
   });
 
   useEffect(() => {
@@ -22,23 +22,21 @@ const Details = () => {
     if (location.state) {
       setFormValue((prevFormValue) => ({
         ...prevFormValue,
-        ...location.state,
+        ...location.state
       }));
     }
   }, [location.state]);
 
-  const [errors, setErrors] = useState({
-    user_id: "",
-    user_password: "",
-    user_password2: "",
-  });
+  const [errors, setErrors] = useState(
+    { user_id: "", user_password: "", user_password2: "" }
+  );
 
   // ================================================================================
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValue({
       ...formValue,
-      [name]: value,
+      [name]: value
     });
 
     // 유효성 검사 실행
@@ -58,7 +56,7 @@ const Details = () => {
       const dataToSend = {
         ...location.state,
         user_id: formValue.user_id,
-        user_password: formValue.user_password,
+        user_password: formValue.user_password
       };
 
       console.log("데이터 배열:", dataToSend);
@@ -70,8 +68,8 @@ const Details = () => {
       axios
         .post(url, dataToSend, {
           headers: {
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         })
         .then((response) => {
           setIsModalOpen(true);
@@ -93,7 +91,7 @@ const Details = () => {
   // ================================================================================
   const validateField = (fieldName, value) => {
     const newErrors = {
-      ...errors,
+      ...errors
     };
 
     switch (fieldName) {
@@ -128,7 +126,7 @@ const Details = () => {
   // ================================================================================
   const validateForm = () => {
     const newErrors = {
-      ...errors,
+      ...errors
     };
 
     // 아이디, 비밀번호, 비밀번호 확인 필드의 유효성 검사를 진행합니다.
@@ -140,31 +138,34 @@ const Details = () => {
 
     // 모든 필드의 값이 존재하고, 에러가 없으면 true를 반환합니다.
     return (
-      formValue.user_id !== "" &&
-      formValue.user_password !== "" &&
-      formValue.user_password2 !== "" &&
-      Object.values(newErrors).every((error) => error === "")
+      formValue.user_id !== "" && formValue.user_password !== "" && formValue.user_password2 !== "" && Object.values(newErrors).every((error) => error === "")
     );
   };
 
-  // function idDupCheck() {
-  //   // 1) 입력값의 무결성 확인
-  //   if ( formValue.user_id==false ) formValue.user_id=idCheck();
-  //   else {
-  //   // 2) 서버로 id 확인요청 -> 결과는 새창으로 
-  //     let url = "/member/idDupCheck?id="+document.getElementById('user_id').value;
-  //     window.open(url,'_blank','width=400,height=250,resizable=yes,scrollbars=yes,toolbar=no,menubar=yes'); 
-  //   }
+  const idDupCheck = async () => {
+    try {
+      const response = await axios.get(
+        "/member/idDupCheck?user_id=" + formValue.user_id
+      );
 
-  // } 
+      if (response.data === "Duplicate") {
+        alert("중복된 아이디입니다. 다른 아이디를 사용해주세요.");
+      } else {
+        alert("사용 가능한 아이디입니다.");
+      }
+    } catch (error) {
+      console.error("Error checking ID duplication", error);
+      alert("아이디 중복 확인 중 오류가 발생했습니다.");
+    }
+  };
+
   // ================================================================================
   return (
     <form
       action="/join/details"
       id="join_form"
       method="post"
-      onSubmit={handleSubmit}
-    >
+      onSubmit={handleSubmit}>
       <figure>
         <table>
           <tbody>
@@ -182,9 +183,13 @@ const Details = () => {
                   id="user_id"
                   placeholder="아이디 입력(6~20자)"
                   value={formValue.user_id}
-                  onChange={handleChange}
-                />
-                <input type="button" value="중복확인" className="user_idDupCheck" id="idDup" onclick="idDupCheck()" />
+                  onChange={handleChange} />
+                <input
+                  type="button"
+                  value="중복확인"
+                  className="user_idDupCheck"
+                  id="idDup"
+                  onClick={idDupCheck} />
               </td>
               {errors.user_id && <div className="error">{errors.user_id}</div>}
             </tr>
@@ -202,12 +207,9 @@ const Details = () => {
                   id="user_password"
                   placeholder="비밀번호 입력(문자, 숫자, 특수문자 포함 8~20자)"
                   value={formValue.user_password}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
               </td>
-              {errors.user_password && (
-                <div className="error">{errors.user_password}</div>
-              )}
+              {errors.user_password && (<div className="error">{errors.user_password}</div>)}
             </tr>
             <tr>
               <th>
@@ -223,25 +225,23 @@ const Details = () => {
                   id="user_password2"
                   placeholder="비밀번호 재입력"
                   value={formValue.user_password2}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
               </td>
-              {errors.user_password2 && (
-                <div className="error">{errors.user_password2}</div>
-              )}
+              {errors.user_password2 && (<div className="error">{errors.user_password2}</div>)}
             </tr>
           </tbody>
         </table>
       </figure>
       <input type="submit" value="회원가입" onClick={handleSubmit} />{" "}
-      {isModalOpen && (
-        <Modal
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-          modalContent="회원가입이 완료되었습니다."
-          modalAfterPath={"/login/*"}
-        />
-      )}
+      {
+        isModalOpen && (
+          <Modal
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            modalContent="회원가입이 완료되었습니다."
+            modalAfterPath={"/login/*"} />
+        )
+      }
     </form>
   );
 };
