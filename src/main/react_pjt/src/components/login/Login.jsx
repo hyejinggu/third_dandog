@@ -1,19 +1,19 @@
 import "../../css/login/login.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "../common/Modal";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [userId, setUserId] = useState(""); // 입력한 아이디
-  const [password, setPassword] = useState(""); // 입력한 비밀번호
-  const [errorMessage, setErrorMessage] = useState(""); // 오류 메시지
+  const [userId, setUserId] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loginId, setLoginId] = useState("");
 
-  let loginId = "";
   function handleLogin(e) {
     e.preventDefault();
     const url = "/member/login";
@@ -33,8 +33,9 @@ const Login = () => {
           setErrorMessage("아이디 또는 패스워드가 일치하지 않습니다.");
           navigate("/login");
         } else {
-          loginId = response.data;
-          sessionStorage.setItem("loginId", loginId);
+          const loggedInId = response.data;
+          sessionStorage.setItem("loginId", loggedInId);
+          setLoginId(loggedInId);
           setIsModalOpen(true);
         }
       })
@@ -43,6 +44,13 @@ const Login = () => {
         setErrorMessage("로그인 중 오류가 발생했습니다.");
       });
   }
+
+  useEffect(() => {
+    if (isModalOpen) {
+      setIsModalOpen(false);
+      setIsModalOpen(true);
+    }
+  }, [loginId, isModalOpen]);
 
   return (
     <main className="login">
@@ -82,7 +90,7 @@ const Login = () => {
 
           <div className="saveId">
             <input type="checkbox" name="idsave" value="idsave" />
-            <label for="idsave" name="idsave" id="idsave">
+            <label htmlFor="idsave" name="idsave" id="idsave">
               아이디 저장
             </label>
           </div>
@@ -95,11 +103,11 @@ const Login = () => {
             <Link to="/findpw">
               <span>비밀번호찾기</span>
             </Link>
-            {/* <Link to='/main'><span>로그인</span></Link> */}
           </div>
         </div>
       </div>
     </main>
   );
 };
+
 export default Login;

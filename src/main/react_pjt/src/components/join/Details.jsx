@@ -74,7 +74,6 @@ const Details = () => {
           },
         })
         .then((response) => {
-          alert("Server Response:", response);
           setIsModalOpen(true);
         })
         .catch((err) => {
@@ -102,22 +101,22 @@ const Details = () => {
         newErrors.user_id = !value
           ? "아이디를 입력하세요."
           : value.length < 6 || value.length > 20
-          ? "아이디는 6~20자 사이여야 합니다."
-          : "";
+            ? "아이디는 6~20자 사이여야 합니다."
+            : "";
         break;
       case "user_password":
         newErrors.user_password = !value
           ? "비밀번호를 입력하세요."
           : value.length < 8
-          ? "비밀번호는 8자 이상이어야 합니다."
-          : "";
+            ? "비밀번호는 8자 이상이어야 합니다."
+            : "";
         break;
       case "user_password2":
         newErrors.user_password2 = !value
           ? "비밀번호를 확인하세요."
           : value !== formValue.user_password
-          ? "비밀번호가 일치하지 않습니다."
-          : "";
+            ? "비밀번호가 일치하지 않습니다."
+            : "";
         break;
       default:
         break;
@@ -148,6 +147,16 @@ const Details = () => {
     );
   };
 
+  // function idDupCheck() {
+  //   // 1) 입력값의 무결성 확인
+  //   if ( formValue.user_id==false ) formValue.user_id=idCheck();
+  //   else {
+  //   // 2) 서버로 id 확인요청 -> 결과는 새창으로 
+  //     let url = "/member/idDupCheck?id="+document.getElementById('user_id').value;
+  //     window.open(url,'_blank','width=400,height=250,resizable=yes,scrollbars=yes,toolbar=no,menubar=yes'); 
+  //   }
+
+  // } 
   // ================================================================================
   return (
     <form
@@ -169,11 +178,13 @@ const Details = () => {
                 <input
                   type="text"
                   name="user_id"
+                  className="user_id"
                   id="user_id"
                   placeholder="아이디 입력(6~20자)"
                   value={formValue.user_id}
                   onChange={handleChange}
                 />
+                <input type="button" value="중복확인" className="user_idDupCheck" id="idDup" onclick="idDupCheck()" />
               </td>
               {errors.user_id && <div className="error">{errors.user_id}</div>}
             </tr>

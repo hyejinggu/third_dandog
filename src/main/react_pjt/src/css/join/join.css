@@ -159,6 +159,21 @@
 }
 
 /*==================================================================*/
+/* details */
+.right_contents table tr td input.user_id {
+  width: 82%;
+}
+
+.right_contents table tr td input.user_idDupCheck {
+  width: 13%;
+  background-color: #ffa900;
+  color: #fff;
+  border: none;
+  height: 34px;
+  cursor: pointer;
+}
+
+/*==================================================================*/
 /* profile */
 
 .right_contents table tr .user_birth select {
