@@ -57,8 +57,6 @@ public class MemberController {
 	// ** MemberJoin
 	@PostMapping("/details")
 	public String join(@RequestBody Member entity, Model model) {
-		// ** PasswordEncoder (암호화 적용)
-		entity.setUser_password(passwordEncoder.encode(entity.getUser_password()));
 
 		try {
 			service.save(entity);
