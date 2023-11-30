@@ -10,13 +10,12 @@ const Profile = () => {
 
   const [formValue, setFormValue] = useState({
     user_name: "",
-    user_year: "",
-    user_month: "",
-    user_day: "",
+    user_year: "2019",
+    user_month: "01",
+    user_day: "01",
     user_phonenum: "",
     user_email: "",
   });
-
 
   const [errors, setErrors] = useState({
     user_name: "",
@@ -26,10 +25,20 @@ const Profile = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormValue((prevFormValue) => ({
-      ...prevFormValue,
-      [name]: value,
-    }));
+
+    if (name === "user_email" || name === "domain_list") {
+      // user_email 또는 domain_list가 변경된 경우
+      setFormValue((prevFormValue) => ({
+        ...prevFormValue,
+        [name === "user_email" ? "user_email" : name]: value,
+      }));
+    } else {
+      // 다른 필드가 변경된 경우
+      setFormValue((prevFormValue) => ({
+        ...prevFormValue,
+        [name]: value,
+      }));
+    }
 
     // 유효성 검사 실행
     validateField(name, value);
@@ -40,26 +49,24 @@ const Profile = () => {
 
     // 유효성 검사 실행
     if (validateForm()) {
-
       // 데이터 배열 생성
       const dataToSend = {
-        required_check: required_check ? 'Y' : 'N',
-        choice_check: location.state?.choice_check || '',  // Agree 컴포넌트에서 받아온 데이터
-        // 나머지 필드들 추가
+        required_check: required_check ? "Y" : "N",
+        choice_check: location.state?.choice_check || "",
         user_name: formValue.user_name,
         user_birthday: `${formValue.user_year}${formValue.user_month}${formValue.user_day}`,
         user_phonenum: formValue.user_phonenum,
-        user_email: `${formValue.user_email}${formValue.domain_list}`
+        user_email: `${formValue.user_email}`,
       };
 
       // 다음 페이지로 이동
-      console.log('데이터 배열:', dataToSend);
+      console.log("데이터 배열:", dataToSend);
       navigate("/join/information", { state: dataToSend });
-
     } else {
       alert("필수정보를 입력해주세요.");
     }
   };
+
   useEffect(() => {
     if (location.state) {
       // 받아온 데이터와 Profile 컴포넌트의 formValue 합치기
@@ -69,7 +76,6 @@ const Profile = () => {
       }));
     }
   }, [location.state]);
-
 
   const validateField = (fieldName, value) => {
     const newErrors = { ...errors };
@@ -158,7 +164,7 @@ const Profile = () => {
                   onChange={handleChange}
                   value={formValue.user_year}
                 >
-                  <option value="2019" defaultValue>2019</option>
+                  <option value="2019">2019</option>
                   <option value="2018">2018</option>
                   <option value="2017">2017</option>
                   <option value="2016">2016</option>
@@ -266,9 +272,6 @@ const Profile = () => {
                   onChange={handleChange}
                   value={formValue.user_month}
                 >
-                  <option disabled defaultValue>
-                    월
-                  </option>
                   <option value="01">01</option>
                   <option value="02">02</option>
                   <option value="03">03</option>
@@ -289,9 +292,7 @@ const Profile = () => {
                   onChange={handleChange}
                   value={formValue.user_day}
                 >
-                  <option disabled defaultValue>
-                    일
-                  </option>
+
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -350,22 +351,14 @@ const Profile = () => {
               <th>
                 <label htmlFor="user_email" className="required">이메일 주소</label>
               </th>
-              <td>
+              <td >
                 <input
                   type="email"
                   name="user_email"
                   id="user_email"
-                  className="user_email"
-                  value={formValue.user_email}
+                  className="user_email" value={formValue.user_email}
                   onChange={handleChange}
                 />
-                <select className="domain_list">
-                  <option value="naver.com" defaultValue>naver.com</option>
-                  <option value="hanmail.net">hanmail.net</option>
-                  <option value="google.com">google.com</option>
-                  <option value="nate.com">nate.com</option>
-                  <option value="custom">직접 입력</option>
-                </select>
               </td>
               {errors.user_email && (
                 <div className="error">{errors.user_email}</div>

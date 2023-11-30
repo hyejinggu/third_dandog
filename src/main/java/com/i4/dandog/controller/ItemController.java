@@ -2,13 +2,17 @@ package com.i4.dandog.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -196,23 +200,28 @@ public class ItemController {
 	
 	
 	// ======== 상품 삭제 =======
-	@GetMapping(value="/itemdelete")
-	public String mdelete(Item entity, Model model) {
-		
-		String uri = "redirect:itemList";
-		
-		try {
-			service.delete(entity.getItem_no());
-			log.info("delete 성공! 상품 번호: " + entity.getItem_no());
-			model.addAttribute("message", "상품 수정 성공");
+	@PostMapping(value = "/deleteItem", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String deleteItem(@RequestBody Map<String, List<String>> requestMap, Model model) {
+	    try {
+	        List<String> valueArr = requestMap.get("valueArr");
+	        if (valueArr != null) {
+	            log.info("***********길이: " + valueArr.size());
+	            for (String item : valueArr) {
+	                service.delete(Integer.parseInt(item));                
+	                log.info("delete 성공! 상품 번호: " + item);
+	            }
+	            model.addAttribute("message", "선택 상품 삭제 성공");            
+	        } else {
+	            model.addAttribute("message", "삭제할 상품을 선택하세요.");
+	        }
 			
 		} catch (Exception e) {
 			log.info("** delete Exception => "+e.toString());
-			model.addAttribute("message", "상품 삭제 실패");
+			model.addAttribute("message", "선택 상품 삭제 실패");
 		}
 		
-		return uri;
-	} // mdelete
+	    return "/item/itemList";
+	} // delete
 	
 	
 	

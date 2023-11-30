@@ -1,27 +1,33 @@
 import "../../css/login/login.css";
-import { Route, Routes, Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState(""); // 입력한 아이디
+  const [userId, setUserId] = useState(""); // 입력한 아이디
   const [password, setPassword] = useState(""); // 입력한 비밀번호
   const [errorMessage, setErrorMessage] = useState(""); // 오류 메시지
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    const storedUsername = localStorage.getItem("id");
-    const storedPassword = localStorage.getItem("pw");
+    try {
+      const response = await axios.post("/member/login", {
+        user_id: userId,
+        user_password: password,
+      });
 
-    if (username === storedUsername && password === storedPassword) {
-      navigate("/main"); // 로그인 성공 시 이동할 페이지로 이동
-    } else if (username !== storedUsername) {
-      setErrorMessage("아이디가 일치하지 않습니다.");
-    } else {
-      setErrorMessage("비밀번호가 일치하지 않습니다.");
+      if (response.data.success) {
+        navigate("/main"); // 로그인 성공 시 이동할 페이지로 이동
+      } else {
+        setErrorMessage(response.data.message || "로그인 실패");
+      }
+    } catch (error) {
+      console.error("로그인 에러:", error);
+      setErrorMessage("로그인 중 오류가 발생했습니다.");
     }
   };
   return (
@@ -38,8 +44,8 @@ const Login = () => {
               required
               type="text"
               placeholder="아이디"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
             />
             <input
               required

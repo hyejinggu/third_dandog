@@ -2,7 +2,7 @@ import ItemInfo from "./ItemInfo";
 import RecentSeenItem from "./RecentSeenItem";
 import styles from "../../css/subpage/Itemlist.module.css";
 import PageNation from "./PageNation";
-import { useReducer, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const ItemList = () => {
@@ -10,6 +10,16 @@ const ItemList = () => {
   const [itemList, setItemList] = useState([]);
   const [itemSort, setItemSort] = useState("");
   const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("/item/toyItemList?sort=" + itemSort + "&inputValue=" + inputValue)
+      .then((res) => {
+        setItemList(res.data);
+        console.log(res.data);
+      })
+      .catch((res) => console.log(res));
+  }, []);
 
   const onSubmit = (e) => {
     switch (e.target.innerText) {
@@ -56,10 +66,10 @@ const ItemList = () => {
 
       <div className={styles.sort}>
         <ul>
-          <li onClick={onSubmit}>인기순</li>
-          <li onClick={onSubmit}>높은가격순</li>
-          <li onClick={onSubmit}>낮은가격순</li>
-          <li onClick={onSubmit}>신상품순</li>
+          <li onClick={(e) => onSubmit(e)}>인기순</li>
+          <li onClick={(e) => onSubmit(e)}>높은가격순</li>
+          <li onClick={(e) => onSubmit(e)}>낮은가격순</li>
+          <li onClick={(e) => onSubmit(e)}>신상품순</li>
         </ul>
         <div className={styles.search_bar}>
           <form onSubmit={onSubmit}>

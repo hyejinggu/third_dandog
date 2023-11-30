@@ -25,8 +25,8 @@ public class MemberServiceImpl implements MemberService {
 
 	// ** selectOne
 	@Override
-	public Member selectOne(Member dto) {
-		Optional<Member> result = repository.findById(dto.getUser_id());
+	public Member selectOne(Member entity) {
+		Optional<Member> result = repository.findById(entity.getUser_id());
 		if (result.isPresent())
 			return result.get();
 		else
@@ -42,15 +42,15 @@ public class MemberServiceImpl implements MemberService {
 
 	// ** delete
 	@Override
-	public String delete(Member dto) {
-		repository.deleteById(dto.getUser_id());
-		return dto.getUser_id(); // 삭제후 key return
+	public String delete(String user_id) {
+		repository.deleteById(user_id);
+		return user_id; // 삭제후 key return
 	}
 
 	// ** update
 	@Override
-	public String update(Member dto) {
-		return dto.getUser_id();
+	public String update(Member entity) {
+		return entity.getUser_id();
 	}
 
 	// ** join
@@ -61,5 +61,6 @@ public class MemberServiceImpl implements MemberService {
 		// MemberRepository를 사용하여 데이터베이스에 저장
 		repository.save(member);
 	}
+	
 
 } // class

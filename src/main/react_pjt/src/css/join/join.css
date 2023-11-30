@@ -161,11 +161,6 @@
 /*==================================================================*/
 /* profile */
 
-.right_contents table tr td .user_email,
-.right_contents table tr td .do_list {
-  width: 48.5%;
-}
-
 .right_contents table tr .user_birth select {
   width: 33%;
 }
