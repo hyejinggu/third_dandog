@@ -29,7 +29,7 @@ public interface SampleMemberRepository
 	// => 단, JPQL 의 select 의 return Type은 List<Object[]> 이며,
 	//	  이를 ~DTO 로 받기 위해서 select new ~~~ 를 사용함.
 	//    
-	@Query("SELECT new com.example.demo.domain.MemberJoDTO(m.id, m.name, m.jno, j.jname, j.project) FROM Member m LEFT JOIN Jo j ON m.jno=j.jno order by m.jno")
-    List<SampleMemberJoDTO> findMemberJo();
+//	@Query("SELECT new com.example.demo.domain.SampleMemberJoDTO(m.id, m.name, m.jno, j.jname, j.project) FROM Member m LEFT JOIN Jo j ON m.jno=j.jno order by m.jno")
+//    List<SampleMemberJoDTO> findMemberJo();
 	
 }
