@@ -12,6 +12,7 @@ const Information = () => {
         ani_birthday: '',
         ani_gender: '',
         ani_info: '',
+        ani_type: '강아지',  // 추가: 반려동물 종류
     });
 
     useEffect(() => {
@@ -35,7 +36,7 @@ const Information = () => {
             ...location.state,
             ani_name: formValue.ani_name,
             ani_birthday: formValue.ani_birthday,
-            ani_type: formValue.ani_type,
+            ani_type: formValue.ani_type,  // 반려동물 종류 추가
             ani_info: formValue.ani_info,
         };
 
@@ -45,7 +46,6 @@ const Information = () => {
         // 다음 페이지로 이동
         navigate('/join/details', { state: dataToSend });
     };
-
 
     return (
         <form action="join" id="join_form" method="post" onSubmit={handleSubmit}>
@@ -85,11 +85,32 @@ const Information = () => {
                             <label htmlFor="ani_type">반려동물 종류</label>
                         </th>
                         <td className="ani_type">
-                            <input type="radio" name="ani_type" id="dog" checked />
+                            <input
+                                type="radio"
+                                name="ani_type"
+                                id="dog"
+                                value="강아지"
+                                checked={formValue.ani_type === "강아지"}
+                                onChange={(e) => setFormValue({ ...formValue, ani_type: e.target.value })}
+                            />
                             <label htmlFor="dog">강아지</label>
-                            <input type="radio" name="ani_type" id="cat" />
+                            <input
+                                type="radio"
+                                name="ani_type"
+                                id="cat"
+                                value="고양이"
+                                checked={formValue.ani_type === "고양이"}
+                                onChange={(e) => setFormValue({ ...formValue, ani_type: e.target.value })}
+                            />
                             <label htmlFor="cat">고양이</label>
-                            <input type="radio" name="ani_type" id="any" />
+                            <input
+                                type="radio"
+                                name="ani_type"
+                                id="any"
+                                value="기타"
+                                checked={formValue.ani_type === "기타"}
+                                onChange={(e) => setFormValue({ ...formValue, ani_type: e.target.value })}
+                            />
                             <label htmlFor="any">기타</label>
                         </td>
                     </tr>
