@@ -46,7 +46,7 @@ public class MemberController {
 	// ** MemberDetail
 	@GetMapping(value = "/mdetail")
 	public String mdetail(HttpServletRequest request, Model model, Member entity) {
-		model.addAttribute("apple", service.selectOne(entity));
+		model.addAttribute("apple", service.selectOne(entity.getUser_id()));
 
 		if ("U".equals(request.getParameter("jCode")))
 			return "member/memberUpdate";

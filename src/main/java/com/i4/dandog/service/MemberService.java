@@ -11,7 +11,7 @@ public interface MemberService {
 	List<Member> selectList();
 
 	// ** selectOne
-	Member selectOne(Member entity);
+	Member selectOne(String user_id);
 
 	// ** insert, update
 	String save(Member entity);
