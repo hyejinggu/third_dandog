@@ -2,6 +2,8 @@ package com.i4.dandog.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
@@ -17,16 +19,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@IdClass(CartId.class)
 public class Cart {
 
-//    @Id
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int cart_id;
+	
     private String user_id;
 
-    @Id
     private int item_no;
 
-    @Column
     private int item_quantity;
 
 }

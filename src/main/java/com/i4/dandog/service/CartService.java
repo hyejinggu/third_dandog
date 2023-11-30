@@ -7,5 +7,5 @@ import com.i4.dandog.entity.Cart;
 public interface CartService {
 	List<Cart> selectAll();
 
-	Cart save(Cart entity);
+	int save(Cart entity);
 }

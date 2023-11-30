@@ -20,7 +20,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart save(Cart entity) {
-        return repository.save(entity);
+    public int save(Cart entity) {
+		repository.save(entity);
+		return entity.getCart_id();
     }
 }
