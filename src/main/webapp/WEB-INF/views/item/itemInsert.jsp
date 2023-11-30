@@ -18,7 +18,7 @@
 			<tr>
 				<th>아이템 카테고리</th>
 				<td><select name="item_category">
-						<option value="Snank">간식, 사료</option>
+						<option value="Snack">간식, 사료</option>
 						<option value="Toy">장난감</option>
 						<option value="Living">리빙, 패션</option>
 						<option value="Stroll">산책, 케어</option>

@@ -70,8 +70,6 @@ public class MemberRestController {
 			String id = request.getUser_id();
 			String password = request.getUser_password();
 
-			System.out.println("id: " + id);
-			System.out.println("password: " + password);
 			// 가정: username에 해당하는 Member 정보를 가져옴
 			Member member = memberService.selectOne(id);
 

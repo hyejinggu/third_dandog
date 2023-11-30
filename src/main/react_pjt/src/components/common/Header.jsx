@@ -81,8 +81,10 @@ const Header = () => {
       <ul className={styles.gnb_list}>
         <li>
           <Link to="/itemlist?category=snack">
-            <img src={"/images/header/food_img.png"} alt="" />
-            간식&#183;사료
+            <span>
+              <img src={"/images/header/food_img.png"} alt="" />
+              간식&#183;사료
+            </span>
           </Link>
         </li>
         <li>
