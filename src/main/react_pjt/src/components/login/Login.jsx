@@ -12,7 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loginId, setLoginId] = useState("");
+  // const [loginId, setLoginId] = useState("");
 
   function handleLogin(e) {
     e.preventDefault();
@@ -29,13 +29,12 @@ const Login = () => {
         },
       })
       .then((response) => {
-        if (response.data === "0") {
+        if (response.data == "0") {
           setErrorMessage("아이디 또는 패스워드가 일치하지 않습니다.");
           navigate("/login");
         } else {
           const loggedInId = response.data;
           sessionStorage.setItem("loginId", loggedInId);
-          setLoginId(loggedInId);
           setIsModalOpen(true);
         }
       })
@@ -45,20 +44,13 @@ const Login = () => {
       });
   }
 
-  useEffect(() => {
-    if (isModalOpen) {
-      setIsModalOpen(false);
-      setIsModalOpen(true);
-    }
-  }, [loginId, isModalOpen]);
-
   return (
     <main className="login">
       {isModalOpen && (
         <Modal
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          modalContent={loginId + "님 안녕하세요."}
+          modalContent={sessionStorage.getItem("loginId") + "님 안녕하세요."}
           modalAfterPath={"/main"}
         />
       )}
@@ -86,7 +78,7 @@ const Login = () => {
             />
             <input type="submit" value="로그인" />
           </form>
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          {errorMessage && <p className="error_message">{errorMessage}</p>}
 
           <div className="saveId">
             <input type="checkbox" name="idsave" value="idsave" />

@@ -16,6 +16,8 @@ public class ItemServiceImpl implements ItemService {
 
 	private final ItemRepository repository;
 
+	
+	// ============ Controller에서 사용 ============
 	@Override
 	public List<Item> selectList(String searchCategory, String searchField, String searchValues_) {
 		if ("all".equals(searchCategory)) {
@@ -30,25 +32,27 @@ public class ItemServiceImpl implements ItemService {
 		return repository.findAll();
 	}
 
-	// 정렬
+	
+	// ============ Rest Controller에서 사용 ============
+	// 아이템 불러오기
 	@Override
-	public List<Item> findByOrderByItemSalesVolumeDesc(String inputValue) {
-		return repository.findByOrderByItemSalesVolumeDesc(inputValue);
+	public List<Item> findByOrderByItemSalesVolumeDesc(String inputValue, String category) {
+		return repository.findByOrderByItemSalesVolumeDesc(inputValue, category);
 	}
 	
 	@Override
-	public List<Item> findByOrderByItemPriceDesc(String inputValue) {
-		return repository.findByOrderByItemPriceDesc(inputValue);
+	public List<Item> findByOrderByItemPriceDesc(String inputValue, String category) {
+		return repository.findByOrderByItemPriceDesc(inputValue, category);
 	}
 	
 	@Override
-	public List<Item> findByOrderByItemPriceAsc(String inputValue) {
-		return repository.findByOrderByItemPriceAsc(inputValue);
+	public List<Item> findByOrderByItemPriceAsc(String inputValue, String category) {
+		return repository.findByOrderByItemPriceAsc(inputValue, category);
 	}
 	
 	@Override
-	public List<Item> findByOrderByRegdate(String inputValue) {
-		return repository.findByOrderByRegdate(inputValue);
+	public List<Item> findByOrderByRegdate(String inputValue, String category) {
+		return repository.findByOrderByRegdate(inputValue, category);
 	}
 	
 	

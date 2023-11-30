@@ -6,7 +6,7 @@ const NeighborReview = ({ category }) => {
   const [neighborArray, setNeighborArray] = useState([]);
   useEffect(() => {
     axios
-      .get("/neighbor?category=" + category)
+      .get("/neighbor/review?category=" + category)
       .then((res) => {
         setNeighborArray(res.data);
         console.log(res.data);
@@ -19,7 +19,7 @@ const NeighborReview = ({ category }) => {
       <div className={styles.review_title}>review</div>
       <ul>
         {neighborArray.map((it, index) => (
-          <li key={index}>
+          <li key={it.neighbor_no}>
             <p>{it.neighbor_brand_name}</p>
             <span>
               <p>{it.neighbor_title}</p>

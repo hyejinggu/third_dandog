@@ -10,17 +10,21 @@ import com.i4.dandog.entity.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Integer> {
 	
-	@Query("select i from Item i where item_name like %:inputValue% order by i.item_sales_volume desc")
-	public List<Item> findByOrderByItemSalesVolumeDesc(@Param("inputValue") String inputValue);
+	@Query("select i from Item i where item_name like %:inputValue% and item_category = :category order by i.item_sales_volume desc")
+	public List<Item> findByOrderByItemSalesVolumeDesc(@Param("inputValue") String inputValue, 
+			@Param("category") String category);
 	
-	@Query("select i from Item i where item_name like %:inputValue% order by i.item_price desc")
-	public List<Item> findByOrderByItemPriceDesc(@Param("inputValue") String inputValue);
+	@Query("select i from Item i where item_name like %:inputValue% and item_category = :category order by i.item_price desc")
+	public List<Item> findByOrderByItemPriceDesc(@Param("inputValue") String inputValue, 
+			@Param("category") String category);
 	
-	@Query("select i from Item i where item_name like %:inputValue% order by i.item_price")
-	public List<Item> findByOrderByItemPriceAsc(@Param("inputValue") String inputValue);
+	@Query("select i from Item i where item_name like %:inputValue% and item_category = :category order by i.item_price")
+	public List<Item> findByOrderByItemPriceAsc(@Param("inputValue") String inputValue, 
+			@Param("category") String category);
 	
-	@Query("select i from Item i where item_name like %:inputValue% order by i.regdate")
-	public List<Item> findByOrderByRegdate(@Param("inputValue") String inputValue);
+	@Query("select i from Item i where item_name like %:inputValue% and item_category = :category order by i.regdate")
+	public List<Item> findByOrderByRegdate(@Param("inputValue") String inputValue, 
+			@Param("category") String category);
 	
 // ===============================================================================
 	
