@@ -18,9 +18,9 @@ public interface ItemService {
 	// delete
 	int delete(int item_no);
 	
-	List<Item> findByOrderByItemSalesVolumeDesc(String inputValue);
-	List<Item> findByOrderByItemPriceDesc(String inputValue);
-	List<Item> findByOrderByItemPriceAsc(String inputValue);
-	List<Item> findByOrderByRegdate(String inputValue);
+	List<Item> findByOrderByItemSalesVolumeDesc(String inputValue, String category);
+	List<Item> findByOrderByItemPriceDesc(String inputValue, String category);
+	List<Item> findByOrderByItemPriceAsc(String inputValue, String category);
+	List<Item> findByOrderByRegdate(String inputValue, String category);
 	
 }

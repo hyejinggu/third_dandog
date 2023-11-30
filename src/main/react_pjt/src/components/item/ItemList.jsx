@@ -3,9 +3,11 @@ import RecentSeenItem from "./RecentSeenItem";
 import styles from "../../css/subpage/Itemlist.module.css";
 import PageNation from "./PageNation";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const ItemList = () => {
+  const { category } = useParams();
   // ======== 상품 목록 배열 ========
   const [itemList, setItemList] = useState([]);
   const [itemSort, setItemSort] = useState("");
@@ -13,7 +15,9 @@ const ItemList = () => {
 
   useEffect(() => {
     axios
-      .get("/item/toyItemList?sort=" + itemSort + "&inputValue=" + inputValue)
+      .get(
+        `/item/getItemList?category=${category}&sort=${itemSort}&inputValue=${inputValue}`
+      )
       .then((res) => {
         setItemList(res.data);
         console.log(res.data);
@@ -41,7 +45,9 @@ const ItemList = () => {
     }
     e.preventDefault();
     axios
-      .get("/item/toyItemList?sort=" + itemSort + "&inputValue=" + inputValue)
+      .get(
+        `/item/getItemList?category=${category}&sort=${itemSort}&inputValue=${inputValue}`
+      )
       .then((res) => {
         setItemList(res.data);
         console.log(res.data);
@@ -95,7 +101,7 @@ const ItemList = () => {
       <p className={styles.item_count}>총 {itemList.length}개의 상품</p>
 
       {/* <RecentSeenItem /> */}
-      <PageNation setPage={""} />
+      {/* <PageNation setPage={""} /> */}
     </div>
   );
 };
