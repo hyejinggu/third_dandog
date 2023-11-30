@@ -2,6 +2,7 @@ package com.i4.dandog.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -196,23 +197,32 @@ public class ItemController {
 	
 	
 	// ======== 상품 삭제 =======
-	@GetMapping(value="/itemdelete")
-	public String mdelete(Item entity, Model model) {
+	@PostMapping(value="/deleteItem")
+	public String deleteItem(HttpServletRequest request, Item entity, Model model) {
 		
-		String uri = "redirect:itemList";
+		String uri = "/item/itemList";
+		log.info("**********: " + request.getParameterValues("valueArr"));
+		String itemsToDelete[] = request.getParameterValues("valueArr");
 		
 		try {
-			service.delete(entity.getItem_no());
-			log.info("delete 성공! 상품 번호: " + entity.getItem_no());
-			model.addAttribute("message", "상품 수정 성공");
+			if (itemsToDelete != null) {
+				log.info("***********길이: " + itemsToDelete.length);
+				for (int i = 0; i < itemsToDelete.length; i++) {
+					service.delete(Integer.parseInt(itemsToDelete[i]));				
+					log.info("delete 성공! 상품 번호: " + itemsToDelete[i]);
+				}
+				model.addAttribute("message", "선택 상품 삭제 성공");			
+			} else {
+				model.addAttribute("message", "삭제할 상품을 선택하세요.");
+			}
 			
 		} catch (Exception e) {
 			log.info("** delete Exception => "+e.toString());
-			model.addAttribute("message", "상품 삭제 실패");
+			model.addAttribute("message", "선택 상품 삭제 실패");
 		}
 		
 		return uri;
-	} // mdelete
+	} // delete
 	
 	
 	

@@ -100,7 +100,7 @@
 		<input type="checkbox" id="selectall" value='selectall'
 			onclick='selectAll(this)' /> <label for="selectall">전체 선택</label>
 	</div>
-	<div>선택 삭제</div>
+	<input type="button" value="delete_item" onclick="deleteItem()" />
 
 	<h4>
 		<a href="/home">Home으로 가기</a>

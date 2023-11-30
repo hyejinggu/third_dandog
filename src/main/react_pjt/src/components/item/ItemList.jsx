@@ -11,6 +11,16 @@ const ItemList = () => {
   const [itemSort, setItemSort] = useState("");
   const [inputValue, setInputValue] = useState("");
 
+  useEffect(() => {
+    axios
+      .get("/item/toyItemList?sort=" + itemSort + "&inputValue=" + inputValue)
+      .then((res) => {
+        setItemList(res.data);
+        console.log(res.data);
+      })
+      .catch((res) => console.log(res));
+  }, []);
+
   const onSubmit = (e) => {
     switch (e.target.innerText) {
       case "인기순":
@@ -56,10 +66,10 @@ const ItemList = () => {
 
       <div className={styles.sort}>
         <ul>
-          <li onClick={onSubmit}>인기순</li>
-          <li onClick={onSubmit}>높은가격순</li>
-          <li onClick={onSubmit}>낮은가격순</li>
-          <li onClick={onSubmit}>신상품순</li>
+          <li onClick={(e) => onSubmit(e)}>인기순</li>
+          <li onClick={(e) => onSubmit(e)}>높은가격순</li>
+          <li onClick={(e) => onSubmit(e)}>낮은가격순</li>
+          <li onClick={(e) => onSubmit(e)}>신상품순</li>
         </ul>
         <div className={styles.search_bar}>
           <form onSubmit={onSubmit}>
