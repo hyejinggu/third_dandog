@@ -8,10 +8,8 @@ import com.i4.dandog.entity.Lounge;
 import com.i4.dandog.repository.LoungeRepository;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @Service
-@Log4j2
 @RequiredArgsConstructor
 public class LoungeServiceImpl implements LoungeService {
 

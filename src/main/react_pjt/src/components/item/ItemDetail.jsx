@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import styles from "../../css/subpage/ItemDetail.module.css";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -26,13 +27,19 @@ const ItemDetail = () => {
   };
 
   const handleAddToCart = () => {
-    const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-    const newItem = {
-      selectedItem: selectedItem,
-      quantity: quantity,
+    const cartRequest = {
+      user_id: 'admin',
+      item_no: selectedItem.item_no,
+      item_quantity: quantity
     };
-    existingCart.push(newItem);
-    localStorage.setItem("cart", JSON.stringify(existingCart));
+
+    axios.post("/cart/add", cartRequest)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error("Error adding product to cart:", error);
+      });
   };
 
   return (
@@ -88,13 +95,13 @@ const ItemDetail = () => {
                     OneSize
                   </option>}
                 {selectedItem.options_size === 'S' &&
-                    <option key='2' value={selectedItem.options_size}>
-                      S
+                  <option key='2' value={selectedItem.options_size}>
+                    S
                   </option>}
                 {selectedItem.options_size !== 'F' && selectedItem.options_size !== 'S' &&
-                      <option key='3' value={selectedItem.options_size}>
-                        선택없음
-                      </option>}
+                  <option key='3' value={selectedItem.options_size}>
+                    선택없음
+                  </option>}
               </select>
             </div>
             {/* 컬러 */}
@@ -114,9 +121,9 @@ const ItemDetail = () => {
                     핑크
                   </option>}
                 {selectedItem.options_color === 'Ye' &&
-                    <option key='4' value={selectedItem.options_color}>
-                      옐로우
-                    </option>}
+                  <option key='4' value={selectedItem.options_color}>
+                    옐로우
+                  </option>}
                 {selectedItem.options_color !== 'Br' && selectedItem.options_color !== 'Bk' && selectedItem.options_color !== 'Pk' && selectedItem.options_color !== 'Ye' &&
                   <option key='5' value={selectedItem.options_color}>
                     선택없음
