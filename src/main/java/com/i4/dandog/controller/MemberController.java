@@ -54,55 +54,23 @@ public class MemberController {
 			return "member/memberDetail";
 	} // mdetail
 
-	
-	
 	// ** MemberJoin
-    @PostMapping("/details")
-    public String join(@RequestBody Member entity, Model model)  {
-    	System.out.println("******* "+entity);
-       
-        try {
-        	service.save(entity);
-        	model.addAttribute("message", "회원가입 성공");
-        	return "성공";
-        	
-        } catch (Exception e) {
-        	log.info("insert Exception: " + e.toString());
+	@PostMapping("/details")
+	public String join(@RequestBody Member entity, Model model) {
+		// ** PasswordEncoder (암호화 적용)
+		entity.setUser_password(passwordEncoder.encode(entity.getUser_password()));
+
+		try {
+			service.save(entity);
+			model.addAttribute("message", "회원가입 성공");
+			return "성공";
+
+		} catch (Exception e) {
+			log.info("insert Exception: " + e.toString());
 			model.addAttribute("message", "회원가입 실패");
 			return "실패냐!!";
-        }
-    }
-	
-	
-
-//	@PostMapping(value = "/join")
-//	public String join(HttpServletRequest request, Member entity, Model model) throws IOException {
-//
-//		String uri = "member/loginForm";
-//
-//		try {
-//			// ** PasswordEncoder (암호화 적용)
-//			entity.setUser_password(passwordEncoder.encode(entity.getUser_password()));
-//
-//			// 2. Service 처리
-//			String savedUserId = service.save(entity);
-//
-//			if (savedUserId != null) {
-//				// 회원가입 성공 시 로그인 페이지로 이동
-//				return "redirect:/login/login";
-//			} else {
-//				System.out.println("~~ 회원가입 실패!! 다시 하세요 ~~");
-//				model.addAttribute("message", "~~ 회원가입 실패!! 다시 하세요 ~~");
-//				// 회원가입 실패 시 회원가입 페이지로 이동
-//				return "join/agree";
-//			}
-//		} catch (Exception e) {
-//			// 예외 처리: 회원가입 중에 오류 발생 시
-//			System.out.println("~~ 회원가입 중 오류 발생 ~~");
-//			model.addAttribute("message", "~~ 회원가입 중 오류 발생 ~~");
-//			return "join/agree";
-//		}
-//	}
+		}
+	}
 
 	// ** Member Update
 	@PostMapping(value = "/mupdate")
@@ -127,32 +95,35 @@ public class MemberController {
 	} // memberUpdte
 
 	// ** Member Delete: 회원탈퇴
-//	@GetMapping(value="/mdelete")
-//	public String mdelete(HttpSession session, Member entity, Model model, RedirectAttributes rttr) {
-//		
-//		// 1) 본인탈퇴
-//		// 결과 : message(삭제 성공/실패), home.jsp, session 무효화 
-//		
-//		// 2) 관리자에 의한 강제탈퇴
-//		// 결과 : message(삭제 성공/실패), memberList.jsp
-//		
-//		// => 본인탈퇴 or 관리자에 의한 강제탈퇴 구분이 필요
-//		//	  entity 의 id 와 session 의 loginID 와 같으면 본인탈퇴,
-//		//    다르면서 session 의 loginID 값이 "admin" 이면 강제탈퇴
-//		String uri = "redirect:/home";
-//		
-//		if ( service.delete(entity.getUser_id()) > 0 ) {
-//			 rttr.addFlashAttribute("message", "~~ 탈퇴 성공!! 1개월후 재가입 가능 합니다 ~~") ;	
-//			 if ( ((String)session.getAttribute("loginID")).equals("admin") ) {
-//				 // => 관리자에 의한 강제탈퇴
-//				 uri="redirect:memberList";
-//			 }else {
-//				 // => 본인탈퇴
-//				 session.invalidate();
-//			 }
-//		}else {
-//			rttr.addFlashAttribute("message", "~~ 탈퇴 실패 ~~");
-//		}
-//		return uri;
-//	} // mdelete
+	@PostMapping(value = "/delete")
+	public String delete(HttpSession session, Member entity, Model model, RedirectAttributes rttr) {
+
+		// 1) 본인탈퇴
+		// 결과 : message(삭제 성공/실패), home.jsp, session 무효화
+
+		// 2) 관리자에 의한 강제탈퇴
+		// 결과 : message(삭제 성공/실패), memberList.jsp
+
+		// => 본인탈퇴 or 관리자에 의한 강제탈퇴 구분이 필요
+		// entity 의 id 와 session 의 loginID 와 같으면 본인탈퇴,
+		// 다르면서 session 의 loginID 값이 "admin" 이면 강제탈퇴
+		String uri = "redirect:/home";
+
+		try {
+			log.info("** delete 성공 id => " + service.delete(entity.getUser_id()));
+			rttr.addFlashAttribute("message", "~~ 탈퇴 성공!! 1개월후 재가입 가능 합니다 ~~");
+//			if (((String) session.getAttribute("loginID")).equals("admin")) {
+//				// => 관리자에 의한 강제탈퇴 : memberList.jsp
+//				uri = "redirect:memberList";
+//			} else {
+//				// => 본인탈퇴 : home.jsp, session 무효화
+//				session.invalidate();
+//			}
+		} catch (Exception e) {
+			log.info("** delete Exception => " + e.toString());
+			rttr.addFlashAttribute("message", "~~ 탈퇴 실패 ~~");
+		}
+
+		return uri;
+	} 
 }

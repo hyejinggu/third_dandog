@@ -60,7 +60,7 @@
 						<td>${s.withdrawal_date}</td>
 						<td>${s.regdate}</td>
 						<!-- 관리자 기능 추가 -->
-						<td align="center"><a href="mdelete?id=${s.user_id}">삭제</a></td>
+						<td align="center"><a href="delete?id=${s.user_id}">삭제</a></td>
 
 
 					</tr>

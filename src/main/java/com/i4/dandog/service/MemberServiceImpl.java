@@ -42,9 +42,9 @@ public class MemberServiceImpl implements MemberService {
 
 	// ** delete
 	@Override
-	public String delete(Member entity) {
-		repository.deleteById(entity.getUser_id());
-		return entity.getUser_id(); // 삭제후 key return
+	public String delete(String user_id) {
+		repository.deleteById(user_id);
+		return user_id; // 삭제후 key return
 	}
 
 	// ** update
@@ -61,5 +61,6 @@ public class MemberServiceImpl implements MemberService {
 		// MemberRepository를 사용하여 데이터베이스에 저장
 		repository.save(member);
 	}
+	
 
 } // class

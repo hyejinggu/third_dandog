@@ -17,7 +17,7 @@ public interface MemberService {
 	String save(Member entity);
 
 	// ** delete
-	String delete(Member entity);
+	String delete(String user_id);
 
 	// ** update
 	String update(Member entity);
