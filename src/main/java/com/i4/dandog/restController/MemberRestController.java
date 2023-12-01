@@ -65,7 +65,7 @@ public class MemberRestController {
 	}
 
 	@PostMapping("/login")
-	public String login(@RequestBody Member request) {
+	public Member login(@RequestBody Member request) {
 		try {
 			String id = request.getUser_id();
 			String password = request.getUser_password();
@@ -75,16 +75,15 @@ public class MemberRestController {
 
 			if (member != null && passwordEncoder.matches(password, member.getUser_password())) {
 				// 패스워드가 일치하는 경우
-				return member.getUser_id();
+				return member;
 			} else {
-				// 패스워드가 일치하지 않는 경우
-				return "0";
+				return null;
 			}
 
 		} catch (Exception e) {
 			log.error("Error processing data from React", e);
 			// 실패한 응답
-			return "Error processing data";
+			return null;
 		}
 	}
 

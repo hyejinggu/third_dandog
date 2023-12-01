@@ -71,8 +71,11 @@ const MyPage = () => {
                         <img src={"/images/myPage/change2.png"} alt="" />
                         반품/교환</li>
                     <li >
-                        <img src={"/images/myPage/change3.png"} alt="" />
-                        회원정보 수정</li>
+                        <Link to="/UpdateProfile">
+                            <img src={"/images/myPage/change3.png"} alt="" />
+                            회원정보 수정
+                        </Link>
+                    </li>
                     <li>
                         <Link to="/board">
                             <img src={"/images/myPage/center.png"} alt="" />
