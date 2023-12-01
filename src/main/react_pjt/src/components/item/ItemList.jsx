@@ -10,8 +10,6 @@ const ItemList = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const category = searchParams.get("category");
-
-  console.log(category);
   // ======== 상품 목록 배열 ========
 
   const [itemList, setItemList] = useState([]);
@@ -19,6 +17,7 @@ const ItemList = () => {
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
+    setInputValue("");
     handleItemList();
   }, [category]);
 
@@ -29,10 +28,20 @@ const ItemList = () => {
       )
       .then((res) => {
         setItemList(res.data);
-        console.log(res.data);
+        setItemList((prevItemList) => {
+          const uniqueItemNames = [];
+          const itemNamesSet = new Set();
+
+          prevItemList.forEach((item) => {
+            if (!itemNamesSet.has(item.item_name)) {
+              itemNamesSet.add(item.item_name);
+              uniqueItemNames.push(item);
+            }
+          });
+          return uniqueItemNames;
+        });
       })
       .catch((res) => console.log(res));
-    setInputValue("");
   };
 
   const handleSort = (e) => {
@@ -79,7 +88,7 @@ const ItemList = () => {
           <li onClick={(e) => handleSort(e)}>신상품순</li>
         </ul>
         <div className={styles.search_bar}>
-          <div onClick={handleSort}>
+          <div>
             <input
               type="text"
               placeholder="검색"
@@ -92,7 +101,7 @@ const ItemList = () => {
               }}
             />
           </div>
-          <span onClick={handleSort}>🔍</span>
+          <span onClick={handleItemList}>🔍</span>
         </div>
       </div>
 
