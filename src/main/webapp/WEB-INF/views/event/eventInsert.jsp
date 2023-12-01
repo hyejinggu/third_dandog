@@ -12,36 +12,27 @@
 <body>
 	<h2>lounge Insert</h2>
 
-	<form action="loungeUpload" method="post" enctype="multipart/form-data" >
+	<form action="/community/eventUpload" method="post" enctype="multipart/form-data" >
 		<table>
 
 			<tr height="40">
-				<th>제목</th>
-				<td><select name="lounge_category">
-						<option value="자유 게시판"
-							${requestScope.loungeinsert.lounge_category=="자유 게시판" ? "selected" : ""}>
-							자유 게시판</option>
-						<option value="고민 상담소"
-							${requestScope.loungeinsert.lounge_category=="고민 상담소" ? "selected" : ""}>
-							고민 상담소</option>
-						<option value="지식 공유"
-							${requestScope.loungeinsert.lounge_category=="지식 공유" ? "selected" : ""}>
-							지식 공유</option>
-						<option value="친구 찾기"
-							${requestScope.loungeinsert.lounge_category=="친구 찾기" ? "selected" : ""}>
-							친구 찾기</option>
-				</select><input type="text" name="lounge_title" size="50"></td>
-			</tr>
-			<tr height="40">
-				<th>내용</th>
-				<td><textarea rows="5" cols="50" name="lounge_content"></textarea>
-				</td>
+				<td>이벤트 이름</td>
+				<td><input type="text" name="event_name" size="50"></td>
 			</tr>
 			<tr height="40">
 				<th>이미지 첨부</th>
-				<td><img src="" class="select_img"><br> <input
-					type="file" name="lounge_imgf" id="lounge_imgf" size="20">
+				<td>
+					<img src="" class="select_img">
+					<input type="file" name="event_imgToUpload" id="event_imgToUpload" size="20">
 				</td>
+			</tr>
+			<tr height="40">
+				<th>이벤트 시작 날짜</th>
+				<td><input type="date" name="e_reg_date"></td>
+			</tr>
+			<tr height="40">
+				<th>이벤트 종료 날짜</th>
+				<td><input type="date" name="e_exp_date"></td>
 			</tr>
 			<tr height="40">
 				<th></th>

@@ -5,42 +5,31 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Lounge</title>
+<title>Event</title>
 </head>
 <body>
 
-	<h2>Lounge</h2>
+	<h2>Event</h2>
 
 	<hr>
 	<table border="1" style="width: 90%">
 		<tr>
 			<th>번호</th>
-			<th>이미지</th>
-			<th>제목 및 내용</th>
-			<th>작성자</th>
-			<th>날짜</th>
-			<th>추천수</th>
-			<th>조회수</th>
+			<th>이름</th>
+			<th>사진</th>
+			<th>시작 날짜</th>
+			<th>종료 날짜</th>
 		</tr>
-		<c:forEach var="l" items="${requestScope.lounge}">
+		<c:forEach var="e" items="${requestScope.eventList}">
 			<tr>
-				<td>${l.lounge_no}</td>
-
-				<td><img alt="MyImage" src="/${l.lounge_img}" width="50" height="70"></td>
-
-				<td><h4>${l.lounge_title}</h4>
-					<p>${l.lounge_content}</p></td>
-
-				<td>${l.user_id}</td>
-
-				<td>${l.regdate}</td>
-
-				<td>${l.lounge_likes}</td>
-
-				<td>${l.lounge_hits}</td>
+				<td>${e.event_no}</td>
+				<td>${e.event_name}</td>
+				<td><img alt="EventImage" src="/${e.event_img}" width="50" height="70"></td>
+				<td>${e.e_reg_date}</td>
+				<td>${e.e_exp_date}</td>
 			</tr>
 		</c:forEach>
 	</table>
-	<a href="loungeInsert">새글등록</a>
+	<span onclick="eventInsert()">이벤트 등록</span>
 </body>
 </html>

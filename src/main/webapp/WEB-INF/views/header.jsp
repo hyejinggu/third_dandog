@@ -42,7 +42,7 @@
 			<li>
 				<p class="textlink" onclick="getAdminCommunity()">커뮤니티 관리</p>
 				<span onclick="getLoungeList()">라운지</span> 
-				<span onclick="getItemInsert()">이벤트</span>
+				<span onclick="getEventList()">이벤트</span>
 				<span onclick="getNeighborList()">우리 동네</span>
 			</li>
 		</ul>
