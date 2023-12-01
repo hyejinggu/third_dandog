@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../../css/subpage/ItemDetail.module.css";
 import { Link } from "react-router-dom";
@@ -12,8 +12,21 @@ import RecentSeenItem from "./RecentSeenItem";
 const ItemDetail = () => {
   const location = useLocation();
   const selectedItem = location.state.item;
+  const [imageData, setImageData] = useState([]);
 
-  console.log(sessionStorage.loginId);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/itemdetail/getImageData");
+        setImageData(response.data);
+      } catch (error) {
+        console.error("데이터를 가져오는 동안 오류 발생:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  
   // 수량 설정
   const [quantity, setQuantity] = useState(1); // 초기 수량 설정
 
@@ -27,12 +40,13 @@ const ItemDetail = () => {
     setMainImage(imageUrl); // 클릭한 이미지를 메인 이미지로 설정
   };
 
+
   const cartRequest = {
     user_id: sessionStorage.loginId,
     item_no: selectedItem.item_no,
     item_quantity: quantity
   };
-  console.log(cartRequest);
+
   const handleAddToCart = () => {
 
     axios
@@ -69,16 +83,17 @@ const ItemDetail = () => {
             </div>
 
             {/* 서브 이미지들 */}
-            {/* <div className={styles.sub_img}>
-              {selectedItem.image.map((imageUrl, index) => (
+            <div className={styles.sub_img}>
+              {imageData.map((i, index) => (
+                selectedItem.item_no === i.item_no && (
                 <img
                   key={index}
-                  src={imageUrl}
+                  src={i.item_img}
                   alt={`상품 이미지 ${index}`}
-                  onClick={() => handleImageClick(imageUrl)} // 이미지 클릭 시 처리
+                  onClick={() => handleImageClick(i.item_img)} // 이미지 클릭 시 처리
                 />
-              ))}
-            </div> */}
+              )))}
+            </div>
           </section>
           <section className={styles.info_area}>
             {/* 상품명 */}
@@ -193,10 +208,10 @@ const ItemDetail = () => {
             </div>
           </section>
         </div>
-        {/* <ItemDetailSection1 selectedItem={selectedItem} /> */}
-        <ItemDetailSection2 selectedItem={selectedItem} />
-        <ItemDetailSection3 selectedItem={selectedItem} />
-        <ItemDetailSection4 selectedItem={selectedItem} />
+        <ItemDetailSection1 />
+        <ItemDetailSection2 />
+        <ItemDetailSection3 />
+        <ItemDetailSection4 />
       </form>
       <RecentSeenItem />
     </div>
