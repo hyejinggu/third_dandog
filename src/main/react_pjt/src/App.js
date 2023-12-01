@@ -17,7 +17,8 @@ import Information from "./components/join/Information";
 import Profile from "./components/join/Profile";
 import Payment from "./components/payment/Payment";
 import Payment2 from "./components/payment/Payment2";
-import MyPage from "./components/common/MyPage";
+
+
 
 // 커뮤니티 링크 페이지 import
 import Community from "./components/community/Community";
@@ -25,6 +26,10 @@ import Community from "./components/community/Community";
 // 로그인
 import FindId from "./components/login/FindId";
 import FindPw from "./components/login/FindPw";
+
+// 마이페이지
+import MyPage from "./components/mypage/MyPage";
+import UpdateProfile from "./components/mypage/UpdateProfile";
 
 // 게시판
 import BoardFaq from "./components/board/BoardFaq";
@@ -60,7 +65,10 @@ function App() {
         {/* 상세페이지, 장바구니, 결제 */}
         <Route path="/cartitem/*" element={<CartItem />} />
         <Route path="/emptyItem/*" element={<EmptyItem />} />
+
+        {/* 마이페이지, 회원정보 수정 */}
         <Route path="/myPage/*" element={<MyPage />} />
+        <Route path="/UpdateProfile/*" element={<UpdateProfile />} />
 
         {/* 로그인 */}
         <Route path="/findid/*" element={<FindId />} />
@@ -71,6 +79,7 @@ function App() {
         <Route path="/board/boardqna/" element={<BoardQna />} />
         <Route path="/board/createquestion/" element={<CreateQuestion />} />
 
+        {/* 회원가입 */}
         <Route path="/agree/*" element={<Agree />} />
         <Route path="/profile/*" element={<Profile />} />
         <Route path="/details/*" element={<Details />} />

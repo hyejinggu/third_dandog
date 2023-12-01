@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import React, { useState, useRef, useContext } from "react";
-import { CreateQuestionContext } from "./Board";
+//import { CreateQuestionContext } from "./Board";
 import Modal from "../common/Modal";
 import axios from "axios";
 
 const CreateQuestion = () => {
-    const { addPostFromLocalStorage } = useContext(CreatePostContext);
+    //const { addPostFromLocalStorage } = useContext(CreateQuestionContext);
 
     const titleRef = useRef(null);
     const contentRef = useRef(null);
@@ -70,7 +71,7 @@ const CreateQuestion = () => {
                 .then((response) => {
                     alert(`response.data : ${response.data}`);
                     setMessage('등록이 완료되었습니다.');
-                    location.reload();
+                    //location.reload();
                 })
                 .catch((err) => {
                     if (err.response.status === "502") {
@@ -83,6 +84,8 @@ const CreateQuestion = () => {
             setIsModalOpen(true);
         }
     };
+
+    //const history = useHistory();
 
 
     return (
@@ -164,7 +167,7 @@ const CreateQuestion = () => {
                             <input
                                 type="file"
                                 name="qna_image"
-                                value={qna_image} 
+                                value={qna_image}
                                 accept="image/*"
                                 onClick={previewImage}
                             />
