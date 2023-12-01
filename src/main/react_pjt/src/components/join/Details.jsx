@@ -136,7 +136,7 @@ const Details = () => {
 
     setErrors(newErrors);
 
-    // 모든 필드의 값이 존재하고, 에러가 없으면 true를 반환합니다.
+    // 모든 필드의 값이 존재하고, 에러가 없으면 true를 반환
     return (
       formValue.user_id !== "" && formValue.user_password !== "" && formValue.user_password2 !== "" && Object.values(newErrors).every((error) => error === "")
     );

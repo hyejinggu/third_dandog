@@ -71,26 +71,28 @@ public class MemberController {
 	}
 
 	// ** Member Update
-	@PostMapping(value = "/mupdate")
-	public String memberUpdte(HttpServletRequest request, Member entity, Model model) throws IOException {
-
-		// => 처리결과에 따른 화면 출력을 위해서 memberentity 의 값을 Attribute에 보관
+	@PostMapping(value="/update")
+	public String memberUpdate(HttpSession session,
+							  Member entity, Model model) throws IOException {
+		
 		model.addAttribute("apple", entity);
-		String uri = "member/memberDetail";
+		String uri="join/Details";
+		
+		// ** password는 수정불가
+		
+		try {
+			log.info("** update 성공 id => "+service.save(entity));
+			session.setAttribute("loginName", entity.getUser_name());
 
-		// ** password 수정과 나머지 컬럼 수정을 분리
-		// => mapper 에서 이것을 구분 하할 수 있도록 password 값을 null 로
-		entity.setUser_password(null);
-
-		// => Service 처리
-		if (!"0".equals(service.update(entity))) {
-			model.addAttribute("message", "회원정보 수정 성공");
-		} else {
-			model.addAttribute("message", "회원정보 수정 실패 다시 실행해주세요.");
-			uri = "member/memberUpdate";
+			model.addAttribute("message", "회원정보가 수정되었습니다.");
+		} catch (Exception e) {
+			log.info("** update Exception => "+e.toString());
+			model.addAttribute("message", "회원정보 수정이 실패하였습니다.");
+			uri="mypage/UpdateProfile";
 		}
+		
 		return uri;
-	} // memberUpdte
+	} //memberUpdte
 
 	// ** Member Delete: 회원탈퇴
 	@PostMapping(value = "/delete")

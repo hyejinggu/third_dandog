@@ -20,7 +20,7 @@ public interface MemberService {
 	String delete(String user_id);
 
 	// ** update
-	String update(Member entity);
+	void update(Member entity);
 
 	// React에서 받은 데이터 처리
     void processData(Member member);

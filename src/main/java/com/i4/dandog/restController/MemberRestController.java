@@ -1,7 +1,10 @@
 package com.i4.dandog.restController;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,6 +46,33 @@ public class MemberRestController {
 		}
 	}
 
+	@GetMapping("/detailRest")
+	public ResponseEntity<Member> getMemberDetails(@RequestParam String user_id) {
+		Member member = memberService.selectOne(user_id);
+		return ResponseEntity.ok(member);
+	}
+
+	 @PostMapping("/updateRest")
+	    public ResponseEntity<String> memberUpdateProfile(@RequestBody Member entity) {
+	        try {
+	            // Password는 수정하지 않도록 체크
+	            Member existingMember = memberService.selectOne(entity.getUser_id());
+
+	            if (existingMember != null) {
+	                // 기존 멤버 정보에서 password를 가져옴
+	            	entity.setUser_password(existingMember.getUser_password());
+	            }
+
+	            // 멤버 정보 업데이트
+	            memberService.update(entity);
+
+	            return ResponseEntity.ok("Member updated successfully");
+	        } catch (Exception e) {
+	            log.error("Error updating member details", e);
+	            return ResponseEntity.status(500).body("Error updating member details");
+	        }
+	    }
+
 	@PostMapping("/join") // 엔드포인트 경로 수정
 	public ResponseEntity<String> receiveData(@RequestBody Member request) {
 
@@ -65,7 +95,7 @@ public class MemberRestController {
 	}
 
 	@PostMapping("/login")
-	public Member login(@RequestBody Member request) {
+	public String login(@RequestBody Member request) {
 		try {
 			String id = request.getUser_id();
 			String password = request.getUser_password();
@@ -75,15 +105,16 @@ public class MemberRestController {
 
 			if (member != null && passwordEncoder.matches(password, member.getUser_password())) {
 				// 패스워드가 일치하는 경우
-				return member;
+				return id;
 			} else {
-				return null;
+				// 패스워드가 일치하지 않는 경우
+				return "0";
 			}
 
 		} catch (Exception e) {
 			log.error("Error processing data from React", e);
 			// 실패한 응답
-			return null;
+			return "Error processing data";
 		}
 	}
 

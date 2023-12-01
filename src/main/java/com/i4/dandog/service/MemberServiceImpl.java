@@ -3,6 +3,8 @@ package com.i4.dandog.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -55,18 +57,15 @@ public class MemberServiceImpl implements MemberService {
 		return user_id; // 삭제후 key return
 	}
 
-	// ** update
+	// ** update	
 	@Override
-	public String update(Member entity) {
-		return entity.getUser_id();
-	}
+    public void update(Member entity) {
+    	repository.save(entity);
+    }
 
 	// ** join
 	@Override
 	public void processData(Member member) {
-
-
-		// MemberRepository를 사용하여 데이터베이스에 저장
 		repository.save(member);
 	}
 	
