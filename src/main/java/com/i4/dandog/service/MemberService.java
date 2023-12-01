@@ -25,6 +25,9 @@ public interface MemberService {
 	// React에서 받은 데이터 처리
     void processData(Member member);
 
+    // ** id 중복체크
+    boolean isIdDuplicate(String user_id);
+
 
 
 }

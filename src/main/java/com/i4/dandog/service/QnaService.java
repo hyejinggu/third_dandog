@@ -2,8 +2,6 @@ package com.i4.dandog.service;
 
 import java.util.List;
 
-import com.i4.dandog.entity.Member;
-import com.i4.dandog.entity.NeighborhoodReview;
 import com.i4.dandog.entity.Qna;
 
 public interface QnaService {

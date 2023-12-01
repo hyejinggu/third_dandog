@@ -17,6 +17,14 @@ public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepository repository;
 
+
+	// ** id 중복확인
+	@Override
+    public boolean isIdDuplicate(String user_id) {
+        return repository.existsById(user_id);
+    }
+
+	
 	// ** selectList
 	@Override
 	public List<Member> selectList() {

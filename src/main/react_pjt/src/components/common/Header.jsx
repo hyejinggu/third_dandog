@@ -80,22 +80,30 @@ const Header = () => {
       </div>
       <ul className={styles.gnb_list}>
         <li>
-          <img src={"/images/header/food_img.png"} alt="" />
-          간식&#183;사료
+          <Link to="/itemlist?category=snack">
+            <span>
+              <img src={"/images/header/food_img.png"} alt="" />
+              간식&#183;사료
+            </span>
+          </Link>
         </li>
         <li>
-          <Link to="/itemlist">
+          <Link to="/itemlist?category=toy">
             <img src={"/images/header/toy_img.png"} alt="" />
             장난감
           </Link>
         </li>
         <li>
-          <img src={"/images/header/living_img.png"} alt="" />
-          리빙&#183;패션
+          <Link to="/itemlist?category=living">
+            <img src={"/images/header/living_img.png"} alt="" />
+            리빙&#183;패션
+          </Link>
         </li>
         <li>
-          <img src={"/images/header/stroll_img.png"} alt="" />
-          산책&#183;케어
+          <Link to="/itemlist?category=stroll">
+            <img src={"/images/header/stroll_img.png"} alt="" />
+            산책&#183;케어
+          </Link>
         </li>
         <li>
           <Link to="/community">

@@ -23,6 +23,7 @@ public class NeighborRestController {
 
 	NeighborhoodReviewService nservice;	
 	
+	@GetMapping("/review")
 	public List<NeighborhoodReview> neighborhoodReview(@RequestParam(name = "category") String category) {
 	    System.out.println("************" + category + "Review");
 

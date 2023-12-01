@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import React, { useState, useRef, useContext } from "react";
+import { CreateQuestionContext } from "./Board";
+import Modal from "../common/Modal";
 import axios from "axios";
 
 const CreateQuestion = () => {
+    const { addPostFromLocalStorage } = useContext(CreatePostContext);
 
     const titleRef = useRef(null);
     const contentRef = useRef(null);
@@ -33,14 +36,27 @@ const CreateQuestion = () => {
         }
     };
 
+    // 세션 스토리지에서 로그인 아이디 불러오기
+    const loginId = sessionStorage.getItem('loginId'); // 'userId'는 저장된 로그인 아이디의 키입니다.
+
+    // 불러온 로그인 아이디 사용하기
+    console.log('loginId:', loginId);
+
     // 폼 제출 함수
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // 테스트 titleRef 및 contentRef가 현재 어떤 요소에 연결되었는지 확인
+        console.log('titleRef:', titleRef);
+        console.log('contentRef:', contentRef);
+
         // TODO: 폼 데이터를 서버로 전송하는 로직 추가
         // 예시: 서버로 전송 후 메시지 설정
         if (!postTitle) {
+            console.log('titleRef.current:', titleRef.current); //
             titleRef.current.focus();
         } else if (!postContent) {
+            console.log('contentRef.current:', contentRef.current); //
             contentRef.current.focus();
         } else {
             let formData = new FormData(document.getElementById("question_form"));
@@ -54,22 +70,33 @@ const CreateQuestion = () => {
                 .then((response) => {
                     alert(`response.data : ${response.data}`);
                     setMessage('등록이 완료되었습니다.');
-                    // location.reload();
+                    location.reload();
                 })
                 .catch((err) => {
-                    if (err.response.status == "502") {
+                    if (err.response.status === "502") {
                         alert("[입력오류] 다시 시도하세요.");
                     } else {
                         alert("[시스템 오류] 잠시 후에 다시 시도하세요." + err.message);
                     }
                 });
+            //document.getElementById('resultArea2').innerHTML="";
             setIsModalOpen(true);
         }
-
     };
 
+
     return (
-        <div>
+        <div >
+            <div>
+                {isModalOpen && (
+                    <Modal
+                        isModalOpen={isModalOpen}
+                        setIsModalOpen={setIsModalOpen}
+                        modalContent={"글 작성이 완료되었습니다."}
+                        modalAfterPath={"/board/boardqna/*"}
+                    />
+                )}
+            </div>
             <h2>** Qna_Insert **</h2>
 
             <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -80,7 +107,7 @@ const CreateQuestion = () => {
                             <input
                                 type="text"
                                 name="user_id"
-                                value={user_id}
+                                value={loginId}
                                 readOnly
                                 size="20"
                                 onChange={(e) => setUser_id(e.target.value)}
@@ -114,6 +141,7 @@ const CreateQuestion = () => {
                                 value={qna_title}
                                 size="50"
                                 onChange={(e) => setQna_title(e.target.value)}
+                                ref={titleRef}
                             />
                         </td>
                     </tr>
@@ -124,8 +152,9 @@ const CreateQuestion = () => {
                                 rows="10"
                                 cols="1500"
                                 name="qna_content"
-                                value={qna_content}
+                                value={qna_content} //
                                 onChange={(e) => setQna_content(e.target.value)}
+                                ref={contentRef}
                             ></textarea>
                         </td>
                     </tr>
@@ -135,15 +164,16 @@ const CreateQuestion = () => {
                             <input
                                 type="file"
                                 name="qna_image"
+                                value={qna_image} 
                                 accept="image/*"
-                                onChange={previewImage}
+                                onClick={previewImage}
                             />
                         </td>
                     </tr>
                     <tr height="40">
                         <th></th>
                         <td>
-                            <input type="submit" value="등록" />
+                            <input type="submit" value="등록" onClick={handleSubmit} />
                             <input type="reset" value="취소" />
                         </td>
                     </tr>

@@ -25,9 +25,9 @@
 	<div class="adminPageHeader">
 		<ul>
 			<li>
-				<p class="textlink" onclick="getItemList()">상품 관리</p> <span
-				onclick="getItemList()">상품 목록</span> <span onclick="getItemInsert()">상품
-					등록</span>
+				<p class="textlink" onclick="getItemList()">상품 관리</p> 
+				<span onclick="getItemList()">상품 목록</span> 
+				<span onclick="getItemInsert()">상품	등록</span>
 			<li>
 				<p class="textlink" onclick="getAdminOrder()">주문 관리</p>
 			</li>
@@ -39,6 +39,9 @@
 			</li>
 			<li>
 				<p class="textlink" onclick="getAdminCommunity()">커뮤니티 관리</p>
+				<span onclick="getItemList()">라운지</span> 
+				<span onclick="getItemInsert()">이벤트</span>
+				<span onclick="getItemInsert()">우리 동네</span>
 			</li>
 		</ul>
 	</div>
