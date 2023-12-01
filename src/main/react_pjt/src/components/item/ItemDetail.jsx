@@ -13,7 +13,7 @@ const ItemDetail = () => {
   const location = useLocation();
   const selectedItem = location.state.item;
 
-  console.log(selectedItem);
+  console.log(sessionStorage.loginId);
   // 수량 설정
   const [quantity, setQuantity] = useState(1); // 초기 수량 설정
 
@@ -28,7 +28,7 @@ const ItemDetail = () => {
   };
 
   const cartRequest = {
-    user_id: 'admin',
+    user_id: sessionStorage.loginId,
     item_no: selectedItem.item_no,
     item_quantity: quantity
   };
@@ -55,7 +55,7 @@ const ItemDetail = () => {
 
   const present_pr = selectedItem.item_price -
     (selectedItem.item_price * selectedItem.item_discount_rate) / 100;
-  
+
   const total_price = present_pr * quantity;
 
   return (
