@@ -17,6 +17,7 @@
 <script src="/resources/js/orders.js"></script>
 <script src="/resources/js/board.js"></script>
 <script src="/resources/js/community.js"></script>
+<script src="/resources/js/code.js"></script>
 
 </head>
 
@@ -28,6 +29,7 @@
 				<p class="textlink" onclick="getItemList()">상품 관리</p> 
 				<span onclick="getItemList()">상품 목록</span> 
 				<span onclick="getItemInsert()">상품	등록</span>
+				<span onclick="getcodeList()">코드 추가</span>
 			<li>
 				<p class="textlink" onclick="getAdminOrder()">주문 관리</p>
 			</li>
@@ -39,9 +41,9 @@
 			</li>
 			<li>
 				<p class="textlink" onclick="getAdminCommunity()">커뮤니티 관리</p>
-				<span onclick="getItemList()">라운지</span> 
+				<span onclick="getLoungeList()">라운지</span> 
 				<span onclick="getItemInsert()">이벤트</span>
-				<span onclick="getItemInsert()">우리 동네</span>
+				<span onclick="getNeighborList()">우리 동네</span>
 			</li>
 		</ul>
 	</div>

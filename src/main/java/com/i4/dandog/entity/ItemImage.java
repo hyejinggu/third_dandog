@@ -31,6 +31,4 @@ public class ItemImage {
 	
 	@Transient
 	private MultipartFile[] etcImages;
-	
-
 }

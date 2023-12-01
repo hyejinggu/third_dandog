@@ -46,16 +46,16 @@
 			<tr>
 				<th>컬러 선택</th>
 				<td><select name="options_color">
-						<option value="Bk">Black</option>
-						<option value="Wh">White</option>
-						<option value="Gr">Gray</option>
-						<option value="Bl">Blue</option>
-						<option value="Rd">Red</option>
-						<option value="Ye">Yellow</option>
-						<option value="Gr">Green</option>
-						<option value="Or">Orange</option>
-						<option value="Br">Brown</option>
-						<option value="Pk">Pink</option>
+						<option value="Black">Black</option>
+						<option value="White">White</option>
+						<option value="Gray">Gray</option>
+						<option value="Blue">Blue</option>
+						<option value="Red">Red</option>
+						<option value="Yellow">Yellow</option>
+						<option value="Green">Green</option>
+						<option value="Orange">Orange</option>
+						<option value="Brown">Brown</option>
+						<option value="Pink">Pink</option>
 				</select></td>
 			</tr>
 			<tr>

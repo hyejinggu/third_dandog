@@ -34,13 +34,6 @@ public class ItemController {
 	ItemService service;
 	ItemImageService iservice;
 	
-
-	// ======== 상품 관리 =======
-//	@GetMapping("/admin")
-//	public void admin(Model model) {
-////		model.addAttribute("itemList", service.selectList());
-//	}
-	
 	
 	// ======== 상품 리스트 =======
 	@GetMapping("/itemList")
@@ -75,15 +68,14 @@ public class ItemController {
 	}
 
 	@PostMapping(value = "/insert")
-	public String insert(HttpServletRequest request, Item entity,
-			Model model, @RequestParam("etcImages") MultipartFile[] images) throws IOException {
+	public String insert(Item entity, Model model, @RequestParam("etcImages") MultipartFile[] images) throws IOException {
 
 		String uri = "redirect:/";
 
 		// 이미지 등록
-		String realPath = "D:\\teamproject\\third_dandog\\dandog\\src\\main\\webapp\\resources\\images";
-		String file1, file2 = "resources/images/basic.jpg"; // 기본 이미지 지정
-		String file3, file4 = "resources/images/basic.jpg"; // 기본 이미지 지정
+		String realPath = "D:\\teamproject\\third_dandog\\dandog\\src\\main\\react_pjt\\public\\images\\item\\";
+		String file1, file2 = "/basic.jpg"; // 기본 이미지 지정
+		String file3, file4 = "/basic.jpg"; // 기본 이미지 지정
 
 		MultipartFile uploadfilef1 = entity.getUploadfileF1(); // 첫번째 상품 이미지
 		System.out.println("uploadfilef1: " + uploadfilef1);
@@ -95,7 +87,7 @@ public class ItemController {
 			System.out.println("file1: " + file1);
 
 			// Table 저장경로 완성 (file2)
-			file2 = "resources/images/" + uploadfilef1.getOriginalFilename();
+			file2 = uploadfilef1.getOriginalFilename();
 			System.out.println("file2: " + file2);
 		}
 		entity.setItem_img1(file2);
@@ -109,7 +101,7 @@ public class ItemController {
 			System.out.println("file3: " + file3);
 
 			// Table 저장경로 완성 (file2)
-			file4 = "resources/images/" + uploadfilef2.getOriginalFilename();
+			file4 = uploadfilef2.getOriginalFilename();
 			System.out.println("file4: " + file4);
 		}
 
@@ -132,7 +124,7 @@ public class ItemController {
 				String file5 = realPath + img.getOriginalFilename();
 				img.transferTo(new File(file5));
 				
-				String file6 = "resources/images/" + img.getOriginalFilename();
+				String file6 = img.getOriginalFilename();
 				
 				ItemImage imgEntity = new ItemImage();
 //				imgEntity.setImage_no(0);
@@ -146,6 +138,7 @@ public class ItemController {
 	}
 
 	// ======== 상품 정보 수정 =======
+	
 	@GetMapping(value = "/itemupdate")
 	public String itemUpdate(Item entity, Model model) {
 		model.addAttribute("itemDetail", service.selectOne(entity.getItem_no()));
@@ -155,12 +148,12 @@ public class ItemController {
 	}
 
 	@PostMapping(value = "/update")
-	public String update(HttpServletRequest request, Item entity, Model model) throws IOException {
+	public String update(Item entity, Model model,  @RequestParam("etcImages") MultipartFile[] images) throws IOException {
 
-		String uri = "redirect:itemList";
+		String uri = "redirect:/";
 
 		// 이미지 수정
-		String realPath = "D:\\teamproject\\third_dandog\\dandog\\src\\main\\webapp\\resources\\images";
+		String realPath = "D:\\teamproject\\third_dandog\\dandog\\src\\main\\react_pjt\\public\\images\\item\\";
 		MultipartFile uploadfilef1 = entity.getUploadfileF1(); // 첫번째 상품 이미지
 		if (uploadfilef1 != null && !uploadfilef1.isEmpty()) {
 			// 물리적위치 저장 (file1)
@@ -168,7 +161,7 @@ public class ItemController {
 			uploadfilef1.transferTo(new File(file1)); // 해당경로에 저장(붙여넣기)
 
 			// Table 저장경로 완성 (file2)
-			String file2 = "resources/images/" + uploadfilef1.getOriginalFilename();
+			String file2 = uploadfilef1.getOriginalFilename();
 			entity.setItem_img1(file2);
 		}
 
@@ -179,7 +172,7 @@ public class ItemController {
 			uploadfilef2.transferTo(new File(file3)); // 해당경로에 저장(붙여넣기)
 
 			// Table 저장경로 완성 (file2)
-			String file4 = "resources/images/" + uploadfilef2.getOriginalFilename();
+			String file4 = uploadfilef2.getOriginalFilename();
 			entity.setItem_img2(file4);
 		}
 
@@ -193,6 +186,24 @@ public class ItemController {
 			uri = "item/itemUpdate";
 		}
 
+		
+		// 그 외 기타 이미지
+		for (MultipartFile img : images) {
+			if (img != null && !img.isEmpty()) {
+				String file5 = realPath + img.getOriginalFilename();
+				img.transferTo(new File(file5));
+				
+				String file6 = img.getOriginalFilename();
+				
+				ItemImage imgEntity = new ItemImage();
+//				imgEntity.setImage_no(0);
+				imgEntity.setItem_no(entity.getItem_no());
+				imgEntity.setItem_img(file6);
+				log.info("images insert 성공! 상품 번호: " + iservice.save(imgEntity));
+			}
+		}
+		
+		
 		return uri;
 	}
 	

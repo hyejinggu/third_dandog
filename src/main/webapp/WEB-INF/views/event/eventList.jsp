@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Lounge</title>
-<script src="/resources/js/community.js"></script>
 </head>
 <body>
 
@@ -22,9 +21,8 @@
 			<th>날짜</th>
 			<th>추천수</th>
 			<th>조회수</th>
-			<th>카테고리</th>
 		</tr>
-		<c:forEach var="l" items="${requestScope.loungeList}">
+		<c:forEach var="l" items="${requestScope.lounge}">
 			<tr>
 				<td>${l.lounge_no}</td>
 
@@ -34,13 +32,15 @@
 					<p>${l.lounge_content}</p></td>
 
 				<td>${l.user_id}</td>
+
 				<td>${l.regdate}</td>
+
 				<td>${l.lounge_likes}</td>
+
 				<td>${l.lounge_hits}</td>
-				<td>${l.lounge_category}</td>
 			</tr>
 		</c:forEach>
 	</table>
-	<span onclick="loungeInsert()">새글등록</span>
+	<a href="loungeInsert">새글등록</a>
 </body>
 </html>

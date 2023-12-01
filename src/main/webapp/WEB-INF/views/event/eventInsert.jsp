@@ -8,13 +8,11 @@
 <title>lounge Insert</title>
 <link rel="stylesheet" type="text/css"
 	href="/resources/myLib/myStyle.css">
-<script src="/resources/js/community.js"></script>
 </head>
 <body>
 	<h2>lounge Insert</h2>
 
-	<form action="/community/loungeUpload" method="post" enctype="multipart/form-data" >
-		<input type="hidden" name="user_id" value="admin" >
+	<form action="loungeUpload" method="post" enctype="multipart/form-data" >
 		<table>
 
 			<tr height="40">
@@ -47,9 +45,7 @@
 			</tr>
 			<tr height="40">
 				<th></th>
-				<td><input type="reset" value="취소">
-					<input type="submit" value="공지 등록"></td>
-				
+				<td><input type="submit" value="등록"></td>
 			</tr>
 		</table>
 	</form>
