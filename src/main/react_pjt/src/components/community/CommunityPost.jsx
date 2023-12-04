@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function CommunityPost({ loungeArray }) {
   return (
     <tbody>
@@ -11,10 +13,14 @@ export default function CommunityPost({ loungeArray }) {
           <tr key={index}>
             <td>{loungeArray.length - index}</td>
             <td>
-              <img
-                src={`/images/item/${post.lounge_img}`}
-                alt={`Lounge ${index + 1}`}
-              />
+              <Link to="/community/loungepostdetail" state={{ post: post }}>
+                <div>
+                  <img
+                    src={`/images/item/${post.lounge_img}`}
+                    alt={`Lounge ${index + 1}`}
+                  />
+                </div>
+              </Link>
             </td>
             <td>
               <h4>{post.lounge_title}</h4>

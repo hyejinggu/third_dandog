@@ -1,9 +1,24 @@
 package com.i4.dandog.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.i4.dandog.entity.Lounge;
 
 public interface LoungeRepository extends JpaRepository<Lounge, Integer> {
+	
+    @Transactional
+    @Modifying
+    @Query("UPDATE Lounge l SET l.lounge_hits = l.lounge_hits + 1 WHERE l.lounge_no = :lounge_no")
+    void updateHits(@Param("lounge_no") int lounge_no);
+    
+    @Transactional
+    @Modifying
+    @Query("UPDATE Lounge l SET l.lounge_likes = l.lounge_likes + 1 WHERE l.lounge_no = :lounge_no")
+    void updateLikes(@Param("lounge_no") int lounge_no);
+	
 }
 

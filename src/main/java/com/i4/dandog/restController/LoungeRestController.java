@@ -19,7 +19,7 @@ import lombok.extern.log4j.Log4j2;
 @AllArgsConstructor
 public class LoungeRestController {
 
-	LoungeService service;	
+	LoungeService service;
 	
 	@GetMapping("/allLoungeList")
 	public List<Lounge> allLoungeList() {
@@ -28,21 +28,38 @@ public class LoungeRestController {
 	}
 
 	
+	@GetMapping("/updateHits")
+	public int updateHits(@RequestParam(name="lounge_no") String lounge_no){
+
+		int loungeNo = Integer.parseInt(lounge_no);
+		int loungeHits = 0;
+		try {
+			service.updateHits(loungeNo);
+			Lounge entity = service.selectOne(loungeNo);
+			loungeHits = entity.getLounge_hits();
+		} catch (Exception e) {
+			log.error("update ERROR lounge hits", e);
+		}
+		
+		return loungeHits;
+	}
 	
-	// createReview
-//	@PostMapping("/createReview")
-//	public String createReview(Model model, NeighborhoodReview entity) {
-//		
-//		try {
-//			nservice.save(entity);
-//			model.addAttribute("message", "상품 등록 성공");
-//			return "성공!!";
-//		} catch (Exception e) {
-//			log.info("insert Exception: " + e.toString());
-//			model.addAttribute("message", "상품 등록 실패");
-//			return "실패냐!!";
-//		}
-//		
-//	}
+	
+	
+	@GetMapping("/updateLikes")
+	public int updateLikes(@RequestParam(name="lounge_no") String lounge_no){
+
+		int loungeNo = Integer.parseInt(lounge_no);
+		int loungeLikes = 0;
+		try {
+			service.updateLikes(loungeNo);
+			Lounge entity = service.selectOne(loungeNo);
+			loungeLikes = entity.getLounge_likes();
+		} catch (Exception e) {
+			log.error("update ERROR lounge likes", e);
+		}
+		
+		return loungeLikes;
+	}
 
 }
