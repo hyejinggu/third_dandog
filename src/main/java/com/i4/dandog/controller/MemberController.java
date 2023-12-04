@@ -3,6 +3,7 @@ package com.i4.dandog.controller;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -46,17 +47,6 @@ public class MemberController {
 		log.info("** MemberList 성공 **");
 	}
 
-//	// ** MemberDetail
-//	@GetMapping(value = "/mdetail")
-//	public String mdetail(HttpServletRequest request, Model model, Member entity) {
-//		model.addAttribute("apple", service.selectOne(entity.getUser_id()));
-//
-//		if ("U".equals(request.getParameter("jCode")))
-//			return "member/memberUpdate";
-//		else
-//			return "member/memberDetail";
-//	} // mdetail
-
 	// ** MemberJoin
 	@PostMapping("/details")
 	public String join(@RequestBody Member entity, Model model) {
@@ -72,30 +62,12 @@ public class MemberController {
 			return "실패냐!!";
 		}
 	}
-
-//	// ** Member Update
-//	@PostMapping(value="/update")
-//	public String memberUpdate(HttpSession session,
-//							  Member entity, Model model) throws IOException {
-//		
-//		model.addAttribute("apple", entity);
-//		String uri="join/Details";
-//		
-//		// ** password는 수정불가
-//		
-//		try {
-//			log.info("** update 성공 id => "+service.save(entity));
-//			session.setAttribute("loginName", entity.getUser_name());
-//
-//			model.addAttribute("message", "회원정보가 수정되었습니다.");
-//		} catch (Exception e) {
-//			log.info("** update Exception => "+e.toString());
-//			model.addAttribute("message", "회원정보 수정이 실패하였습니다.");
-//			uri="mypage/UpdateProfile";
-//		}
-//		
-//		return uri;
-//	} //memberUpdte
-
 	
+	
+	// Member 삭제
+	@GetMapping("/delete")
+	public String delete(Model model, @RequestParam(name = "user_id") String user_id) {
+		service.deleteById(user_id);
+		return "/member/memberList";
+	}
 }

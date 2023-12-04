@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -49,19 +50,16 @@ public class MemberServiceImpl implements MemberService {
 		return entity.getUser_id(); // 저장후 key return
 	}
 
+	// ** delete (withdraw)
 	@Override
-	public String delete(String user_id) {
-	    try {
-	        repository.deleteById(user_id);
-	        return user_id; // 삭제 후 key return
-	    } catch (EmptyResultDataAccessException e) {
-	        // 특별한 동작이 필요하지 않은 경우, 예외를 그대로 전파하지 않고 처리할 수 있습니다.
-	        // 예를 들어, 삭제할 회원이 존재하지 않으면 그냥 삭제되었다고 간주할 수 있습니다.
-	        // 또는 다른 동작이 필요하다면 해당 동작을 수행하고 그에 맞는 응답을 반환할 수 있습니다.
-	        return "회원이 존재하지 않아 삭제되지 않았습니다.";
-	    } catch (Exception e) {
-	        throw new RuntimeException("회원 삭제 중 오류가 발생했습니다.", e);
-	    }
+	public String withdraw(String user_id) {
+		Optional<Member> existingMember = repository.findById(user_id);
+		if (existingMember.isPresent()) {
+			repository.deleteById(user_id);
+			return user_id;
+		} else {
+			return "삭제할 회원이 존재하지 않습니다.";
+		}
 	}
 
 	// ** update
@@ -75,5 +73,12 @@ public class MemberServiceImpl implements MemberService {
 	public void processData(Member member) {
 		repository.save(member);
 	}
+
+	// ** 관리자 delete
+	@Override
+    public String deleteById(String user_id) {
+    	repository.deleteById(user_id);
+    	return user_id;
+    }
 
 } // class

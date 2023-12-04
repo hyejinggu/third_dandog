@@ -1,6 +1,10 @@
 package com.i4.dandog.restController;
 
+import java.util.Map;
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,18 +34,39 @@ public class MemberRestController {
 	private final MemberService memberService;
 	private final PasswordEncoder passwordEncoder;
 
-	// 회원 탈퇴 (DELETE 메서드)
-	@DeleteMapping("/withdraw")
-	public ResponseEntity<String> withdraw(@RequestParam String user_id) {
-		try {
-			// 회원 삭제
-			memberService.delete(user_id);
-			return ResponseEntity.ok("회원 탈퇴가 완료되었습니다.");
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 탈퇴 중 오류가 발생했습니다.");
-		}
+	 @DeleteMapping("/withdraw/{user_id}")
+	    public ResponseEntity<String> withdraw(@PathVariable String user_id, HttpServletRequest request) {
+	        try {
+	            // 삭제할 회원이 존재하는지 확인
+	            Optional<String> existingMemberId = Optional.ofNullable(memberService.withdraw(user_id));
+	            if (!existingMemberId.isPresent()) {
+	                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("회원이 존재하지 않습니다.");
+	            }
+
+	            // 세션 만료시키기
+	            HttpSession session = request.getSession(false);
+	            if (session != null) {
+	                session.invalidate();
+	            }
+
+	            // 회원 삭제
+	            return ResponseEntity.ok("회원 탈퇴 성공");
+	        } catch (Exception e) {
+	            log.error("Error processing member withdrawal request", e);
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 탈퇴 실패");
+	        }
+	    }
+	
+	@GetMapping("/detailRest")
+	public ResponseEntity<Member> getMemberDetails(@RequestParam String user_id) {
+	    Member member = memberService.selectOne(user_id);
+	    if (member != null) {
+	        return ResponseEntity.ok(member);
+	    } else {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	    }
 	}
+
 
 	@GetMapping("/idDupCheck")
 	public ResponseEntity<String> idDupCheck(@RequestParam String user_id) {
@@ -61,11 +87,6 @@ public class MemberRestController {
 		}
 	}
 
-	@GetMapping("/detailRest")
-	public ResponseEntity<Member> getMemberDetails(@RequestParam String user_id) {
-		Member member = memberService.selectOne(user_id);
-		return ResponseEntity.ok(member);
-	}
 
 	@PostMapping("/updateRest")
 	public ResponseEntity<String> memberUpdateProfile(@RequestBody Member entity) {

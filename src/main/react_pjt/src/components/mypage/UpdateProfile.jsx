@@ -106,29 +106,29 @@ const UpdateProfile = () => {
 
     // ==============================================================================
 
-    const handleWithdraw = async () => {
+    const handleWithdraw = async (e) => {
+        e.preventDefault();
         try {
             // 세션 스토리지에서 로그인한 사용자의 아이디를 가져옴
             const loginId = sessionStorage.getItem('loginId');
 
             // 서버의 회원 탈퇴 엔드포인트로 DELETE 요청을 보냄
-            await axios.delete('/member/withdraw', {
-                params: {
-                    user_id: loginId
-                }
+            const response = await axios.delete(`/member/withdraw/${loginId}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
             });
 
-            // 회원 탈퇴 성공 시 모달 열기 등의 추가 작업 수행
-            setIsModalOpen(true);
-
             sessionStorage.clear();
+            alert("탈퇴가 완료되었습니다.");
             navigate("/main");
-
         } catch (error) {
             console.error('회원 탈퇴 실패:', error);
             // 회원 탈퇴 실패 시 에러 처리 등의 추가 작업 수행
+            alert("회원 탈퇴에 실패했습니다.");
         }
     };
+
 
     // ==============================================================================
     return (
@@ -478,15 +478,8 @@ const UpdateProfile = () => {
                             <tr>
                                 <th></th>
                                 <td>
-                                    <input type="submit" value="회원 탈퇴" onClick={handleWithdraw} />{
-                                        isModalOpen && (
-                                            <Modal
-                                                isModalOpen={isModalOpen}
-                                                setIsModalOpen={setIsModalOpen}
-                                                modalContent="회원 탈퇴가 완료되었습니다."
-                                                modalAfterPath={"/login"} />
-                                        )
-                                    }
+                                    <input type="submit" value="회원 탈퇴" onClick={handleWithdraw} />
+
                                     <input type="submit" value="수정" onClick={handleSubmit} />
                                 </td>
                             </tr>

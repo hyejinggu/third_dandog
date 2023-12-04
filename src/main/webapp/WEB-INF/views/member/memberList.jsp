@@ -36,8 +36,8 @@
 				<th>reg date</th>
 
 				<!-- 관리자 기능 추가 -->
+				<th>Delete</th>
 				<c:if test="${sessionScope.loginID=='admin'}">
-					<th>Delete</th>
 				</c:if>
 			</tr>
 			<c:if test="${not empty requestScope.memberList}">
@@ -59,12 +59,13 @@
 						<td>${s.point}</td>
 						<td>${s.withdrawal_date}</td>
 						<td>${s.regdate}</td>
+
 						<!-- 관리자 기능 추가 -->
-						<td align="center"><a href="delete?user_id=${s.user_id}">삭제</a></td>
-
-
-					</tr>
-				</c:forEach>
+						<td><input type="button" value="삭제" onclick="deleteMember('${s.user_id}')" /></td>
+						
+							
+			</tr>
+			</c:forEach>
 			</c:if>
 			<c:if test="${empty requestScope.memberList}">
 				<tr>
