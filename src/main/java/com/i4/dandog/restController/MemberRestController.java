@@ -2,9 +2,11 @@ package com.i4.dandog.restController;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +28,19 @@ public class MemberRestController {
 
 	private final MemberService memberService;
 	private final PasswordEncoder passwordEncoder;
+
+	// 회원 탈퇴 (DELETE 메서드)
+	@DeleteMapping("/withdraw")
+	public ResponseEntity<String> withdraw(@RequestParam String user_id) {
+		try {
+			// 회원 삭제
+			memberService.delete(user_id);
+			return ResponseEntity.ok("회원 탈퇴가 완료되었습니다.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 탈퇴 중 오류가 발생했습니다.");
+		}
+	}
 
 	@GetMapping("/idDupCheck")
 	public ResponseEntity<String> idDupCheck(@RequestParam String user_id) {
@@ -52,26 +67,26 @@ public class MemberRestController {
 		return ResponseEntity.ok(member);
 	}
 
-	 @PostMapping("/updateRest")
-	    public ResponseEntity<String> memberUpdateProfile(@RequestBody Member entity) {
-	        try {
-	            // Password는 수정하지 않도록 체크
-	            Member existingMember = memberService.selectOne(entity.getUser_id());
+	@PostMapping("/updateRest")
+	public ResponseEntity<String> memberUpdateProfile(@RequestBody Member entity) {
+		try {
+			// Password는 수정하지 않도록 체크
+			Member existingMember = memberService.selectOne(entity.getUser_id());
 
-	            if (existingMember != null) {
-	                // 기존 멤버 정보에서 password를 가져옴
-	            	entity.setUser_password(existingMember.getUser_password());
-	            }
+			if (existingMember != null) {
+				// 기존 멤버 정보에서 password를 가져옴
+				entity.setUser_password(existingMember.getUser_password());
+			}
 
-	            // 멤버 정보 업데이트
-	            memberService.update(entity);
+			// 멤버 정보 업데이트
+			memberService.update(entity);
 
-	            return ResponseEntity.ok("Member updated successfully");
-	        } catch (Exception e) {
-	            log.error("Error updating member details", e);
-	            return ResponseEntity.status(500).body("Error updating member details");
-	        }
-	    }
+			return ResponseEntity.ok("Member updated successfully");
+		} catch (Exception e) {
+			log.error("Error updating member details", e);
+			return ResponseEntity.status(500).body("Error updating member details");
+		}
+	}
 
 	@PostMapping("/join") // 엔드포인트 경로 수정
 	public ResponseEntity<String> receiveData(@RequestBody Member request) {

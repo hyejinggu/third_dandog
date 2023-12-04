@@ -3,11 +3,12 @@ import Modal from "../common/Modal";
 import axios from "axios";
 import "../../css/myPage/updateProfile.css";
 import "../../css/join/join.css";
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const UpdateProfile = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [memberData, setMemberData] = useState({});
+    const navigate = useNavigate();
     const [formValue, setFormValue] = useState({
         user_id: '',
         user_name: '',
@@ -105,8 +106,29 @@ const UpdateProfile = () => {
 
     // ==============================================================================
 
+    const handleWithdraw = async () => {
+        try {
+            // 세션 스토리지에서 로그인한 사용자의 아이디를 가져옴
+            const loginId = sessionStorage.getItem('loginId');
 
-    // member/detail?jCode=U&id=${sessionScope.loginID}
+            // 서버의 회원 탈퇴 엔드포인트로 DELETE 요청을 보냄
+            await axios.delete('/member/withdraw', {
+                params: {
+                    user_id: loginId
+                }
+            });
+
+            // 회원 탈퇴 성공 시 모달 열기 등의 추가 작업 수행
+            setIsModalOpen(true);
+
+            sessionStorage.clear();
+            navigate("/main");
+
+        } catch (error) {
+            console.error('회원 탈퇴 실패:', error);
+            // 회원 탈퇴 실패 시 에러 처리 등의 추가 작업 수행
+        }
+    };
 
     // ==============================================================================
     return (
@@ -456,6 +478,15 @@ const UpdateProfile = () => {
                             <tr>
                                 <th></th>
                                 <td>
+                                    <input type="submit" value="회원 탈퇴" onClick={handleWithdraw} />{
+                                        isModalOpen && (
+                                            <Modal
+                                                isModalOpen={isModalOpen}
+                                                setIsModalOpen={setIsModalOpen}
+                                                modalContent="회원 탈퇴가 완료되었습니다."
+                                                modalAfterPath={"/login"} />
+                                        )
+                                    }
                                     <input type="submit" value="수정" onClick={handleSubmit} />
                                 </td>
                             </tr>
