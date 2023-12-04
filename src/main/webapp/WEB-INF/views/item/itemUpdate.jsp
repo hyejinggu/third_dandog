@@ -12,7 +12,7 @@
 	<c:if test="${not empty requestScope.message}">
 		<h3>${requestScope.message}</h3>
 	</c:if>
-	<form action="update" method="post" enctype="multipart/form-data">
+	<form action="/item/update" method="post" enctype="multipart/form-data">
 		<table>
 		<c:set var="i" value="${requestScope.itemDetail}" />
 		<c:if test="${not empty requestScope.itemDetail}">
@@ -104,13 +104,20 @@
 			</tr>
 			<tr height="40">
 				<th bgcolor="aqua">기타 상품 사진</th>
-				<td>
-					<c:forEach var="img" items="${requestScope.itemImages}" >
-						<img src="/${img.item_img}" class="select_img" width="100" height="100"><br> 					
-					</c:forEach>
-					<input type="hidden" name="item_img" value="${img.item_img}" multiple>
-					<input type="file" name="etcImages" id="etcImages" multiple>
-				</td>
+			    <td>
+			        <!-- 기존 이미지 표시 -->
+			        <c:forEach var="img" items="${requestScope.itemImages}">
+			            <img src="/${img.item_img}" class="select_img" width="100" height="100"><br>
+			            
+			            <!-- 이미지 수정을 위한 체크박스 -->
+			            <input type="checkbox" name="selectedImages" value="${img.item_img}">
+			            <label for="selectedImages">삭제할 이미지 선택</label>
+			            <br>
+			        </c:forEach>
+			
+			        <!-- 수정된 이미지 업로드를 위한 파일 입력 -->
+			        <input type="file" name="etcImages" id="etcImages" multiple>
+			    </td>
 			</tr>
 			
 			<tr height="40">

@@ -18,14 +18,20 @@ const ItemList = () => {
 
   useEffect(() => {
     setInputValue("");
-    handleItemList();
+    handleItemList(
+      `/item/getItemList?category=${category}&sort=${itemSort}&inputValue`
+    );
   }, [category]);
 
-  const handleItemList = () => {
+  useEffect(() => {
+    handleItemList(
+      `/item/getItemList?category=${category}&sort=${itemSort}&inputValue=${inputValue}`
+    );
+  }, [itemSort]);
+
+  const handleItemList = (requestURL) => {
     axios
-      .get(
-        `/item/getItemList?category=${category}&sort=${itemSort}&inputValue=${inputValue}`
-      )
+      .get(`${requestURL}`)
       .then((res) => {
         setItemList(res.data);
         setItemList((prevItemList) => {
@@ -62,7 +68,6 @@ const ItemList = () => {
         setItemSort("new");
         break;
     }
-    handleItemList();
   };
 
   // const [array, dispatch] = useReducer(arrayReducer, itemList);

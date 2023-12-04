@@ -24,8 +24,8 @@ function ItemInfo({ itemList }) {
             <Link to="/itemdetail" state={{ item: i }}>
               <div className={styles.item_container}>
                 <div className={styles.normal_item}>
-                  <img src={i.item_img1} alt="" />
-                  <img src={i.item_img2} alt="" />
+                  <img src={`/images/item/${i.item_img1}`} alt="" />
+                  <img src={`/images/item/${i.item_img2}`} alt="" />
                 </div>
                 <div className={styles.item_info_wrap}>
                   <h3>{i.item_name}</h3>

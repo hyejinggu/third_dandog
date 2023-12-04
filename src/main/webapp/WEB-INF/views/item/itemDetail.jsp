@@ -85,7 +85,7 @@
 			
 			<tr height="40">
 				<th></th>
-				<td><a href="itemupdate?item_no=${i.item_no}">상품 수정</a></td>
+				<td><span onclick="itemUpdate(${i.item_no})">상품 수정</span></td>
 			</tr>
 			</c:if>
 		</table>

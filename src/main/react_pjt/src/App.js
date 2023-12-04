@@ -18,8 +18,6 @@ import Profile from "./components/join/Profile";
 import Payment from "./components/payment/Payment";
 import Payment2 from "./components/payment/Payment2";
 
-
-
 // 커뮤니티 링크 페이지 import
 import Community from "./components/community/Community";
 
@@ -45,7 +43,7 @@ import styles from "./css/common/common.module.css";
 function App() {
   return (
     <div className="App" id={styles.wrap}>
-      <a href="http://localhost:8080">관리자</a>
+      {/* <a href="http://localhost:8080">관리자</a> */}
       <ScrollTop />
       <Header />
       <Routes>

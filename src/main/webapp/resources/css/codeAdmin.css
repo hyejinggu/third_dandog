@@ -1,4 +1,4 @@
-.adminPageWrap {
+/* .adminPageWrap {
 	width: 100%;
 	margin-bottom: 50px;
 }
@@ -93,19 +93,41 @@
 
 .adminItemContainer ul>li a {
 	font-weight: bold;
-}
+} */
 
-.item_table {
+.code_table {
+	text-align: center;
 	border-collapse: collapse;
 	border: 2px solid #ffa900;
 	background-color: #fff;
-	border-radius: 5px;
 }
 
-.item_table th {
+.code_table th,
+.code_table td {
+	border-radius: 5px;
+	padding: 5px;
+}
+
+.code_table th {
 	background-color: #fff8d0;
 }
 
-.item_table td {
+.code_table td {
 	border: 1px solid #ffa900;
 }
+
+
+.add {
+	background-color: #FFC256;
+	cursor: pointer;
+	font-size: 0.8em;
+	border-radius: 5px;
+	padding: 3px;
+	font-weight: bold;
+}
+
+.add:hover {
+	background-color: #ffa900;
+}
+
+
