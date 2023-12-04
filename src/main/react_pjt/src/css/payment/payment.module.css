@@ -41,15 +41,13 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.address_input th,
-.pass_input th {
+.address_input th {
     width: 150px;
     margin: 0 auto;
 }
 
 .address_input input[type="text"],
 .address_input input[type="email"],
-.pass_input input[type="password"],
 .address_input select[id="payment-method"] {
     width: 100%;
     margin-top: 20px;
@@ -83,6 +81,7 @@
     cursor: pointer;
     box-sizing: border-box;
     text-align: center;
+    height: 40px;
 }
 
 .button input[type="button"] {
@@ -103,7 +102,6 @@
 
 /*====================================================================== 배송지정보 ====================================================================== */
 
-.pass_input table,
 .address_input table,
 .desc table {
     margin-bottom: 40px;
@@ -114,17 +112,13 @@
 .address_input {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr .5fr;
-    grid-template-areas: "a b""c b";
+    /* grid-template-rows: 1fr .5fr; */
+    grid-template-areas: "a b";
 }
 
 .address_input {
     width: 100%;
     grid-area: a;
-}
-
-.pass_input {
-    grid-area: c;
 }
 
 .img_area {
