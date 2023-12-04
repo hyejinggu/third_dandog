@@ -13,7 +13,11 @@ const Header = () => {
   useEffect(() => {
     if (sessionStorage.getItem("loginId") != null) {
       setLogin("로그아웃");
-      setJoin("마이페이지");
+      if (sessionStorage.getItem("loginId") == "manager") {
+        setJoin("관리자 페이지");
+      } else {
+        setJoin("마이페이지");
+      }
     }
   });
 
@@ -59,10 +63,17 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link to={login === "로그아웃" ? "/myPage/*" : "/join/Agree"}>
-              <img src={"/images/header/join_img.png"} alt="" />
-              {join}
-            </Link>
+            {join === "관리자 페이지" ? (
+              <a href="http://localhost:8080">
+                <img src={"/images/header/join_img.png"} alt="" />
+                {join}
+              </a>
+            ) : (
+              <Link to={login === "로그아웃" ? "/myPage/*" : "/join/Agree"}>
+                <img src={"/images/header/join_img.png"} alt="" />
+                {join}
+              </Link>
+            )}
           </li>
           <li>
             <Link to="/cart">

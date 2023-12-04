@@ -7,45 +7,26 @@ import React, { useReducer, useState, useContext, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { CreatePostContext } from "./Community";
 
-const date = new Date();
-
 export default function Lounge() {
-  // // message 초기값 설정 (""로 설정)
-  // const [message, setMessage] = useState("");
+  const { loungeArray } = useContext(CreatePostContext);
 
-  // // useEffect(함수, 배열) : 컴포넌트가 화면에 나타났을 때 자동 실행
-  // useEffect(() => {
-  //   // fetch(url, options) : Http 요청 함수
-  //   fetch("/neighbor/test")
-  //     .then((response) => response.text())
-  //     .then((message) => {
-  //       setMessage(message);
-  //     });
-  // }, []);
-
-  // ==============================================================
-
-  const { addedPostArray } = useContext(CreatePostContext);
+  const loungeList = JSON.stringify(loungeArray);
 
   const arrayReducer = (state, action) => {
     switch (action.type) {
-      // 글 작성 case
-      case "create":
-        return [action.newPost, ...state];
-
       // 글 정렬 case
       case "popular":
         return [...state].sort(
           (a, b) => b.recommended + b.views - (a.recommended + a.views)
         );
       case "notice":
-        return addedPostArray;
+        return loungeList;
 
       // 글 검색 case
       case "allPost":
         return inputValue === ""
           ? state
-          : addedPostArray.filter(
+          : loungeList.filter(
               (it) =>
                 it.title.includes(inputValue) ||
                 it.content.includes(inputValue) ||
@@ -54,17 +35,17 @@ export default function Lounge() {
       case "postTitle":
         return inputValue === ""
           ? state
-          : addedPostArray.filter((it) => it.title.includes(inputValue));
+          : loungeList.filter((it) => it.title.includes(inputValue));
       case "postContent":
         return inputValue === ""
           ? state
-          : addedPostArray.filter((it) => it.content.includes(inputValue));
+          : loungeList.filter((it) => it.content.includes(inputValue));
       case "postUserId":
         return inputValue === ""
           ? state
-          : addedPostArray.filter((it) => it.userid.includes(inputValue));
+          : loungeList.filter((it) => it.userid.includes(inputValue));
       default:
-        return addedPostArray;
+        return loungeList;
     }
   };
 
@@ -81,7 +62,7 @@ export default function Lounge() {
   const [category, setCategory] = useState("자유 게시판");
 
   // 글 추가, 정렬을 위해 useReducer 설정
-  const [array, dispatch] = useReducer(arrayReducer, addedPostArray);
+  const [array, dispatch] = useReducer(arrayReducer, loungeList);
 
   // page 이동
   const [page, setPage] = useState(1);
@@ -93,7 +74,6 @@ export default function Lounge() {
     <div id="wrap" className={styles.lounge_container}>
       <div className={styles.title}>
         <strong>
-          {/* <p>{message}</p> */}
           <NavLink to="/community/lounge">라운지</NavLink>
           <NavLink to="/community/event">이벤트</NavLink>
           <NavLink to="/community/neighborhood">우리 동네</NavLink>
@@ -107,7 +87,7 @@ export default function Lounge() {
           <li>최신순</li>
           <li>오래된순</li>
         </ul>
-        <p>총 50개의 글</p>
+        <p>총 {loungeArray.length}개의 글</p>
       </div>
       <div className={styles.content_wrap}>
         <SideBar content="lounge" setCategory={setCategory} />
@@ -126,7 +106,7 @@ export default function Lounge() {
                 <th>조회수</th>
               </tr>
             </thead>
-            <CommunityPost addedPostArray={displayedItemInfo} />
+            <CommunityPost loungeArray={loungeArray} />
           </table>
 
           {/* 검색 및 글쓰기 */}

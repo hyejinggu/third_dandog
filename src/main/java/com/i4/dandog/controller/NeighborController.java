@@ -19,16 +19,11 @@ public class NeighborController {
 	NeighborhoodReviewService nservice;
 	
 	
-	// ======== 라운지 관리 =======
-	@GetMapping("/adminLounge")
-	public void adminLounge(Model model) {
-	}
-	
-	
 	// ======== 우리 동네 관리 =======
-	@GetMapping("/adminNeighbor")
-	public void adminNeighbor(Model model) {
-		model.addAttribute("NeighborList", nservice.selectList());
+	@GetMapping("/neighborList")
+	public String adminNeighbor(Model model) {
+		model.addAttribute("neighborList", nservice.selectList());
+		return "/neighbor/neighborList";
 	}
 	
 	

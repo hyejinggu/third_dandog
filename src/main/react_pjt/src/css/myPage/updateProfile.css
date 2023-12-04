@@ -94,7 +94,7 @@
 #updateProfile_form .left_contents tr td select,
 #updateProfile_form .right_contents tr td input {
     font-size: 16px;
-    color: #929292;
+    color: #000;
     width: 100%;
     max-width: 700px;
     outline: none;
@@ -104,8 +104,10 @@
     margin-right: 3px;
 }
 
-#updateProfile_form .left_contents .user_id {
-    color: #000;
+#updateProfile_form .left_contents .user_id,
+#updateProfile_form .left_contents .user_name {
+    color: #929292;
+    background-color: #f3f3f3;
 }
 
 #updateProfile_form .left_contents .user_birthday {

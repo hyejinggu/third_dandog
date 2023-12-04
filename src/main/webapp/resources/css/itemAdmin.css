@@ -96,6 +96,7 @@
 }
 
 .item_table {
+	border-collapse: collapse;
 	border: 2px solid #ffa900;
 	background-color: #fff;
 	border-radius: 5px;

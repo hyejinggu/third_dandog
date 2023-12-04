@@ -1,0 +1,133 @@
+/* .adminPageWrap {
+	width: 100%;
+	margin-bottom: 50px;
+}
+
+.adminPageWrap .title {
+	margin-bottom: 40px;
+}
+
+.adminPageHeader {
+	width: 100%;
+	height: 150px;
+	background-color: #fff8d0;
+	border: #ffa900 2px solid;
+	margin-bottom: 20px;
+	border-radius: 8px;
+}
+
+.adminPageHeader ul {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	padding: 0;
+}
+
+.adminPageHeader ul>li {
+	width: 20%;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.adminPageHeader ul>li:hover p {
+	color: #e39400;
+	cursor: pointer;
+    text-decoration: underline;
+}
+
+.adminPageHeader ul>li p {
+	color: #ffa900;
+	font-weight: bold;
+	line-height: 30px;
+	font-size: 20px;
+}
+
+
+
+.adminItemContainer {
+	width: 100%;
+}
+
+.adminItemContainer h2 {
+	width: 100%;
+	font-size: 20px;
+	margin-top: 10px;
+}
+
+.adminItemContainer ul {
+	border-bottom: 2px solid #ffa900;
+	border-top: 2px solid #ffa900;
+	background-color: #fff;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.adminItemContainer ul>li {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-right: 1px solid #ddd;
+	padding: 20px;
+	width: 25%;
+}
+
+.adminItemContainer ul>li:last-child {
+	border-right: 0px;
+}
+
+.adminItemContainer ul>li .num, .adminItemContainer ul>li .point
+	{
+	font-size: 25px;
+	font-weight: bold;
+	line-height: 50px;
+	color: #cdcdcd;
+}
+
+.adminItemContainer ul>li .point {
+	color: #000;
+}
+
+.adminItemContainer ul>li a {
+	font-weight: bold;
+} */
+
+.code_table {
+	text-align: center;
+	border-collapse: collapse;
+	border: 2px solid #ffa900;
+	background-color: #fff;
+}
+
+.code_table th,
+.code_table td {
+	border-radius: 5px;
+	padding: 5px;
+}
+
+.code_table th {
+	background-color: #fff8d0;
+}
+
+.code_table td {
+	border: 1px solid #ffa900;
+}
+
+
+.add {
+	background-color: #FFC256;
+	cursor: pointer;
+	font-size: 0.8em;
+	border-radius: 5px;
+	padding: 3px;
+	font-weight: bold;
+}
+
+.add:hover {
+	background-color: #ffa900;
+}
+
+

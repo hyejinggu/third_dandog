@@ -1,30 +1,139 @@
-// UpdateProfile.js
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from "../common/Modal";
+import axios from "axios";
 import "../../css/myPage/updateProfile.css";
 import "../../css/join/join.css";
-
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const UpdateProfile = () => {
-    const [userName, setUserName] = useState('');
-    const [userEmail, setUserEmail] = useState('');
-    const [userPassword, setUserPassword] = useState('');
-
-    // 세션 스토리지에서 로그인 아이디 불러오기
-    const loginId = sessionStorage.getItem('loginId');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [memberData, setMemberData] = useState({});
+    const navigate = useNavigate();
+    const [formValue, setFormValue] = useState({
+        user_id: '',
+        user_name: '',
+        user_year: "2019",
+        user_month: "01",
+        user_day: "01",
+        user_phonenum: '',
+        user_email: '',
+        ani_name: '',
+        ani_birthday: '',
+        ani_type: '',
+        ani_info: '',
+    });
 
+    const loginId = sessionStorage.getItem('loginId');
+    const location = useLocation();
+
+    useEffect(() => {
+        const fetchMemberDetails = async () => {
+            try {
+                const response = await axios.get(`/member/detailRest?user_id=${loginId}`);
+                setMemberData(response.data);
+
+                // 이 부분에서 formValue를 업데이트할 때 기존 formValue를 사용해야 합니다.
+                setFormValue((prevFormValue) => ({
+                    ...prevFormValue,
+                    user_id: response.data.user_id,
+                    user_name: response.data.user_name,
+                    user_birthday: `${prevFormValue.user_year}${prevFormValue.user_month}${prevFormValue.user_day}`,
+                    user_phonenum: response.data.user_phonenum,
+                    user_email: response.data.user_email,
+                    ani_name: response.data.ani_name,
+                    ani_birthday: response.data.ani_birthday,
+                    ani_type: response.data.ani_type,
+                    ani_info: response.data.ani_info,
+                }));
+            } catch (error) {
+                console.error('Error fetching member details:', error);
+            }
+        };
+
+        fetchMemberDetails();
+    }, [loginId]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormValue({
+            ...formValue,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const user_birthday = formValue.user_year + formValue.user_month + formValue.user_day;
+        const dataToSend = {
+            ...location.state,
+            user_id: formValue.user_id,
+            user_name: formValue.user_name,
+            user_birthday: user_birthday,
+            user_phonenum: formValue.user_phonenum,
+            user_email: formValue.user_email,
+
+            ani_name: formValue.ani_name,
+            ani_birthday: formValue.ani_birthday,
+            ani_type: formValue.ani_type,
+            ani_info: formValue.ani_info,
+        };
+
+        console.log("데이터 배열:", dataToSend);
+
+        try {
+            // 경로를 정확하게 확인해야 합니다.
+            const response = await axios.post("/member/updateRest", dataToSend, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            // 성공적으로 요청이 완료된 경우에만 모달을 엽니다.
+            setIsModalOpen(true);
+        } catch (error) {
+            // 오류가 발생한 경우 콘솔에 오류를 출력하여 디버깅에 도움이 될 수 있습니다.
+            console.error('Error updating member details:', error);
+
+            if (error.response) {
+                console.error('Response data:', error.response.data);
+                console.error('Response status:', error.response.status);
+            }
+
+            alert("[시스템 오류] 잠시 후에 다시 시도하세요.");
+        }
+    };
 
     // ==============================================================================
 
+    const handleWithdraw = async (e) => {
+        e.preventDefault();
+        try {
+            // 세션 스토리지에서 로그인한 사용자의 아이디를 가져옴
+            const loginId = sessionStorage.getItem('loginId');
 
+            // 서버의 회원 탈퇴 엔드포인트로 DELETE 요청을 보냄
+            const response = await axios.delete(`/member/withdraw/${loginId}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            sessionStorage.clear();
+            alert("탈퇴가 완료되었습니다.");
+            navigate("/main");
+        } catch (error) {
+            console.error('회원 탈퇴 실패:', error);
+            // 회원 탈퇴 실패 시 에러 처리 등의 추가 작업 수행
+            alert("회원 탈퇴에 실패했습니다.");
+        }
+    };
 
 
     // ==============================================================================
     return (
         <form
-            action="/updateProfile"
+            action="/updateRest"
             id="updateProfile_form"
             method="post" >
             <figure>
@@ -35,7 +144,7 @@ const UpdateProfile = () => {
                             <hr />
                             <tr>
                                 <th>
-                                    <label htmlFor="user_id" className="required">
+                                    <label htmlFor="user_id">
                                         아이디
                                         <span className='update_id'>(아이디는 변경하실 수 없습니다.)</span>
                                     </label>
@@ -45,31 +154,31 @@ const UpdateProfile = () => {
                                         type="text"
                                         name="user_id"
                                         className='user_id'
-                                        value={loginId}
+                                        value={formValue.user_id}
                                         readOnly
                                     />
                                 </td>
                             </tr>
-                            <tr>
+                            {/* <tr>
                                 <th>
-                                    <label htmlFor="user_password" className="required">
+                                    <label htmlFor="user_password">
                                         비밀번호
                                     </label>
                                 </th>
                                 <td>
                                     <input
-                                        required="required"
                                         type="password"
                                         name="user_password"
-                                        id="user_password"
-                                        placeholder="비밀번호 입력(문자, 숫자, 특수문자 포함 8~20자)" />
+                                        id="user_password" />
                                 </td>
 
-                            </tr>
+                            </tr> */}
                             <tr>
                                 <th>
-                                    <label htmlFor="user_name" className="required">
+                                    <label htmlFor="user_name">
                                         이름
+                                        <span className='update_id'>(성함은 변경하실 수 없습니다.)</span>
+
                                     </label>
                                 </th>
                                 <td>
@@ -77,15 +186,16 @@ const UpdateProfile = () => {
                                         type="text"
                                         name="user_name" // Add "name" attribute
                                         id="user_name"
-                                        placeholder="이름을 입력해주세요"
-                                        required
+                                        className='user_name'
+                                        readOnly
+                                        value={formValue.user_name}
                                     />
                                 </td>
                             </tr>
 
                             <tr>
                                 <th>
-                                    <label htmlFor="user_birthday" className="required">
+                                    <label htmlFor="user_birthday">
                                         생년월일
                                     </label>
                                 </th>
@@ -93,7 +203,7 @@ const UpdateProfile = () => {
                                     <select
                                         className="user_year"
                                         name="user_year"
-                                        required
+                                        onChange={handleChange}
                                     >
                                         <option value="2019">2019</option>
                                         <option value="2018">2018</option>
@@ -199,7 +309,7 @@ const UpdateProfile = () => {
                                     <select
                                         className="user_month"
                                         name="user_month"
-                                        required
+                                        onChange={handleChange}
                                     >
                                         <option value="01">01</option>
                                         <option value="02">02</option>
@@ -217,7 +327,7 @@ const UpdateProfile = () => {
                                     <select
                                         className="user_day"
                                         name="user_day"
-                                        required
+                                        onChange={handleChange}
                                     >
 
                                         <option value="1">1</option>
@@ -256,7 +366,7 @@ const UpdateProfile = () => {
                             </tr>
                             <tr>
                                 <th>
-                                    <label htmlFor="user_phonenum" className="required">
+                                    <label htmlFor="user_phonenum">
                                         핸드폰 번호
                                     </label>
                                 </th>
@@ -265,19 +375,23 @@ const UpdateProfile = () => {
                                         type="tel"
                                         name="user_phonenum"
                                         id="user_phonenum"
-                                        placeholder="- 없이 입력해주세요"
+                                        placeholder="숫자만 입력해주세요"
+                                        value={formValue.user_phonenum}
+                                        onChange={handleChange}
                                     />
                                 </td>
                             </tr>
                             <tr>
                                 <th>
-                                    <label htmlFor="user_email" className="required">이메일 주소</label>
+                                    <label htmlFor="user_email">이메일 주소</label>
                                 </th>
                                 <td >
                                     <input
                                         type="email"
                                         name="user_email"
                                         id="user_email"
+                                        value={formValue.user_email}
+                                        onChange={handleChange}
                                     />
                                 </td>
                             </tr>
@@ -298,6 +412,8 @@ const UpdateProfile = () => {
                                         type="text"
                                         name="ani_name"
                                         id="ani_name"
+                                        value={formValue.ani_name}
+                                        onChange={handleChange}
                                     />
                                 </td>
                             </tr>
@@ -311,6 +427,8 @@ const UpdateProfile = () => {
                                         name="ani_birthday"
                                         id="ani_birthday"
                                         placeholder="ex) 20230203"
+                                        value={formValue.ani_birthday}
+                                        onChange={handleChange}
                                     />
                                 </td>
                             </tr>
@@ -352,13 +470,17 @@ const UpdateProfile = () => {
                                         id="ani_info"
                                         cols="84"
                                         rows="3"
+                                        value={formValue.ani_info}
+                                        onChange={handleChange}
                                     ></textarea>
                                 </td>
                             </tr>
                             <tr>
                                 <th></th>
                                 <td>
-                                    <input type="submit" value="수정" />
+                                    <input type="submit" value="회원 탈퇴" onClick={handleWithdraw} />
+
+                                    <input type="submit" value="수정" onClick={handleSubmit} />
                                 </td>
                             </tr>
                         </div>
@@ -371,7 +493,7 @@ const UpdateProfile = () => {
                         isModalOpen={isModalOpen}
                         setIsModalOpen={setIsModalOpen}
                         modalContent="회원 정보가 수정되었습니다."
-                        modalAfterPath={"/login/*"} />
+                        modalAfterPath={"/main"} />
                 )
             }
         </form >

@@ -70,6 +70,8 @@ public class Member extends BaseEntity {
 	@Column(name = "regdate", updatable = false) private LocalDateTime
 	regdate;
 	
+	
+	
 
 
 

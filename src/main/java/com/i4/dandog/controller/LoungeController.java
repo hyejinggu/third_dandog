@@ -24,9 +24,9 @@ import lombok.extern.log4j.Log4j2;
 public class LoungeController {
 	private LoungeService loungeService;
 
-	@GetMapping(value = "/loungelist")
+	@GetMapping(value = "/loungeList")
 	public String getLoungeList(Model model) {
-		model.addAttribute("lounge", loungeService.getAllLounge());
+		model.addAttribute("loungeList", loungeService.getAllLounge());
 		return "lounge/lounge";
 	}
 
@@ -37,16 +37,16 @@ public class LoungeController {
 	
 	@PostMapping(value = "/loungeUpload")
 	public String loungeupload(Lounge entity, Model model) throws IOException {
-	    String uri = "redirect:loungelist";
+	    String uri = "redirect:/";
 
-	    String realPath = "D:\\teamproject03\\DanDog\\src\\main\\webapp\\resources\\communityimages\\";
+	    String realPath = "D:\\teamproject\\third_dandog\\dandog\\src\\main\\react_pjt\\public\\images\\item\\";
 	    MultipartFile lounge_imgf = entity.getLounge_imgf(); 
 	    if (lounge_imgf != null && !lounge_imgf.isEmpty()) {
 	        String fileName = lounge_imgf.getOriginalFilename();
 	        String filePath = realPath + fileName;
 	        lounge_imgf.transferTo(new File(filePath));
 	        
-	        String file2 = "resources/communityimages/" + fileName;
+	        String file2 = fileName;
 	        entity.setLounge_img(file2);
 	    }
 

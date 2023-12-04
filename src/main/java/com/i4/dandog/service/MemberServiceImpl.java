@@ -3,6 +3,10 @@ package com.i4.dandog.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -17,14 +21,12 @@ public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepository repository;
 
-
 	// ** id 중복확인
 	@Override
-    public boolean isIdDuplicate(String user_id) {
-        return repository.existsById(user_id);
-    }
+	public boolean isIdDuplicate(String user_id) {
+		return repository.existsById(user_id);
+	}
 
-	
 	// ** selectList
 	@Override
 	public List<Member> selectList() {
@@ -48,27 +50,41 @@ public class MemberServiceImpl implements MemberService {
 		return entity.getUser_id(); // 저장후 key return
 	}
 
-	// ** delete
+	// ** delete (withdraw)
 	@Override
-	public String delete(String user_id) {
-		repository.deleteById(user_id);
-		return user_id; // 삭제후 key return
+	public String withdraw(String user_id) {
+		Optional<Member> existingMember = repository.findById(user_id);
+		if (existingMember.isPresent()) {
+			repository.deleteById(user_id);
+			return user_id;
+		} else {
+			return "삭제할 회원이 존재하지 않습니다.";
+		}
 	}
 
 	// ** update
 	@Override
-	public String update(Member entity) {
-		return entity.getUser_id();
+	public void update(Member entity) {
+		repository.save(entity);
 	}
 
 	// ** join
 	@Override
 	public void processData(Member member) {
-
-
-		// MemberRepository를 사용하여 데이터베이스에 저장
 		repository.save(member);
 	}
-	
+
+	// ** 관리자 delete
+	@Override
+	public String deleteById(String user_id) {
+		repository.deleteById(user_id);
+		return user_id;
+	}
+
+	// ** 관리자 Search
+	@Override
+	public List<Member> searchMembers(String searchField, String searchValue) {
+	    return repository.searchMembers(searchField, searchValue);
+	}
 
 } // class

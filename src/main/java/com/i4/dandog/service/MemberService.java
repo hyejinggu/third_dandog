@@ -1,11 +1,13 @@
 package com.i4.dandog.service;
+
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.ui.Model;
 
 import com.i4.dandog.entity.Member;
+
 public interface MemberService {
-	
 
 	// ** selectList
 	List<Member> selectList();
@@ -17,17 +19,21 @@ public interface MemberService {
 	String save(Member entity);
 
 	// ** delete
-	String delete(String user_id);
+	String withdraw(String user_id);
 
 	// ** update
-	String update(Member entity);
+	void update(Member entity);
 
 	// React에서 받은 데이터 처리
-    void processData(Member member);
+	void processData(Member member);
 
-    // ** id 중복체크
-    boolean isIdDuplicate(String user_id);
+	// ** id 중복체크
+	boolean isIdDuplicate(String user_id);
 
+	// ** 관리자 delete
+	String deleteById(String user_id);
 
+	// ** 관리자 Search
+	List<Member> searchMembers(String searchField, String searchValue);
 
 }
