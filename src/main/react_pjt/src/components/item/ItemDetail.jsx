@@ -26,7 +26,7 @@ const ItemDetail = () => {
 
     fetchData();
   }, []);
-  
+
   // 수량 설정
   const [quantity, setQuantity] = useState(1); // 초기 수량 설정
 
@@ -42,11 +42,7 @@ const ItemDetail = () => {
 
 
   const cartRequest = {
-<<<<<<< HEAD
     user_id: sessionStorage.loginId,
-=======
-    user_id: "admin",
->>>>>>> main
     item_no: selectedItem.item_no,
     item_quantity: quantity,
   };
@@ -83,20 +79,20 @@ const ItemDetail = () => {
           <section className={styles.img_area}>
             {/* 메인 이미지 */}
             <div className={styles.main_img}>
-              <img src={mainImage} alt="상품이미지" />
+              <img src={`/images/subpage/${mainImage}`} alt="상품이미지" />
             </div>
 
             {/* 서브 이미지들 */}
             <div className={styles.sub_img}>
               {imageData.map((i, index) => (
                 selectedItem.item_no === i.item_no && (
-                <img
-                  key={index}
-                  src={i.item_img}
-                  alt={`상품 이미지 ${index}`}
-                  onClick={() => handleImageClick(i.item_img)} // 이미지 클릭 시 처리
-                />
-              )))}
+                  <img
+                    key={index}
+                    src={`/images/subpage/${i.item_img}`}
+                    alt={`상품 이미지 ${index}`}
+                    onClick={() => handleImageClick(i.item_img)} // 이미지 클릭 시 처리
+                  />
+                )))}
             </div>
           </section>
           <section className={styles.info_area}>
@@ -116,7 +112,7 @@ const ItemDetail = () => {
                 {(
                   selectedItem.item_price -
                   (selectedItem.item_price * selectedItem.item_discount_rate) /
-                    100
+                  100
                 ).toLocaleString("ko")}
                 원
               </span>
