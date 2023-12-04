@@ -16,7 +16,6 @@ import Details from "./components/join/Details";
 import Information from "./components/join/Information";
 import Profile from "./components/join/Profile";
 import Payment from "./components/payment/Payment";
-import Payment2 from "./components/payment/Payment2";
 
 
 
@@ -87,7 +86,6 @@ function App() {
 
         <Route path="/itemdetail" element={<ItemDetail />} />
         <Route path="/payment" element={<Payment />} />
-        <Route path="/payment2" element={<Payment2 />} />
       </Routes>
 
       {/* 회원가입 */}
