@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.i4.dandog.entity.Item;
 import com.i4.dandog.entity.ItemImage;
 import com.i4.dandog.service.ItemImageService;
+import com.i4.dandog.service.ItemInfoImageService;
 import com.i4.dandog.service.ItemService;
 
 import lombok.AllArgsConstructor;
@@ -33,6 +34,7 @@ public class ItemController {
 
 	ItemService service;
 	ItemImageService iservice;
+	ItemInfoImageService iiservice;
 	
 	
 	// ======== 상품 리스트 =======
@@ -55,6 +57,7 @@ public class ItemController {
 	public String itemDetail(Item entity, Model model) {
 		model.addAttribute("itemDetail", service.selectOne(entity.getItem_no()));
 		model.addAttribute("itemImages", iservice.findByItemNo(entity.getItem_no()));
+		model.addAttribute("itemInfoImages", iiservice.findByItemNo(entity.getItem_no()));
 		
 		return "item/itemDetail";
 	}
