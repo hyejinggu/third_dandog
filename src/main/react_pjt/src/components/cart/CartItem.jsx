@@ -12,7 +12,7 @@ const CartItem = ({
     <tbody>
       <tr>
         <td>
-          <img src={selectedItem.image[1]} alt="이미지" />
+          {/* <img src={ } alt="이미지" /> */}
           <span className="text-ellipsis">{selectedItem.name}</span>
         </td>
         <td>
@@ -22,16 +22,16 @@ const CartItem = ({
         </td>
         <td className="price">
           <span className="sale_info">{selectedItem.saleInfo}%</span>
-          <del>{selectedItem.normalPr.toLocaleString("ko")}원</del>
+          {/* <del>{selectedItem.normalPr.toLocaleString("ko")}원</del> */}
           <span className="sale_price">
-            {(
+            {/* {(
               selectedItem.normalPr -
               (selectedItem.normalPr * selectedItem.saleInfo) / 100
             ).toLocaleString("ko")}
-            원
+            원 */}
           </span>
         </td>
-        <td className="total">{totalPrice().toLocaleString()}원</td>
+        {/* <td className="total">{totalPrice().toLocaleString()}원</td> */}
         <td>
           <input type="button" onClick={handleDelete} value="X" />
         </td>
