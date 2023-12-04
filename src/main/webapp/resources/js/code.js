@@ -55,7 +55,6 @@ function addCodeName() {
 function codeInsertToDB() {
 	let formData = new FormData(document.getElementById("code_insert_form"));
 	let url = "/code/insert";
-
 	axios.post(url, formData
 	).then(response => {
 		getcodeList();

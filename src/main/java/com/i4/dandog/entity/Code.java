@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,4 +29,7 @@ public class Code {
 	private String code_name;
 	
 	private String code_value;
+	
+	@Transient
+	private String new_code_name;
 }

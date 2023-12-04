@@ -37,10 +37,14 @@ public class CodeController {
 	
 	@PostMapping("/insert")
 	public String insert(Code entity, Model model) {
-		
-		String uri = "/code/codeList";
-		service.save(entity);
-		return uri;
+	    String new_code = entity.getNew_code_name();
+	    if (new_code != null && !new_code.isEmpty()) {
+	        entity.setCode_name(new_code);
+	    }
+
+	    String uri = "/code/codeList";
+	    service.save(entity);
+	    return uri;
 	}
 	
 	

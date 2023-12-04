@@ -31,7 +31,7 @@
 				        </c:forEach>
 				    </select>
 				    <span id="add" class="add" onclick="addCodeName()">새로운 코드 분류 추가</span>
-				    <input type="text" name="code_name" id="newCodeNameInput" placeholder="새로운 코드 분류 이름" style="display: none;">
+				    <input type="text" name="new_code_name" id="newCodeNameInput" placeholder="새로운 코드 분류 이름" style="display: none;">
 				</td>
 
 				<td><input type="text" name="code_value" placeholder="코드 값 입력" /></td>
