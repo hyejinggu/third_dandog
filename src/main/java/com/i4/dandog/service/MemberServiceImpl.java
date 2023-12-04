@@ -76,9 +76,15 @@ public class MemberServiceImpl implements MemberService {
 
 	// ** 관리자 delete
 	@Override
-    public String deleteById(String user_id) {
-    	repository.deleteById(user_id);
-    	return user_id;
-    }
+	public String deleteById(String user_id) {
+		repository.deleteById(user_id);
+		return user_id;
+	}
+
+	// ** 관리자 Search
+	@Override
+	public List<Member> searchMembers(String searchField, String searchValue) {
+	    return repository.searchMembers(searchField, searchValue);
+	}
 
 } // class

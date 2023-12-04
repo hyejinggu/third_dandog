@@ -33,4 +33,7 @@ public interface MemberService {
 	// ** 관리자 delete
 	String deleteById(String user_id);
 
+	// ** 관리자 Search
+	List<Member> searchMembers(String searchField, String searchValue);
+
 }
