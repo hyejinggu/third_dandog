@@ -16,7 +16,7 @@ export default function CommunityPost({ loungeArray }) {
               <Link to="/community/loungepostdetail" state={{ post: post }}>
                 <div>
                   <img
-                    src={`/images/item/${post.lounge_img}`}
+                    src={`/images/community/${post.lounge_img}`}
                     alt={`Lounge ${index + 1}`}
                   />
                 </div>

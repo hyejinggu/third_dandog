@@ -27,7 +27,6 @@
 
 .content_wrap .gridContainer {
   display: grid;
-  grid-template-rows: 1fr 1.5fr;
   align-items: center;
   gap: 10px; /* 열 사이의 간격을 설정합니다. */
 }
@@ -78,9 +77,19 @@
   border: none;
 }
 
-.edit_input {
+.edit_input,
+.edit_textarea {
   width: 100%;
   border: 1px solid #ffe344;
   border-radius: 10px;
   padding: 5px 0;
+}
+
+.edit_textarea {
+  height: 500px;
+}
+
+.origin_img {
+  width: 150px;
+  height: 150px;
 }

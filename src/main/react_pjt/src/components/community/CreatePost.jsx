@@ -1,11 +1,10 @@
-import styles from "../../css/subpage/create_post.module.css";
+import styles from "../../css/subpage/lounge_post_detail.module.css";
 import React, { useState, useRef, useContext } from "react";
-import { CreatePostContext } from "./Community";
+import { useNavigate } from "react-router-dom";
 import Modal from "../common/Modal";
 
 const CreatePost = () => {
-  const { addPostFromLocalStorage } = useContext(CreatePostContext);
-
+  const navigate = useNavigate();
   // const [image, setImage] = useState(null);
   const titleRef = useRef(null);
   const contentRef = useRef(null);
@@ -21,81 +20,96 @@ const CreatePost = () => {
     } else if (!postContent) {
       contentRef.current.focus();
     } else {
-      localStorage.setItem("title", postTitle);
-      localStorage.setItem("content", postContent);
-      addPostFromLocalStorage();
       setIsModalOpen(true);
     }
   };
 
+  const handleGoBack = () => {
+    navigate(-1); // This is equivalent to history.goBack()
+  };
+
+  function handleInsert() {}
+
   return (
-    <div className={styles.createpost_wrap}>
-      <div>
-        {isModalOpen && (
-          <Modal
-            isModalOpen={isModalOpen}
-            setIsModalOpen={setIsModalOpen}
-            modalContent={"글 작성이 완료되었습니다."}
-            modalAfterPath={"/community/lounge/*"}
-          />
-        )}
-      </div>
-      <h2>글쓰기</h2>
-      <div className={styles.form_wrap}>
-        <form onSubmit={handleSubmit}>
-          {/* 제목 영역 */}
-          <div className={styles.title_wrap}>
-            <label htmlFor="title">제목</label>
-            <select name="commmu_board_select" id="commmu_board_select">
-              <option value="general">자유 게시판</option>
-              <option value="consult">고민 상담소</option>
-              <option value="sharing_info">지식 공유</option>
-              <option value="find_friends">친구 찾기</option>
-            </select>
-            <input
-              type="text"
-              id="title"
-              value={postTitle}
-              onChange={(e) => setPostTitle(e.target.value)}
-              ref={titleRef}
-            />
-            <div className={styles.empty_alert}>
-              {postTitle ? "" : "제목을 입력하세요"}
-            </div>
-          </div>
+    <div className={styles.post_detail_wrap}>
+      {isModalOpen && (
+        <Modal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          modalContent={"정말 삭제하시겠습니까?"}
+          modalAfterPath={"/community"}
+          requestAxios={`/lounge/postDelete`}
+        />
+      )}
+      <h2>커뮤니티 글</h2>
+      <table className={styles.table}>
+        <colgroup>
+          <col style={{ width: "20%" }} />
+          <col style={{ width: "30%" }} />
+          <col style={{ width: "20%" }} />
+          <col style={{ width: "30%" }} />
+        </colgroup>
+        <tbody>
+          <tr>
+            <th scope="row">카테고리</th>
+            <td>
+              <select name="lounge_category">
+                <option value="자유 게시판">자유 게시판</option>
+                <option value="고민 상담소">고민 상담소</option>
+                <option value="지식 공유">지식 공유</option>
+                <option value="친구 찾기">친구 찾기</option>
+              </select>
+            </td>
 
-          {/* 내용 영역 */}
-          <div className={styles.content_wrap}>
-            <label htmlFor="content">내용</label>
-            <textarea
-              id="content"
-              value={postContent}
-              onChange={(e) => setPostContent(e.target.value)}
-              ref={contentRef}
-            />
-            <div className={styles.empty_alert}>
-              {postContent ? "" : "내용을 입력하세요"}
-            </div>
-          </div>
-
-          {/* 이미지 영역 */}
-          <div className={styles.image_wrap}>
-            <label htmlFor="image">이미지 첨부</label>
-            <input
-              type="file"
-              id="image"
-              accept="image/*"
-              // onChange={handleImageChange}
-            />
-          </div>
-
-          <div className={styles.button_wrap}>
-            <button type="submit" onClick={handleSubmit}>
-              작성 완료
-            </button>
-          </div>
-        </form>
-      </div>
+            <th scope="row">작성자</th>
+            <td>
+              <input
+                type="text"
+                value={sessionStorage.getItem("loginId")}
+                readOnly
+              />
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">제목</th>
+            <td colSpan={3}>
+              <input type="text" />
+            </td>
+          </tr>
+          <tr className={styles.content_wrap}>
+            <th scope="row">내용</th>
+            <td colspan="3">
+              <div className={styles.gridContainer}>
+                <textarea name="" id="" cols="30" rows="10"></textarea>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">첨부파일</th>
+            <td colSpan={3}>
+              <input type="file" />
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={4}>
+              <div className={styles.btn_wrap}>
+                <input
+                  className={styles.btn}
+                  type="button"
+                  onClick={handleGoBack}
+                  value={"글 목록"}
+                />
+                <input
+                  className={styles.btn}
+                  type="button"
+                  onClick={handleInsert}
+                  value={"등록"}
+                />
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Modal from "../common/Modal";
 
 const LoungePostDetail = () => {
   const location = useLocation();
@@ -10,6 +11,7 @@ const LoungePostDetail = () => {
   const post = location.state.post;
   const [updatedHits, setUpdatedHits] = useState(0);
   const [updatedLikes, setUpdatedLikes] = useState(post.lounge_likes);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const loginId = sessionStorage.getItem("loginId");
 
@@ -45,10 +47,21 @@ const LoungePostDetail = () => {
         console.error("추천수 업데이트 실패:", error);
       });
   }
-  function handleDelete() {}
+  function handleDelete() {
+    setIsModalOpen(true);
+  }
 
   return (
     <div className={styles.post_detail_wrap}>
+      {isModalOpen && (
+        <Modal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          modalContent={"정말 삭제하시겠습니까?"}
+          modalAfterPath={"/community"}
+          requestAxios={`/lounge/postDelete?lounge_no=${post.lounge_no}`}
+        />
+      )}
       <h2>커뮤니티 글</h2>
       <table className={styles.table}>
         <colgroup>
@@ -82,7 +95,7 @@ const LoungePostDetail = () => {
             <th scope="row">내용</th>
             <td colspan="3">
               <div className={styles.gridContainer}>
-                <img src={`/images/item/${post.lounge_img}`} alt="" />
+                <img src={`/images/community/${post.lounge_img}`} alt="" />
                 <span>{post.lounge_content}</span>
               </div>
             </td>
