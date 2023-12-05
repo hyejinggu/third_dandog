@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Transient;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,9 +55,13 @@ public class Qna extends BaseEntity {
 	
 	//private int indent; // DB에도 추가하기
 	//==================================
+	
+	// 파일 업로드를 위한 필드 추가
+//    @Transient
+//    private MultipartFile qnafile;  // 업로드된 파일을 저장하는 필드
+	
 	@LastModifiedDate
 	@Column(name = "answer_regdate")
 	private LocalDateTime answer_regdate;
 
-	
 }

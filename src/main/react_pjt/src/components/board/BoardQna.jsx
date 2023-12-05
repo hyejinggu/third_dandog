@@ -1,6 +1,7 @@
 import "../../css/board/board.css";
 import { Link } from "react-router-dom";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 //import Creat from "./NeighborReview";
 
 // 게시판 글 목록 배열
@@ -13,8 +14,26 @@ const BoardQna = () => {
     // 위의 useState가 빈 배열로 바뀌고 아래 한 줄이 추가되면서 다시 배열의 위로 위치함.
 
     // 게시판 글 목록 데이터 배열. table을 배열로 수정. const로 수정
-    const boardArray = [
-    ]
+
+    const [boardArray, setBoardArray] = useState([]);
+    //const boardList = boardArray;
+
+    console.log('boardArray' + boardArray);
+    useEffect(() => {
+        axios
+            .post("/qnar/qnaList")
+            .then((res) => {
+                setBoardArray(res.data);
+                console.log('res.data : ' + res.data);
+            })
+            .catch((res) => console.log('** res.data.err : ' + res));
+    }, [openQuestion, searchText]);
+
+    // CreateQuestion에서 글을 등록하는 로직 수행 후
+    // 데이터를 다시 불러오기 위해 openQuestion 상태를 변경
+    const handleCreateQuestion = () => {
+        setOpenQuestion(openQuestion === null ? 0 : null);
+    }
 
     // 검색 버튼을 누르면 필터링된 항목을 보여지게 하는 함수. boardArray 보다 앞에 위치해야 작동함.
     /* const handleSearch = (e) => {
@@ -59,10 +78,24 @@ const BoardQna = () => {
     }; // ... (펼치기/접기 로직)
 
     // 검색어 입력후 공지사항 눌렀을때 다시 초기 테이블(항목이 나오게)로 돌아가기 함수
+    // const [boardArray, setBoardArray] = useState([]);
     const handleInitialTable = () => {
+
+        // useEffect(() => {
+        //     axios
+        //         .get("/qnar/qnaList")
+        //         .then((res) => {
+        //             alert("** qnaList 성공 **");
+        //             setBoardArray(res.data);
+        //             console.log(res.data);
+        //         })
+        //         .catch((res) => console.log(res));
+        // }, [openQuestion, searchText]);
+
         setFilteredBoardArray([]); // 초기 테이블 항목을 보여주기 위해 필터링된 배열 초기화
         setShowInitialTable(true); // 초기 테이블 내용 보여주기
-        setSearchText(""); // 검색어 초기화
+        setSearchText(""); // 검색어 초기
+
     };
 
     // 고객센터 게시판 종류
@@ -123,25 +156,36 @@ const BoardQna = () => {
                         {showInitialTable ? (
                             // 초기 테이블 항목 보여주기
                             boardArray.map((item, index) => (
-                                <React.Fragment key={item.number}>
+                                <React.Fragment key={item.qna_seq}>
                                     <tr className={`question_1 ${openQuestion === index ? "show-answer" : ""}`}
                                         onClick={() => toggleAnswer(index)}>
                                         <td></td>
-                                        <td>{item.number}</td>
-                                        <td>{item.title}</td>
-                                        <td>{item.writer}</td>
-                                        <td>{item.date}</td>
-                                        <td>{item.view}</td>
+                                        <td>{item.qna_seq}</td>
+                                        <td>{item.qna_title}</td>
+                                        <td>{item.user_id}</td>
+                                        <td>{item.regdate}</td>
+                                        <td>{item.qna_view}</td>
                                     </tr>
+
                                     {openQuestion === index && (
+                                        // <tr className="answer">
+                                        //     {/* tr.answer의 시작점을 tr.question_1.show-answer의 세 번째 td와 같도록 수정 */}
+                                        //     <td></td>
+                                        //     <td></td>
+                                        //     <td colSpan="4">
+                                        //         {/*  */}
+                                        //         <span>{item.answer}</span>
+                                        //     </td>
+                                        // </tr>
                                         <tr className="answer">
-                                            {/* tr.answer의 시작점을 tr.question_1.show-answer의 세 번째 td와 같도록 수정 */}
                                             <td></td>
                                             <td></td>
-                                            <td colSpan="4">
-                                                {/*  */}
-                                                <span>{item.answer}</span>
-                                            </td>
+                                            {/* <td colSpan={2}></td> */}
+                                            <td>{item.qna_content}</td>
+                                            {/* <td colSpan={3}></td> */}
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                     )}
                                 </React.Fragment>
@@ -154,21 +198,31 @@ const BoardQna = () => {
                                         <tr className={`question_1 ${openQuestion === index ? "show-answer" : ""}`}
                                             onClick={() => toggleAnswer(index)}>
                                             <td></td>
-                                            <td>{item.number}</td>
-                                            <td>{item.title}</td>
-                                            <td>{item.writer}</td>
-                                            <td>{item.date}</td>
-                                            <td>{item.view}</td>
+                                            <td>{item.qna_seq}</td>
+                                            <td>{item.qna_title}</td>
+                                            <td>{item.user_id}</td>
+                                            <td>{item.regdate}</td>
+                                            <td>{item.qna_view}</td>
                                         </tr>
                                         {openQuestion === index && (
+                                            // <tr className="answer">
+                                            //     {/* tr.answer의 시작점을 tr.question_1.show-answer의 세 번째 td와 같도록 수정 */}
+                                            //     <td></td>
+                                            //     <td></td>
+                                            //     <td colSpan="4">
+                                            //         {/*  */}
+                                            //         <span>{item.answer}</span>
+                                            //     </td>
+                                            // </tr>
                                             <tr className="answer">
-                                                {/* tr.answer의 시작점을 tr.question_1.show-answer의 세 번째 td와 같도록 수정 */}
                                                 <td></td>
                                                 <td></td>
-                                                <td colSpan="4">
-                                                    {/*  */}
-                                                    <span>{item.answer}</span>
-                                                </td>
+                                                {/* <td colSpan={2}></td> */}
+                                                <td>{item.qna_content}</td>
+                                                {/* <td colSpan={3}></td> */}
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                         )}
                                     </React.Fragment>
@@ -185,7 +239,7 @@ const BoardQna = () => {
 
                 <div className="button">
                     <Link to="/board/createquestion">
-                        <input type="button" value="글쓰기" />
+                        <input type="button" value="글쓰기" onClick={handleCreateQuestion} />
                     </Link>
                 </div>
             </div>
