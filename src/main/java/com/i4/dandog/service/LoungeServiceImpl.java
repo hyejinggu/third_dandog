@@ -6,9 +6,12 @@ import org.springframework.stereotype.Service;
 
 import com.i4.dandog.entity.Lounge;
 import com.i4.dandog.repository.LoungeRepository;
+import com.i4.dandog.restController.LoungeRestController;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class LoungeServiceImpl implements LoungeService {
@@ -35,4 +38,16 @@ public class LoungeServiceImpl implements LoungeService {
     public void delete(int lounge_no) {
     	loungeRepository.deleteById(lounge_no);
     }
+    
+    @Override
+    public void updateHits(int loungeNo) {
+    	loungeRepository.updateHits(loungeNo);
+    }
+    
+    @Override
+    public void updateLikes(int loungeNo) {
+    	loungeRepository.updateLikes(loungeNo);
+    }
+    
+    
 }

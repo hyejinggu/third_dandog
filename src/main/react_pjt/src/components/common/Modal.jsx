@@ -1,5 +1,5 @@
 import styles from "../../css/common/modal.module.css";
-
+import axios from "axios";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +8,9 @@ const Modal = ({
   modalContent,
   setIsModalOpen,
   modalAfterPath,
+  requestAxios,
+  requestMethod,
+  dataToRequest,
 }) => {
   const navigate = useNavigate();
 
@@ -17,13 +20,59 @@ const Modal = ({
     navigate(modalAfterPath);
   };
 
+  const requestGet = () => {
+    axios
+      .get(requestAxios)
+      .then((response) => {
+        setIsModalOpen(false);
+        navigate(modalAfterPath);
+        console.log("요청 성공:", response.data);
+      })
+      .catch((error) => {
+        console.error("요청 실패:", error);
+      });
+  };
+
+  const requestPost = () => {
+    axios
+      .post(requestAxios, dataToRequest, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        alert(`response.data : ${response.data}`);
+        navigate("/community");
+      })
+      .catch((err) => {
+        console.error("요청 실패:", err);
+      });
+  };
+
   return (
     <div className={styles.modal} onClick={closeModal}>
       <div className={styles.modal_wrap} onClick={(e) => e.stopPropagation()}>
         <p className={styles.modal_content}>{modalContent}</p>
-        <span className={styles.modal_btn} onClick={closeModal}>
-          확인
-        </span>
+        <div className={styles.modal_btn_wrap}>
+          {requestAxios == null ? ( // requestAxios(보낼 요청 값) 없으면 기존 모달처럼 확인 버튼만 뜸
+            <span className={styles.modal_btn} onClick={closeModal}>
+              확인
+            </span>
+          ) : requestMethod === "post" ? ( // requestMethod 방식에 따라 확인 버튼의 onClick 함수 달라짐
+            <span className={styles.modal_btn} onClick={requestPost}>
+              확인:post
+            </span>
+          ) : (
+            <span className={styles.modal_btn} onClick={requestGet}>
+              확인:get
+            </span>
+          )}
+          {requestAxios == null ? (
+            ""
+          ) : (
+            <span className={styles.modal_btn} onClick={closeModal}>
+              취소
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

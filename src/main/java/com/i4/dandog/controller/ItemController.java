@@ -44,6 +44,10 @@ public class ItemController {
             @RequestParam(name = "search_feild", defaultValue = "name") String searchField,
             @RequestParam(name = "search_value", defaultValue = "") String searchValue,
             Model model) {
+		if (searchCategory.equals("all")) {
+			searchCategory = null;
+		}
+		log.info("Controller - searchCategory: " + searchCategory);
 		model.addAttribute("itemList", service.selectList(searchCategory, searchField, searchValue));
 		model.addAttribute("itemImgList", iservice.selectList());
 		

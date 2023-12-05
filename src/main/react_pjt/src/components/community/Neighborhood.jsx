@@ -39,8 +39,12 @@ export default function Neighborhood() {
           <NeighborMap />
 
           <NeighborReview category={category} />
+          <div className={styles.review_btn}>
+            <span>
+              <NavLink to="/community/createreview">리뷰 작성</NavLink>
+            </span>
+          </div>
         </div>
-        <NavLink to="/community/createreview">리뷰 작성</NavLink>
       </div>
     </div>
   );

@@ -9,7 +9,10 @@ public interface LoungeService {
     
     Lounge selectOne(int lounge_no);
     
-	String save(Lounge dto);
+	String save(Lounge entity);
     
     void delete(int lounge_no);
+    
+    void updateHits(int loungeNo);
+    void updateLikes(int loungeNo);
 }

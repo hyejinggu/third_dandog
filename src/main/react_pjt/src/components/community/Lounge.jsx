@@ -5,12 +5,21 @@ import CommunityPost from "./CommunityPost";
 import SideBar from "./SideBar";
 import React, { useReducer, useState, useContext, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { CreatePostContext } from "./Community";
+import axios from "axios";
+// import { CreatePostContext } from "./Community";
 
 export default function Lounge() {
-  const { loungeArray } = useContext(CreatePostContext);
-
-  const loungeList = JSON.stringify(loungeArray);
+  const [loungeArray, setLoungeArray] = useState([]);
+  const loungeList = loungeArray;
+  useEffect(() => {
+    axios
+      .get("/lounge/allLoungeList")
+      .then((res) => {
+        setLoungeArray(res.data);
+        console.log(res.data);
+      })
+      .catch((res) => console.log(res));
+  }, []);
 
   const arrayReducer = (state, action) => {
     switch (action.type) {
@@ -137,9 +146,13 @@ export default function Lounge() {
               <span onClick={() => dispatch({ type: selectedValue })}>🔍</span>
             </div>
 
-            <Link to="/community/createpost">
-              <button>글쓰기</button>
-            </Link>
+            {sessionStorage.getItem("loginId") == null ? (
+              ""
+            ) : (
+              <Link to="/community/createpost">
+                <button>글쓰기</button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
