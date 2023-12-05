@@ -21,4 +21,10 @@ public interface CartService {
 
 	// delete
 	void delete(CartKeyId keyId);
+
+	List<Cart> getCartItems(String user_id);
+
+	void addToCart(String user_id, int item_no, int item_quantity);
+	
+
 }

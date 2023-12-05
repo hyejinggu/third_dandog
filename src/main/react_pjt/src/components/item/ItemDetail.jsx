@@ -40,20 +40,28 @@ const ItemDetail = () => {
     setMainImage(imageUrl); // 클릭한 이미지를 메인 이미지로 설정
   };
 
-
+  const loginId = sessionStorage.getItem('loginId') || "admin";
   const cartRequest = {
-    user_id: sessionStorage.loginId,
+    user_id: loginId,
     item_no: selectedItem.item_no,
     item_quantity: quantity,
   };
 
+  // axios를 사용하여 서버에 장바구니 담기 요청
   const handleAddToCart = () => {
+    console.log(cartRequest);
     axios
-      .post("/cart/add", cartRequest)
+      .post(`/restCart/addCart?user_id=${loginId}`, cartRequest, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => {
-        alert(`response.data : ${response.data}`);
+        // 성공적으로 응답을 받았을 때 처리
+        alert(`상품이 장바구니에 담겼습니다.`);
       })
       .catch((error) => {
+        // 에러 발생 시 처리
         if (error.response) {
           console.error("서버에서 오류 응답:", error.response.data);
           console.error("Status code:", error.response.status);
@@ -212,7 +220,12 @@ const ItemDetail = () => {
             </div>
             {/* 장바구니 버튼 */}
             <div>
-              <Link to="/cart">
+              <Link to="/cart"
+                state={{
+                  selectedItem: selectedItem,
+                  item_quantity: quantity,
+                }}
+              >
                 <input
                   type="button"
                   value="장바구니 담기"

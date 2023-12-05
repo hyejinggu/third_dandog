@@ -1,41 +1,64 @@
-import CartItem from "./CartItem";
-import CartItemPrice from "./CartItemPrice";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import styles from "../../css/subpage/ItemDetail.module.css";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import CartItem from "./CartItem";
 import EmptyItem from "./EmptyItem";
-import "../../css/cart/cart.css";
+import CartItemPrice from "./CartItemPrice";
+import { useLocation } from "react-router-dom";
 
-export default function Cart() {
+const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const location = useLocation();
+  const selectedItem = location.state.item;
 
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
-    setCartItems(storedCart);
+    const fetchData = async () => {
+      try {
+        // 실제 서버 엔드포인트로 변경
+        const response = await axios.get("/cart");
+        setCartItems(response.data);
+      } catch (error) {
+        console.error("데이터를 가져오는 동안 오류 발생:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const handleDelete = (index, itemName) => {
-    const confirmDelete = window.confirm(
-      `<${itemName}> 상품을 삭제하시겠습니까?`
-    );
+  const handleAddToCart = async () => {
+    try {
+      const response = await axios.post("/cart/add", {
+        user_id: sessionStorage.loginId, // 이 부분이 문제일 수 있음
+        item_no: selectedItem.item_no, // item_no를 정확히 가져오는지 확인
+        item_quantity: quantity, // quantity가 정확한지 확인
+      });
 
-    if (confirmDelete) {
-      const updatedCart = [...cartItems];
-      updatedCart.splice(index, 1); // 해당 인덱스의 아이템 삭제
-      setCartItems(updatedCart);
-      localStorage.setItem("cart", JSON.stringify(updatedCart)); // 로컬 스토리지 업데이트
+      console.log("장바구니에 상품이 추가되었습니다.", response.data);
+    } catch (error) {
+      console.error("장바구니에 상품 추가 중 오류 발생:", error);
     }
   };
 
-  // 수량 관리
+  const handleDelete = (index, itemName) => {
+    const confirmDelete = window.confirm(`<${itemName}> 상품을 삭제하시겠습니까?`);
+
+    if (confirmDelete) {
+      const updatedCart = [...cartItems];
+      updatedCart.splice(index, 1);
+      setCartItems(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    }
+  };
+
   const handleIncrease = (index, event) => {
     event.preventDefault();
     const updatedCart = [...cartItems];
     updatedCart[index].quantity += 1;
     setCartItems(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart)); // 로컬 스토리지 업데이트
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
-
-  // 수량이 0 미만으로 갈때
 
   const handleDecrease = (index, event) => {
     event.preventDefault();
@@ -43,13 +66,12 @@ export default function Cart() {
       const updatedCart = [...cartItems];
       updatedCart[index].quantity -= 1;
       setCartItems(updatedCart);
-      localStorage.setItem("cart", JSON.stringify(updatedCart)); // 로컬 스토리지 업데이트
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
     } else {
       alert("최소 주문수량은 1개 입니다.");
     }
   };
 
-  // 수량에 맞춰 가격 계산
   const calculateTotalPrice = (item) => {
     const originalPr = item.selectedItem.normalPr;
     const salePr = originalPr - originalPr * (item.selectedItem.saleInfo / 100);
@@ -57,7 +79,6 @@ export default function Cart() {
     return totalpr;
   };
 
-  // 장바구니 가격 총합
   const calculateTotalCartPrice = () => {
     let totalCartPrice = 0;
 
@@ -70,55 +91,52 @@ export default function Cart() {
   };
 
   const delivery_price = () => {
-    // const totalpr = salePr * quantity
-    return calculateTotalCartPrice() >= 50000 ? 0 : 3000;
+    return calculateTotalCartPrice() >= 30000
+      ? 0
+      : 3000;
   };
 
   return (
-    <>
-      <h2 className="title">장바구니</h2>
-      <div className="cart">
-        {cartItems.length === 0 ? (
+        <> < h2 className="title" > 장바구니</h2> < div className="cart" > {/* {cartItems.length === 0 ? (
           <EmptyItem />
-        ) : (
-          <form action="#" method="post">
-            <table>
-              <thead>
-                <tr>
-                  <th>상품/옵션 정보</th>
-                  <th>수량</th>
-                  <th>상품금액</th>
-                  <th>합계금액</th>
-                  <th> </th>
-                </tr>
-              </thead>
+        ) : ( */
+    } < form action="#" method="post" > <table>
+      <thead>
+        <tr>
+          <th>상품/옵션 정보</th>
+          <th>수량</th>
+          <th>상품금액</th>
+          <th>합계금액</th>
+          <th></th>
+        </tr>
+      </thead>
 
-              {cartItems.map((item, index) => (
-                <CartItem
-                  key={index}
-                  selectedItem={item.selectedItem}
-                  quantity={item.quantity}
-                  onIncrease={(event) => handleIncrease(index, event)}
-                  onDecrease={(event) => handleDecrease(index, event)}
-                  totalPrice={() => calculateTotalPrice(item)}
-                  handleDelete={() =>
-                    handleDelete(index, item.selectedItem.name)
-                  } // 삭제 핸들러 전달
-                />
-              ))}
-            </table>
+      {
+        cartItems.map((item) => (
+          <CartItem
+            key={item.cart_id}
+            selectedItem={item.selectedItem}
+            quantity={item.item_quantity}
+            onIncrease={(event) => handleIncrease(item.cart_id, event)}
+            onDecrease={(event) => handleDecrease(item.cart_id, event)}
+            totalPrice={() => calculateTotalPrice(item)}
+            handleDelete={() => handleDelete(item.cart_id, item.selectedItem.item_name)} />
+        ))
+      }
+    </table>
 
-            <CartItemPrice
-              totalPrice={calculateTotalCartPrice}
-              delivery_price={delivery_price}
-            />
+        <CartItemPrice
+          totalPrice={calculateTotalCartPrice}
+          delivery_price={delivery_price} />
 
-            <Link to="/payment">
-              <input type="button" value="구매하기" className="order" />
-            </Link>
-          </form>
-        )}
-      </div>
-    </>
-  );
-}
+        <Link to="/payment">
+          <input type="button" value="구매하기" className="order" />
+        </Link>
+      </form>
+      {/* )} */
+      } < /div>
+    </ >
+      );
+};
+
+      export default Cart;
