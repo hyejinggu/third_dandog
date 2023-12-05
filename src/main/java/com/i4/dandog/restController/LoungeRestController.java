@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.i4.dandog.entity.Item;
 import com.i4.dandog.entity.Lounge;
 import com.i4.dandog.entity.Qna;
 import com.i4.dandog.service.LoungeService;
@@ -27,16 +28,21 @@ import lombok.extern.log4j.Log4j2;
 public class LoungeRestController {
 
 	LoungeService service;
-	
-	@GetMapping("/loungeList")
-	public List<Lounge> allLoungeList() {
 
-	    return service.getAllLounge();
+	@GetMapping("/loungeList")
+	public List<Lounge> loungeList(@RequestParam(name = "category") String category, 
+			@RequestParam(name = "sort") String sort,
+			@RequestParam(name = "filterValue") String filterValue,
+			@RequestParam(name = "inputValue") String inputValue
+			) {
+//		List<Lounge> loungeList; 
+//		loungeList = service.findByDynamicQuery(category, inputValue, filterValue, sort);
+	    
+	    return service.findByDynamicQuery(category, inputValue, filterValue, sort);
 	}
 
-	
 	@GetMapping("/updateHits")
-	public int updateHits(@RequestParam(name="lounge_no") String lounge_no){
+	public int updateHits(@RequestParam(name = "lounge_no") String lounge_no) {
 
 		int loungeNo = Integer.parseInt(lounge_no);
 		int loungeHits = 0;
@@ -47,14 +53,12 @@ public class LoungeRestController {
 		} catch (Exception e) {
 			log.error("update ERROR lounge hits", e);
 		}
-		
+
 		return loungeHits;
 	}
-	
-	
-	
+
 	@GetMapping("/updateLikes")
-	public int updateLikes(@RequestParam(name="lounge_no") String lounge_no){
+	public int updateLikes(@RequestParam(name = "lounge_no") String lounge_no) {
 
 		int loungeNo = Integer.parseInt(lounge_no);
 		int loungeLikes = 0;
@@ -65,11 +69,10 @@ public class LoungeRestController {
 		} catch (Exception e) {
 			log.error("update ERROR lounge likes", e);
 		}
-		
+
 		return loungeLikes;
 	}
-	
-	
+
 	@PostMapping("/postUpdate")
 	public String postUpdate(Lounge entity) throws IOException {
 		String realPath = "D:\\teamproject\\third_dandog\\dandog\\src\\main\\react_pjt\\public\\images\\";
@@ -83,7 +86,7 @@ public class LoungeRestController {
 			String file2 = uploadfilef1.getOriginalFilename();
 			entity.setLounge_img(file2);
 		}
-		
+
 		try {
 			service.save(entity);
 			return "성공";
@@ -92,12 +95,11 @@ public class LoungeRestController {
 			log.info("insert Exception: " + e.toString());
 			return null;
 		}
-		
+
 	}
-	
-	
+
 	@GetMapping("/postDelete")
-	public String postDelete(@RequestParam(name="lounge_no") String lounge_no) {
+	public String postDelete(@RequestParam(name = "lounge_no") String lounge_no) {
 		int loungeNo = Integer.parseInt(lounge_no);
 		try {
 			service.delete(loungeNo);
@@ -107,7 +109,5 @@ public class LoungeRestController {
 			return "실패";
 		}
 	}
-	
-	
 
 }

@@ -5,7 +5,7 @@ import Modal from "../common/Modal";
 import axios from "axios";
 
 const CreatePost = () => {
-  const { addPostFromLocalStorage } = useContext(CreatePostContext);
+  // const { addPostFromLocalStorage } = useContext(CreatePostContext);
 
   // const [image, setImage] = useState(null);
   const titleRef = useRef(null);

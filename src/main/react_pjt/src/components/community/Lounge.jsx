@@ -9,13 +9,13 @@ import axios from "axios";
 export default function Lounge() {
   const [loungeArray, setLoungeArray] = useState([]);
   const loungeList = loungeArray;
-  const [itemSort, setItemSort] = useState("");
+  const [sort, setSort] = useState("new");
   const [inputValue, setInputValue] = useState("");
   const [category, setCategory] = useState("자유 게시판");
-  // 글 검색을 위해 select, input value에 useState 설정
   const [filterValue, setFilterValue] = useState("all");
   let queryCategory = "free";
   useEffect(() => {
+    setInputValue("");
     switch (category) {
       case "자유 게시판":
         queryCategory = "free";
@@ -33,47 +33,52 @@ export default function Lounge() {
         queryCategory = "free";
         break;
     }
-    axios
-      .get(
-        `/lounge/loungeList?category=${queryCategory}&sort${itemSort}&inputValue=${inputValue}`
-      )
-      .then((res) => {
-        setLoungeArray(res.data);
-        console.log(res.data);
-      })
-      .catch((res) => console.log(res));
+    handleLoungeList(
+      `/lounge/loungeList?category=${queryCategory}&sort=${sort}&filterValue&inputValue`
+    );
   }, [category]);
 
+  useEffect(() => {
+    if (inputValue == "") {
+      handleLoungeList(
+        `/lounge/loungeList?category=${queryCategory}&sort=${sort}&filterValue&inputValue`
+      );
+    } else {
+      handleLoungeList(
+        `/lounge/loungeList?category=${queryCategory}&sort=${sort}&filterValue=${filterValue}&inputValue=${inputValue}`
+      );
+    }
+  }, [sort]);
+
   const handleInputValue = () => {
-    handleItemList(
-      `/item/loungeList?category=${queryCategory}&sort=${itemSort}&inputValue=${inputValue}`
+    handleLoungeList(
+      `/lounge/loungeList?category=${queryCategory}&sort=${sort}&filterValue=${filterValue}&inputValue=${inputValue}`
     );
+    // setInputValue("");
   };
 
-  const handleItemList = (requestURL) => {};
+  const handleLoungeList = (requestURL) => {
+    axios.get(`${requestURL}`).then((res) => {
+      setLoungeArray(res.data);
+    });
+  };
 
   const handleSort = (e) => {
     switch (e.target.innerText) {
-      case "인기순":
-        setItemSort("popular");
+      case "인기글":
+        setSort("popular");
         break;
-      case "높은가격순":
-        setItemSort("high");
+      case "최신순":
+        setSort("new");
         break;
-      case "낮은가격순":
-        setItemSort("low");
-        break;
-      case "신상품순":
-        setItemSort("new");
+      case "오래된순":
+        setSort("old");
         break;
       default:
-        setItemSort("new");
+        setSort("new");
         break;
     }
   };
-
-  // 글 추가, 정렬을 위해 useReducer 설정
-  // const [array, dispatch] = useReducer(arrayReducer, loungeList);
 
   // page 이동
   const [page, setPage] = useState(1);
@@ -94,7 +99,6 @@ export default function Lounge() {
       <div className={styles.sort}>
         <ul>
           <li onClick={(e) => handleSort(e)}>인기글</li>
-          <li onClick={(e) => handleSort(e)}>공지사항</li>
           <li onClick={(e) => handleSort(e)}>최신순</li>
           <li onClick={(e) => handleSort(e)}>오래된순</li>
         </ul>
@@ -105,17 +109,18 @@ export default function Lounge() {
             id="search_condition"
           >
             <option value="all">전체</option>
-            <option value="title">제목</option>
-            <option value="content">내용</option>
-            <option value="id">작성자</option>
+            <option value="lounge_title">제목</option>
+            <option value="lounge_content">내용</option>
+            <option value="user_id">작성자</option>
           </select>
           <input
             onChange={(e) => setInputValue(e.target.value)}
             type="text"
+            value={inputValue}
             placeholder="검색"
             onKeyDown={(e) => {
               if (e.keyCode === 13) {
-                handleInputValue(e);
+                handleInputValue();
               }
             }}
           />
@@ -144,14 +149,14 @@ export default function Lounge() {
           </table>
 
           {/* 검색 및 글쓰기 */}
-          <div className={styles.search_and_post}>
+          <div className={styles.counting_post}>
             <p>총 {loungeArray.length}개의 글</p>
 
             {sessionStorage.getItem("loginId") == null ? (
               ""
             ) : (
               <Link to="/community/createpost">
-                <button>글쓰기</button>
+                <span className={styles.posting}>글쓰기</span>
               </Link>
             )}
           </div>

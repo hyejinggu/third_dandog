@@ -26,7 +26,7 @@ public class LoungeController {
 
 	@GetMapping(value = "/loungeList")
 	public String getLoungeList(Model model) {
-		model.addAttribute("loungeList", loungeService.getAllLounge());
+		model.addAttribute("loungeList", loungeService.selectList());
 		return "lounge/lounge";
 	}
 
