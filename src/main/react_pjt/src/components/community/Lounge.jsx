@@ -146,9 +146,13 @@ export default function Lounge() {
               <span onClick={() => dispatch({ type: selectedValue })}>🔍</span>
             </div>
 
-            <Link to="/community/createpost">
-              <button>글쓰기</button>
-            </Link>
+            {sessionStorage.getItem("loginId") == null ? (
+              ""
+            ) : (
+              <Link to="/community/createpost">
+                <button>글쓰기</button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

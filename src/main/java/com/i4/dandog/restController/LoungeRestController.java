@@ -85,8 +85,9 @@ public class LoungeRestController {
 		}
 		
 		try {
-			log.info("insert 성공!" + service.save(entity));
-			return "성공!";
+			service.save(entity);
+			return "성공";
+
 		} catch (Exception e) {
 			log.info("insert Exception: " + e.toString());
 			return null;

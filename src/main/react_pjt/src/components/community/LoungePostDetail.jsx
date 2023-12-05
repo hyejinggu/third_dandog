@@ -60,6 +60,7 @@ const LoungePostDetail = () => {
           modalContent={"정말 삭제하시겠습니까?"}
           modalAfterPath={"/community"}
           requestAxios={`/lounge/postDelete?lounge_no=${post.lounge_no}`}
+          requestMethod={"get"}
         />
       )}
       <h2>커뮤니티 글</h2>
