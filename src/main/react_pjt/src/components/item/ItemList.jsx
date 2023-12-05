@@ -29,6 +29,12 @@ const ItemList = () => {
     );
   }, [itemSort]);
 
+  const handleInputValue = () => {
+    handleItemList(
+      `/item/getItemList?category=${category}&sort=${itemSort}&inputValue=${inputValue}`
+    );
+  };
+
   const handleItemList = (requestURL) => {
     axios
       .get(`${requestURL}`)
@@ -101,12 +107,12 @@ const ItemList = () => {
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={(e) => {
                 if (e.keyCode === 13) {
-                  handleSort(e);
+                  handleInputValue();
                 }
               }}
             />
           </div>
-          <span onClick={handleItemList}>🔍</span>
+          <span onClick={handleInputValue}>🔍</span>
         </div>
       </div>
 

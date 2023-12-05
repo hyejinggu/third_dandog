@@ -5,8 +5,26 @@ import axios from "axios";
 const NeighborReview = ({ category }) => {
   const [neighborArray, setNeighborArray] = useState([]);
   useEffect(() => {
+    let queryCategory = "beauty";
+    switch (category) {
+      case "뷰티, 미용":
+        queryCategory = "beauty";
+        break;
+      case "병원":
+        queryCategory = "hospital";
+        break;
+      case "카페, 호텔":
+        queryCategory = "cafe";
+        break;
+      case "훈련, 시터":
+        queryCategory = "training";
+        break;
+      default:
+        queryCategory = "beauty";
+        break;
+    }
     axios
-      .get("/neighbor/review?category=" + category)
+      .get("/neighbor/review?category=" + queryCategory)
       .then((res) => {
         setNeighborArray(res.data);
         console.log(res.data);

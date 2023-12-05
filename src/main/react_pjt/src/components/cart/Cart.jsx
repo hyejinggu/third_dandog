@@ -12,6 +12,12 @@ const Cart = () => {
   const [quantity, setQuantity] = useState(1);
   const location = useLocation();
   const selectedItem = location.state.item;
+  const loginId = sessionStorage.getItem("loginId");
+  useEffect(() => {
+    axios.get(`/restCart/getCartItems/${loginId}`).then((response) => {
+      alert(response.data);
+    });
+  }, []);
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -42,7 +48,9 @@ const Cart = () => {
   // };
 
   const handleDelete = (index, itemName) => {
-    const confirmDelete = window.confirm(`<${itemName}> 상품을 삭제하시겠습니까?`);
+    const confirmDelete = window.confirm(
+      `<${itemName}> 상품을 삭제하시겠습니까?`
+    );
 
     if (confirmDelete) {
       const updatedCart = [...cartItems];
@@ -91,31 +99,30 @@ const Cart = () => {
   };
 
   const delivery_price = () => {
-    return calculateTotalCartPrice() >= 30000
-      ? 0
-      : 3000;
+    return calculateTotalCartPrice() >= 30000 ? 0 : 3000;
   };
 
   return (
     <>
-      < h2 className="title" > 장바구니</h2>
-      < div className="cart" >
+      <h2 className="title"> 장바구니</h2>
+      <div className="cart">
         {/* {cartItems.length === 0 ? (
           <EmptyItem />
         ) : ( */}
-        < form action="#" method="post" > <table>
-          <thead>
-            <tr>
-              <th>상품/옵션 정보</th>
-              <th>수량</th>
-              <th>상품금액</th>
-              <th>합계금액</th>
-              <th></th>
-            </tr>
-          </thead>
+        <form action="#" method="post">
+          {" "}
+          <table>
+            <thead>
+              <tr>
+                <th>상품/옵션 정보</th>
+                <th>수량</th>
+                <th>상품금액</th>
+                <th>합계금액</th>
+                <th></th>
+              </tr>
+            </thead>
 
-          {
-            cartItems.map((item) => (
+            {cartItems.map((item) => (
               <CartItem
                 key={item.cart_id}
                 selectedItem={item.selectedItem}
@@ -123,22 +130,23 @@ const Cart = () => {
                 onIncrease={(event) => handleIncrease(item.cart_id, event)}
                 onDecrease={(event) => handleDecrease(item.cart_id, event)}
                 totalPrice={() => calculateTotalPrice(item)}
-                handleDelete={() => handleDelete(item.cart_id, item.selectedItem.item_name)} />
-            ))
-          }
-        </table>
-
+                handleDelete={() =>
+                  handleDelete(item.cart_id, item.selectedItem.item_name)
+                }
+              />
+            ))}
+          </table>
           <CartItemPrice
             totalPrice={calculateTotalCartPrice}
-            delivery_price={delivery_price} />
-
+            delivery_price={delivery_price}
+          />
           <Link to="/payment">
             <input type="button" value="구매하기" className="order" />
           </Link>
         </form>
       </div>
       {/* )} */}
-    </ >
+    </>
   );
 };
 

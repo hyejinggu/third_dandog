@@ -69,10 +69,10 @@ const CreatePost = () => {
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
                 >
-                  <option value="자유 게시판">자유 게시판</option>
-                  <option value="고민 상담소">고민 상담소</option>
-                  <option value="지식 공유">지식 공유</option>
-                  <option value="친구 찾기">친구 찾기</option>
+                  <option value="free">자유 게시판</option>
+                  <option value="trouble">고민 상담소</option>
+                  <option value="sharing">지식 공유</option>
+                  <option value="friends">친구 찾기</option>
                 </select>
               </td>
 

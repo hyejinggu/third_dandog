@@ -28,7 +28,7 @@ public class LoungeRestController {
 
 	LoungeService service;
 	
-	@GetMapping("/allLoungeList")
+	@GetMapping("/loungeList")
 	public List<Lounge> allLoungeList() {
 
 	    return service.getAllLounge();

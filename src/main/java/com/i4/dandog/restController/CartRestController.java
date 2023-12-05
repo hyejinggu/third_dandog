@@ -56,8 +56,9 @@ public class CartRestController {
 	}
 
 	// 장바구니 목록 조회
-    @GetMapping("/getCartItems")
-    public ResponseEntity<List<CartDTO>> getCartItems(@RequestParam String user_id) {
+    @GetMapping("/getCartItems/{user_id}")
+    public ResponseEntity<List<CartDTO>> getCartItems(@PathVariable String user_id) {
+    	log.info("*********************************" + user_id);
         List<CartDTO> cartItems = cartService.getCartItems(user_id);
         List<CartDTO> cartDTOs = new ArrayList<>();
 

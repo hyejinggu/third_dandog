@@ -68,10 +68,10 @@ const CreatePost = () => {
               </td>
               <td colSpan={3}>
                 <select name="neighbor_category" id="commmu_board_select">
-                  <option value="B">미용</option>
-                  <option value="H">병원</option>
-                  <option value="C">카페, 호텔</option>
-                  <option value="T">훈련, 시터</option>
+                  <option value="beauty">미용</option>
+                  <option value="hospital">병원</option>
+                  <option value="cafe">카페, 호텔</option>
+                  <option value="training">훈련, 시터</option>
                 </select>
                 <input
                   type="text"

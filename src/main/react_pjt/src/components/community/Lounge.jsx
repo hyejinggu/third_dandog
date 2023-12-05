@@ -6,78 +6,80 @@ import SideBar from "./SideBar";
 import React, { useReducer, useState, useContext, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import axios from "axios";
-// import { CreatePostContext } from "./Community";
-
 export default function Lounge() {
   const [loungeArray, setLoungeArray] = useState([]);
   const loungeList = loungeArray;
+  const [itemSort, setItemSort] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [category, setCategory] = useState("자유 게시판");
+  // 글 검색을 위해 select, input value에 useState 설정
+  const [filterValue, setFilterValue] = useState("all");
+  let queryCategory = "free";
   useEffect(() => {
+    switch (category) {
+      case "자유 게시판":
+        queryCategory = "free";
+        break;
+      case "고민 상담소":
+        queryCategory = "trouble";
+        break;
+      case "지식 공유":
+        queryCategory = "sharing";
+        break;
+      case "친구 찾기":
+        queryCategory = "friends";
+        break;
+      default:
+        queryCategory = "free";
+        break;
+    }
     axios
-      .get("/lounge/allLoungeList")
+      .get(
+        `/lounge/loungeList?category=${queryCategory}&sort${itemSort}&inputValue=${inputValue}`
+      )
       .then((res) => {
         setLoungeArray(res.data);
         console.log(res.data);
       })
       .catch((res) => console.log(res));
-  }, []);
+  }, [category]);
 
-  const arrayReducer = (state, action) => {
-    switch (action.type) {
-      // 글 정렬 case
-      case "popular":
-        return [...state].sort(
-          (a, b) => b.recommended + b.views - (a.recommended + a.views)
-        );
-      case "notice":
-        return loungeList;
+  const handleInputValue = () => {
+    handleItemList(
+      `/item/loungeList?category=${queryCategory}&sort=${itemSort}&inputValue=${inputValue}`
+    );
+  };
 
-      // 글 검색 case
-      case "allPost":
-        return inputValue === ""
-          ? state
-          : loungeList.filter(
-              (it) =>
-                it.title.includes(inputValue) ||
-                it.content.includes(inputValue) ||
-                it.userid.includes(inputValue)
-            );
-      case "postTitle":
-        return inputValue === ""
-          ? state
-          : loungeList.filter((it) => it.title.includes(inputValue));
-      case "postContent":
-        return inputValue === ""
-          ? state
-          : loungeList.filter((it) => it.content.includes(inputValue));
-      case "postUserId":
-        return inputValue === ""
-          ? state
-          : loungeList.filter((it) => it.userid.includes(inputValue));
+  const handleItemList = (requestURL) => {};
+
+  const handleSort = (e) => {
+    switch (e.target.innerText) {
+      case "인기순":
+        setItemSort("popular");
+        break;
+      case "높은가격순":
+        setItemSort("high");
+        break;
+      case "낮은가격순":
+        setItemSort("low");
+        break;
+      case "신상품순":
+        setItemSort("new");
+        break;
       default:
-        return loungeList;
+        setItemSort("new");
+        break;
     }
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    dispatch({ type: selectedValue }); // 글 목록 정렬
-  };
-
-  // 글 검색을 위해 select, input value에 useState 설정
-  const [selectedValue, setSelectedValue] = useState("allPost");
-  const [inputValue, setInputValue] = useState("");
-
-  // 사이드 바 선택
-  const [category, setCategory] = useState("자유 게시판");
-
   // 글 추가, 정렬을 위해 useReducer 설정
-  const [array, dispatch] = useReducer(arrayReducer, loungeList);
+  // const [array, dispatch] = useReducer(arrayReducer, loungeList);
 
   // page 이동
   const [page, setPage] = useState(1);
   const itemsPerPage = 8;
   const startIndex = (page - 1) * itemsPerPage;
-  const displayedItemInfo = array.slice(startIndex, startIndex + itemsPerPage);
+  // const displayedItemInfo = array.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <div id="wrap" className={styles.lounge_container}>
@@ -91,12 +93,35 @@ export default function Lounge() {
       {/* 글 정렬, 사이드 바 */}
       <div className={styles.sort}>
         <ul>
-          <li onClick={() => dispatch({ type: "popular" })}>인기글</li>
-          <li onClick={() => dispatch({ type: "notice" })}>공지사항</li>
-          <li>최신순</li>
-          <li>오래된순</li>
+          <li onClick={(e) => handleSort(e)}>인기글</li>
+          <li onClick={(e) => handleSort(e)}>공지사항</li>
+          <li onClick={(e) => handleSort(e)}>최신순</li>
+          <li onClick={(e) => handleSort(e)}>오래된순</li>
         </ul>
-        <p>총 {loungeArray.length}개의 글</p>
+        <div className={styles.search_bar}>
+          <select
+            onChange={(e) => setFilterValue(e.target.value)}
+            name="search_condition"
+            id="search_condition"
+          >
+            <option value="all">전체</option>
+            <option value="title">제목</option>
+            <option value="content">내용</option>
+            <option value="id">작성자</option>
+          </select>
+          <input
+            onChange={(e) => setInputValue(e.target.value)}
+            type="text"
+            placeholder="검색"
+            onKeyDown={(e) => {
+              if (e.keyCode === 13) {
+                handleInputValue(e);
+              }
+            }}
+          />
+
+          <span onClick={handleInputValue}>🔍</span>
+        </div>
       </div>
       <div className={styles.content_wrap}>
         <SideBar content="lounge" setCategory={setCategory} />
@@ -120,31 +145,7 @@ export default function Lounge() {
 
           {/* 검색 및 글쓰기 */}
           <div className={styles.search_and_post}>
-            <div className={styles.search_bar}>
-              <form onSubmit={onSubmit}>
-                <select
-                  onChange={(e) => setSelectedValue(e.target.value)}
-                  name="search_condition"
-                  id="search_condition"
-                >
-                  <option value="allPost">전체</option>
-                  <option value="postTitle">제목</option>
-                  <option value="postContent">내용</option>
-                  <option value="postUserId">작성자</option>
-                </select>
-                <input
-                  onChange={(e) => setInputValue(e.target.value)}
-                  type="text"
-                  placeholder="검색"
-                  onKeyDown={(e) => {
-                    if (e.keyCode === 13) {
-                      onSubmit(e);
-                    }
-                  }}
-                />
-              </form>
-              <span onClick={() => dispatch({ type: selectedValue })}>🔍</span>
-            </div>
+            <p>총 {loungeArray.length}개의 글</p>
 
             {sessionStorage.getItem("loginId") == null ? (
               ""

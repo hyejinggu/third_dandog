@@ -21,40 +21,23 @@ import lombok.extern.log4j.Log4j2;
 @AllArgsConstructor
 public class NeighborRestController {
 
-	NeighborhoodReviewService nservice;	
-	
+	NeighborhoodReviewService nservice;
+
 	@GetMapping("/review")
 	public List<NeighborhoodReview> neighborhoodReview(@RequestParam(name = "category") String category) {
-	    System.out.println("************" + category + "Review");
+		System.out.println("************" + category + "Review");
 
-	    List<NeighborhoodReview> reviews;
-	    
-	    switch (category) {
-	        case "B":
-	            reviews = nservice.findByCategory("B");
-	            break;
-	        case "H":
-	            reviews = nservice.findByCategory("H");
-	            break;
-	        case "C":
-	            reviews = nservice.findByCategory("C");
-	            break;
-	        case "T":
-	            reviews = nservice.findByCategory("T");
-	            break;
-	        default:
-	            reviews = nservice.findByCategory("B");
-	    }
+		List<NeighborhoodReview> reviews;
 
-	    return reviews;
+		reviews = nservice.findByCategory(category);
+
+		return reviews;
 	}
 
-	
-	
 	// createReview
 	@PostMapping("/createReview")
 	public String createReview(Model model, NeighborhoodReview entity) {
-		
+
 		try {
 			nservice.save(entity);
 			model.addAttribute("message", "상품 등록 성공");
@@ -64,7 +47,7 @@ public class NeighborRestController {
 			model.addAttribute("message", "상품 등록 실패");
 			return "실패냐!!";
 		}
-		
+
 	}
 
 }
