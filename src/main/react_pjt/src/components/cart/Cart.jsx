@@ -13,9 +13,13 @@ const Cart = () => {
   const location = useLocation();
   const selectedItem = location.state.item;
   const loginId = sessionStorage.getItem("loginId");
+  const [cartItemInfo, setCartItemInfo] = useState([]);
   useEffect(() => {
     axios.get(`/restCart/getCartItems/${loginId}`).then((response) => {
-      alert(response.data);
+      setCartItemInfo(response.data);
+      response.data.forEach((cartDTO) => {
+        console.log(cartDTO.item_name);
+      });
     });
   }, []);
 

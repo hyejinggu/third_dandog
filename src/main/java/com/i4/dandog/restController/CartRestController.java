@@ -60,24 +60,8 @@ public class CartRestController {
     public ResponseEntity<List<CartDTO>> getCartItems(@PathVariable String user_id) {
     	log.info("*********************************" + user_id);
         List<CartDTO> cartItems = cartService.getCartItems(user_id);
-        List<CartDTO> cartDTOs = new ArrayList<>();
 
-        log.info("=========================================="+cartService.getCartItems(user_id));
-        for (CartDTO cartItem : cartItems) {
-            Item item = getItemInfo(cartItem.getItem_no());
-
-            CartDTO cartDTO = new CartDTO(
-                cartItem.getUser_id(),
-                cartItem.getItem_no(),
-                cartItem.getItem_quantity(),
-                item.getItem_img1(),
-                item.getItem_name(),
-                item.getItem_desc()
-            );
-            cartDTOs.add(cartDTO);
-        }
-
-        return ResponseEntity.ok(cartDTOs);
+        return ResponseEntity.ok(cartItems);
     }
 
     private Item getItemInfo(int item_no) {
