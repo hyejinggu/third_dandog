@@ -18,15 +18,14 @@ const CartItem = ({
 
   useEffect(() => {
     const fetchCartItemInfo = async () => {
-      console.log(loginId);
       try {
-        const response = await
-          axios.get(`/cart?user_id=${loginId}`);
+        const response = await axios.get(`/restCart/getCartItems?user_id=${loginId}`);
         setCartItemInfo(response.data);
       } catch (error) {
         console.error("Error fetching cart item info:", error);
       }
     };
+
 
     if (loginId) {
       fetchCartItemInfo();
@@ -39,28 +38,6 @@ const CartItem = ({
     item_quantity: quantity,
   };
 
-  // const addToCart = async () => {
-  //   const user_id = sessionStorage.loginId;
-  //   const item_no = selectedItem.item_no;  // Use actual item number
-  //   const item_quantity = quantity;  // Use actual quantity
-
-  //   try {
-  //     const response = await axios.post('/cart/add', {
-  //       user_id,
-  //       item_no,
-  //       item_quantity,
-  //     });
-
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error('Error adding item to cart:', error);
-  //   }
-  // };
-
-  // // 함수 호출을 useEffect로 이동
-  // useEffect(() => {
-  //   addToCart();
-  // }, []);
 
   const formatter = new Intl.NumberFormat("ko-KR", {
     minimumFractionDigits: 0,
@@ -69,8 +46,7 @@ const CartItem = ({
 
   return (
     <tbody>
-
-      {selectedItem.quantity === null && [selectedItem].map((i, index) => {
+      {cartItemInfo && cartItemInfo.map((i, index) => {
         const calculateTotalPrice = () => {
           const presentPr =
             i.item_price - (i.item_price * i.item_discount_rate) / 100;
@@ -90,12 +66,12 @@ const CartItem = ({
               <button onClick={onIncrease}>+</button>
             </td>
             <td className="price">
-              <span className="sale_info">{selectedItem.item_discount_rate}%</span>
-              <del>{selectedItem.item_price.toLocaleString("ko")}원</del>
+              <span className="sale_info">{i.item_discount_rate}%</span>
+              <del>{i.item_price.toLocaleString("ko")}원</del>
               <span className="sale_price">
                 {(
-                  selectedItem.item_price -
-                  (selectedItem.item_price * selectedItem.item_discount_rate) /
+                  i.item_price -
+                  (i.item_price * i.item_discount_rate) /
                   100
                 ).toLocaleString("ko")}
                 원
@@ -111,5 +87,4 @@ const CartItem = ({
     </tbody>
   );
 };
-
 export default CartItem;

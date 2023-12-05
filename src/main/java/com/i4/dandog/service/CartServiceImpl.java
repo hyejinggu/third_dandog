@@ -48,7 +48,7 @@ public class CartServiceImpl implements CartService {
     
 
     @Override
-    public List<Cart> getCartItems(String user_id) {
+    public List<CartDTO> getCartItems(String user_id) {
         return repository.findByUser_id(user_id);
     }
     

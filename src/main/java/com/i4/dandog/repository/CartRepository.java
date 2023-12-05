@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.i4.dandog.domain.CartDTO;
 import com.i4.dandog.entity.Cart;
 import com.i4.dandog.entity.CartKeyId;
 
@@ -22,9 +23,15 @@ public interface CartRepository extends JpaRepository<Cart, CartKeyId> {
 	
 	
 	 @Query("SELECT new com.i4.dandog.domain.CartDTO(c.user_id, c.item_no, c.item_quantity, i.item_img1, i.item_name, i.item_desc) "
-	            + "FROM com.i4.dandog.entity.Cart c JOIN com.i4.dandog.entity.Item i ON c.item_no = i.item_no "
+	            + "FROM Cart c LEFT JOIN Item i ON c.item_no = i.item_no "
 	            + "WHERE c.user_id = :user_id ORDER BY c.item_no")
-	    List<Cart> findByUser_id(String user_id);
+	    List<CartDTO> findByUser_id(String user_id);
+	 
+	   // 장바구니 + 상품 Join
+//	   @Query("SELECT new com.ojo.ojoa.domain.CartProdDTO(c.cart_num, c.id, c.prod_num, c.quantity, p.prod_mainimage, p.prod_name, p.prod_content) "
+//	      + "FROM Cart c LEFT JOIN Product p ON c.prod_num=p.prod_num order by c.prod_num")
+//	   List<CartProdDTO> findCartProd();
+
 
 }
 

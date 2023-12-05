@@ -2,6 +2,7 @@ package com.i4.dandog.service;
 
 import java.util.List;
 
+import com.i4.dandog.domain.CartDTO;
 import com.i4.dandog.entity.Cart;
 import com.i4.dandog.entity.CartKeyId;
 
@@ -22,7 +23,7 @@ public interface CartService {
 	// delete
 	void delete(CartKeyId keyId);
 
-	List<Cart> getCartItems(String user_id);
+	List<CartDTO> getCartItems(String user_id);
 
 	void addToCart(String user_id, int item_no, int item_quantity);
 	
