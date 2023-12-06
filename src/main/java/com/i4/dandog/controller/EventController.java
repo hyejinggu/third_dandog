@@ -2,12 +2,15 @@ package com.i4.dandog.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.i4.dandog.entity.Event;
@@ -25,8 +28,24 @@ public class EventController {
 	private EventService service;
 
 	@GetMapping(value = "/eventList")
-	public String getLoungeList(Model model) {
-		model.addAttribute("eventList", service.selectList());
+	public String getLoungeList(
+			@RequestParam(name = "search_category", defaultValue = "name") String searchCategory,
+            @RequestParam(name = "search_value", defaultValue = "") String searchValue,
+            @RequestParam(name = "reg_date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate regDate,
+            @RequestParam(name = "exp_date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate expDate,
+            Model model) {
+		
+		log.info("searchCategory: " + searchCategory + " searchValue: " + searchValue);
+		
+		if (searchCategory.equals("name")) {
+			if (searchValue.equals("")) {
+				model.addAttribute("eventList", service.selectList());
+			} else {
+				model.addAttribute("eventList", service.findByEventName(searchValue));					
+			}
+		} else {
+			model.addAttribute("eventList", service.findByDate(regDate, expDate));
+		}
 		return "event/eventList";
 	}
 

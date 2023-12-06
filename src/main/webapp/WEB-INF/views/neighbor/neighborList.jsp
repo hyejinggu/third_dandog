@@ -15,10 +15,10 @@
 	<hr>
 	<select name="search_category">
 		<option value="all">전체</option>
-		<option value="beauty">간식, 사료</option>
-		<option value="hospital">장난감</option>
-		<option value="cafe">리빙, 패션</option>
-		<option value="training">산책, 케어</option>
+		<option value="beauty">미용</option>
+		<option value="hospital">병원</option>
+		<option value="cafe">카페, 호텔</option>
+		<option value="training">훈련, 시터</option>
 	</select>
 	<select name="search_feild">
 		<option value="contents">제목+내용</option>
@@ -29,6 +29,7 @@
 	<span onclick="searchList()">검색</span>
 	<table border="1" style="width: 100%">
 		<tr>
+			<th>선택</th>
 			<th>번호</th>
 			<th>상호명</th>
 			<th>제목 및 내용</th>

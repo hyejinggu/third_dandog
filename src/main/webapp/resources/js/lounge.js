@@ -48,8 +48,27 @@ function loungeInsert() {
 
 
 
+function searchLoungeList() {
+	let url = "/community/loungeList";
+	
+	let searchCategory = document.getElementById("l_search_category").value;
+	let searchField = document.getElementById("l_search_field").value;
+	let searchValue = document.getElementById("l_search_value").value;
+	
+	url += `?search_category=${searchCategory}&search_field=${searchField}&search_value=${searchValue}`;
+
+	axios.get(url)
+		.then(response => {
+			document.getElementById("resultArea1").innerHTML = response.data;
+		})
+		.catch(err => {
+			alert("response 실패: " + err.message);
+		});
+}
 
 
+
+// =================================================================================
 
 
 function select_lounge(select_lounge) {

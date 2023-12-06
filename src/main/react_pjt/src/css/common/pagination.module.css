@@ -1,0 +1,67 @@
+/* 페이지네이션 스타일링 */
+.pagination {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ec-base-paginate {
+  margin: 30px 0 50px;
+  text-align: center;
+  line-height: 0;
+  display: block;
+}
+
+.ec-base-paginate li {
+  display: inline-block;
+  margin: 0 0 0 -1px;
+  font-size: 18px;
+  color: #a8a7a7;
+  vertical-align: top;
+}
+
+.ec-base-paginate li a.this {
+  font-weight: bold;
+  padding-bottom: 6px;
+  color: #ff8c00;
+}
+
+.ec-base-paginate li a {
+  display: block;
+  width: 33px;
+  padding: 9px 0;
+  font-weight: bold;
+  color: #a8a7a7;
+  line-height: 14px;
+}
+
+.ec-base-paginate ol {
+  list-style-type: decimal;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  display: inline-block;
+  font-size: 0;
+  line-height: 0;
+  vertical-align: top;
+}
+
+.ec-base-paginate img {
+  border: none;
+  vertical-align: top;
+}
+
+.ec-base-paginate .menu li {
+  display: block;
+  min-width: 187px;
+  margin: 0 0 0 -1px;
+  padding: 12px 5px 11px;
+  border-right: 1px solid #cbcdce;
+  color: #707070;
+  text-decoration: none;
+  outline: 0;
+  text-align: center;
+  background: #f2f2f2;
+}

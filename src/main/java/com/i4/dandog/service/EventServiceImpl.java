@@ -1,5 +1,6 @@
 package com.i4.dandog.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,18 @@ import lombok.RequiredArgsConstructor;
 public class EventServiceImpl implements EventService {
 	
 	private final EventRepository repository;
+	
+	
+	@Override
+	public List<Event> findByEventName(String searchValue) {
+		return repository.findByEventName(searchValue);
+	}
+	
+	@Override
+	public List<Event> findByDate(LocalDate regDate, LocalDate expDate) {
+		return repository.findByDate(regDate, expDate);
+	}
+	
 	
 	@Override
 	public List<Event> selectList() {

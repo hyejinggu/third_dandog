@@ -14,26 +14,27 @@
 
 	<hr>
 	<div>
-		<select name="search_category" id="search_category"	onchange="toggleSearchOptions()">
+		<select name="search_category" id="e_search_category" onchange="toggleSearchOptions()">
 			<option value="name">이벤트 이름</option>
-			<option value="date">날짜 검색</option>
+			<option value="date">기간 검색</option>
 		</select> 
-		<span class="search_name" id="search_name"> 
-			<select name="search_field">
+		<span class="search_name" id="e_search_name"> 
+			<select name="e_search_field">
 				<option value="contents">제목+내용</option>
 			</select> 
-			<input name="search_value" placeholder="검색어 입력" />
+			<input name="search_value" placeholder="검색어 입력" id="e_search_value" />
 		</span> 
-		<span class="search_date" id="search_date" style="display: none;">
-			<span>시작 날짜</span> <input type="date" name="e_reg_date" /> 
-			<span>종료 날짜</span><input type="date" name="e_exp_date" />
+		<span class="search_date" id="e_search_date" style="display: none;">
+			<span>시작 날짜</span> <input type="date" name="e_reg_date" id="e_reg_date" /> 
+			<span>종료 날짜</span> <input type="date" name="e_exp_date" id="e_exp_date" />
 		</span> 
 		
-		<input type="submit" value="검색" onclick="searchList()" />
+		<input type="submit" value="검색" onclick="searchEventList()" />
 	</div>
 
 	<table border="1" style="width: 90%">
 		<tr>
+			<th>선택</th>
 			<th>번호</th>
 			<th>이름</th>
 			<th>사진</th>

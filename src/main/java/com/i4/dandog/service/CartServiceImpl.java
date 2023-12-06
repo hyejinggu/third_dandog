@@ -35,9 +35,15 @@ public class CartServiceImpl implements CartService {
     }
     
     @Override
-    public void dupUpdateQuantity(String user_id, int item_no, int item_quantity) {
-    	repository.dupUpdateQuantity(user_id, item_no, item_quantity);
-    	
+    public CartDTO onIncrease(String user_id, int item_no, int item_quantity) {
+        repository.onIncrease(user_id, item_no, item_quantity);
+        return new CartDTO(user_id, item_no, item_quantity, "item_img1", "item_name", 1000, 10);
+    }
+    
+    @Override
+    public CartDTO onDecrease(String user_id, int item_no, int item_quantity) {
+        repository.onDecrease(user_id, item_no, item_quantity);
+        return new CartDTO(user_id, item_no, item_quantity, "item_img1", "item_name", 1000, 10);
     }
     
     @Override

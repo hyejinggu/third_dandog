@@ -13,22 +13,23 @@
 	<h2>Lounge</h2>
 
 	<hr>
-	<select name="search_category">
+	<select name="search_category" id="l_search_category" >
 		<option value="all">전체</option>
 		<option value="free">자유 게시판</option>
 		<option value="trouble">고민 상담소</option>
 		<option value="sharing">지식 공유</option>
 		<option value="friends">친구 찾기</option>
 	</select>
-	<select name="search_feild">
+	<select name="search_field" id="l_search_field">
 		<option value="contents">제목+내용</option>
 		<option value="id">작성자</option>
 	</select>
-	<input name="search_value" placeholder="검색어 입력" />
-	<input type="submit" value="검색" onclick="searchList()" />
+	<input name="search_value" placeholder="검색어 입력" id="l_search_value" />
+	<span onclick="searchLoungeList()">검색</span>
 
 	<table border="1" style="width: 90%">
 		<tr>
+			<th>선택</th>
 			<th>번호</th>
 			<th>이미지</th>
 			<th>제목 및 내용</th>

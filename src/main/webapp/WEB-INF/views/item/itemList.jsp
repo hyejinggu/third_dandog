@@ -25,19 +25,19 @@
 		<h3>${requestScope.message}</h3>
 	</c:if>
 	<div>
-		<select name="search_category">
+		<select name="search_category" id="i_search_category" >
 			<option value="all">전체</option>
 			<option value="Snack">간식, 사료</option>
 			<option value="Toy">장난감</option>
 			<option value="Living">리빙, 패션</option>
 			<option value="Stroll">산책, 케어</option>
 		</select> 
-		<select name="search_feild">
+		<select name="search_field" id="i_search_field" >
 			<option value="name">상품 이름</option>
 			<option value="no">상품 번호</option>
 		</select> 
-			<input name="search_value" placeholder="검색어 입력" /> 
-			<span onclick="searchList()">검색</span>
+			<input name="search_value" placeholder="검색어 입력" id="i_search_value" /> 
+			<span onclick="searchItemList()">검색</span>
 	</div>
 	<table class="item_table">
 		<tr>
