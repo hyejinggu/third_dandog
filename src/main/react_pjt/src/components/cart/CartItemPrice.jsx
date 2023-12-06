@@ -1,7 +1,6 @@
 import React from "react";
 
 const CartItemPrice = ({ totalPrice, delivery_price, quantity }) => {
-  // totalPrice = totalPrice.toLocaleString();
   return (
     <div>
       <p className="total_product">
@@ -11,13 +10,13 @@ const CartItemPrice = ({ totalPrice, delivery_price, quantity }) => {
         <p>50,000원 이상 구매시 배송비 무료</p>
         <div className="firstB_price">
           <span className="product_price">
-            {totalPrice().toLocaleString()}원
+            {totalPrice.toLocaleString()}원
           </span>
           <span className="delivery_price">
-            {delivery_price().toLocaleString()}원
+            {delivery_price.toLocaleString()}원
           </span>
           <span className="total_price2">
-            {(totalPrice() + delivery_price()).toLocaleString()}원
+            {(totalPrice + delivery_price).toLocaleString()}원
           </span>
         </div>
         <div className="price_info">
