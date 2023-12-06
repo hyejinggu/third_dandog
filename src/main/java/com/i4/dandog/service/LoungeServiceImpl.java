@@ -30,8 +30,7 @@ public class LoungeServiceImpl implements LoungeService {
 	
 	@Override
 	public List<Lounge> selectList() {
-		loungeRepository.findAll();
-		return null;
+		return loungeRepository.findAll();
 	}
 	
 	

@@ -41,13 +41,13 @@ public class ItemController {
 	@GetMapping("/itemList")
 	public String itemList(
             @RequestParam(name = "search_category", defaultValue = "all") String searchCategory,
-            @RequestParam(name = "search_feild", defaultValue = "name") String searchField,
+            @RequestParam(name = "search_field", defaultValue = "name") String searchField,
             @RequestParam(name = "search_value", defaultValue = "") String searchValue,
             Model model) {
 		if (searchCategory.equals("all")) {
 			searchCategory = null;
 		}
-		log.info("Controller - searchCategory: " + searchCategory);
+
 		model.addAttribute("itemList", service.selectList(searchCategory, searchField, searchValue));
 		model.addAttribute("itemImgList", iservice.selectList());
 		
