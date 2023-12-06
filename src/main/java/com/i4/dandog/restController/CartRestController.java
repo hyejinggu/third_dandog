@@ -3,11 +3,13 @@ package com.i4.dandog.restController;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,7 +40,7 @@ public class CartRestController {
 		return "redirect:/cart";
 	}
 
-	@PostMapping("/add") // URL 패턴 변경
+	@PostMapping("/add") 
 	public String save(Model model, @RequestBody Cart entity) {
 
 		try {
@@ -58,20 +60,55 @@ public class CartRestController {
 	// 장바구니 목록 조회
     @GetMapping("/getCartItems/{user_id}")
     public ResponseEntity<List<CartDTO>> getCartItems(@PathVariable String user_id) {
-    	log.info("*********************************" + user_id);
         List<CartDTO> cartItems = cartService.getCartItems(user_id);
 
         return ResponseEntity.ok(cartItems);
     }
 
     private Item getItemInfo(int item_no) {
-        // ItemService를 사용하여 해당 item_no에 해당하는 Item 정보를 가져오는 메서드
         try {
             return itemService.selectOne(item_no);
         } catch (Exception e) {
-            // 예외 처리 로직 추가
             log.error("Error while fetching item information", e);
             return new Item(); // 에러 시 가상의 Item 반환
+        }
+    }
+    
+    // 장바구니 아이템 수량 업데이트 엔드포인트
+    @PostMapping("/onIncrease/{user_id}/{item_no}/{item_quantity}")
+    public ResponseEntity<CartDTO> onIncrease(
+            @PathVariable String user_id,
+            @PathVariable int item_no,
+            @PathVariable int item_quantity) {
+        try {
+            CartDTO updatedItem = cartService.onIncrease(user_id, item_no, item_quantity);
+
+            if (updatedItem != null) {
+                return new ResponseEntity<>(updatedItem, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    
+    @PostMapping("/onDecrease/{user_id}/{item_no}/{item_quantity}")
+    public ResponseEntity<CartDTO> onDecrease(
+            @PathVariable String user_id,
+            @PathVariable int item_no,
+            @PathVariable int item_quantity) {
+        try {
+            CartDTO updatedItem = cartService.onDecrease(user_id, item_no, item_quantity);
+
+            if (updatedItem != null) {
+                return new ResponseEntity<>(updatedItem, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -24,7 +24,7 @@ const Cart = () => {
             item_price: cartDTO.item_price,
             item_sales_volume: cartDTO.item_sales_volume
           };
-
+          console.log(selectedItem.item_sales_volume);
 
           return { selectedItem };
         });
@@ -51,20 +51,48 @@ const Cart = () => {
     }
   };
 
-  const handleIncrease = (index) => {
+  const handleIncrease = (index, event) => {
+    event.preventDefault();
+
     const updatedCart = [...cartItems];
-    updatedCart[index].item_quantity += 1;
+    updatedCart[index].selectedItem.item_quantity += 1;
     setCartItems(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+    // 서버에 수량 업데이트 요청
+    const selectedItem = updatedCart[index].selectedItem;
+    const updatedQuantity = selectedItem.item_quantity;
+
+    axios.post(`/restCart/onIncrease/${selectedItem.user_id}/${selectedItem.item_no}/${updatedQuantity}`)
+      .then(response => {
+        console.log('Updated item:', response.data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   };
 
+  // handleDecrease
   const handleDecrease = (index, event) => {
     event.preventDefault();
-    if (cartItems[index].quantity > 0) {
-      const updatedCart = [...cartItems];
-      updatedCart[index].quantity -= 1;
+
+    const updatedCart = [...cartItems];
+    const selectedItem = updatedCart[index].selectedItem;
+
+    if (selectedItem.item_quantity > 1) {
+      selectedItem.item_quantity -= 1;
       setCartItems(updatedCart);
       localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+      // 서버에 수량 업데이트 요청
+      const updatedQuantity = selectedItem.item_quantity;
+      axios.post(`/restCart/onDecrease/${selectedItem.user_id}/${selectedItem.item_no}/${updatedQuantity}`)
+        .then(response => {
+          console.log('Updated item:', response.data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
     } else {
       alert("최소 주문수량은 1개 입니다.");
     }

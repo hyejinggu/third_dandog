@@ -18,8 +18,9 @@ public interface CartService {
 	void save(Cart entity);
 
 	// DUPLICATE KEY UPDATE 구문 (insert 대신 사용 가능)
-	void dupUpdateQuantity(String user_id, int item_no, int item_quantity);
-
+	CartDTO onIncrease(String user_id, int item_no, int item_quantity);
+	CartDTO onDecrease(String user_id, int item_no, int item_quantity);
+	
 	// delete
 	void delete(CartKeyId keyId);
 
