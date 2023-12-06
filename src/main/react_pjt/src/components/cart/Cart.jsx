@@ -1,48 +1,47 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styles from "../../css/subpage/ItemDetail.module.css";
 import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 import EmptyItem from "./EmptyItem";
 import CartItemPrice from "./CartItemPrice";
-import { useLocation } from "react-router-dom";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [quantity, setQuantity] = useState(1);
-  const location = useLocation();
-  const selectedItem = location.state.item;
+  const loginId = sessionStorage.getItem("loginId");
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // 실제 서버 엔드포인트로 변경
-        const response = await axios.get("/cart");
-        setCartItems(response.data);
-      } catch (error) {
-        console.error("데이터를 가져오는 동안 오류 발생:", error);
-      }
-    };
+    axios
+      .get(`/restCart/getCartItems/${loginId}`)
+      .then((response) => {
+        const items = response.data.map((cartDTO) => {
+          const selectedItem = {
+            user_id: loginId,
+            item_no: cartDTO.item_no,
+            item_quantity: cartDTO.item_quantity,
+            item_img: cartDTO.item_img1,
+            item_name: cartDTO.item_name,
+            item_price: cartDTO.item_price,
+            item_sales_volume: cartDTO.item_sales_volume
+          };
 
-    fetchData();
+
+          return { selectedItem };
+        });
+
+        setCartItems(items);
+      })
+      .catch((error) => {
+        console.error("API 요청 중 오류 발생:", error);
+      });
   }, []);
 
-  const handleAddToCart = async () => {
-    try {
-      const response = await axios.post("/cart/add", {
-        user_id: sessionStorage.loginId, // 이 부분이 문제일 수 있음
-        item_no: selectedItem.item_no, // item_no를 정확히 가져오는지 확인
-        item_quantity: quantity, // quantity가 정확한지 확인
-      });
 
-      console.log("장바구니에 상품이 추가되었습니다.", response.data);
-    } catch (error) {
-      console.error("장바구니에 상품 추가 중 오류 발생:", error);
-    }
-  };
 
   const handleDelete = (index, itemName) => {
-    const confirmDelete = window.confirm(`<${itemName}> 상품을 삭제하시겠습니까?`);
+    const confirmDelete = window.confirm(
+      `<${itemName}> 상품을 삭제하시겠습니까?`
+    );
 
     if (confirmDelete) {
       const updatedCart = [...cartItems];
@@ -52,10 +51,9 @@ const Cart = () => {
     }
   };
 
-  const handleIncrease = (index, event) => {
-    event.preventDefault();
+  const handleIncrease = (index) => {
     const updatedCart = [...cartItems];
-    updatedCart[index].quantity += 1;
+    updatedCart[index].item_quantity += 1;
     setCartItems(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
@@ -73,70 +71,90 @@ const Cart = () => {
   };
 
   const calculateTotalPrice = (item) => {
-    const originalPr = item.selectedItem.normalPr;
-    const salePr = originalPr - originalPr * (item.selectedItem.saleInfo / 100);
-    const totalpr = salePr * item.quantity;
-    return totalpr;
+    if (!item || !item.selectedItem) {
+      console.error("잘못된 'item' 또는 'selectedItem'");
+      return 0;
+    }
+
+    const selectedItem = item.selectedItem;
+
+    const originalPrice = selectedItem.item_price || 0;
+    const salePrice = originalPrice - originalPrice * (selectedItem.item_sales_volume / 100);
+
+    const quantity = selectedItem.item_quantity == null ? 1 : selectedItem.item_quantity;
+
+    const totalPrice = salePrice * quantity;
+
+    return totalPrice;
   };
 
-  const calculateTotalCartPrice = () => {
+  const calculateTotalCartPrice = (items) => {
+    if (!Array.isArray(items) || items.length === 0) {
+      return 0;
+    }
+
     let totalCartPrice = 0;
 
-    for (const item of cartItems) {
-      const itemTotalPrice = calculateTotalPrice(item);
+    for (const cartItem of items) {
+      if (!cartItem.selectedItem) {
+        console.error("잘못된 'cartItem' 또는 'selectedItem'");
+        continue;
+      }
+
+      const itemTotalPrice = calculateTotalPrice(cartItem);
       totalCartPrice += itemTotalPrice;
     }
 
-    return totalCartPrice;
+    const deliveryPrice = totalCartPrice >= 50000 ? 0 : 3000;
+
+    return totalCartPrice + deliveryPrice;
   };
 
-  const delivery_price = () => {
-    return calculateTotalCartPrice() >= 30000
-      ? 0
-      : 3000;
-  };
+  const delivery_price = calculateTotalCartPrice(cartItems) >= 50000 ? 0 : 3000;
 
   return (
-        <> < h2 className="title" > 장바구니</h2> < div className="cart" > {/* {cartItems.length === 0 ? (
+    <>
+      <h2 className="title"> 장바구니</h2>
+      <div className="cart">
+        {cartItems.length === 0 ? (
           <EmptyItem />
-        ) : ( */
-    } < form action="#" method="post" > <table>
-      <thead>
-        <tr>
-          <th>상품/옵션 정보</th>
-          <th>수량</th>
-          <th>상품금액</th>
-          <th>합계금액</th>
-          <th></th>
-        </tr>
-      </thead>
+        ) : (
+          <form action="#" method="post">
+            <table>
+              <thead>
+                <tr>
+                  <th>상품/옵션 정보</th>
+                  <th>수량</th>
+                  <th>상품금액</th>
+                  <th>합계금액</th>
+                  <th></th>
+                </tr>
+              </thead>
 
-      {
-        cartItems.map((item) => (
-          <CartItem
-            key={item.cart_id}
-            selectedItem={item.selectedItem}
-            quantity={item.item_quantity}
-            onIncrease={(event) => handleIncrease(item.cart_id, event)}
-            onDecrease={(event) => handleDecrease(item.cart_id, event)}
-            totalPrice={() => calculateTotalPrice(item)}
-            handleDelete={() => handleDelete(item.cart_id, item.selectedItem.item_name)} />
-        ))
-      }
-    </table>
+              {cartItems.map((item, index) => (
+                <CartItem
+                  key={index}
+                  selectedItem={item.selectedItem}
+                  quantity={item.item_quantity}
+                  onIncrease={(event) => handleIncrease(index, event)}
+                  onDecrease={(event) => handleDecrease(index, event)}
+                  totalPrice={calculateTotalPrice(item)}
+                  handleDelete={() => handleDelete(index)}
+                />
+              ))}
 
-        <CartItemPrice
-          totalPrice={calculateTotalCartPrice}
-          delivery_price={delivery_price} />
-
-        <Link to="/payment">
-          <input type="button" value="구매하기" className="order" />
-        </Link>
-      </form>
-      {/* )} */
-      } < /div>
-    </ >
-      );
+            </table>
+            <CartItemPrice
+              totalPrice={calculateTotalCartPrice(cartItems)}
+              delivery_price={delivery_price} />
+            <Link to="/payment">
+              <input type="button" value="구매하기" className="order" />
+            </Link>
+          </form>
+        )}
+      </div>
+    </>
+  );
 };
 
-      export default Cart;
+export default Cart;

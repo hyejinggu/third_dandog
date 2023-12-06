@@ -5,7 +5,11 @@ import java.util.List;
 import com.i4.dandog.entity.Lounge;
 
 public interface LoungeService {
-    List<Lounge> getAllLounge();
+
+    
+	List<Lounge> findByDynamicQuery(String category, String inputValue, String filterValue, String sort);
+	
+    List<Lounge> selectList();
     
     Lounge selectOne(int lounge_no);
     

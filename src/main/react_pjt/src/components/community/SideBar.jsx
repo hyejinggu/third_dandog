@@ -3,12 +3,7 @@ import { useState } from "react";
 
 export default function SideBar({ content, setCategory }) {
   const loungeSide = ["자유 게시판", "고민 상담소", "지식 공유", "친구 찾기"];
-  const neighborSide = [
-    "beautyReview",
-    "hospitalReview",
-    "cafeReview",
-    "trainingReview",
-  ];
+  const neighborSide = ["뷰티, 미용", "병원", "카페, 호텔", "훈련, 시터"];
 
   const sidebarItems = content === "lounge" ? loungeSide : neighborSide;
   // 현재 선택된 카테고리

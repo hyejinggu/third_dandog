@@ -6,10 +6,10 @@ import { NavLink } from "react-router-dom";
 import React, { useState } from "react";
 import NeighborReview from "./NeighborReview";
 import NeighborMap from "./NeighborMap";
+import SideBar from "./SideBar";
 
-const neighborSide = ["B", "H", "C", "T"];
 export default function Neighborhood() {
-  const [category, setCategory] = useState("beautyReview");
+  const [category, setCategory] = useState("beauty");
 
   return (
     <div className={styles.neighborhood_container}>
@@ -23,15 +23,7 @@ export default function Neighborhood() {
       <div className={styles.content_wrap}>
         <div className={styles.side_bar_wrap}>
           <ul className={styles.side_bar}>
-            {neighborSide.map((content, index) => (
-              <li
-                className={category === content ? styles.sidebar_active : ""}
-                onClick={() => setCategory(content)}
-                key={index}
-              >
-                {content}
-              </li>
-            ))}
+            <SideBar content="neighbor" setCategory={setCategory} />
           </ul>
         </div>
 

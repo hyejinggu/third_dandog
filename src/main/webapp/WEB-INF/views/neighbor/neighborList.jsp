@@ -6,12 +6,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Lounge</title>
+<script src="/resources/js/neighbor.js"></script>
 </head>
 <body>
 
 	<h2>Lounge</h2>
 
 	<hr>
+	<select name="search_category">
+		<option value="all">전체</option>
+		<option value="beauty">간식, 사료</option>
+		<option value="hospital">장난감</option>
+		<option value="cafe">리빙, 패션</option>
+		<option value="training">산책, 케어</option>
+	</select>
+	<select name="search_feild">
+		<option value="contents">제목+내용</option>
+		<option value="no">상호명</option>
+		<option value="no">작성자</option>
+	</select>
+	<input name="search_value" placeholder="검색어 입력" />
+	<span onclick="searchList()">검색</span>
 	<table border="1" style="width: 100%">
 		<tr>
 			<th>번호</th>
@@ -24,6 +39,8 @@
 		</tr>
 		<c:forEach var="n" items="${requestScope.neighborList}">
 			<tr>
+				<td><input type="checkbox" name="selectedItem" class="neighbor_check"
+					value="${n.neighbor_no}" /></td>
 				<td>${n.neighbor_no}</td>
 				<td>${n.neighbor_brand_name}</td>
 				<td><h4>${n.neighbor_title}</h4>
@@ -35,5 +52,10 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<div>
+		<input type="checkbox" id="selectall" value='selectall'
+			onclick='select_neighbor(this)' /> <label for="selectall">전체 선택</label>
+	</div>
+	<input type="submit" value="delete_item" onclick="deleteItem()" />
 </body>
 </html>

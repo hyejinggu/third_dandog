@@ -22,13 +22,14 @@ import lombok.extern.log4j.Log4j2;
 @AllArgsConstructor
 @RequestMapping("/community")
 public class LoungeController {
-	private LoungeService loungeService;
+	private LoungeService service;
 
 	@GetMapping(value = "/loungeList")
 	public String getLoungeList(Model model) {
-		model.addAttribute("loungeList", loungeService.getAllLounge());
-		return "lounge/lounge";
+		model.addAttribute("loungeList", service.selectList());
+		return "lounge/loungeList";
 	}
+	
 
 	@GetMapping(value = "/loungeInsert")
 	public String loungeInsert() {
@@ -51,7 +52,7 @@ public class LoungeController {
 	    }
 
 	    try {
-	        loungeService.save(entity);
+	    	service.save(entity);
 	    } catch (Exception e) {
 	        log.info("** insert Exception => " + e.toString());
 	        uri = "lounge/loungeInsert";

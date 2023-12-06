@@ -8,7 +8,7 @@
 <title>lounge Insert</title>
 <link rel="stylesheet" type="text/css"
 	href="/resources/myLib/myStyle.css">
-<script src="/resources/js/community.js"></script>
+<script src="/resources/js/lounge.js"></script>
 </head>
 <body>
 	<h2>lounge Insert</h2>

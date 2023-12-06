@@ -2,6 +2,8 @@ import styles from "../../css/common/common.module.css";
 import { Link, useLocation } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Modal from "../common/Modal";
+import axios from "axios";
+
 
 const Header = () => {
   const location = useLocation();
@@ -29,6 +31,18 @@ const Header = () => {
       setIsModalOpen(true);
     }
   };
+
+
+  // axios.get(`/restCart/getCartItems/${loginId}`, async (req, res) => {
+  //   const userId = req.params.user_id;
+  //   try {
+  //     const cartItems = await CartModel.find({ user_id: sessionStorage.getItem("loginId") }).exec();
+  //     res.json(cartItems);
+  //   } catch (error) {
+  //     console.error('Error fetching cart items:', error);
+  //     res.status(500).json({ error: 'Internal Server Error' });
+  //   }
+  // });
 
   return (
     <header>

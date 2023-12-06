@@ -1,5 +1,6 @@
 package com.i4.dandog.restController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.i4.dandog.domain.CartDTO;
 import com.i4.dandog.entity.Cart;
+import com.i4.dandog.entity.Item;
 import com.i4.dandog.service.CartService;
+import com.i4.dandog.service.ItemService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -26,14 +29,13 @@ import lombok.extern.log4j.Log4j2;
 public class CartRestController {
 
 	CartService cartService;
+	ItemService itemService;
 
 	// 장바구니에 상품 추가
 	@PostMapping("/addCart")
 	public String addToCart(@RequestBody Cart entity) {
-	    log.info("================================" + entity.getUser_id() +
-	    		entity.getItem_no() + entity.getItem_quantity());
-	    cartService.addToCart(entity.getUser_id(), entity.getItem_no(), entity.getItem_quantity());
-	    return "redirect:/cart";
+		cartService.addToCart(entity.getUser_id(), entity.getItem_no(), entity.getItem_quantity());
+		return "redirect:/cart";
 	}
 
 	@PostMapping("/add") // URL 패턴 변경
@@ -52,13 +54,25 @@ public class CartRestController {
 		}
 
 	}
-	
-	
-    // 장바구니 목록 조회
-    @GetMapping
-    public ResponseEntity<List<Cart>> getCartItems(@RequestParam String user_id) {
-        List<Cart> cartItems = cartService.getCartItems(user_id);
+
+	// 장바구니 목록 조회
+    @GetMapping("/getCartItems/{user_id}")
+    public ResponseEntity<List<CartDTO>> getCartItems(@PathVariable String user_id) {
+    	log.info("*********************************" + user_id);
+        List<CartDTO> cartItems = cartService.getCartItems(user_id);
+
         return ResponseEntity.ok(cartItems);
+    }
+
+    private Item getItemInfo(int item_no) {
+        // ItemService를 사용하여 해당 item_no에 해당하는 Item 정보를 가져오는 메서드
+        try {
+            return itemService.selectOne(item_no);
+        } catch (Exception e) {
+            // 예외 처리 로직 추가
+            log.error("Error while fetching item information", e);
+            return new Item(); // 에러 시 가상의 Item 반환
+        }
     }
 
 }

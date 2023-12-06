@@ -16,16 +16,19 @@ public class CartDTO {
 
 	private String item_name;
 
-	private String item_desc;
+	private int item_price;
+	
+	private int item_sales_volume;
 	
 	
-	 public CartDTO(String user_id, int item_no, int item_quantity, String item_img1, String item_name, String item_desc) {
+	 public CartDTO(String user_id, int item_no, int item_quantity, String item_img1, String item_name, int item_price, int item_sales_volume) {
 	        this.user_id = user_id;
 	        this.item_no = item_no;
 	        this.item_quantity = item_quantity;
 	        this.item_img1 = item_img1;
 	        this.item_name = item_name;
-	        this.item_desc = item_desc;
+	        this.item_price = item_price;
+	        this.item_sales_volume = item_sales_volume;
 	    }
 	
 }
