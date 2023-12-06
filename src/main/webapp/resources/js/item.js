@@ -64,13 +64,13 @@ function itemUpdate(item_no) {
 
 
 
-function searchList() {
+function searchItemList() {
 	let url = "/item/itemList";
 
 	// 폼 데이터 가져오기
-	let searchCategory = document.querySelector('[name="search_category"]').value;
-	let searchField = document.querySelector('[name="search_feild"]').value;
-	let searchValue = document.querySelector('[name="search_value"]').value;
+	let searchCategory = document.getElementById("i_search_category").value;
+	let searchField = document.getElementById("i_search_field").value;
+	let searchValue = document.getElementById("i_search_value").value;
 
 
 	// URL에 쿼리 문자열 추가
@@ -83,7 +83,6 @@ function searchList() {
 		.catch(err => {
 			alert("response 실패: " + err.message);
 		});
-
 }
 
 

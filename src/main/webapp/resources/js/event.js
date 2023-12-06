@@ -36,21 +36,47 @@ function eventInsert() {
 
 
 function toggleSearchOptions() {
-    var searchCategory = document.getElementById("search_category");
-    var searchName = document.getElementById("search_name");
-    var searchDate = document.getElementById("search_date");
+    var searchCategory = document.getElementById("e_search_category");
+    var searchName = document.getElementById("e_search_name");
+    var searchDate = document.getElementById("e_search_date");
 
     if (searchCategory.value === "name") {
-        searchName.style.display = "block";
+        searchName.style.display = "inline-block";
         searchDate.style.display = "none";
     } else if (searchCategory.value === "date") {
         searchName.style.display = "none";
-        searchDate.style.display = "block";
+        searchDate.style.display = "inline-block";
     }
 }
 
 // Initialize on page load
 toggleSearchOptions();
+
+
+
+
+function searchEventList() {
+	let url = "/community/eventList";
+	
+	let searchCategory = document.getElementById("e_search_category").value;
+	let searchValue = document.getElementById("e_search_value").value;
+	let regDate = document.getElementById("e_reg_date").value;
+	let expDate = document.getElementById("e_exp_date").value;
+
+	//alert("searchCategory: " + searchCategory + "searchValue: " + searchValue);
+	//alert("regDate: " + regDate + "expDate: " + expDate);
+
+	url += `?search_category=${searchCategory}&search_value=${searchValue}&reg_date=${regDate}&exp_date=${expDate}`;
+
+	axios.get(url)
+		.then(response => {
+			document.getElementById("resultArea1").innerHTML = response.data;
+		})
+		.catch(err => {
+			alert("response 실패: " + err.message);
+		});
+}
+
 
 
 
