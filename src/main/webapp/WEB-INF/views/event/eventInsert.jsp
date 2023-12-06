@@ -8,6 +8,7 @@
 <title>lounge Insert</title>
 <link rel="stylesheet" type="text/css"
 	href="/resources/myLib/myStyle.css">
+	<script src="/resources/js/event.js"></script>
 </head>
 <body>
 	<h2>lounge Insert</h2>

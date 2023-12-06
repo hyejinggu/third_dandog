@@ -24,19 +24,21 @@
 	<c:if test="${not empty requestScope.message}">
 		<h3>${requestScope.message}</h3>
 	</c:if>
-	<form action="/item/itemList" method="get">
+	<div>
 		<select name="search_category">
 			<option value="all">전체</option>
-			<option value="Snk">간식, 사료</option>
+			<option value="Snack">간식, 사료</option>
 			<option value="Toy">장난감</option>
-			<option value="Liv">리빙, 패션</option>
-			<option value="Str">산책, 케어</option>
-		</select> <select name="search_feild">
+			<option value="Living">리빙, 패션</option>
+			<option value="Stroll">산책, 케어</option>
+		</select> 
+		<select name="search_feild">
 			<option value="name">상품 이름</option>
 			<option value="no">상품 번호</option>
-		</select> <input name="search_value" placeholder="검색어 입력" /> <input
-			type="submit" value="검색" onclick="searchList()" />
-	</form>
+		</select> 
+			<input name="search_value" placeholder="검색어 입력" /> 
+			<span onclick="searchList()">검색</span>
+	</div>
 	<table class="item_table">
 		<tr>
 			<th>삭제</th>
@@ -59,7 +61,7 @@
 		<c:if test="${not empty requestScope.itemList}">
 			<c:forEach var="i" items="${requestScope.itemList}">
 				<tr>
-					<td><input type="checkbox" name="selectedItem"
+					<td><input type="checkbox" name="selectedItem" class="item_check"
 						value="${i.item_no}" /></td>
 					<td>${i.item_no}</td>
 					<td>${i.item_category}</td>
@@ -98,7 +100,7 @@
 	</table>
 	<div>
 		<input type="checkbox" id="selectall" value='selectall'
-			onclick='selectAll(this)' /> <label for="selectall">전체 선택</label>
+			onclick='select_item(this)' /> <label for="selectall">전체 선택</label>
 	</div>
 	<input type="submit" value="delete_item" onclick="deleteItem()"/>
 

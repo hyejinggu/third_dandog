@@ -16,7 +16,9 @@
 <script src="/resources/js/item.js"></script>
 <script src="/resources/js/orders.js"></script>
 <script src="/resources/js/board.js"></script>
-<script src="/resources/js/community.js"></script>
+<script src="/resources/js/lounge.js"></script>
+<script src="/resources/js/event.js"></script>
+<script src="/resources/js/neighbor.js"></script>
 <script src="/resources/js/code.js"></script>
 
 </head>
