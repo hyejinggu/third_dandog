@@ -5,11 +5,20 @@ import style from "../../css/payment/paymentmodal.module.css";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Modal from "../common/Modal";
+import DaumPostcode from 'react-daum-postcode';
 
 const AddressModal = ({ closeModal, onSelectAddress }) => {
     const [addressData, setaddressData] = useState([]);
     const [userData, setuserData] = useState([]);
     const [showAddAddressForm, setShowAddAddressForm] = useState(false);
+    const [openPostcode, setOpenPostcode] = useState(false);
+    const [newAddress, setNewAddress] = useState({
+        recipient_name: '',
+        user_address1: '',
+        user_address2: '',
+        post_code: '',
+        recipient_phone: '',
+    });
 
     // member data 가져오기
     useEffect(() => {
@@ -40,12 +49,12 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
     }, []);
 
     // 기본 배송지 설정
-    const handleDefualtAddress = () => {
+    const handleDefualtAddress = (user_address1, user_address2, post_code) => {
         axios
             .post(`/payment/addDefaultAddress?user_id=${sessionStorage.loginId}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                user_address1,
+                user_address2,
+                post_code,
             })
             .then((response) => {
                 // 성공적으로 응답을 받았을 때 처리
@@ -66,29 +75,98 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
             });
     };
 
-
+    // 배송지 선택
     const handleSelectAddress = (selectedAddress) => {
         if (selectedAddress) {
             onSelectAddress(selectedAddress);
             closeModal();
         } else {
-            // 사용자에게 주소를 선택하라는 메시지를 표시하거나 다른 처리를 수행할 수 있습니다.
             alert('주소를 선택해주세요.');
         }
     };
 
     const handleAddAddress = () => {
-        // 추가 화면을 나타내는 상태를 변경합니다.
         setShowAddAddressForm(true);
     };
 
-    const handleAddNewAddress = (newAddressData) => {
-        // 서버에 새로운 배송지 데이터를 전송하거나, 상태에 직접 추가하는 등의 동작을 수행합니다.
-        // 예시로 상태에 직접 추가하도록 하겠습니다.
-        setaddressData((prevData) => [...prevData, newAddressData]);
-        setShowAddAddressForm(false);
+    // 배송지 추가
+    const handleAddNewAddress = () => {
+        const newAddressData = {
+            user_id: sessionStorage.loginId,
+            recipient_name: recipient_name,
+            recipient_phone: recipient_phone,
+            post_code: newAddress.post_code,
+            user_address1: newAddress.address,
+            user_address2: user_address2,
+        }
+        axios
+            .post(`/payment/addNewAddress?user_id=${sessionStorage.loginId}`, newAddressData)
+            .then((response) => {
+                setaddressData((prevData) => [...prevData, response.data]);
+                setShowAddAddressForm(false);
+                const fetchData = async () => {
+                    try {
+                        const response = await axios.get(`/payment/getAddress?user_id=${sessionStorage.loginId}`);
+                        setaddressData(response.data);
+                    } catch (error) {
+                        console.error("데이터를 가져오는 동안 오류 발생:", error);
+                    }
+                };
+
+                fetchData();
+            })
+            .catch((error) => {
+                console.error("주소 추가 중 오류 발생:", error);
+            });
     };
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewAddress((prevAddress) => ({
+            ...prevAddress,
+            [name]: value,
+        }));
+    };
+
+    // 도로명주소
+    const handle = {
+        // 버튼 클릭 이벤트
+        clickButton: () => {
+            setOpenPostcode(current => !current);
+        },
+
+        // 주소 선택 이벤트
+        selectAddress: (data) => {
+            // console.log(`
+            //     주소: ${data.address},
+            //     우편번호: ${data.zonecode}
+            // `)
+            setOpenPostcode(false);
+            setNewAddress((prevAddress) => ({
+                ...prevAddress,
+                post_code: data.zonecode,
+                address: data.address,
+            }));
+            // handleSelectAddress(data);
+        },
+    }
+
+    const [recipient_name, setRecipientName] = useState("");
+    const [user_address2, setUserAddress2] = useState("");
+    const [recipient_phone, setRecipientPhone] = useState("");
+
+    const handleRecipientNameChange = (event) => {
+        setRecipientName(event.target.value);
+    };
+
+    const handleUserAddress2Change = (event) => {
+        setUserAddress2(event.target.value);
+    };
+    
+    const handleRecipientPhoneChange = (event) => {
+        setRecipientPhone(event.target.value);
+    
+    };
     return (
         <div className={style.modal}>
             <div className={style.modal_wrap}>
@@ -98,13 +176,27 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
                 </div>
                 {showAddAddressForm && (
                     <div>
+                        {openPostcode &&
+                            <DaumPostcode
+                                onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
+                                autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
+                            // defaultQuery='판교역로 235' // 팝업을 열때 기본적으로 입력되는 검색어 
+                            />}
                         <table>
                             <tr>
                                 <th>
                                     <label htmlFor="name">받는사람</label>
                                 </th>
                                 <td colSpan="">
-                                    <input type="text" id="name" name="name" required />
+                                    <input
+                                        type="text"
+                                        id="recipient_name"
+                                        name="recipient_name"
+                                        value={recipient_name}
+                                        required
+                                        placeholder="이름을 입력하세요."
+                                        onChange={handleRecipientNameChange}
+                                    />
                                 </td>
                             </tr>
                             <tr>
@@ -114,17 +206,34 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
                                 <td colSpan="">
                                     <input
                                         type="text"
-                                        id="address1"
-                                        name="address1"
+                                        id="post_code"
+                                        name="post_code"
+                                        value={newAddress.post_code}
+                                        readOnly
                                         required
-                                        placeholder="도로명, 지번, 건물명 등을 입력하세요"
+                                        placeholder="우편번호"
+                                        onClick={handle.clickButton}
+                                        onChange={handleInputChange}
                                     />
                                     <input
                                         type="text"
-                                        id="address2"
-                                        name="address2"
+                                        id="user_address1"
+                                        name="user_address1"
+                                        value={newAddress.address}
+                                        readOnly
+                                        required
+                                        placeholder="도로명, 지번, 건물명 등을 입력하세요"
+                                        onClick={handle.clickButton}
+                                        onChange={handleInputChange}
+                                    />
+                                    <input
+                                        type="text"
+                                        id="user_address2"
+                                        name="user_address2"
+                                        value={user_address2}
                                         required
                                         placeholder="상세주소를 입력하세요"
+                                        onChange={handleUserAddress2Change}
                                     />
                                 </td>
                             </tr>
@@ -137,15 +246,17 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
                                         type="text"
                                         id="recipient_phone"
                                         name="recipient_phone"
+                                        value={recipient_phone}
                                         required
-                                        placeholder="-를 제외하고 입력해주세요."
+                                        placeholder="-를 제외하고 입력하세요."
+                                        onChange={handleRecipientPhoneChange}
                                     />
                                 </td>
                             </tr>
                         </table>
                         <div className={styles.button} >
                             <input type="button" value="취소" onClick={() => setShowAddAddressForm(false)} />
-                            <input type="button" value="확인" onClick={() => handleAddNewAddress({ /* 새로운 배송지 데이터 */ })} />
+                            <input type="button" value="등록" onClick={handleAddNewAddress} />
                         </div>
                     </div>
                 )}
@@ -268,6 +379,11 @@ const Payment = () => {
                         <div className={styles.button} >
                             <input type="button" value="배송지 선택" onClick={openAddressModal} />
                         </div>
+
+                        {addressModalOpen && (
+                            <AddressModal closeModal={closeAddressModal} onSelectAddress={onSelectAddress} />
+                        )}
+
                         {selectedAddress.recipient_name == undefined &&
                             userData.map((i, index) => (
                                 <table>
@@ -331,10 +447,6 @@ const Payment = () => {
                             </table>
                         }
                     </div>
-
-                    {addressModalOpen && (
-                        <AddressModal closeModal={closeAddressModal} onSelectAddress={onSelectAddress} />
-                    )}
 
                     <Link to="/itemList" className={styles.img_area}>
                         <img src="https://i.pinimg.com/originals/7e/35/0c/7e350c22750cea72abeb1ab755ad43d0.gif" alt="" />
