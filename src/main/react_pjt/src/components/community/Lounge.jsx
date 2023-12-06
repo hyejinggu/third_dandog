@@ -1,6 +1,6 @@
 // import "../../css/subpage/community_lounge.css";
 import styles from "../../css/subpage/community_lounge.module.css";
-import PageNation from "../item/PageNation";
+import Pagination from "../item/Pagination";
 import CommunityPost from "./CommunityPost";
 import SideBar from "./SideBar";
 import React, { useReducer, useState, useContext, useEffect } from "react";
@@ -8,7 +8,6 @@ import { Link, NavLink } from "react-router-dom";
 import axios from "axios";
 export default function Lounge() {
   const [loungeArray, setLoungeArray] = useState([]);
-  const loungeList = loungeArray;
   const [sort, setSort] = useState("new");
   const [inputValue, setInputValue] = useState("");
   const [category, setCategory] = useState("자유 게시판");
@@ -54,7 +53,6 @@ export default function Lounge() {
     handleLoungeList(
       `/lounge/loungeList?category=${queryCategory}&sort=${sort}&filterValue=${filterValue}&inputValue=${inputValue}`
     );
-    // setInputValue("");
   };
 
   const handleLoungeList = (requestURL) => {
@@ -80,11 +78,20 @@ export default function Lounge() {
     }
   };
 
-  // page 이동
-  const [page, setPage] = useState(1);
-  const itemsPerPage = 8;
-  const startIndex = (page - 1) * itemsPerPage;
-  // const displayedItemInfo = array.slice(startIndex, startIndex + itemsPerPage);
+  // pagination 구현
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
+  const listPerPage = 5; // 페이지 당 게시글 개수
+  const totalPages = Math.ceil(loungeArray.length / listPerPage); // 전체 페이지 번호
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const getPaginatedData = () => {
+    const startIndex = (currentPage - 1) * listPerPage;
+    const endIndex = startIndex + listPerPage;
+    return loungeArray.slice(startIndex, endIndex);
+  };
 
   return (
     <div id="wrap" className={styles.lounge_container}>
@@ -145,7 +152,7 @@ export default function Lounge() {
                 <th>조회수</th>
               </tr>
             </thead>
-            <CommunityPost loungeArray={loungeArray} />
+            <CommunityPost loungeArray={getPaginatedData()} />
           </table>
 
           {/* 검색 및 글쓰기 */}
@@ -164,7 +171,11 @@ export default function Lounge() {
       </div>
 
       {/* 페이지 이동 */}
-      <PageNation setPage={setPage} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      ></Pagination>
     </div>
   );
 }

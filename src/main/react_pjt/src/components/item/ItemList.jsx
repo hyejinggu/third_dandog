@@ -1,7 +1,7 @@
 import ItemInfo from "./ItemInfo";
 import RecentSeenItem from "./RecentSeenItem";
 import styles from "../../css/subpage/Itemlist.module.css";
-import PageNation from "./PageNation";
+import Pagination from "./Pagination";
 import { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -122,7 +122,7 @@ const ItemList = () => {
       <p className={styles.item_count}>총 {itemList.length}개의 상품</p>
 
       {/* <RecentSeenItem /> */}
-      {/* <PageNation setPage={""} /> */}
+      <Pagination setPage={""} />
     </div>
   );
 };

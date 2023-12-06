@@ -3,6 +3,7 @@ import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Main from "./components/common/Main";
 import ScrollTop from "./components/common/ScrollTop";
+import SearchAll from "./components/common/SearchAll";
 
 // router
 import { Route, Routes } from "react-router-dom";
@@ -48,6 +49,7 @@ function App() {
       <Routes>
         {/* header 링크 */}
         <Route path="/*" element={<Main />} />
+        <Route path="/searchall/:searchAllValue" element={<SearchAll />} />
         <Route path="/main/*" element={<Main />} />
         <Route path="/login/*" element={<Login />} />
         <Route path="/join/*" element={<Join />} />

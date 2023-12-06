@@ -2,15 +2,22 @@ import styles from "../../css/common/common.module.css";
 import { Link, useLocation } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Modal from "../common/Modal";
-import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   // const navigate = useNavigate();
+  const [searchAllValue, setSearchAllValue] = useState("로그인");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [login, setLogin] = useState("로그인");
   const [join, setJoin] = useState("회원가입");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/searchall/${encodeURIComponent(searchAllValue)}`);
+    setSearchAllValue("");
+  };
 
   useEffect(() => {
     if (sessionStorage.getItem("loginId") != null) {
@@ -32,18 +39,6 @@ const Header = () => {
     }
   };
 
-
-  // axios.get(`/restCart/getCartItems/${loginId}`, async (req, res) => {
-  //   const userId = req.params.user_id;
-  //   try {
-  //     const cartItems = await CartModel.find({ user_id: sessionStorage.getItem("loginId") }).exec();
-  //     res.json(cartItems);
-  //   } catch (error) {
-  //     console.error('Error fetching cart items:', error);
-  //     res.status(500).json({ error: 'Internal Server Error' });
-  //   }
-  // });
-
   return (
     <header>
       <div>
@@ -63,12 +58,16 @@ const Header = () => {
             className={styles.logo}
           />
         </Link>
-        <input
-          type="search"
-          name="search"
-          id="search"
-          placeholder="검색어를 입력해주세요."
-        />
+        <form onSubmit={handleSubmit}>
+          <input
+            type="search"
+            name="search"
+            id="search"
+            placeholder="검색어를 입력해주세요."
+            value={searchAllValue}
+            onChange={(e) => setSearchAllValue(e.target.value)}
+          />
+        </form>
 
         <ul>
           <li onClick={handleLoginState}>

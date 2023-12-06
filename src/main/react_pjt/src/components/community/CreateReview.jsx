@@ -1,6 +1,5 @@
 import styles from "../../css/subpage/create_review.module.css";
 import React, { useState, useRef, useContext } from "react";
-import { CreatePostContext } from "./Community";
 import Modal from "../common/Modal";
 import axios from "axios";
 
@@ -14,6 +13,16 @@ const CreatePost = () => {
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [starRatings, setStarRatings] = useState([1, 1, 1, 1, 1]); // 모든 별이 선택된 상태로 시작
+  const [selectedRating, setSelectedRating] = useState(0); // 기본적으로 5점 선택
+
+  const handleStarClick = (index) => {
+    const updatedRatings = starRatings.map((rating, i) => {
+      return i <= index ? 1 : 0; // 클릭한 별을 포함하여 그 이전의 별은 전체로 채우기
+    });
+    setStarRatings(updatedRatings);
+    setSelectedRating(index + 1); // 클릭한 별에 대한 등급 설정
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -97,7 +106,19 @@ const CreatePost = () => {
                 <label htmlFor="rating">별점</label>
               </td>
               <td>
-                <input type="text" id="rating" name="neighbor_rating" />
+                <div className={styles.star_rating}>
+                  {[0, 1, 2, 3, 4].map((index) => (
+                    <span
+                      key={index}
+                      className={`${styles.star} ${
+                        starRatings[index] === 1 ? styles.full : ""
+                      }`}
+                      onClick={() => handleStarClick(index)}
+                    >
+                      ★
+                    </span>
+                  ))}
+                </div>
               </td>
             </tr>
             <tr>
