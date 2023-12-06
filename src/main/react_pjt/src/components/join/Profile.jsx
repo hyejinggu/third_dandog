@@ -27,29 +27,24 @@ const Profile = () => {
     const { name, value } = e.target;
 
     if (name === "user_email" || name === "domain_list") {
-      // user_email 또는 domain_list가 변경된 경우
       setFormValue((prevFormValue) => ({
         ...prevFormValue,
         [name === "user_email" ? "user_email" : name]: value,
       }));
     } else {
-      // 다른 필드가 변경된 경우
       setFormValue((prevFormValue) => ({
         ...prevFormValue,
         [name]: value,
       }));
     }
 
-    // 유효성 검사 실행
     validateField(name, value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // 유효성 검사 실행
     if (validateForm()) {
-      // 데이터 배열 생성
       const dataToSend = {
         required_check: required_check ? "Y" : "N",
         choice_check: location.state?.choice_check || "",
@@ -59,7 +54,6 @@ const Profile = () => {
         user_email: `${formValue.user_email}`,
       };
 
-      // 다음 페이지로 이동
       console.log("데이터 배열:", dataToSend);
       navigate("/join/information", { state: dataToSend });
     } else {
@@ -69,7 +63,6 @@ const Profile = () => {
 
   useEffect(() => {
     if (location.state) {
-      // 받아온 데이터와 Profile 컴포넌트의 formValue 합치기
       setFormValue((prevFormValue) => ({
         ...prevFormValue,
         ...location.state,
@@ -137,12 +130,12 @@ const Profile = () => {
               <td>
                 <input
                   type="text"
-                  name="user_name" // Add "name" attribute
+                  name="user_name"
                   id="user_name"
                   placeholder="이름을 입력해주세요"
                   required
-                  value={formValue.user_name} // Add "value" attribute
-                  onChange={handleChange} // Add "onChange" attribute
+                  value={formValue.user_name}
+                  onChange={handleChange}
                 />
               </td>
               {errors.user_name && (

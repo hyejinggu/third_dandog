@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styles from "../../css/subpage/ItemDetail.module.css";
 import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 import EmptyItem from "./EmptyItem";
 import CartItemPrice from "./CartItemPrice";
-import { useLocation } from "react-router-dom";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [quantity, setQuantity] = useState(1);
-  const location = useLocation();
-  const selectedItem = location.state.item;
   const loginId = sessionStorage.getItem("loginId");
-  const [cartItemInfo, setCartItemInfo] = useState([]);
 
 
   useEffect(() => {
@@ -32,7 +26,7 @@ const Cart = () => {
           };
 
 
-          return { selectedItem }; // 수정된 부분: selectedItem를 반환 객체에 포함
+          return { selectedItem };
         });
 
         setCartItems(items);
@@ -77,19 +71,16 @@ const Cart = () => {
   };
 
   const calculateTotalPrice = (item) => {
-    // 'item'이 정의되었고 'item.selectedItem' 속성이 있는지 확인합니다.
     if (!item || !item.selectedItem) {
       console.error("잘못된 'item' 또는 'selectedItem'");
-      return 0; // 또는 기본값을 반환합니다.
+      return 0;
     }
 
     const selectedItem = item.selectedItem;
 
-    // 'selectedItem'에 필요한 속성이 있는지 확인합니다.
     const originalPrice = selectedItem.item_price || 0;
     const salePrice = originalPrice - originalPrice * (selectedItem.item_sales_volume / 100);
 
-    // 'selectedItem'에 'item_quantity' 속성이 있는지 확인합니다.
     const quantity = selectedItem.item_quantity == null ? 1 : selectedItem.item_quantity;
 
     const totalPrice = salePrice * quantity;
@@ -99,7 +90,6 @@ const Cart = () => {
 
   const calculateTotalCartPrice = (items) => {
     if (!Array.isArray(items) || items.length === 0) {
-      // console.error("잘못된 'items' 또는 빈 배열");
       return 0;
     }
 
@@ -115,14 +105,12 @@ const Cart = () => {
       totalCartPrice += itemTotalPrice;
     }
 
-    // 배송비가 50,000원 이상인 경우 0으로 설정합니다.
     const deliveryPrice = totalCartPrice >= 50000 ? 0 : 3000;
 
     return totalCartPrice + deliveryPrice;
   };
 
   const delivery_price = calculateTotalCartPrice(cartItems) >= 50000 ? 0 : 3000;
-  console.log(calculateTotalCartPrice(cartItems));
 
   return (
     <>
@@ -150,7 +138,7 @@ const Cart = () => {
                   quantity={item.item_quantity}
                   onIncrease={(event) => handleIncrease(index, event)}
                   onDecrease={(event) => handleDecrease(index, event)}
-                  totalPrice={calculateTotalPrice(item)}  // 변경된 부분
+                  totalPrice={calculateTotalPrice(item)}
                   handleDelete={() => handleDelete(index)}
                 />
               ))}
@@ -158,8 +146,7 @@ const Cart = () => {
             </table>
             <CartItemPrice
               totalPrice={calculateTotalCartPrice(cartItems)}
-              delivery_price={delivery_price}   // 함수 호출로 변경
-            />
+              delivery_price={delivery_price} />
             <Link to="/payment">
               <input type="button" value="구매하기" className="order" />
             </Link>

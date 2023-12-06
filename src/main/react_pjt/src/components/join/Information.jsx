@@ -5,18 +5,16 @@ const Information = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Information 컴포넌트의 상태 변수
     const [formValue, setFormValue] = useState({
         ...location.state,
         ani_name: '',
         ani_birthday: '',
         ani_gender: '',
         ani_info: '',
-        ani_type: '강아지',  // 추가: 반려동물 종류
+        ani_type: '강아지',
     });
 
     useEffect(() => {
-        // Agree와 Profile에서 받아온 데이터 합치기
         if (location.state) {
             setFormValue((prevFormValue) => ({
                 ...prevFormValue,
@@ -28,22 +26,14 @@ const Information = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        // Information 컴포넌트에서의 추가적인 처리나 페이지 이동 등을 수행할 수 있습니다.
-
-        // 데이터 배열 생성
         const dataToSend = {
-            // 받아온 데이터와 Information 컴포넌트의 formValue 합치기
             ...location.state,
             ani_name: formValue.ani_name,
             ani_birthday: formValue.ani_birthday,
-            ani_type: formValue.ani_type,  // 반려동물 종류 추가
+            ani_type: formValue.ani_type,
             ani_info: formValue.ani_info,
         };
 
-        // 콘솔에 데이터 배열 출력
-        console.log('데이터 배열:', dataToSend);
-
-        // 다음 페이지로 이동
         navigate('/join/details', { state: dataToSend });
     };
 

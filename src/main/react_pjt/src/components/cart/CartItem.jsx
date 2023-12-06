@@ -1,19 +1,13 @@
-// CartItem.jsx
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
 
 const CartItem = ({
   selectedItem,
   onIncrease,
   onDecrease,
   totalPrice,
-  quantity,
   handleDelete,
 }) => {
   const loginId = sessionStorage.getItem("loginId");
-  const location = useLocation();
-  const [mainImage, setMainImage] = useState("");
-  const [cartItemInfo, setCartItemInfo] = useState([]);
 
 
 

@@ -7,10 +7,6 @@ const Agree = () => {
     const [required_check, setRequired_check] = useState(false); // 상태 변수 설정
     const [choice_check, setChoice_check] = useState(false); // 상태 변수 설정
 
-    // const handleAgreeAllChange = (event) => {
-    //     setRequired_check(event.target.checked); // 체크 여부를 상태에 반영
-    // };
-
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -19,34 +15,16 @@ const Agree = () => {
             return;
         }
 
-        // 데이터 배열 생성
         const dataToSend = {
             required_check: required_check ? 'Y' : 'N',
             choice_check: choice_check ? 'Y' : 'N', // 또는 실제 데이터 값
         };
 
-        // 콘솔에 데이터 배열 출력
         console.log('데이터 배열:', dataToSend);
         navigate('/join/profile', { state: dataToSend });
 
     };
 
-    // const btnChecked = (event) => {
-    //     if (!required_check) {
-    //         alert('(필수)모든 약관에 동의해주세요.');
-    //     } else {
-    //         // 데이터 배열 생성
-    //         const dataToSend = {
-    //             agreement: required_check ? 'Y' : 'N',
-    //             // 다른 데이터 필드들도 추가 가능
-    //         };
-
-    //         // 콘솔에 데이터 배열 출력
-    //         console.log('데이터 배열:', dataToSend);
-    //         navigate('/join/profile', { state: dataToSend }); // state를 수정
-
-    //     }
-    // };
     return (
 
         <form action="join" id="join_form" method="post" onSubmit={handleSubmit}>
@@ -191,7 +169,6 @@ const Agree = () => {
                                 checked={required_check}
                                 onChange={(e) => {
                                     setRequired_check(e.target.checked);
-                                    // 다른 로직이 필요한 경우 여기에 추가
                                 }} />
                             <label htmlFor="required_check" className="required">(필수)모든 약관을 확인하였으며 전체 동의합니다.</label>
                         </th>
@@ -210,7 +187,6 @@ const Agree = () => {
                             <input type="checkbox" id="choice_check" name="choice_check" checked={choice_check}
                                 onChange={(e) => {
                                     setChoice_check(e.target.checked);
-                                    // 다른 로직이 필요한 경우 여기에 추가
                                 }}
                             />
                             <label htmlFor="choice_check">(선택)모든 약관을 확인하였으며 전체 동의합니다.</label>
