@@ -65,6 +65,32 @@
   justify-items: center;
 }
 
+/* 별점 컨테이너 */
+.star_rating {
+  font-size: 30px;
+}
+
+/* 각 별 스타일 */
+.star {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  color: #ccc; /* 비활성화된 별의 색상 */
+}
+
+/* 전체 별 스타일 */
+.star::before {
+  content: "\2605"; /* 별 모양 유니코드 */
+  display: inline-block;
+  position: absolute;
+}
+
+/* 클릭된 별 스타일 */
+.star.full::before {
+  content: "\2605"; /* 클릭된 별의 색상을 별로 변경 */
+  color: gold; /* 클릭된 별의 색상 */
+}
+
 /* 내용 영역 */
 .content_wrap {
   width: 100%;

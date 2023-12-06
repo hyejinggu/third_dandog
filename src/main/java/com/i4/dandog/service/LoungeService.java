@@ -9,6 +9,9 @@ public interface LoungeService {
     
 	List<Lounge> findByDynamicQuery(String category, String inputValue, String filterValue, String sort);
 	
+	List<Lounge> findByCategoryLoungeContents(String category, String inputValue);
+	List<Lounge> findByCategoryUserId(String category, String inputValue);
+	
     List<Lounge> selectList();
     
     Lounge selectOne(int lounge_no);

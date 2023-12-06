@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.i4.dandog.entity.Lounge;
@@ -25,8 +26,20 @@ public class LoungeController {
 	private LoungeService service;
 
 	@GetMapping(value = "/loungeList")
-	public String getLoungeList(Model model) {
-		model.addAttribute("loungeList", service.selectList());
+	public String getLoungeList(
+			@RequestParam(name = "search_category", defaultValue = "all") String searchCategory,
+            @RequestParam(name = "search_field", defaultValue = "contents") String searchField,
+            @RequestParam(name = "search_value", defaultValue = "") String searchValue,
+            Model model) {
+		log.info("************************ " +searchField);
+	
+		if (searchCategory.equals("all")) searchCategory = null;
+		if ("id".equals(searchField)) {
+			model.addAttribute("loungeList", service.findByCategoryUserId(searchCategory, searchValue));
+		} else {
+			model.addAttribute("loungeList", service.findByCategoryLoungeContents(searchCategory, searchValue));			
+		}
+		
 		return "lounge/loungeList";
 	}
 	
@@ -35,7 +48,7 @@ public class LoungeController {
 	public String loungeInsert() {
 		return "lounge/loungeInsert";
 	}
-	
+
 	@PostMapping(value = "/loungeUpload")
 	public String loungeupload(Lounge entity, Model model) throws IOException {
 	    String uri = "redirect:/";

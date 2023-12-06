@@ -1,0 +1,59 @@
+/* SearchAll.module.css */
+
+.title {
+  text-align: center;
+}
+
+.searched_area {
+  max-width: 1200px;
+  margin: 100px auto;
+  width: 100%;
+}
+
+.resultsContainer {
+  display: grid;
+  gap: 20px;
+  width: 100%;
+}
+
+.productResults,
+.boardResults,
+.communityResults {
+  background-color: #fff;
+  width: 100%;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.productResults h2,
+.boardResults h2,
+.communityResults h2 {
+  color: #333;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.productResults ul,
+.boardResults ul,
+.communityResults ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.productResults li,
+.boardResults li,
+.communityResults li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.productResults li:last-child,
+.boardResults li:last-child,
+.communityResults li:last-child {
+  border-bottom: none;
+}
+
+/* 예시에서는 각 결과 섹션의 배경색, 헤더 색상, 리스트 스타일 등을 조정했습니다.
+     원하는 디자인에 맞게 추가적인 스타일을 조정하세요. */

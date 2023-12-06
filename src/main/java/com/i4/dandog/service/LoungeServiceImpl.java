@@ -29,6 +29,17 @@ public class LoungeServiceImpl implements LoungeService {
 
 	
 	@Override
+	public List<Lounge> findByCategoryLoungeContents(String category, String inputValue) {
+		return loungeRepository.findByCategoryLoungeContents(category, inputValue);
+	}
+	
+	@Override
+	public List<Lounge> findByCategoryUserId(String category, String inputValue) {
+		return loungeRepository.findByCategoryUserId(category, inputValue);
+	}
+	
+	
+	@Override
 	public List<Lounge> selectList() {
 		return loungeRepository.findAll();
 	}
