@@ -1,19 +1,73 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styles from '../../css/payment/payment.module.css';
-import style from "../../css/common/modal.module.css";
+import style from "../../css/payment/paymentmodal.module.css";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
 import Modal from "../common/Modal";
 
 const AddressModal = ({ closeModal, onSelectAddress }) => {
-    const [selectedAddress, setSelectedAddress] = useState('');
+    const [addressData, setaddressData] = useState([]);
+    const [userData, setuserData] = useState([]);
+    const [showAddAddressForm, setShowAddAddressForm] = useState(false);
 
-    const handleAddressChange = (e) => {
-        setSelectedAddress(e.target.value);
+    // member data 가져오기
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`/payment/getuserinfo?user_id=${sessionStorage.loginId}`);
+                setuserData(response.data);
+            } catch (error) {
+                console.error("유저데이터를 가져오는 동안 오류 발생:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    // 주소록 가져오기
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`/payment/getAddress?user_id=${sessionStorage.loginId}`);
+                setaddressData(response.data);
+            } catch (error) {
+                console.error("데이터를 가져오는 동안 오류 발생:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    // 기본 배송지 설정
+    const handleDefualtAddress = () => {
+        axios
+            .post(`/payment/addDefaultAddress?user_id=${sessionStorage.loginId}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then((response) => {
+                // 성공적으로 응답을 받았을 때 처리
+                alert(`기본 배송지로 설정되었습니다.`);
+                closeModal();
+            })
+            .catch((error) => {
+                // 에러 발생 시 처리
+                if (error.response) {
+                    console.error("서버에서 오류 응답:", error.response.data);
+                    console.error("Status code:", error.response.status);
+                } else if (error.request) {
+                    console.error("서버로부터 응답을 받지 못했습니다.");
+                } else {
+                    console.error("요청 설정 중 오류 발생:", error.message);
+                }
+                console.error("전부 에러:", error);
+            });
     };
 
-    const handleSelectAddress = () => {
+
+    const handleSelectAddress = (selectedAddress) => {
         if (selectedAddress) {
             onSelectAddress(selectedAddress);
             closeModal();
@@ -23,61 +77,124 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
         }
     };
 
+    const handleAddAddress = () => {
+        // 추가 화면을 나타내는 상태를 변경합니다.
+        setShowAddAddressForm(true);
+    };
+
+    const handleAddNewAddress = (newAddressData) => {
+        // 서버에 새로운 배송지 데이터를 전송하거나, 상태에 직접 추가하는 등의 동작을 수행합니다.
+        // 예시로 상태에 직접 추가하도록 하겠습니다.
+        setaddressData((prevData) => [...prevData, newAddressData]);
+        setShowAddAddressForm(false);
+    };
+
     return (
         <div className={style.modal}>
             <div className={style.modal_wrap}>
                 <h2>배송지 선택</h2>
+                <div className={styles.button} >
+                    <input type="button" value="배송지 추가" onClick={handleAddAddress} />
+                </div>
+                {showAddAddressForm && (
+                    <div>
+                        <table>
+                            <tr>
+                                <th>
+                                    <label htmlFor="name">받는사람</label>
+                                </th>
+                                <td colSpan="">
+                                    <input type="text" id="name" name="name" required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label htmlFor="address">주소</label>
+                                </th>
+                                <td colSpan="">
+                                    <input
+                                        type="text"
+                                        id="address1"
+                                        name="address1"
+                                        required
+                                        placeholder="도로명, 지번, 건물명 등을 입력하세요"
+                                    />
+                                    <input
+                                        type="text"
+                                        id="address2"
+                                        name="address2"
+                                        required
+                                        placeholder="상세주소를 입력하세요"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label htmlFor="phone">전화번호</label>
+                                </th>
+                                <td>
+                                    <input
+                                        type="text"
+                                        id="recipient_phone"
+                                        name="recipient_phone"
+                                        required
+                                        placeholder="-를 제외하고 입력해주세요."
+                                    />
+                                </td>
+                            </tr>
+                        </table>
+                        <div className={styles.button} >
+                            <input type="button" value="취소" onClick={() => setShowAddAddressForm(false)} />
+                            <input type="button" value="확인" onClick={() => handleAddNewAddress({ /* 새로운 배송지 데이터 */ })} />
+                        </div>
+                    </div>
+                )}
                 <table>
                     <tr>
                         <th>
-                            <label htmlFor="name">받는사람</label>
+                            <label htmlFor={`name`}>받는사람</label>
                         </th>
-                        <td colSpan="">
-                            <input type="text" id="name" name="name" required />
-                        </td>
-                    </tr>
-                    <tr>
                         <th>
-                            <label htmlFor="address">주소</label>
+                            <label htmlFor={`address`}>주소</label>
                         </th>
-                        <td colSpan="">
-                            <input type="text" id="address" name="address" required placeholder="도로명, 지번, 건물명 등을 입력하세요" />
-                            <input type="text" id="address" name="address" required placeholder="상세주소를 입력하세요" />
-                        </td>
-                    </tr>
-                    <tr>
                         <th>
-                            <label htmlFor="phone">전화번호</label>
+                            <label htmlFor={`phone`}>전화번호</label>
                         </th>
-                        <td>
-                            <input type="tel" id="phone1" name="phone1" required pattern="[0-9]{3}" placeholder="010" />
-                            <input type="tel" id="phone2" name="phone2" required pattern="[0-9]{3,4}"
-                                placeholder="1234" />
-                            <input type="tel" id="phone3" name="phone3" required pattern="[0-9]{4}" placeholder="5678" />
-                        </td>
                     </tr>
-                    <tr>
-                        <th>
-                            <label htmlFor="email">이메일</label>
-                        </th>
-                        <td colSpan="">
-                            <input type="email" id="email" name="email" required />
-                        </td>
-                    </tr>
-
+                    {addressData.map((i, index) => (
+                        <tr key={index}>
+                            <td>
+                                <strong>
+                                    {i.recipient_name}
+                                </strong>
+                            </td>
+                            <td>
+                                <p>{`${i.user_address1} ${i.user_address2} (${i.post_code})`}</p>
+                            </td>
+                            <td>
+                                <p>
+                                    {i.recipient_phone}
+                                </p>
+                            </td>
+                            <div className={styles.button} >
+                                {userData.map((u, index) => (
+                                    i.post_code !== u.post_code &&
+                                    <input type="button" value="기본배송지로 선택" onClick={() => handleDefualtAddress(i.user_address1, i.user_address2, i.post_code)} />
+                                ))}
+                                <input type="button" value="삭제" />
+                                <input type="button" value="선택" onClick={() => handleSelectAddress(i)} />
+                            </div>
+                        </tr>
+                    ))}
                 </table>
-            <select value={selectedAddress} onChange={handleAddressChange}>
-                <option value="">주소를 선택하세요</option>
-                <option value="서울시">서울시</option>
-                <option value="부산시">부산시</option>
-                {/* 다른 주소 옵션들을 추가할 수 있습니다. */}
-            </select>
-            <button onClick={handleSelectAddress}>선택</button>
-            <button onClick={closeModal}>취소</button>
+                <div className={styles.button} >
+                    <input type="button" onClick={closeModal} value="취소" />
+                </div>
             </div>
         </div>
     );
 };
+
 
 const Payment = () => {
     const location = useLocation();
@@ -86,6 +203,20 @@ const Payment = () => {
 
     const [addressModalOpen, setAddressModalOpen] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState('');
+    const [userData, setuserData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`/payment/getuserinfo?user_id=${sessionStorage.loginId}`);
+                setuserData(response.data);
+            } catch (error) {
+                console.error("유저데이터를 가져오는 동안 오류 발생:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const openAddressModal = () => {
         setAddressModalOpen(true);
@@ -133,22 +264,84 @@ const Payment = () => {
 
                 <h2 className={styles.title}>배송지</h2>
                 <div className={styles.address_input}>
-                    <div className={styles.button} >
-                    <input type="button" value="배송지 선택" onClick={openAddressModal} />
-                    {/* <p>선택된 주소: {selectedAddress}</p> */}
+                    <div>
+                        <div className={styles.button} >
+                            <input type="button" value="배송지 선택" onClick={openAddressModal} />
+                        </div>
+                        {selectedAddress.recipient_name == undefined &&
+                            userData.map((i, index) => (
+                                <table>
+                                    <tr>
+                                        <th>
+                                            <label htmlFor="text">받는 분 : </label>
+                                        </th>
+                                        <td colSpan="">
+                                            <input type="text" id="recipient_name" name="recipient_name" value={i.user_name} readOnly />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <label htmlFor="text">전화번호 : </label>
+                                        </th>
+                                        <td colSpan="">
+                                            <input type="text" id="recipient_phone" name="recipient_phone" value={i.user_phonenum} readOnly />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <label htmlFor="text">주소 : </label>
+                                        </th>
+                                        <td colSpan="">
+                                            {i.user_address1 === null &&
+                                                <input type="text" id="address" name="address" value="배송지를 선택해주세요" />
+                                            }
+                                            {i.user_address1 !== null &&
+                                                < input type="text" id="address" name="address" value={`${i.user_address1} ${i.user_address2} (${i.post_code})`} />
+                                            }
+                                        </td>
+                                    </tr>
+                                </table>
+                            ))
+                        }{selectedAddress.recipient_name !== undefined &&
+                            <table>
+                                <tr>
+                                    <th>
+                                        <label htmlFor="text">받는 분 : </label>
+                                    </th>
+                                    <td colSpan="">
+                                        <input type="text" id="recipient_name" name="recipient_name" value={selectedAddress.recipient_name} readOnly />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label htmlFor="text">전화번호 : </label>
+                                    </th>
+                                    <td colSpan="">
+                                        <input type="text" id="recipient_phone" name="recipient_phone" value={selectedAddress.recipient_phone} readOnly />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label htmlFor="text">주소 : </label>
+                                    </th>
+                                    <td colSpan="">
+                                        <input type="text" id="address" name="address" value={`${selectedAddress.user_address1} ${selectedAddress.user_address2} (${selectedAddress.post_code})`} />
+                                    </td>
+                                </tr>
+                            </table>
+                        }
                     </div>
 
                     {addressModalOpen && (
                         <AddressModal closeModal={closeAddressModal} onSelectAddress={onSelectAddress} />
                     )}
-                    
+
                     <Link to="/itemList" className={styles.img_area}>
                         <img src="https://i.pinimg.com/originals/7e/35/0c/7e350c22750cea72abeb1ab755ad43d0.gif" alt="" />
                     </Link>
                     <div className={styles.pass_input}>
                         <hr />
                         <h2 className={styles.title}>주문자 정보</h2>
-                        <table>
                         <tr>
                             <th>
                                 <label htmlFor="payment-method">결제방법</label>
@@ -161,31 +354,34 @@ const Payment = () => {
                                 </select>
                             </td>
                         </tr>
-                            <tr>
-                                <th>
-                                    <label htmlFor="email">주문자 이름 : </label>
-                                </th>
-                                <td colSpan="">
-                                    <input type="email" id="email" name="email" required />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <label htmlFor="email">주문자 이메일 : </label>
-                                </th>
-                                <td colSpan="">
-                                    <input type="email" id="email" name="email" required />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <label htmlFor="email">주문자 전화번호 : </label>
-                                </th>
-                                <td colSpan="">
-                                    <input type="email" id="email" name="email" required />
-                                </td>
-                            </tr>
-                        </table>
+                        {userData.map((i, index) => (
+                            <table>
+                                <tr>
+                                    <th>
+                                        <label htmlFor="text">주문자 이름 : </label>
+                                    </th>
+                                    <td colSpan="">
+                                        <input type="text" id="user_name" name="user_name" value={i.user_name} readOnly />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label htmlFor="email">주문자 이메일 : </label>
+                                    </th>
+                                    <td colSpan="">
+                                        <input type="email" id="user_email" name="user_email" value={i.user_email} readOnly />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label htmlFor="text">주문자 전화번호 : </label>
+                                    </th>
+                                    <td colSpan="">
+                                        <input type="text" id="user_phonenum" name="user_phonenum" value={i.user_phonenum} readOnly />
+                                    </td>
+                                </tr>
+                            </table>
+                        ))}
                     </div>
                 </div>
 

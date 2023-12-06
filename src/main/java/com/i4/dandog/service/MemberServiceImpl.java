@@ -87,4 +87,10 @@ public class MemberServiceImpl implements MemberService {
 	    return repository.searchMembers(searchField, searchValue);
 	}
 
+	// ** 결제페이지 userinfo
+	@Override
+	public List<Member> getuserinfoForUser(String user_id) {
+		return repository.findByUser_id(user_id);
+	}
+	
 } // class

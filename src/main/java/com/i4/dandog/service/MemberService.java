@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 
 import com.i4.dandog.entity.Member;
 
+
 public interface MemberService {
 
 	// ** selectList
@@ -35,5 +36,8 @@ public interface MemberService {
 
 	// ** 관리자 Search
 	List<Member> searchMembers(String searchField, String searchValue);
+
+	// ** 결제페이지 userinfo
+	List<Member> getuserinfoForUser(String user_id);
 
 }
