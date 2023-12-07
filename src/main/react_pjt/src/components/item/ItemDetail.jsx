@@ -16,6 +16,7 @@ const ItemDetail = () => {
   const selectedItem = location.state.item;
   const [imageData, setImageData] = useState([]);
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,7 +43,7 @@ const ItemDetail = () => {
     setMainImage(imageUrl); // 클릭한 이미지를 메인 이미지로 설정
   };
 
-  const loginId = sessionStorage.getItem('loginId') || "admin";
+  const loginId = sessionStorage.getItem('loginId');
   const cartRequest = {
     user_id: loginId,
     item_no: selectedItem.item_no,
@@ -50,30 +51,35 @@ const ItemDetail = () => {
   };
 
   const handleAddToCart = () => {
-
-    console.log(cartRequest);
-    axios
-      .post(`/restCart/addCart?user_id=${loginId}`, cartRequest, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        // alert(`상품이 장바구니에 담겼습니다.`);
-        navigate("/cart");
-      })
-      .catch((error) => {
-        // 에러 발생 시 처리
-        if (error.response) {
-          console.error("서버에서 오류 응답:", error.response.data);
-          console.error("Status code:", error.response.status);
-        } else if (error.request) {
-          console.error("서버로부터 응답을 받지 못했습니다.");
-        } else {
-          console.error("요청 설정 중 오류 발생:", error.message);
-        }
-        console.error("전부 에러:", error);
-      });
+    if (!loginId) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+    } else {
+      console.log(cartRequest);
+      axios
+        .post(`/restCart/addCart?user_id=${loginId}`, cartRequest, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((response) => {
+          alert(`상품이 장바구니에 담겼습니다.`);
+          // Only navigate if the user is logged in
+          navigate("/cart");
+        })
+        .catch((error) => {
+          // Handle the error
+          if (error.response) {
+            console.error("서버에서 오류 응답:", error.response.data);
+            console.error("Status code:", error.response.status);
+          } else if (error.request) {
+            console.error("서버로부터 응답을 받지 못했습니다.");
+          } else {
+            console.error("요청 설정 중 오류 발생:", error.message);
+          }
+          console.error("전부 에러:", error);
+        });
+    }
   };
 
   const present_pr =
