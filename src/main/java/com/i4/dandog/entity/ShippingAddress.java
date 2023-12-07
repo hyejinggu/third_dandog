@@ -1,5 +1,6 @@
 package com.i4.dandog.entity;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -18,6 +19,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @IdClass(ShippingAddressKeyId.class)
 public class ShippingAddress {
+	
+//	@EmbeddedId
+//    private ShippingAddressKeyId keyId;
 	
 	@Id
     private String user_id;

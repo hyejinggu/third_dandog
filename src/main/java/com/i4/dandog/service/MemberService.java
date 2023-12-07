@@ -39,5 +39,8 @@ public interface MemberService {
 
 	// ** 결제페이지 userinfo
 	List<Member> getuserinfoForUser(String user_id);
+	
+	// ** 결제페이지 기본배송지
+	void updateAddress(String user_id, String user_address1, String user_address2, int post_code);
 
 }
