@@ -4,18 +4,14 @@ import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 import EmptyItem from "./EmptyItem";
 import CartItemPrice from "./CartItemPrice";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const loginId = sessionStorage.getItem("loginId");
 
   useEffect(() => {
-    if (!loginId) {
-      alert("로그인이 필요합니다.");
-      window.location.href = "/login";
-      return;
-    }
-
     axios
       .get(`/restCart/getCartItems/${loginId}`)
       .then((response) => {
@@ -27,9 +23,9 @@ const Cart = () => {
             item_img: cartDTO.item_img1,
             item_name: cartDTO.item_name,
             item_price: cartDTO.item_price,
-            item_sales_volume: cartDTO.item_sales_volume
+            item_discount_rate: cartDTO.item_discount_rate
           };
-          console.log(selectedItem.item_sales_volume);
+          console.log(selectedItem.item_discount_rate);
 
           return { selectedItem };
         });
@@ -121,7 +117,7 @@ const Cart = () => {
     const selectedItem = item.selectedItem;
 
     const originalPrice = selectedItem.item_price || 0;
-    const salePrice = originalPrice - originalPrice * (selectedItem.item_sales_volume / 100);
+    const salePrice = originalPrice - originalPrice * (selectedItem.item_discount_rate / 100);
 
     const quantity = selectedItem.item_quantity == null ? 1 : selectedItem.item_quantity;
 
