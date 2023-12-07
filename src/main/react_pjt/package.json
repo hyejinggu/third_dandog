@@ -21,7 +21,7 @@
     "react-fontawesome": "^1.7.1",
     "react-ratings-declarative": "^3.4.1",
     "react-router-dom": "^6.15.0",
-    "react-scripts": "^5.0.0",
+    "react-scripts": "^5.0.1",
     "react-scroll": "^1.8.9",
     "sweetalert2": "^11.6.13",
     "web-vitals": "^2.1.4"
