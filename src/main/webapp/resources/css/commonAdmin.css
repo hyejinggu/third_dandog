@@ -70,4 +70,13 @@
     max-width: 1400px;
     min-width: 1400px;
     float: right;
+    padding: 30px;
+}
+
+#resultArea1 h1 {
+    width: 100%;
+    font-size: 20px;
+    margin-top: 10px;
+    border-bottom: 3px solid #ffa900;
+    line-height: 50px;
 }

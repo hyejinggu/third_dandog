@@ -83,18 +83,19 @@ public class MemberServiceImpl implements MemberService {
 	}
 
     // ** 관리자 Search
-    @Override
-    public List<Member> searchMembers(String searchField, String searchValue) {
-        return repository.searchMembers(searchField, searchValue);
-    }
-//	@Override
-//	public List<Member> findByUser_email(String inputValue, String category) {
-//		return repository.findByUser_email(inputValue, category);
-//	}
-//	@Override
-//	public List<Member> findByUser_id(String inputValue, String category) {
-//		return repository.findByUser_id(inputValue, category);
-//	}
+//    @Override
+//    public List<Member> searchMembers(String searchField, String searchValue) {
+//        return repository.searchMembers(searchField, searchValue);
+//    }
+	@Override
+	public List<Member> searchMembersName(String searchValue) {
+		return repository.searchMembersName(searchValue);
+	}
+	@Override
+	public List<Member> searchMembersId(String searchValue) {
+		return repository.searchMembersId(searchValue);
+	}
+    
 
 	// ** 결제페이지 userinfo
 	@Override
