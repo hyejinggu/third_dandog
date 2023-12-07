@@ -17,5 +17,9 @@ public interface ItemImageRepository extends JpaRepository<ItemImage, Integer> {
 	@Query("select i from ItemImage i where i.item_no = :item_no")
 	public List<ItemImage> findByItemNo(@Param("item_no") int item_no);
 	
+	
+	@Query("select i.image_no from ItemImage i where i.item_no = :item_no")
+	public List<Integer> getAllImageNumbersByItemNo(@Param("item_no") int item_no);
+	
 }
 

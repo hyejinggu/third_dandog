@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -191,66 +192,70 @@ public class ItemController {
 	}
 
 	@PostMapping(value = "/update")
-	public String update(Item entity, Model model,  @RequestParam("etcImages") MultipartFile[] images) throws IOException {
+	public String update(Item entity, Model model, @RequestParam(value = "selectedImages", required = false) List<Long> selectedImages,
+	        @RequestParam("etcImages") MultipartFile[] images) throws IOException {
 
 		String uri = "redirect:/";
 
-		// 이미지 수정
-		String realPath = "D:\\teamproject\\dandog_pjt\\dandog\\src\\main\\react_pjt\\public\\images\\item\\";
-		MultipartFile uploadfilef1 = entity.getUploadfileF1(); // 첫번째 상품 이미지
-		if (uploadfilef1 != null && !uploadfilef1.isEmpty()) {
-			// 물리적위치 저장 (file1)
-			String file1 = realPath + uploadfilef1.getOriginalFilename(); // 저장경로 완성
-			uploadfilef1.transferTo(new File(file1)); // 해당경로에 저장(붙여넣기)
+	    // 이미지 수정
+	    String realPath = "D:\\teamproject\\dandog_pjt\\dandog\\src\\main\\react_pjt\\public\\images\\item\\";
 
-			// Table 저장경로 완성 (file2)
-			String file2 = uploadfilef1.getOriginalFilename();
-			entity.setItem_img1(file2);
-		}
-
-		MultipartFile uploadfilef2 = entity.getUploadfileF2(); // 두번째 상품 이미지
-		if (uploadfilef2 != null && !uploadfilef2.isEmpty()) {
-			// 물리적위치 저장 (file1)
-			String file3 = realPath + uploadfilef2.getOriginalFilename(); // 저장경로 완성
-			uploadfilef2.transferTo(new File(file3)); // 해당경로에 저장(붙여넣기)
-
-			// Table 저장경로 완성 (file2)
-			String file4 = uploadfilef2.getOriginalFilename();
-			entity.setItem_img2(file4);
-		}
-
-
-		try {
-			log.info("insert 성공! 상품 번호: " + service.save(entity));
-			model.addAttribute("message", "상품 수정 성공");
-		} catch (Exception e) {
-			log.info("insert Exception: " + e.toString());
-			model.addAttribute("message", "상품 수정 실패");
-			uri = "item/itemUpdate";
-		}
+	    // 업로드된 첫번째 이미지 처리
+	    handleUploadedFile(entity.getUploadfileF1(), realPath, entity::setItem_img1);
+	    // 업로드된 두번째 이미지 처리
+	    handleUploadedFile(entity.getUploadfileF2(), realPath, entity::setItem_img2);
+	    
+	    
+	    try {
+	        log.info("insert 성공! 상품 번호: " + service.save(entity));
+	        model.addAttribute("message", "상품 수정 성공");
+	    } catch (Exception e) {
+	        log.info("insert Exception: " + e.toString());
+	        model.addAttribute("message", "상품 수정 실패");
+	        uri = "item/itemUpdate";
+	    }
 
 		
-		// 그 외 기타 이미지
-		for (MultipartFile img : images) {
-			if (img != null && !img.isEmpty()) {
-				String file5 = realPath + img.getOriginalFilename();
-				img.transferTo(new File(file5));
-				
-				String file6 = img.getOriginalFilename();
-				
-				ItemImage imgEntity = new ItemImage();
-//				imgEntity.setImage_no(0);
-				imgEntity.setItem_no(entity.getItem_no());
-				imgEntity.setItem_img(file6);
-				log.info("images insert 성공! 상품 번호: " + iservice.save(imgEntity));
-			}
-		}
+	 // 기존에 속한 이미지 중에서 선택되지 않은 이미지 삭제
+	    if (selectedImages != null && !selectedImages.isEmpty()) {
+	        // 기존에 속한 모든 이미지 번호를 가져오는 로직 (예: service.getAllImageNumbersByItemNo(entity.getItem_no()))
+	        List<Integer> allImageNumbers = iservice.getAllImageNumbersByItemNo(entity.getItem_no());
+
+	        // 선택된 이미지를 제외한 나머지 이미지를 삭제
+	        allImageNumbers.stream()
+	                .filter(imageNo -> !selectedImages.contains(imageNo.intValue()))
+	                .forEach(imageNo -> {
+	                    iservice.delete(imageNo.intValue());
+	                });
+	    }
+
+	    
+	    // 새로 추가된 이미지 처리
+	    for (MultipartFile img : images) {
+	        if (img != null && !img.isEmpty()) {
+	            String file5 = realPath + img.getOriginalFilename();
+	            img.transferTo(new File(file5));
+
+	            String file6 = img.getOriginalFilename();
+
+	            ItemImage imgEntity = new ItemImage();
+	            imgEntity.setItem_no(entity.getItem_no());
+	            imgEntity.setItem_img(file6);
+	            log.info("images insert 성공! 상품 번호: " + iservice.save(imgEntity));
+	        }
+	    }
 		
 		
 		return uri;
-	}
+	} //update
 	
-	
+    private void handleUploadedFile(MultipartFile file, String realPath, Consumer<String> setItemImg) throws IOException {
+    	if (file != null && !file.isEmpty()) {
+    		String filePath = realPath + file.getOriginalFilename();
+    		file.transferTo(new File(filePath));
+    		setItemImg.accept(file.getOriginalFilename());
+    	}
+    }
 	
 	
 	// ======== 상품 삭제 =======
