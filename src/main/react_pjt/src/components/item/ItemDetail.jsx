@@ -49,8 +49,8 @@ const ItemDetail = () => {
     item_quantity: quantity,
   };
 
-  // axios를 사용하여 서버에 장바구니 담기 요청
   const handleAddToCart = () => {
+
     console.log(cartRequest);
     axios
       .post(`/restCart/addCart?user_id=${loginId}`, cartRequest, {
@@ -59,8 +59,7 @@ const ItemDetail = () => {
         },
       })
       .then((response) => {
-        // 성공적으로 응답을 받았을 때 처리
-        alert(`상품이 장바구니에 담겼습니다.`);
+        // alert(`상품이 장바구니에 담겼습니다.`);
         navigate("/cart");
       })
       .catch((error) => {

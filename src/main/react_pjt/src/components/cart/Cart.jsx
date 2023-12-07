@@ -9,8 +9,13 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const loginId = sessionStorage.getItem("loginId");
 
-
   useEffect(() => {
+    if (!loginId) {
+      alert("로그인이 필요합니다.");
+      window.location.href = "/login";
+      return;
+    }
+
     axios
       .get(`/restCart/getCartItems/${loginId}`)
       .then((response) => {
@@ -34,8 +39,7 @@ const Cart = () => {
       .catch((error) => {
         console.error("API 요청 중 오류 발생:", error);
       });
-  }, []);
-
+  }, [loginId]);
 
 
   const handleDelete = (index) => {
