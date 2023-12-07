@@ -24,7 +24,7 @@ const CartItem = ({
   });
 
   const itemName = selectedItem.item_name;
-  console.log("상품 이름:", itemName, selectedItem.item_price);
+  console.log("상품 이름:", itemName, selectedItem.item_discount_rate);
 
   return (
     <tbody>
@@ -40,12 +40,12 @@ const CartItem = ({
           <button onClick={onIncrease}>+</button>
         </td>
         <td className="price">
-          <span className="sale_info">{selectedItem.item_sales_volume}%</span>
+          <span className="sale_info">{selectedItem.item_discount_rate}%</span>
           <del>{selectedItem.item_price}원</del>
           <span className="sale_price">
             {(
               selectedItem.item_price -
-              (selectedItem.item_price * selectedItem.item_sales_volume) / 100
+              (selectedItem.item_price * selectedItem.item_discount_rate) / 100
             ).toLocaleString("ko")}
             원
           </span>

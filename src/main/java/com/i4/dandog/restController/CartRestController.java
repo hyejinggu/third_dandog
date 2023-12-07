@@ -2,10 +2,15 @@ package com.i4.dandog.restController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.i4.dandog.domain.CartDTO;
 import com.i4.dandog.entity.Cart;
+import com.i4.dandog.entity.CartKeyId;
 import com.i4.dandog.entity.Item;
 import com.i4.dandog.service.CartService;
 import com.i4.dandog.service.ItemService;
@@ -33,6 +39,20 @@ public class CartRestController {
 	CartService cartService;
 	ItemService itemService;
 
+	 // 장바구니 아이템 삭제
+    @DeleteMapping("/deleteCartItem/{user_id}/{item_no}")
+    public ResponseEntity<String> deleteCartItem(@PathVariable String user_id, @PathVariable int item_no) {
+        try {
+            CartKeyId keyId = new CartKeyId(user_id, item_no);
+            cartService.delete(keyId);
+            return ResponseEntity.ok("장바구니에서 상품이 삭제되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("장바구니 삭제 실패");
+        }
+    }
+
+	
+	
 	// 장바구니에 상품 추가
 	@PostMapping("/addCart")
 	public String addToCart(@RequestBody Cart entity) {

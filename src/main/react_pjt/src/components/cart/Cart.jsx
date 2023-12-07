@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 import EmptyItem from "./EmptyItem";
 import CartItemPrice from "./CartItemPrice";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const loginId = sessionStorage.getItem("loginId");
-
 
   useEffect(() => {
     axios
@@ -22,9 +23,9 @@ const Cart = () => {
             item_img: cartDTO.item_img1,
             item_name: cartDTO.item_name,
             item_price: cartDTO.item_price,
-            item_sales_volume: cartDTO.item_sales_volume
+            item_discount_rate: cartDTO.item_discount_rate
           };
-          console.log(selectedItem.item_sales_volume);
+          console.log(selectedItem.item_discount_rate);
 
           return { selectedItem };
         });
@@ -34,16 +35,25 @@ const Cart = () => {
       .catch((error) => {
         console.error("API 요청 중 오류 발생:", error);
       });
-  }, []);
+  }, [loginId]);
 
 
-
-  const handleDelete = (index, itemName) => {
+  const handleDelete = (index) => {
+    const selectedItem = cartItems[index].selectedItem;
     const confirmDelete = window.confirm(
-      `<${itemName}> 상품을 삭제하시겠습니까?`
+      `<${selectedItem.item_name}> 상품을 삭제하시겠습니까?`
     );
 
     if (confirmDelete) {
+      // 서버에서 해당 상품 삭제 요청
+      axios.delete(`/restCart/deleteCartItem/${loginId}/${selectedItem.item_no}`)
+        .then(response => {
+          console.log('Deleted item:', response.data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
       const updatedCart = [...cartItems];
       updatedCart.splice(index, 1);
       setCartItems(updatedCart);
@@ -107,7 +117,7 @@ const Cart = () => {
     const selectedItem = item.selectedItem;
 
     const originalPrice = selectedItem.item_price || 0;
-    const salePrice = originalPrice - originalPrice * (selectedItem.item_sales_volume / 100);
+    const salePrice = originalPrice - originalPrice * (selectedItem.item_discount_rate / 100);
 
     const quantity = selectedItem.item_quantity == null ? 1 : selectedItem.item_quantity;
 

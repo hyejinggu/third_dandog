@@ -8,6 +8,7 @@ public interface ItemService {
 
 	// selectList
 	List<Item> selectList(String searchCategory, String searchField, String searchValues);
+
 	
 	// selectOne
 	Item selectOne(int item_no);

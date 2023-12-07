@@ -8,7 +8,7 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   // const navigate = useNavigate();
-  const [searchAllValue, setSearchAllValue] = useState("로그인");
+  const [searchAllValue, setSearchAllValue] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [login, setLogin] = useState("로그인");
   const [join, setJoin] = useState("회원가입");
@@ -36,6 +36,12 @@ const Header = () => {
       setLogin("로그인");
       setJoin("회원가입");
       setIsModalOpen(true);
+    }
+  };
+
+  const handleCartLinkClick = () => {
+    if (login === "로그인") {
+      alert("로그인이 필요합니다.");
     }
   };
 
@@ -89,7 +95,7 @@ const Header = () => {
             )}
           </li>
           <li>
-            <Link to="/cart">
+            <Link to={login === "로그인" ? "/login" : "/cart"} onClick={handleCartLinkClick}>
               <img src="/images/header/cart_img.png" alt="" />
               장바구니
             </Link>

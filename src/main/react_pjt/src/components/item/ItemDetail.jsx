@@ -8,11 +8,14 @@ import ItemDetailSection2 from "./ItemDetailSection2";
 import ItemDetailSection3 from "./ItemDetailSection3";
 import ItemDetailSection4 from "./ItemDetailSection4";
 import RecentSeenItem from "./RecentSeenItem";
+import { useNavigate } from "react-router-dom";
 
 const ItemDetail = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const selectedItem = location.state.item;
   const [imageData, setImageData] = useState([]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,38 +43,43 @@ const ItemDetail = () => {
     setMainImage(imageUrl); // 클릭한 이미지를 메인 이미지로 설정
   };
 
-  const loginId = sessionStorage.getItem('loginId') || "admin";
+  const loginId = sessionStorage.getItem('loginId');
   const cartRequest = {
     user_id: loginId,
     item_no: selectedItem.item_no,
     item_quantity: quantity,
   };
 
-  // axios를 사용하여 서버에 장바구니 담기 요청
   const handleAddToCart = () => {
-    console.log(cartRequest);
-    axios
-      .post(`/restCart/addCart?user_id=${loginId}`, cartRequest, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        // 성공적으로 응답을 받았을 때 처리
-        alert(`상품이 장바구니에 담겼습니다.`);
-      })
-      .catch((error) => {
-        // 에러 발생 시 처리
-        if (error.response) {
-          console.error("서버에서 오류 응답:", error.response.data);
-          console.error("Status code:", error.response.status);
-        } else if (error.request) {
-          console.error("서버로부터 응답을 받지 못했습니다.");
-        } else {
-          console.error("요청 설정 중 오류 발생:", error.message);
-        }
-        console.error("전부 에러:", error);
-      });
+    if (!loginId) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+    } else {
+      console.log(cartRequest);
+      axios
+        .post(`/restCart/addCart?user_id=${loginId}`, cartRequest, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((response) => {
+          alert(`상품이 장바구니에 담겼습니다.`);
+          // Only navigate if the user is logged in
+          navigate("/cart");
+        })
+        .catch((error) => {
+          // Handle the error
+          if (error.response) {
+            console.error("서버에서 오류 응답:", error.response.data);
+            console.error("Status code:", error.response.status);
+          } else if (error.request) {
+            console.error("서버로부터 응답을 받지 못했습니다.");
+          } else {
+            console.error("요청 설정 중 오류 발생:", error.message);
+          }
+          console.error("전부 에러:", error);
+        });
+    }
   };
 
   const present_pr =
@@ -220,19 +228,12 @@ const ItemDetail = () => {
             </div>
             {/* 장바구니 버튼 */}
             <div>
-              <Link to="/cart"
-                state={{
-                  selectedItem: selectedItem,
-                  item_quantity: quantity,
-                }}
-              >
-                <input
-                  type="button"
-                  value="장바구니 담기"
-                  className={styles.button}
-                  onClick={handleAddToCart} // 장바구니 버튼 클릭 시 처리
-                />
-              </Link>
+              <input
+                type="button"
+                value="장바구니 담기"
+                className={styles.button}
+                onClick={handleAddToCart} // 장바구니 버튼 클릭 시 처리
+              />
             </div>
           </section>
         </div>

@@ -17,7 +17,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	@Query("select i from Item i where (:searchCategory is null or i.item_category = :searchCategory) and i.item_no = :searchValue order by item_no desc")
 	List<Item> findByCategoryItemNo(@Param("searchCategory") String searchCategory,
 			@Param("searchValue") int searchValue);
-
+	
+	
 // =========================== Rest Controller에서 사용 =====================================
 
 	@Query("select i from Item i where item_name like %:inputValue% and item_category = :category order by i.item_sales_volume desc")

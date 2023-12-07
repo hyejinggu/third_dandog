@@ -30,7 +30,8 @@ public class ItemServiceImpl implements ItemService {
 		}
 		return repository.findByCategoryAndItemName(searchCategory, searchValues);
 	}
-
+	
+	
 	// ============ Rest Controller에서 사용 ============
 	// 아이템 불러오기
 	@Override

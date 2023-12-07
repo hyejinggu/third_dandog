@@ -64,7 +64,10 @@ const EventList = ({ eventList }) => {
           ) : (
             ""
           )}
-          <img src={`/images/${event.event_img}`} alt={`event_img${index}`} />
+          <img
+            src={`/images/event/${event.event_img}`}
+            alt={`event_img${index}`}
+          />
         </li>
       ))}
     </ul>

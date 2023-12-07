@@ -59,7 +59,7 @@ public class EventController {
 	    String redirectUri = "redirect:/";
 
 	    try {
-	        String uploadPath = "D:\\teamproject\\third_dandog\\dandog\\src\\main\\react_pjt\\public\\images\\";
+	        String uploadPath = "D:\\teamproject\\dandog_pjt\\dandog\\src\\main\\react_pjt\\public\\images\\event\\";
 	        MultipartFile eventImageFile = entity.getEvent_imgToUpload();
 
 	        if (eventImageFile != null && !eventImageFile.isEmpty()) {

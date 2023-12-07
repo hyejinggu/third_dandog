@@ -9,6 +9,9 @@ public interface CodeService {
 	List<Code> selectList();
 
 	List<String> selectCodeName();
+	// select itemSizes, itemColors
+	List<String> selectSizes();
+	List<String> selectColors();
 	
 	// ** selectOne
 	public Code selectOne(Code entity);
