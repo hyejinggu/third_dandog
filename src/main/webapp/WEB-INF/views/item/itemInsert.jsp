@@ -36,26 +36,18 @@
 			</tr>
 			<tr>
 				<th>사이즈 선택</th>
-				<td><select name="options_size">
-						<option value="F">Free</option>
-						<option value="S">S</option>
-						<option value="M">M</option>
-						<option value="L">L</option>
+				<td><select name="options_sizes" multiple>
+						<c:forEach var="s" items="${requestScope.itemSizes}">
+							<option ${s == 'F' ? 'selected' : ''} value="${s}"> ${s} </option>
+						</c:forEach>
 				</select></td>
 			</tr>
 			<tr>
 				<th>컬러 선택</th>
-				<td><select name="options_color">
-						<option value="Black">Black</option>
-						<option value="White">White</option>
-						<option value="Gray">Gray</option>
-						<option value="Blue">Blue</option>
-						<option value="Red">Red</option>
-						<option value="Yellow">Yellow</option>
-						<option value="Green">Green</option>
-						<option value="Orange">Orange</option>
-						<option value="Brown">Brown</option>
-						<option value="Pink">Pink</option>
+				<td><select name="options_colors" multiple>
+						<c:forEach var="c" items="${requestScope.itemColors}">
+							<option ${c == 'OneColor' ? 'selected' : ''} value="${c}"> ${c} </option>
+						</c:forEach>
 				</select></td>
 			</tr>
 			<tr>

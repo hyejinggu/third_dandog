@@ -31,7 +31,6 @@ public class CodeController {
 	@GetMapping("/codeInsert")
 	public void codeInsert(Model model) {
 	    List<String> codeNames = service.selectCodeName();
-	    log.info("************************" + codeNames);
 	    model.addAttribute("codeNames", codeNames);
 	}
 	

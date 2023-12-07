@@ -56,11 +56,11 @@ public class Item extends BaseEntity {
 	private int item_stock;
 	
 	
-//    @OneToMany(targetEntity = ItemImage.class, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "item_no", referencedColumnName = "item_no")
-//    private List<ItemImage> itemImages;
 	
-	
+	@Transient
+	private String[] options_sizes;
+	@Transient
+	private String[] options_colors;
 	
 	@Transient // DB에는 따로 생성되지 않음
 	private MultipartFile uploadfileF1; // form의 Upload_File 정보를 전달받기 위한 필드

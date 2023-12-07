@@ -25,6 +25,17 @@ public class CodeServiceImpl implements CodeService {
     	return repository.selectCodeName();
     }
     
+    
+	@Override
+	public List<String> selectColors() {
+		return repository.selectColors();
+	}
+	
+	@Override
+	public List<String> selectSizes() {
+		return repository.selectSizes();
+	}
+    
     @Override
     public Code selectOne(Code entity) {
     	repository.findById(entity.getCode_seq());

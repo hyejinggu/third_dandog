@@ -88,7 +88,7 @@ public class LoungeRestController {
 
 	@PostMapping("/postUpdate")
 	public String postUpdate(Lounge entity) throws IOException {
-		String realPath = "D:\\teamproject\\third_dandog\\dandog\\src\\main\\react_pjt\\public\\images\\community\\";
+		String realPath = "D:\\teamproject\\dandog_pjt\\dandog\\src\\main\\react_pjt\\public\\images\\community\\";
 		MultipartFile uploadfilef1 = entity.getLounge_imgf(); // 첫번째 상품 이미지
 		if (uploadfilef1 != null && !uploadfilef1.isEmpty()) {
 			// 물리적위치 저장 (file1)

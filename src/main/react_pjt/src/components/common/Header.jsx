@@ -8,7 +8,7 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   // const navigate = useNavigate();
-  const [searchAllValue, setSearchAllValue] = useState("로그인");
+  const [searchAllValue, setSearchAllValue] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [login, setLogin] = useState("로그인");
   const [join, setJoin] = useState("회원가입");
