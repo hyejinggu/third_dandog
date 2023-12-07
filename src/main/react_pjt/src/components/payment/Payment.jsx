@@ -162,10 +162,10 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
     const handleUserAddress2Change = (event) => {
         setUserAddress2(event.target.value);
     };
-    
+
     const handleRecipientPhoneChange = (event) => {
         setRecipientPhone(event.target.value);
-    
+
     };
     return (
         <div className={style.modal}>
@@ -883,7 +883,11 @@ const Payment = () => {
                             setIsModalOpen={setIsModalOpen}
                             modalContent="상품 구매가 완료되었습니다."
                             modalAfterPath={'/main/*'}
+                            // requestAxios={`/lounge/postUpdate`}
+                            // requestMethod={"post"}
+                            // dataToRequest={formData}
                         />
+
                     )}
                 </div>
             </form>

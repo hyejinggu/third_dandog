@@ -93,4 +93,24 @@ public class MemberServiceImpl implements MemberService {
 		return repository.findByUser_id(user_id);
 	}
 	
+	// ** 결제페이지 기본배송지
+	@Override
+    public void updateAddress(String user_id, String user_address1, String user_address2, int post_code) {
+        Optional<Member> existingMember = repository.findById(user_id);
+
+        if (existingMember.isPresent()) {
+            Member member = existingMember.get();
+
+            // 주소 정보 설정
+            member.setUser_address1(user_address1);
+            member.setUser_address2(user_address2);
+            member.setPost_code(post_code);
+
+            // 저장
+            repository.save(member);
+        } else {
+            // 해당 user_id를 가진 Member가 없는 경우 예외처리 또는 다른 로직을 수행
+        }
+    }
+	
 } // class
