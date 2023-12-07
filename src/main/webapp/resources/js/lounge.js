@@ -83,7 +83,7 @@ function select_lounge(select_lounge) {
 
 function deleteLounge() {
 
-	let url = "/item/deleteItem";
+	let url = "/community/deleteLounge";
 	let valueArr = [];
 
 	const checkboxes = document.querySelectorAll('.lounge_check:checked');
@@ -99,19 +99,16 @@ function deleteLounge() {
 		return;
 	}
 
-	console.log("선택된 아이템을 삭제합니다:", valueArr);
-
 	// 아래는 AJAX를 사용한 서버 요청 예시
 	axios.post(url, { "valueArr": valueArr })
 		.then((response) => {
 			console.log("삭제 요청이 성공했습니다.", response);
-			getItemList();
+			getLoungeList();
 		})
 		.catch((error) => {
 			console.error("삭제 요청이 실패했습니다.", error);
 		});
 
-	document.getElementById("resultArea1").innerHTML = "";
 
 }
 

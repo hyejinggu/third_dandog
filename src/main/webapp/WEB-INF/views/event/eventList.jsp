@@ -58,7 +58,7 @@
 		<input type="checkbox" id="selectall" value='selectall'
 			onclick='select_event(this)' /> <label for="selectall">전체 선택</label>
 	</div>
-	<input type="submit" value="delete_item" onclick="deleteItem()" />
+	<input type="submit" value="이벤트 삭제" onclick="deleteEvent()" />
 	<div onclick="eventInsert()">이벤트 등록</div>
 </body>
 </html>

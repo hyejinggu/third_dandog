@@ -94,7 +94,7 @@ function select_event(select_event) {
 
 function deleteEvent() {
 
-	let url = "/item/deleteItem";
+	let url = "/community/deleteEvent";
 	let valueArr = [];
 
 	const checkboxes = document.querySelectorAll('.event_check:checked');
@@ -116,7 +116,7 @@ function deleteEvent() {
 	axios.post(url, { "valueArr": valueArr })
 		.then((response) => {
 			console.log("삭제 요청이 성공했습니다.", response);
-			getItemList();
+			getEventList();
 		})
 		.catch((error) => {
 			console.error("삭제 요청이 실패했습니다.", error);
