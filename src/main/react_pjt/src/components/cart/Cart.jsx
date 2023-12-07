@@ -38,12 +38,22 @@ const Cart = () => {
 
 
 
-  const handleDelete = (index, itemName) => {
+  const handleDelete = (index) => {
+    const selectedItem = cartItems[index].selectedItem;
     const confirmDelete = window.confirm(
-      `<${itemName}> 상품을 삭제하시겠습니까?`
+      `<${selectedItem.item_name}> 상품을 삭제하시겠습니까?`
     );
 
     if (confirmDelete) {
+      // 서버에서 해당 상품 삭제 요청
+      axios.delete(`/restCart/deleteCartItem/${loginId}/${selectedItem.item_no}`)
+        .then(response => {
+          console.log('Deleted item:', response.data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
       const updatedCart = [...cartItems];
       updatedCart.splice(index, 1);
       setCartItems(updatedCart);

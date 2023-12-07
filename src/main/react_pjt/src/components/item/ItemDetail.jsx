@@ -8,9 +8,11 @@ import ItemDetailSection2 from "./ItemDetailSection2";
 import ItemDetailSection3 from "./ItemDetailSection3";
 import ItemDetailSection4 from "./ItemDetailSection4";
 import RecentSeenItem from "./RecentSeenItem";
+import { useNavigate } from "react-router-dom";
 
 const ItemDetail = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const selectedItem = location.state.item;
   const [imageData, setImageData] = useState([]);
 
@@ -59,6 +61,7 @@ const ItemDetail = () => {
       .then((response) => {
         // 성공적으로 응답을 받았을 때 처리
         alert(`상품이 장바구니에 담겼습니다.`);
+        navigate("/cart");
       })
       .catch((error) => {
         // 에러 발생 시 처리
@@ -220,19 +223,12 @@ const ItemDetail = () => {
             </div>
             {/* 장바구니 버튼 */}
             <div>
-              <Link to="/cart"
-                state={{
-                  selectedItem: selectedItem,
-                  item_quantity: quantity,
-                }}
-              >
-                <input
-                  type="button"
-                  value="장바구니 담기"
-                  className={styles.button}
-                  onClick={handleAddToCart} // 장바구니 버튼 클릭 시 처리
-                />
-              </Link>
+              <input
+                type="button"
+                value="장바구니 담기"
+                className={styles.button}
+                onClick={handleAddToCart} // 장바구니 버튼 클릭 시 처리
+              />
             </div>
           </section>
         </div>
