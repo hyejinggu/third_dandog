@@ -71,18 +71,23 @@ const CreatePost = () => {
       <div className={styles.form_wrap}>
         <form onSubmit={handleSubmit} id="review_form">
           <table>
-            <tr>
-              <td>
+            <tr className={styles.title_wrap}>
+              <th>
                 <label htmlFor="title">제목</label>
-              </td>
+              </th>
               <td colSpan={3}>
-                <select name="neighbor_category" id="commmu_board_select">
+                <select
+                  className={styles.title_input}
+                  name="neighbor_category"
+                  id="commmu_board_select"
+                >
                   <option value="beauty">미용</option>
                   <option value="hospital">병원</option>
                   <option value="cafe">카페, 호텔</option>
                   <option value="training">훈련, 시터</option>
                 </select>
                 <input
+                  className={styles.title_input}
                   type="text"
                   name="neighbor_title"
                   id="title"
@@ -96,15 +101,15 @@ const CreatePost = () => {
               </td>
             </tr>
             <tr>
-              <td>
+              <th>
                 <label htmlFor="brand">상호명</label>
-              </td>
+              </th>
               <td>
                 <input type="text" id="brand" name="neighbor_brand_name" />
               </td>
-              <td>
+              <th>
                 <label htmlFor="rating">별점</label>
-              </td>
+              </th>
               <td>
                 <div className={styles.star_rating}>
                   {[0, 1, 2, 3, 4].map((index) => (
@@ -121,10 +126,10 @@ const CreatePost = () => {
                 </div>
               </td>
             </tr>
-            <tr>
-              <td>
+            <tr className={styles.content_wrap}>
+              <th>
                 <label htmlFor="content">내용</label>
-              </td>
+              </th>
               <td colSpan={3}>
                 <textarea
                   id="content"
@@ -138,13 +143,14 @@ const CreatePost = () => {
                 </div>
               </td>
             </tr>
+            <tr>
+              <td colSpan={4}>
+                <div className={styles.button_wrap}>
+                  <div onClick={handleSubmit}>작성 완료</div>
+                </div>
+              </td>
+            </tr>
           </table>
-
-          <div className={styles.button_wrap}>
-            <button type="submit" onClick={handleSubmit}>
-              작성 완료
-            </button>
-          </div>
         </form>
       </div>
     </div>

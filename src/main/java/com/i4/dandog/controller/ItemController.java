@@ -192,7 +192,7 @@ public class ItemController {
 	}
 
 	@PostMapping(value = "/update")
-	public String update(Item entity, Model model, @RequestParam(value = "selectedImages", required = false) List<Long> selectedImages,
+	public String update(Item entity, Model model, @RequestParam(value = "selectedImages", required = false) List<Integer> selectedImages,
 	        @RequestParam("etcImages") MultipartFile[] images) throws IOException {
 
 		String uri = "redirect:/";
@@ -218,17 +218,16 @@ public class ItemController {
 		
 	 // 기존에 속한 이미지 중에서 선택되지 않은 이미지 삭제
 	    if (selectedImages != null && !selectedImages.isEmpty()) {
-	        // 기존에 속한 모든 이미지 번호를 가져오는 로직 (예: service.getAllImageNumbersByItemNo(entity.getItem_no()))
+	        // 기존에 속한 모든 이미지 번호를 가져오는 로직
 	        List<Integer> allImageNumbers = iservice.getAllImageNumbersByItemNo(entity.getItem_no());
 
 	        // 선택된 이미지를 제외한 나머지 이미지를 삭제
-	        allImageNumbers.stream()
-	                .filter(imageNo -> !selectedImages.contains(imageNo.intValue()))
-	                .forEach(imageNo -> {
-	                    iservice.delete(imageNo.intValue());
-	                });
+	        for (Integer imageNo : allImageNumbers) {
+	            if (!selectedImages.contains(imageNo)) {
+	                iservice.delete(imageNo);
+	            }
+	        }
 	    }
-
 	    
 	    // 새로 추가된 이미지 처리
 	    for (MultipartFile img : images) {
@@ -258,6 +257,8 @@ public class ItemController {
     }
 	
 	
+    
+    
 	// ======== 상품 삭제 =======
 	@PostMapping(value = "/deleteItem", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String deleteItem(@RequestBody Map<String, List<String>> requestMap, Model model) {
