@@ -2,11 +2,15 @@ package com.i4.dandog.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -73,6 +77,32 @@ public class LoungeController {
 
 	    return uri;
 	}
+	
+	
+	
+	
+	@PostMapping(value = "/deleteLounge", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String deleteLounge(@RequestBody Map<String, List<String>> requestMap, Model model) {
+	    try {
+	        List<String> valueArr = requestMap.get("valueArr");
+	        if (valueArr != null) {
+	        	
+	            for (String lounge : valueArr) {
+	                service.delete(Integer.parseInt(lounge));                
+	            }
+	            
+	            model.addAttribute("message", "선택 게시글 삭제 성공");            
+	        } else {
+	            model.addAttribute("message", "삭제할 게시글을 선택하세요.");
+	        }
+			
+		} catch (Exception e) {
+			log.info("** delete Exception => "+e.toString());
+			model.addAttribute("message", "선택 게시글 삭제 실패");
+		}
+		
+	    return "/lounge/loungeList";
+	} // delete
 
 
 }
