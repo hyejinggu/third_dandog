@@ -1,0 +1,70 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.adminPageWrap {
+    width: 100%;
+    height: 100%;
+    max-width: 1920px;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.adminPageWrap .title {
+    margin-bottom: 40px;
+}
+
+.adminPageHeader {
+    width: 10%;
+    min-width: 200px;
+    height: 891px;
+    background-color: #f5f6f7;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+.adminPageHeader ul {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+.adminPageHeader ul>li {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.adminPageHeader ul>li>span:hover {
+    border-bottom: 1px solid;
+}
+
+
+.adminPageHeader ul>li p {
+    line-height: 30px;
+    border-bottom: 1px solid #e9eced;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.adminPageHeader ul>li>span {
+    font-size: 15px;
+    line-height: 30px;
+}
+
+.adminPageHeader {
+    float: left;
+}
+
+
+#resultArea1 {
+    width: 87%;
+    float: right;
+}

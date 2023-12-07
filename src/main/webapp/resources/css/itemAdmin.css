@@ -1,4 +1,4 @@
-.adminPageWrap {
+/* .adminPageWrap {
 	width: 100%;
 	margin-bottom: 50px;
 }
@@ -43,7 +43,7 @@
 	font-weight: bold;
 	line-height: 30px;
 	font-size: 20px;
-}
+} */
 
 
 
@@ -79,8 +79,8 @@
 	border-right: 0px;
 }
 
-.adminItemContainer ul>li .num, .adminItemContainer ul>li .point
-	{
+.adminItemContainer ul>li .num,
+.adminItemContainer ul>li .point {
 	font-size: 25px;
 	font-weight: bold;
 	line-height: 50px;
