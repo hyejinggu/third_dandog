@@ -19,8 +19,10 @@
 	<form id="searchForm" method="post" onsubmit="searchMembers(); return false;">>
 		<select name="search_field">
 			<option value="user_id">user_id</option>
-		</select> <input name="search_value" placeholder="검색어 입력" /> <input
-			type="submit" value="검색" onsubmit="searchMembers() return false;"/>
+			<option value="user_email">user_email</option>
+		</select> 
+		<input name="search_value" placeholder="검색어 입력" /> 
+		<input type="submit" value="검색" onsubmit="searchMembers() return false;"/>
 	</form>
 
 	<table border="1" style="width: 90%">
@@ -52,7 +54,6 @@
 						test="${empty param.search_value or s.user_id eq param.search_value}">
 						<tr>
 							<td>${s.user_id}</td>
-							<td>${s.user_id}</td>
 							<td>${s.user_password}</td>
 							<td>${s.user_name}</td>
 							<td>${s.user_birthday}</td>
@@ -66,8 +67,8 @@
 							<td>${s.user_address1}</td>
 							<td>${s.user_address2}</td>
 							<td>${s.point}</td>
-							<td>${s.withdrawal_date}</td>
 							<td>${s.regdate}</td>
+							<td>${s.withdrawal_date}</td>
 
 							<!-- 관리자 기능 추가 -->
 							<td><input type="button" value="삭제"

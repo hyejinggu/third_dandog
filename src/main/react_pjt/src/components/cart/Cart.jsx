@@ -4,18 +4,14 @@ import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 import EmptyItem from "./EmptyItem";
 import CartItemPrice from "./CartItemPrice";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const loginId = sessionStorage.getItem("loginId");
 
   useEffect(() => {
-    if (!loginId) {
-      alert("로그인이 필요합니다.");
-      window.location.href = "/login";
-      return;
-    }
-
     axios
       .get(`/restCart/getCartItems/${loginId}`)
       .then((response) => {
