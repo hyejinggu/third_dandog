@@ -24,34 +24,35 @@
 
 		<body>
 			<h2>관리자 페이지</h2>
-			<div class="adminPageHeader">
-				<ul>
-					<li>
-						<p class="textlink" onclick="getItemList()">상품 관리</p>
-						<span onclick="getItemList()">상품 목록</span>
-						<span onclick="getItemInsert()">상품 등록</span>
-						<span onclick="getcodeList()">코드 추가</span>
-					<li>
-						<p class="textlink" onclick="getAdminOrder()">주문 관리</p>
-					</li>
-					<li>
-						<p class="textlink" onclick="getMemberList()">회원 관리</p>
-					</li>
-					<li>
-						<p class="textlink" onclick="getAdminBoard()">고객센터 관리</p>
-					</li>
-					<li>
-						<p class="textlink" onclick="getAdminCommunity()">커뮤니티 관리</p>
-						<span onclick="getLoungeList()">라운지</span>
-						<span onclick="getEventList()">이벤트</span>
-						<span onclick="getNeighborList()">우리 동네</span>
-					</li>
-				</ul>
+			<div id="adminPage">
+				<div class="adminPageHeader">
+					<ul>
+						<li>
+							<p class="textlink" onclick="getItemList()">상품 관리</p>
+							<span onclick="getItemList()">상품 목록</span>
+							<span onclick="getItemInsert()">상품 등록</span>
+							<span onclick="getcodeList()">코드 추가</span>
+						<li>
+							<p class="textlink" onclick="getAdminOrder()">주문 관리</p>
+						</li>
+						<li>
+							<p class="textlink" onclick="getMemberList()">회원 관리</p>
+						</li>
+						<li>
+							<p class="textlink" onclick="getAdminBoard()">고객센터 관리</p>
+						</li>
+						<li>
+							<p class="textlink" onclick="getAdminCommunity()">커뮤니티 관리</p>
+							<span onclick="getLoungeList()">라운지</span>
+							<span onclick="getEventList()">이벤트</span>
+							<span onclick="getNeighborList()">우리 동네</span>
+						</li>
+					</ul>
+				</div>
+
+				<div id="resultArea1">관리자 페이지 입니다</div>
+				<div id="resultArea2"></div>
 			</div>
-
-			<div id="resultArea1">관리자 페이지 입니다</div>
-			<div id="resultArea2"></div>
-
 		</body>
 
 		</html>

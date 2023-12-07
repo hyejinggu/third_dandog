@@ -12,21 +12,19 @@
 
 		</head>
 
-
 		<body class="memberList">
-			<form id="searchForm" method="post" onsubmit="searchMembers(); return false;">>
-				<select name="search_field">
+			<form id="searchForm" method="get" onsubmit="searchMembers(); return false;">
+				<select name="search_field" id="search_field" onchange="updateSearchResults()">
 					<option value="user_id">user_id</option>
 					<option value="user_email">user_email</option>
 				</select>
 				<input name="search_value" placeholder="검색어 입력" />
-				<input type="submit" value="검색" onsubmit="searchMembers() return false;" />
+				<input type="submit" value="검색" />
 			</form>
 
 			<table>
 				<tr>
 					<th>user_id</th>
-					<th>user_password</th>
 					<th>user_name</th>
 					<th>user_birthday</th>
 					<th>user_phonenum</th>
@@ -51,7 +49,6 @@
 							<c:when test="${empty param.search_value or s.user_id eq param.search_value}">
 								<tr>
 									<td>${s.user_id}</td>
-									<td>${s.user_password}</td>
 									<td>${s.user_name}</td>
 									<td>${s.user_birthday}</td>
 									<td>${s.user_phonenum}</td>
@@ -69,8 +66,6 @@
 
 									<!-- 관리자 기능 추가 -->
 									<td><input type="button" value="삭제" onclick="deleteMember('${s.user_id}')" /></td>
-
-
 								</tr>
 							</c:when>
 						</c:choose>
@@ -85,7 +80,6 @@
 			<h4>
 				<a href="/home">Home으로 가기</a>
 			</h4>
-			</form>
 		</body>
 
 		</html>

@@ -10,6 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.i4.dandog.entity.Item;
 import com.i4.dandog.entity.Member;
 import com.i4.dandog.repository.MemberRepository;
 
@@ -81,11 +82,19 @@ public class MemberServiceImpl implements MemberService {
 		return user_id;
 	}
 
-	// ** 관리자 Search
-	@Override
-	public List<Member> searchMembers(String searchField, String searchValue) {
-	    return repository.searchMembers(searchField, searchValue);
-	}
+    // ** 관리자 Search
+    @Override
+    public List<Member> searchMembers(String searchField, String searchValue) {
+        return repository.searchMembers(searchField, searchValue);
+    }
+//	@Override
+//	public List<Member> findByUser_email(String inputValue, String category) {
+//		return repository.findByUser_email(inputValue, category);
+//	}
+//	@Override
+//	public List<Member> findByUser_id(String inputValue, String category) {
+//		return repository.findByUser_id(inputValue, category);
+//	}
 
 	// ** 결제페이지 userinfo
 	@Override

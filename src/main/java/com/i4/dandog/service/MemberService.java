@@ -36,6 +36,8 @@ public interface MemberService {
 
 	// ** 관리자 Search
 	List<Member> searchMembers(String searchField, String searchValue);
+//	List<Member> findByUser_id(String searchField, String searchValue);
+//	List<Member> findByUser_email(String searchField, String searchValue);
 
 	// ** 결제페이지 userinfo
 	List<Member> getuserinfoForUser(String user_id);
