@@ -27,6 +27,26 @@ public class NeighborhoodReviewServiceImpl implements NeighborhoodReviewService 
 		return repository.findByCategory(neighbor_category);
 	}
 	
+	
+	// 관리자 검색
+	@Override
+	public List<NeighborhoodReview> findByCategoryUserId(String searchCategory, String searchValue) {
+		return repository.findByCategoryUserId(searchCategory, searchValue);
+	}
+	
+	@Override
+	public List<NeighborhoodReview> findByCategoryLoungeContents(String searchCategory, String searchValue) {
+		return repository.findByCategoryLoungeContents(searchCategory, searchValue);
+	}  
+	
+	
+	@Override
+	public List<NeighborhoodReview> findByCategoryLoungeBrand(String searchCategory, String searchValue) {
+		return repository.findByCategoryLoungeBrand(searchCategory, searchValue);
+	}
+	
+	
+	
 	@Override
 	public NeighborhoodReview selectOne(int neighbor_no) {
 		Optional<NeighborhoodReview> result = repository.findById(neighbor_no);
