@@ -12,7 +12,7 @@
 	<c:if test="${not empty requestScope.message}">
 		<h3>${requestScope.message}</h3>
 	</c:if>
-	<form action="/item/update" method="post" enctype="multipart/form-data">
+	<form action="/item/update" method="post" enctype="multipart/form-data" id="item_update_form" >
 		<table class="item_table">
 		<c:set var="i" value="${requestScope.itemDetail}" />
 		<c:if test="${not empty requestScope.itemDetail}">
@@ -21,10 +21,10 @@
 				<td><input type="text" value="${i.item_no}" name="item_no" readonly></td>
 				<th>아이템 카테고리</th>
 				<td><select name="item_category">
-						<option ${i.item_category == "Snk" ? "selected" : ""} value="Snk">간식, 사료</option>
+						<option ${i.item_category == "Snack" ? "selected" : ""} value="Snack">간식, 사료</option>
 						<option ${i.item_category == "Toy" ? "selected" : ""} value="Toy">장난감</option>
-						<option ${i.item_category == "Liv" ? "selected" : ""} value="Liv">리빙, 패션</option>
-						<option ${i.item_category == "Str" ? "selected" : ""} value="Str">산책, 케어</option>
+						<option ${i.item_category == "Living" ? "selected" : ""} value="Living">리빙, 패션</option>
+						<option ${i.item_category == "Stroll" ? "selected" : ""} value="Stroll">산책, 케어</option>
 				</select></td>
 			</tr>
 			<tr>
@@ -94,15 +94,16 @@
 				        <!-- 기존 이미지 표시 -->
 				        <div>
 				        <c:forEach var="img" items="${requestScope.itemImages}">
-				            <input type="checkbox" name="selectedImages" value="${img.item_img}">
+				            <input id="selectedImages" type="checkbox" name="selectedImages" value="${img.image_no}">
 				        	<label for="selectedImages">
 				            	<img src="/${img.item_img}" class="select_img" width="100" height="100">
+				            	<input type="hidden" name="item_img" value="${img.item_img}">
 				            </label>
 				            
 				            <!-- 이미지 수정을 위한 체크박스 -->
 				        </c:forEach>
 				        </div>
-						<span>선택한 이미지 삭제</span>
+						<span>선택한 이미지만 업로드됩니다.</span>
 					</div>
 			        <!-- 수정된 이미지 업로드를 위한 파일 입력 -->
 			        <input type="file" name="etcImages" id="etcImages" multiple>
@@ -113,7 +114,7 @@
 				<th></th>
 				<td colspan="3">
 					<input type="reset" value="취소"> 
-					<input type="submit" value="상품 수정">
+					<input type="submit" value="상품 수정" onclick="updateItem()">
 				</td>
 			</tr>
 			</c:if>

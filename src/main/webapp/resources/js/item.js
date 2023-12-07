@@ -59,8 +59,40 @@ function itemUpdate(item_no) {
 	});
 
 	document.getElementById("resultArea2").innerHTML = "";
-
 }
+
+
+
+function updateItem() {
+    let url = "/item/update";
+    let formData = new FormData();
+
+    // 선택된 이미지의 체크박스를 찾아서 FormData에 추가
+    let selectedImages = document.getElementsByName("selectedImages");
+    for (let i = 0; i < selectedImages.length; i++) {
+        if (selectedImages[i].checked) {
+            // 이미지 번호를 FormData에 추가
+            formData.append("selectedImages", selectedImages[i].value);
+        }
+    }
+
+    // 수정된 이미지 업로드를 위한 파일 입력 추가
+    let etcImages = document.getElementById("etcImages").files;
+    for (let i = 0; i < etcImages.length; i++) {
+        formData.append("etcImages", etcImages[i]);
+    }
+
+    axios.post(url, formData)
+        .then((response) => {
+            console.log("업데이트 요청이 성공했습니다.", response);
+            getEventList();
+        })
+        .catch((error) => {
+            console.error("업데이트 요청이 실패했습니다.", error);
+        });
+}
+
+
 
 
 
