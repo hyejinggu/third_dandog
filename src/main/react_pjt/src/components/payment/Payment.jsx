@@ -49,19 +49,17 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
     }, []);
 
     // 기본 배송지 설정
-    const handleDefualtAddress = (selectedAddress) => {
+    const handleDefualtAddress = (user_address1, user_address2, post_code) => {
         axios
-            .post(`/payment/updateAddress`, {
-                user_id: sessionStorage.loginId,
-                user_address1: selectedAddress.user_address1,
-                user_address2: selectedAddress.user_address2,
-                post_code: selectedAddress.post_code,
+            .post(`/payment/addDefaultAddress?user_id=${sessionStorage.loginId}`, {
+                user_address1,
+                user_address2,
+                post_code,
             })
             .then((response) => {
                 // 성공적으로 응답을 받았을 때 처리
                 alert(`기본 배송지로 설정되었습니다.`);
                 closeModal();
-                window.location.reload();
             })
             .catch((error) => {
                 // 에러 발생 시 처리
@@ -75,27 +73,6 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
                 }
                 console.error("전부 에러:", error);
             });
-    };
-
-    // // 배송지 삭제
-    const deleteAddress = async (recipient_phone) => {
-        try {
-            await axios.get(`/payment/deleteAddress/${sessionStorage.loginId}/${recipient_phone}`);
-            console.log('주소가 성공적으로 삭제되었습니다.');
-            alert("배송지가 성공적으로 삭제되었습니다.");
-        } catch (error) {
-            console.error('주소를 삭제하는 데 실패했습니다:', error.message);
-        }
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`/payment/getAddress?user_id=${sessionStorage.loginId}`);
-                setaddressData(response.data);
-            } catch (error) {
-                console.error("데이터를 가져오는 동안 오류 발생:", error);
-            }
-        };
-
-        fetchData();
     };
 
     // 배송지 선택
@@ -135,7 +112,7 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
                         console.error("데이터를 가져오는 동안 오류 발생:", error);
                     }
                 };
-                alert("배송지가 추가되었습니다.");
+
                 fetchData();
             })
             .catch((error) => {
@@ -283,50 +260,44 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
                         </div>
                     </div>
                 )}
-                {addressData.length === 0 ? (
-                        <h2>
-                        배송지를 추가하세요.
-                        </h2>
-                ) : (
-                    <table>
-                        <tr>
-                            <th>
-                                <label htmlFor={`name`}>받는사람</label>
-                            </th>
-                            <th>
-                                <label htmlFor={`address`}>주소</label>
-                            </th>
-                            <th>
-                                <label htmlFor={`phone`}>전화번호</label>
-                            </th>
+                <table>
+                    <tr>
+                        <th>
+                            <label htmlFor={`name`}>받는사람</label>
+                        </th>
+                        <th>
+                            <label htmlFor={`address`}>주소</label>
+                        </th>
+                        <th>
+                            <label htmlFor={`phone`}>전화번호</label>
+                        </th>
+                    </tr>
+                    {addressData.map((i, index) => (
+                        <tr key={index}>
+                            <td>
+                                <strong>
+                                    {i.recipient_name}
+                                </strong>
+                            </td>
+                            <td>
+                                <p>{`${i.user_address1} ${i.user_address2} (${i.post_code})`}</p>
+                            </td>
+                            <td>
+                                <p>
+                                    {i.recipient_phone}
+                                </p>
+                            </td>
+                            <div className={styles.button} >
+                                {userData.map((u, index) => (
+                                    i.post_code !== u.post_code &&
+                                    <input type="button" value="기본배송지로 선택" onClick={() => handleDefualtAddress(i.user_address1, i.user_address2, i.post_code)} />
+                                ))}
+                                <input type="button" value="삭제" />
+                                <input type="button" value="선택" onClick={() => handleSelectAddress(i)} />
+                            </div>
                         </tr>
-                            {addressData.map((i, index) => (
-                                <tr key={index}>
-                                    <td>
-                                        <strong>
-                                            {i.recipient_name}
-                                        </strong>
-                                    </td>
-                                    <td>
-                                        <p>{`${i.user_address1} ${i.user_address2} (${i.post_code})`}</p>
-                                    </td>
-                                    <td>
-                                        <p>
-                                            {i.recipient_phone}
-                                        </p>
-                                    </td>
-                                    <div className={styles.button} >
-                                        {userData.map((u, index) => (
-                                            i.user_address1 + i.user_address1 + i.post_code !== u.user_address1 + u.user_address1 + u.post_code &&
-                                            <input type="button" value="기본배송지로 선택" onClick={() => handleDefualtAddress(i)} />
-                                        ))}
-                                        <input type="button" value="삭제" onClick={() => deleteAddress(i.recipient_phone)} />
-                                        <input type="button" value="선택" onClick={() => handleSelectAddress(i)} />
-                                    </div>
-                                </tr>
-                            ))}
-                    </table>
-                )}
+                    ))}
+                </table>
                 <div className={styles.button} >
                     <input type="button" onClick={closeModal} value="취소" />
                 </div>
@@ -910,11 +881,11 @@ const Payment = () => {
                         <Modal
                             isModalOpen={isModalOpen}
                             setIsModalOpen={setIsModalOpen}
-                            modalContent={"게시글을 등록하겠습니까?"}
-                            modalAfterPath={"/community"}
-                            requestAxios={`/lounge/postUpdate`}
-                            requestMethod={"post"}
-                            dataToRequest={formData}
+                            modalContent="상품 구매가 완료되었습니다."
+                            modalAfterPath={'/main/*'}
+                            // requestAxios={`/lounge/postUpdate`}
+                            // requestMethod={"post"}
+                            // dataToRequest={formData}
                         />
 
                     )}
