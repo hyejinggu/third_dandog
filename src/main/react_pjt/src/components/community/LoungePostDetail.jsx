@@ -38,10 +38,14 @@ const LoungePostDetail = () => {
 
   function updateLikes() {
     axios
-      .get(`/lounge/updateLikes?lounge_no=${post.lounge_no}`)
+      .get(`/lounge/updateLikes?lounge_no=${post.lounge_no}&user_id=${loginId}`)
       .then((response) => {
-        console.log("추천수 업데이트 성공:", response.data);
-        setUpdatedLikes(response.data);
+        if (response.data == 0) {
+          alert("중복 추천은 불가합니다.");
+        } else {
+          console.log("추천수 업데이트 성공:", response.data);
+          setUpdatedLikes(response.data);
+        }
       })
       .catch((error) => {
         console.error("추천수 업데이트 실패:", error);
