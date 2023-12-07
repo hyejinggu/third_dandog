@@ -104,6 +104,7 @@
 
 .item_table th {
 	background-color: #fff8d0;
+	border: 1px solid #ffa900;
 }
 
 .item_table td {
