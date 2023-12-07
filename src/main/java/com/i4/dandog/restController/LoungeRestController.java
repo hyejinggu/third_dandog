@@ -4,18 +4,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.i4.dandog.entity.Item;
 import com.i4.dandog.entity.Lounge;
-import com.i4.dandog.entity.Qna;
+import com.i4.dandog.entity.LoungeLikes;
+import com.i4.dandog.entity.LoungeLikesKeyId;
+import com.i4.dandog.service.LoungeLikesService;
 import com.i4.dandog.service.LoungeService;
 
 import lombok.AllArgsConstructor;
@@ -28,6 +28,7 @@ import lombok.extern.log4j.Log4j2;
 public class LoungeRestController {
 
 	LoungeService service;
+	LoungeLikesService likeService;
 
 	@GetMapping("/loungeList")
 	public List<Lounge> loungeList(@RequestParam(name = "category") String category, 
@@ -58,18 +59,30 @@ public class LoungeRestController {
 	}
 
 	@GetMapping("/updateLikes")
-	public int updateLikes(@RequestParam(name = "lounge_no") String lounge_no) {
+	public int updateLikes(LoungeLikes loungeEntity) {
+		
+		int loungeNo = loungeEntity.getLounge_no();
+		String userId = loungeEntity.getUser_id();
+		
+		LoungeLikesKeyId keyId = new LoungeLikesKeyId();
+		keyId.setLounge_no(loungeNo);
+		keyId.setUser_id(userId);
 
-		int loungeNo = Integer.parseInt(lounge_no);
 		int loungeLikes = 0;
 		try {
-			service.updateLikes(loungeNo);
-			Lounge entity = service.selectOne(loungeNo);
-			loungeLikes = entity.getLounge_likes();
+			if (likeService.selectOne(keyId) != null) {
+				return 0;
+			} else {
+				likeService.insert(loungeEntity);
+				service.updateLikes(loungeNo);
+				Lounge entity = service.selectOne(loungeNo);
+				loungeLikes = entity.getLounge_likes();
+			}
+			
 		} catch (Exception e) {
 			log.error("update ERROR lounge likes", e);
 		}
-
+		
 		return loungeLikes;
 	}
 
