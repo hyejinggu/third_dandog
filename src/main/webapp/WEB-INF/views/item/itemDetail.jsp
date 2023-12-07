@@ -78,7 +78,7 @@
 				<th bgcolor="aqua">기타 상품 사진</th>
 				<td>
 					<c:forEach var="img" items="${requestScope.itemImages}" >
-						<img src="/${img.item_img}" class="select_img" width="100" height="100"><br> 					
+						<img src="/${img.item_img}" class="select_img" width="100" height="100">					
 					</c:forEach>
 				</td>
 			</tr>

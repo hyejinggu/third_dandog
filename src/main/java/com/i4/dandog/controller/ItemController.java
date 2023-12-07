@@ -180,6 +180,10 @@ public class ItemController {
 	
 	@GetMapping(value = "/itemupdate")
 	public String itemUpdate(Item entity, Model model) {
+		List<String> itemSizes = cservice.selectSizes();
+		List<String> itemColors = cservice.selectColors();
+		model.addAttribute("itemSizes", itemSizes);
+		model.addAttribute("itemColors", itemColors);
 		model.addAttribute("itemDetail", service.selectOne(entity.getItem_no()));
 		model.addAttribute("itemImages", iservice.findByItemNo(entity.getItem_no()));
 		
