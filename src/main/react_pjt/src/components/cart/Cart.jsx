@@ -185,7 +185,12 @@ const Cart = () => {
             <CartItemPrice
               totalPrice={calculateTotalCartPrice(cartItems)}
               delivery_price={delivery_price} />
-            <Link to="/payment">
+              <Link
+                to="/payment"
+                state={{
+                  selectedItem: cartItems,
+                }}
+              >
               <input type="button" value="구매하기" className="order" />
             </Link>
           </form>

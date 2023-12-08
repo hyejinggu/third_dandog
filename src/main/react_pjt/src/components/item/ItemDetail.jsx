@@ -216,7 +216,7 @@ const ItemDetail = () => {
                 to="/payment"
                 state={{
                   selectedItem: selectedItem,
-                  item_quantity: quantity,
+                  quantity: quantity,
                 }}
               >
                 <input
