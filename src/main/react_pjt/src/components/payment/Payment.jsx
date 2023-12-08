@@ -309,50 +309,52 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
 
 const Payment = () => {
     const location = useLocation();
+    const [totalOrderPrice, setTotalOrderPrice] = useState(0);
 
     const selectedItem = location.state.selectedItem;
     const quantity = location.state.quantity;
     console.log(selectedItem);
 
-    // const calculateTotalPrice = (item) => {
-    //     if (!item || !item.selectedItem) {
-    //         console.error("잘못된 'item' 또는 'selectedItem'");
-    //         return 0;
-    //     }
+    const calculateTotalPrice = (item) => {
+        if (!item || !item.selectedItem) {
+            console.error("잘못된 'item' 또는 'selectedItem'");
+            return 0;
+        }
 
-    //     const selectedItem = item.selectedItem;
+        const selectedItem = item.selectedItem;
+        console.log(selectedItem);
 
-    //     const originalPrice = selectedItem.item_price || 0;
-    //     const salePrice = originalPrice - originalPrice * (selectedItem.item_discount_rate / 100);
+        const originalPrice = selectedItem.item_price || 0;
+        const salePrice = originalPrice - originalPrice * (selectedItem.item_discount_rate / 100);
 
-    //     const quantity = selectedItem.item_quantity == null ? 1 : selectedItem.item_quantity;
+        const quantity = selectedItem.item_quantity == null ? 1 : selectedItem.item_quantity;
 
-    //     const totalPrice = salePrice * quantity;
+        const totalPrice = salePrice * quantity;
 
-    //     return totalPrice;
-    // };
+        return totalPrice;
+    };
 
-    // const calculateTotalCartPrice = (items) => {
-    //     if (!Array.isArray(items) || items.length === 0) {
-    //         return 0;
-    //     }
+    const calculateTotalCartPrice = (items) => {
+        if (!Array.isArray(items) || items.length === 0) {
+            return 0;
+        }
 
-    //     let totalCartPrice = 0;
+        let totalCartPrice = 0;
 
-    //     for (const cartItem of items) {
-    //         if (!cartItem.selectedItem) {
-    //             console.error("잘못된 'cartItem' 또는 'selectedItem'");
-    //             continue;
-    //         }
+        for (const selectedItem of items) {
+            if (!selectedItem.selectedItem) {
+                console.error("잘못된 'selectedItem' 또는 'selectedItem.selectedItem'");
+                continue;
+            }
 
-    //         const itemTotalPrice = calculateTotalPrice(cartItem);
-    //         totalCartPrice += itemTotalPrice;
-    //     }
+            const itemTotalPrice = calculateTotalPrice(selectedItem);
+            totalCartPrice += itemTotalPrice;
+        }
 
-    //     const deliveryPrice = totalCartPrice >= 50000 ? 0 : 3000;
+        const deliveryPrice = totalCartPrice >= 50000 ? 0 : 3000;
 
-    //     return totalCartPrice + deliveryPrice;
-    // };
+        return totalCartPrice + deliveryPrice;
+    };
 
 
     const [addressModalOpen, setAddressModalOpen] = useState(false);
@@ -620,7 +622,7 @@ const Payment = () => {
                                             </ul>
                                         </td>
                                         <td className={styles.total}>
-                                            {/* <span>{calculateTotalPrice(cartItem)?.toLocaleString("ko")}원</span> */}
+                                            <span>{calculateTotalPrice(i)?.toLocaleString("ko")}원</span>
                                         </td>
                                     </tr>
                                 ))
@@ -648,7 +650,7 @@ const Payment = () => {
                                         </ul>
                                     </td>
                                     <td className={styles.total}>
-                                            {/* <span>{calculateTotalPrice(selectedItem)}원</span> */}
+                                            <span>{totalPrice()?.toLocaleString("ko")}원</span>
                                         <span>(배송비 포함금액)</span>
                                     </td>
                                 </tr>
@@ -663,13 +665,13 @@ const Payment = () => {
                                         <p>50,000원 이상 구매시 배송비 무료</p>
                                         <div className="firstB_price">
                                             <span className="product_price">
-                                                {totalPrice?.toLocaleString("ko")}원
+                                                {calculateTotalCartPrice(selectedItem)?.toLocaleString("ko")}원
                                             </span>
                                             <span className="delivery_price">
-                                                {/* {(calculateTotalCartPrice(selectedItem) >= 50000 ? 0 : 3000)?.toLocaleString("ko")}원 */}
+                                                {(calculateTotalCartPrice(selectedItem) >= 50000 ? 0 : 3000)?.toLocaleString("ko")}원
                                             </span>
                                             <span className="total_price2">
-                                                {/* {(totalPrice + (calculateTotalCartPrice(selectedItem) >= 50000 ? 0 : 3000))?.toLocaleString("ko")}원 */}
+                                                {(calculateTotalCartPrice(selectedItem) >= 50000 ? calculateTotalCartPrice(selectedItem) : calculateTotalCartPrice(selectedItem) + 3000)?.toLocaleString("ko")}원
                                             </span>
                                         </div>
                                         <div className="price_info">
