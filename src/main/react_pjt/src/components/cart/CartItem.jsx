@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const CartItem = ({
   selectedItem,
@@ -8,9 +9,28 @@ const CartItem = ({
   handleDelete,
 }) => {
   const loginId = sessionStorage.getItem("loginId");
-
+  const [colorSize, setColorSize] = useState({ Color: [], Size: [] });
   const itemName = selectedItem.item_name;
-  console.log("상품 이름:", itemName, selectedItem.item_discount_rate);
+
+  // 상품 옵션 정보 가져오기
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const colorSizeResponse = await axios.get(
+          `/item/getColorSize?item_name=${itemName}`
+        );
+
+        setColorSize({
+          Color: colorSizeResponse.data.Color || [],
+          Size: colorSizeResponse.data.Size || [],
+        });
+      } catch (error) {
+        console.error("데이터를 가져오는 동안 오류 발생:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <tr>
@@ -26,15 +46,31 @@ const CartItem = ({
           <span className="text-ellipsis">{selectedItem.item_name}</span>
         </div>
       </td>
-      <td>
-        <span>사이즈</span>
-        <select>
-          <option value="">S</option>
-        </select>
-        <span>색상</span>
-        <select>
-          <option value="">S</option>
-        </select>
+      <td className="cart_item_options">
+        <div>
+          <span>사이즈</span>
+          <span className="cart_opt">
+            <select name="sizeOption">
+              {colorSize.Size.map((size, index) => (
+                <option key={index} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select>
+          </span>
+        </div>
+        <div>
+          <span>색상</span>
+          <span className="cart_opt">
+            <select name="colorOption" className="cart_opt">
+              {colorSize.Color.map((color, index) => (
+                <option key={index} value={color}>
+                  {color}
+                </option>
+              ))}
+            </select>
+          </span>
+        </div>
       </td>
       <td>
         <button onClick={onDecrease}>-</button>

@@ -11,6 +11,7 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const loginId = sessionStorage.getItem("loginId");
 
+  // 장바구니 정보 가져오기
   useEffect(() => {
     axios
       .get(`/restCart/getCartItems/${loginId}`)
@@ -36,6 +37,7 @@ const Cart = () => {
       });
   }, [loginId]);
 
+  // 상품 삭제
   const handleDelete = (index) => {
     const selectedItem = cartItems[index].selectedItem;
     const confirmDelete = window.confirm(
@@ -60,6 +62,7 @@ const Cart = () => {
     }
   };
 
+  // 수량 증가
   const handleIncrease = (index, event) => {
     event.preventDefault();
 
@@ -84,7 +87,7 @@ const Cart = () => {
       });
   };
 
-  // handleDecrease
+  // 수량 감소
   const handleDecrease = (index, event) => {
     event.preventDefault();
 
@@ -113,6 +116,7 @@ const Cart = () => {
     }
   };
 
+  // 가격 계산
   const calculateTotalPrice = (item) => {
     if (!item || !item.selectedItem) {
       console.error("잘못된 'item' 또는 'selectedItem'");
@@ -196,12 +200,12 @@ const Cart = () => {
               delivery_price={delivery_price}
               quantity={cartItems.length}
             />
-              <Link
-                to="/payment"
-                state={{
-                  selectedItem: cartItems,
-                }}
-              >
+            <Link
+              to="/payment"
+              state={{
+                selectedItem: cartItems,
+              }}
+            >
               <input
                 type="button"
                 value="선택상품 구매하기"
