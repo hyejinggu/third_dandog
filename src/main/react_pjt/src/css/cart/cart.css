@@ -1,266 +1,264 @@
 .cart {
-    width: 100%;
-    min-width: 1200px;
-    max-width: 1500px;
-    box-sizing: border-box;
-    margin: 50px 0 115px auto;
-    border-top: 2px solid #ffa900;
+  width: 100%;
+  min-width: 1200px;
+  max-width: 1500px;
+  box-sizing: border-box;
+  margin: 50px 0 115px auto;
+  border-top: 2px solid #ffa900;
 }
 
 .cart table {
-    width: 100%;
-    height: auto;
-    background-color: #fff;
-    border-bottom: 2px solid #ffa900;
-
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  border-bottom: 2px solid #ffa900;
 }
 
 /*========================================================================*/
 /*thead*/
 .cart table thead {
-    height: 50px;
-    line-height: 46px;
-    width: 100%;
-    display: block;
-    border-bottom: 2px solid #ffa900;
+  height: 50px;
+  line-height: 46px;
+  width: 100%;
+  display: block;
+  border-bottom: 2px solid #ffa900;
 }
 
 .cart table thead tr {
-    display: flex;
+  display: grid;
+  grid-template-columns: 0.5fr repeat(5, 1.5fr) 0.5fr;
+  width: 100%;
+  justify-items: center;
 }
 
-.cart table thead tr th,
-.cart table tbody tr td {
-    width: 25%;
-}
-
-.cart table thead tr th:last-child,
-.cart table tbody tr td:last-child {
-    width: 40px;
+.cart table thead tr th {
+  text-align: center;
+  width: 100%;
 }
 
 /*========================================================================*/
 /*tbody*/
 .cart .emptyItem {
-    /* line-height: 100px; */
-    text-align: center;
-    width: 100%;
-    font-weight: bold;
-    padding: 50px;
+  /* line-height: 100px; */
+  text-align: center;
+  width: 100%;
+  font-weight: bold;
+  padding: 50px;
 }
 
-
 .cart .emptyItem p {
-    margin-bottom: 35px;
-    font-size: 20px;
+  margin-bottom: 35px;
+  font-size: 20px;
 }
 
 .cart .emptyItem span {
-    line-height: 30px;
-    color: #9b9b9b;
+  line-height: 30px;
+  color: #9b9b9b;
 }
 
 .cart table tbody {
-    display: block;
-    width: 100%;
-    height: auto;
-
+  width: 100%;
+  height: auto;
 }
 
 .cart table tbody tr {
-    display: block;
-    border-bottom: 1px solid #c8c8c8;
+  display: grid;
+  grid-template-columns: 0.5fr repeat(5, 1.5fr) 0.5fr;
+  width: 100%;
+  justify-items: center;
+  align-items: center;
+  border-bottom: 1px solid #c8c8c8;
+}
+
+.cart table .first_block div {
+  display: grid;
+  grid-template-rows: 1.5fr 0.7fr;
+  justify-items: center;
+  align-items: center;
 }
 
 .cart table tbody tr:last-child {
-    border: none;
+  border: none;
 }
 
 .cart table tbody tr:hover {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
 .cart table tbody tr td {
-    width: 25%;
-    line-height: 100px;
-    text-align: center;
+  /* width: 20%; */
+  line-height: 100px;
+  text-align: center;
 }
 
 .cart table tbody tr td .text-ellipsis {
-    overflow: hidden;
-    display: block;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 255px;
-    float: right;
+  overflow: hidden;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 255px;
+  float: right;
 }
 
 .cart table tbody tr td.price {
-    line-height: 16px;
+  line-height: 16px;
 }
 
 .cart table tbody tr td.price .sale_info {
-    color: red;
-    line-height: 25px;
-    display: inline-block;
-    font-size: 13px;
+  color: red;
+  line-height: 25px;
+  display: inline-block;
+  font-size: 13px;
 }
 
 .cart table tbody tr td.price del {
-    text-decoration: line-through;
-    color: gray;
-    font-weight: 100;
-    display: inline-block;
-    /* margin-left: 10px; */
-    font-size: 12px;
+  text-decoration: line-through;
+  color: gray;
+  font-weight: 100;
+  display: inline-block;
+  /* margin-left: 10px; */
+  font-size: 12px;
 }
 
 .cart table tbody tr td.price .sale_price {
-    display: block;
+  display: block;
 }
 
 .cart table tbody tr td.price,
 .cart table tbody tr td.total {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .cart table tbody tr td img {
-    width: 100px;
-    height: 100px;
-    vertical-align: middle;
+  width: 100px;
+  height: 100px;
+  vertical-align: middle;
 }
 
 .cart table tbody tr td button {
-    width: 22px;
-    height: 22px;
-    padding: 3px;
-    border: none;
-    /* display: block; */
-    border: 1px solid#ffa900;
-    background-color: #fff;
-    border-radius: 3px;
-    cursor: pointer;
-    margin: 0px 10px;
-    font-family: 'Cafe24SsurroundAir';
+  width: 22px;
+  height: 22px;
+  padding: 3px;
+  border: none;
+  /* display: block; */
+  border: 1px solid#ffa900;
+  background-color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 0px 10px;
+  font-family: "Cafe24SsurroundAir";
 }
 
-.cart table tbody tr td input[type=button] {
-    border: none;
-    background-color: #fff;
-    border-radius: 3px;
-    cursor: pointer;
-    padding: 0px 10px;
-    box-shadow: none;
-    font-family: 'Cafe24SsurroundAir';
+.cart table tbody tr td input[type="button"] {
+  border: none;
+  background-color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 0px 10px;
+  box-shadow: none;
+  font-family: "Cafe24SsurroundAir";
 }
 
-.cart table tbody tr td input[type=button] {
-    height: 100px;
+.cart table tbody tr td input[type="button"] {
+  height: 100px;
 }
 
 .cart table tbody tr td:nth-child(3) {
-    line-height: 40px;
+  line-height: 40px;
 }
 
 .cart table tbody tr td button:hover {
-    transition: .5s;
-    background-color: #ffe344;
+  transition: 0.5s;
+  background-color: #ffe344;
 }
-
 
 /*=====================================================================*/
 /* .cart div*/
 .cart .total_product {
-    line-height: 30px;
-    margin: 20px 0 0 0;
-    font-weight: bold;
-    text-align: left;
+  line-height: 30px;
+  margin: 20px 0 0 0;
+  font-weight: bold;
+  text-align: left;
 }
 
 .cart .total_price {
-    width: 100%;
-    height: 200px;
-    border: 2px solid #ffa900;
-    border-radius: 8px;
-    background-color: #fff;
-    box-sizing: border-box;
-    padding: 50px;
-    margin-bottom: 20px;
-
+  width: 100%;
+  height: 200px;
+  border: 2px solid #ffa900;
+  border-radius: 8px;
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 50px;
+  margin-bottom: 20px;
 }
 
 .cart .total_price .firstB_price {
-    float: left;
-    font-weight: bold;
-    text-align: center;
-    width: 100%;
-    display: block;
-    line-height: 45px;
-    font-size: 17px;
+  float: left;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  display: block;
+  line-height: 45px;
+  font-size: 17px;
 }
 
 .cart .total_price .firstB_price .product_price::after,
 .cart .total_price .price_info .product_price::after {
-    content: "　+　";
+  content: "　+　";
 }
 
 .cart .total_price .firstB_price .delivery_price::after,
 .cart .total_price .price_info .delivery_price::after {
-    content: "　=　";
+  content: "　=　";
 }
 
-
 .cart .total_price .price_info {
-    width: 230px;
-    display: block;
-    text-align: center;
-    margin: 0 auto;
-    font-size: 14px;
+  width: 230px;
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 14px;
 }
 
 .cart .total_price .price_info::after {
-    content: "";
-    display: block;
-    clear: both;
+  content: "";
+  display: block;
+  clear: both;
 }
 
-.cart .total_price .price_info ul>li {
-    float: left;
-    font-size: 12px;
-    line-height: 20px;
+.cart .total_price .price_info ul > li {
+  float: left;
+  font-size: 12px;
+  line-height: 20px;
 }
-
-
 
 .cart .total_price p {
-    width: 100%;
-    font-size: 14px;
-    color: gray;
-    text-align: center;
-    display: block;
+  width: 100%;
+  font-size: 14px;
+  color: gray;
+  text-align: center;
+  display: block;
 }
 
-
 .cart .order {
-    width: 100px;
-    height: 50px;
-    border: none;
-    border: 1px solid #ffa900;
-    /* color: #ffa900; */
-    background-color: #fff;
-    border-radius: 8px;
-    cursor: pointer;
-    float: right;
+  width: 150px;
+  height: 50px;
+  border: none;
+  border: 1px solid #ffa900;
+  /* color: #ffa900; */
+  background-color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  float: right;
 }
 
 .cart .order::after {
-    content: "";
-    display: block;
-    clear: both;
+  content: "";
+  display: block;
+  clear: both;
 }
 
 .cart .order:hover {
-    transition: .5s;
-    background-color: #ffe344;
-
+  transition: 0.5s;
+  background-color: #ffe344;
 }
