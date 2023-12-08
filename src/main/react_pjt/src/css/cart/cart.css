@@ -173,6 +173,25 @@
 }
 
 /*=====================================================================*/
+
+.cart_item_options span {
+  margin: 15px;
+}
+
+.cart_item_options div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.cart_item_options .cart_opt {
+  width: 80px;
+}
+
+.cart_item_options .cart_opt select {
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
 /* .cart div*/
 .cart .total_product {
   line-height: 30px;

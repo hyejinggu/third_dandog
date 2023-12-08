@@ -36,4 +36,15 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	@Query("select i from Item i where item_name like %:inputValue% and item_category = :category order by i.regdate")
 	public List<Item> findByOrderByRegdate(@Param("inputValue") String inputValue, @Param("category") String category);
 
+	
+	// Color, Size
+	@Query("select i.options_color from Item i where i.item_name = :item_name")
+	public List<String> findColors(@Param("item_name") String item_name);
+	
+	@Query("select i.options_size from Item i where i.item_name = :item_name")
+	public List<String> findSizes(@Param("item_name") String item_name);
+	
+	
+	
+	
 }

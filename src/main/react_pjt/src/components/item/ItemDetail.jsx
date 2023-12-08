@@ -15,13 +15,24 @@ const ItemDetail = () => {
   const navigate = useNavigate();
   const selectedItem = location.state.item;
   const [imageData, setImageData] = useState([]);
-
+  const [colorSize, setColorSize] = useState({ Color: [], Size: [] });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/itemdetail/getImageData");
-        setImageData(response.data);
+        // 첫 번째 axios 요청 실행
+        const imageDataResponse = await axios.get("/itemdetail/getImageData");
+        setImageData(imageDataResponse.data);
+
+        // 두 번째 axios 요청 실행
+        const colorSizeResponse = await axios.get(
+          `/item/getColorSize?item_name=${selectedItem.item_name}`
+        );
+
+        setColorSize({
+          Color: colorSizeResponse.data.Color || [], // Color가 없으면 빈 배열로 설정
+          Size: colorSizeResponse.data.Size || [], // Size가 없으면 빈 배열로 설정
+        });
       } catch (error) {
         console.error("데이터를 가져오는 동안 오류 발생:", error);
       }
@@ -43,11 +54,13 @@ const ItemDetail = () => {
     setMainImage(imageUrl); // 클릭한 이미지를 메인 이미지로 설정
   };
 
-  const loginId = sessionStorage.getItem('loginId');
+  const loginId = sessionStorage.getItem("loginId");
   const cartRequest = {
     user_id: loginId,
     item_no: selectedItem.item_no,
     item_quantity: quantity,
+    item_options_size: selectedItem.options_size,
+    item_options_color: selectedItem.options_color,
   };
 
   const handleAddToCart = () => {
@@ -59,7 +72,7 @@ const ItemDetail = () => {
       axios
         .post(`/restCart/addCart?user_id=${loginId}`, cartRequest, {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         })
         .then((response) => {
@@ -86,8 +99,6 @@ const ItemDetail = () => {
     selectedItem.item_price -
     (selectedItem.item_price * selectedItem.item_discount_rate) / 100;
 
-  const total_price = present_pr * quantity;
-
   return (
     <div className={styles.detail_wrap}>
       <form onSubmit={handleAddToCart}>
@@ -100,15 +111,17 @@ const ItemDetail = () => {
 
             {/* 서브 이미지들 */}
             <div className={styles.sub_img}>
-              {imageData.map((i, index) => (
-                selectedItem.item_no === i.item_no && (
-                  <img
-                    key={index}
-                    src={`/images/subpage/${i.item_img}`}
-                    alt={`상품 이미지 ${index}`}
-                    onClick={() => handleImageClick(i.item_img)} // 이미지 클릭 시 처리
-                  />
-                )))}
+              {imageData.map(
+                (i, index) =>
+                  selectedItem.item_no === i.item_no && (
+                    <img
+                      key={index}
+                      src={`/images/subpage/${i.item_img}`}
+                      alt={`상품 이미지 ${index}`}
+                      onClick={() => handleImageClick(i.item_img)} // 이미지 클릭 시 처리
+                    />
+                  )
+              )}
             </div>
           </section>
           <section className={styles.info_area}>
@@ -128,7 +141,7 @@ const ItemDetail = () => {
                 {(
                   selectedItem.item_price -
                   (selectedItem.item_price * selectedItem.item_discount_rate) /
-                  100
+                    100
                 ).toLocaleString("ko")}
                 원
               </span>
@@ -140,56 +153,22 @@ const ItemDetail = () => {
             <div>사이즈</div>
             <div>
               <select id="option" name="sizeOption">
-                {selectedItem.options_size === "F" && (
-                  <option key="1" value={selectedItem.options_size}>
-                    OneSize
+                {colorSize.Size.map((size, index) => (
+                  <option key={index} value={size}>
+                    {size}
                   </option>
-                )}
-                {selectedItem.options_size === "S" && (
-                  <option key="2" value={selectedItem.options_size}>
-                    S
-                  </option>
-                )}
-                {selectedItem.options_size !== "F" &&
-                  selectedItem.options_size !== "S" && (
-                    <option key="3" value={selectedItem.options_size}>
-                      선택없음
-                    </option>
-                  )}
+                ))}
               </select>
             </div>
             {/* 컬러 */}
             <div>컬러</div>
             <div>
               <select id="option" name="colorOption">
-                {selectedItem.options_color === "Br" && (
-                  <option key="1" value={selectedItem.options_color}>
-                    브라운
+                {colorSize.Color.map((color, index) => (
+                  <option key={index} value={color}>
+                    {color}
                   </option>
-                )}
-                {selectedItem.options_color === "Bk" && (
-                  <option key="2" value={selectedItem.options_color}>
-                    블랙
-                  </option>
-                )}
-                {selectedItem.options_color === "Pk" && (
-                  <option key="3" value={selectedItem.options_color}>
-                    핑크
-                  </option>
-                )}
-                {selectedItem.options_color === "Ye" && (
-                  <option key="4" value={selectedItem.options_color}>
-                    옐로우
-                  </option>
-                )}
-                {selectedItem.options_color !== "Br" &&
-                  selectedItem.options_color !== "Bk" &&
-                  selectedItem.options_color !== "Pk" &&
-                  selectedItem.options_color !== "Ye" && (
-                    <option key="5" value={selectedItem.options_color}>
-                      선택없음
-                    </option>
-                  )}
+                ))}
               </select>
             </div>
             {/* 수량 */}

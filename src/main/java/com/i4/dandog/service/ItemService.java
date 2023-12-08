@@ -24,4 +24,7 @@ public interface ItemService {
 	List<Item> findByOrderByItemPriceAsc(String inputValue, String category);
 	List<Item> findByOrderByRegdate(String inputValue, String category);
 	
+	
+	List<String> findSizes(String item_name);
+	List<String> findColors(String item_name);
 }

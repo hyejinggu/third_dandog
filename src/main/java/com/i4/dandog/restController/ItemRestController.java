@@ -1,8 +1,12 @@
 package com.i4.dandog.restController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,6 +55,26 @@ public class ItemRestController {
 	    System.out.println("************" + itemList);
 	    return itemList;
 	}
+	
+	@GetMapping("/getColorSize")
+	public Map<String, List<String>> getColorSize(@RequestParam(name = "item_name") String item_name) {
+	    
+		List<String> colors = service.findColors(item_name);
+		List<String> sizes = service.findSizes(item_name);
+
+
+	    Map<String, List<String>> result = new HashMap<>();
+	    result.put("Color", new ArrayList<>(new HashSet<>(colors)));
+	    result.put("Size", new ArrayList<>(new HashSet<>(sizes)));
+
+	    log.info("**********************" + result);
+	    // **********************{Color=[Black, White], Size=[S, M]}
+	    
+	    return result;
+	}
+	
+	
+	
 
 
 }
