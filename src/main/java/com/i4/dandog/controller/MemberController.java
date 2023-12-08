@@ -41,23 +41,39 @@ public class MemberController {
 	MemberService service;
 	PasswordEncoder passwordEncoder;
 
-	 // 검색 결과를 가져오는 메소드
-	@PostMapping("/memberList")
-	public void memberSearch(Model model,
-	                         @RequestParam(name = "search_field", required = false) String searchField,
-	                         @RequestParam(name = "search_value", required = false) String searchValue) {
-	    if (searchField != null && searchValue != null) {
-	        // 검색 로직 실행
-	        List<Member> searchResult = service.searchMembers(searchField, searchValue);
-	        model.addAttribute("memberList", searchResult);
-	    } else {
-	        // 전체 멤버 리스트 조회
-	        model.addAttribute("memberList", service.selectList());
-	    }
-	    log.info("** MemberSearch 성공 **");
-	}
+	// 검색 결과를 가져오는 메소드
+//	@PostMapping("/memberList")
+//	public void memberSearch(Model model, @RequestParam(name = "search_field", required = false) String searchField,
+//			@RequestParam(name = "search_value", required = false) String searchValue) {
+//		if (searchField != null && searchValue != null) {
+//			// 검색 로직 실행
+//			List<Member> searchResult = service.searchMembers(searchField, searchValue);
+//			model.addAttribute("memberList", searchResult);
+//		} else {
+//			// 전체 멤버 리스트 조회
+//			model.addAttribute("memberList", service.selectList());
+//		}
+//		log.info("** MemberSearch 성공 **");
+//	}
 	
-	// ** MemberList
+	@GetMapping("/memberSearch")
+	public String searchMembersId(
+            @RequestParam(name = "search_field", defaultValue = "user_id") String searchField,
+            @RequestParam(name = "search_value", defaultValue = "") String searchValue,
+            Model model) {
+	
+		
+		if ("user_id".equals(searchField)) {
+			log.info("************************ " +service.searchMembersId(searchValue));
+			model.addAttribute("memberList", service.searchMembersId(searchValue));
+		} else {
+			model.addAttribute("memberList", service.searchMembersName(searchValue));			
+		}
+		
+		return "member/memberList";
+	}
+
+//	 ** MemberList
 	@GetMapping("/memberList")
 	public void memberList(Model model) {
 		model.addAttribute("memberList", service.selectList());

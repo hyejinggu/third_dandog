@@ -11,6 +11,14 @@ public interface NeighborhoodReviewService {
 	
 	List<NeighborhoodReview> findByCategory(String neighbor_category);
 	
+	// 관리자 검색
+	List<NeighborhoodReview> findByCategoryUserId(String searchCategory, String searchValue);
+	List<NeighborhoodReview> findByCategoryLoungeContents(String searchCategory, String searchValue);
+	List<NeighborhoodReview> findByCategoryLoungeBrand(String searchCategory, String searchValue);
+	
+	
+	
+	
 	// selectOne
 	NeighborhoodReview selectOne(int neighbor_no);
 	

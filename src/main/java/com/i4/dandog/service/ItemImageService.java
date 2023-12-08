@@ -18,10 +18,11 @@ public interface ItemImageService {
 	int save(ItemImage entity);
 	
 	// delete
-	int delete(int item_no);
+	int delete(int image_no);
 	
 	
 	// findByItem_no
-	@Transactional
 	List<ItemImage> findByItemNo(int item_no);
+	
+	List<Integer> getAllImageNumbersByItemNo(int item_no);
 }

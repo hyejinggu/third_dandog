@@ -38,20 +38,23 @@ public class ItemImageServiceImpl implements ItemImageService {
 	
 	
 	@Override
-	public int delete(int item_no) {
-		repository.deleteById(item_no);
-		return item_no;
+	public int delete(int image_no) {
+		repository.deleteById(image_no);
+		return image_no;
 	}
 	
 	
 	@Override
 	public List<ItemImage> findByItemNo(int item_no) {
-		System.out.println("item_no: " + item_no);
-		System.out.println("findByItem_no: " + repository.findByItemNo(item_no));
 		return repository.findByItemNo(item_no);
 //		if ( result != null && !result.isEmpty()) {
 //			return result;
 //		} else return null;
+	}
+	
+	@Override
+	public List<Integer> getAllImageNumbersByItemNo(int item_no) {
+		return repository.getAllImageNumbersByItemNo(item_no);
 	}
 	
 	

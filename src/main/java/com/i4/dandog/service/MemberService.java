@@ -35,7 +35,9 @@ public interface MemberService {
 	String deleteById(String user_id);
 
 	// ** 관리자 Search
-	List<Member> searchMembers(String searchField, String searchValue);
+//	List<Member> searchMembers(String searchField, String searchValue);
+	List<Member> searchMembersId(String searchValue);
+	List<Member> searchMembersName(String searchValue);
 
 	// ** 결제페이지 userinfo
 	List<Member> getuserinfoForUser(String user_id);

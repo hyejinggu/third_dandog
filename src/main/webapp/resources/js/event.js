@@ -36,17 +36,17 @@ function eventInsert() {
 
 
 function toggleSearchOptions() {
-    var searchCategory = document.getElementById("e_search_category");
-    var searchName = document.getElementById("e_search_name");
-    var searchDate = document.getElementById("e_search_date");
+	var searchCategory = document.getElementById("e_search_category");
+	var searchName = document.getElementById("e_search_name");
+	var searchDate = document.getElementById("e_search_date");
 
-    if (searchCategory.value === "name") {
-        searchName.style.display = "inline-block";
-        searchDate.style.display = "none";
-    } else if (searchCategory.value === "date") {
-        searchName.style.display = "none";
-        searchDate.style.display = "inline-block";
-    }
+	if (searchCategory.value === "name") {
+		searchName.style.display = "inline-block";
+		searchDate.style.display = "none";
+	} else if (searchCategory.value === "date") {
+		searchName.style.display = "none";
+		searchDate.style.display = "inline-block";
+	}
 }
 
 // Initialize on page load
@@ -57,7 +57,7 @@ toggleSearchOptions();
 
 function searchEventList() {
 	let url = "/community/eventList";
-	
+
 	let searchCategory = document.getElementById("e_search_category").value;
 	let searchValue = document.getElementById("e_search_value").value;
 	let regDate = document.getElementById("e_reg_date").value;
@@ -94,7 +94,7 @@ function select_event(select_event) {
 
 function deleteEvent() {
 
-	let url = "/item/deleteItem";
+	let url = "/community/deleteEvent";
 	let valueArr = [];
 
 	const checkboxes = document.querySelectorAll('.event_check:checked');
@@ -116,7 +116,7 @@ function deleteEvent() {
 	axios.post(url, { "valueArr": valueArr })
 		.then((response) => {
 			console.log("삭제 요청이 성공했습니다.", response);
-			getItemList();
+			getEventList();
 		})
 		.catch((error) => {
 			console.error("삭제 요청이 실패했습니다.", error);

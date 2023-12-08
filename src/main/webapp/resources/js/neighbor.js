@@ -17,7 +17,26 @@ function getNeighborList() {
 
 
 
+function searchNeighborList() {
+	let url = "/community/neighborList";
+	
+	let searchCategory = document.getElementById("n_search_category").value;
+	let searchField = document.getElementById("n_search_field").value;
+	let searchValue = document.getElementById("n_search_value").value;
+	
+	url += `?search_category=${searchCategory}&search_field=${searchField}&search_value=${searchValue}`;
 
+	axios.get(url)
+		.then(response => {
+			document.getElementById("resultArea1").innerHTML = response.data;
+		})
+		.catch(err => {
+			alert("response 실패: " + err.message);
+		});
+}
+
+
+// =========================================================================
 
 function select_neighbor(select_neighbor) {
 	const checkboxes
@@ -31,7 +50,7 @@ function select_neighbor(select_neighbor) {
 
 function deleteNeighbor() {
 
-	let url = "/item/deleteItem";
+	let url = "/community/deleteNeighbor";
 	let valueArr = [];
 
 	const checkboxes = document.querySelectorAll('.neighbor_check:checked');
@@ -53,7 +72,7 @@ function deleteNeighbor() {
 	axios.post(url, { "valueArr": valueArr })
 		.then((response) => {
 			console.log("삭제 요청이 성공했습니다.", response);
-			getItemList();
+			getNeighborList();
 		})
 		.catch((error) => {
 			console.error("삭제 요청이 실패했습니다.", error);

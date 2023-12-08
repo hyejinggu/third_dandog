@@ -23,9 +23,8 @@ const Cart = () => {
             item_img: cartDTO.item_img1,
             item_name: cartDTO.item_name,
             item_price: cartDTO.item_price,
-            item_discount_rate: cartDTO.item_discount_rate
+            item_discount_rate: cartDTO.item_discount_rate,
           };
-          console.log(selectedItem.item_discount_rate);
 
           return { selectedItem };
         });
@@ -37,7 +36,6 @@ const Cart = () => {
       });
   }, [loginId]);
 
-
   const handleDelete = (index) => {
     const selectedItem = cartItems[index].selectedItem;
     const confirmDelete = window.confirm(
@@ -46,12 +44,13 @@ const Cart = () => {
 
     if (confirmDelete) {
       // 서버에서 해당 상품 삭제 요청
-      axios.delete(`/restCart/deleteCartItem/${loginId}/${selectedItem.item_no}`)
-        .then(response => {
-          console.log('Deleted item:', response.data);
+      axios
+        .delete(`/restCart/deleteCartItem/${loginId}/${selectedItem.item_no}`)
+        .then((response) => {
+          console.log("Deleted item:", response.data);
         })
-        .catch(error => {
-          console.error('Error:', error);
+        .catch((error) => {
+          console.error("Error:", error);
         });
 
       const updatedCart = [...cartItems];
@@ -73,12 +72,15 @@ const Cart = () => {
     const selectedItem = updatedCart[index].selectedItem;
     const updatedQuantity = selectedItem.item_quantity;
 
-    axios.post(`/restCart/onIncrease/${selectedItem.user_id}/${selectedItem.item_no}/${updatedQuantity}`)
-      .then(response => {
-        console.log('Updated item:', response.data);
+    axios
+      .post(
+        `/restCart/onIncrease/${selectedItem.user_id}/${selectedItem.item_no}/${updatedQuantity}`
+      )
+      .then((response) => {
+        console.log("Updated item:", response.data);
       })
-      .catch(error => {
-        console.error('Error:', error);
+      .catch((error) => {
+        console.error("Error:", error);
       });
   };
 
@@ -96,12 +98,15 @@ const Cart = () => {
 
       // 서버에 수량 업데이트 요청
       const updatedQuantity = selectedItem.item_quantity;
-      axios.post(`/restCart/onDecrease/${selectedItem.user_id}/${selectedItem.item_no}/${updatedQuantity}`)
-        .then(response => {
-          console.log('Updated item:', response.data);
+      axios
+        .post(
+          `/restCart/onDecrease/${selectedItem.user_id}/${selectedItem.item_no}/${updatedQuantity}`
+        )
+        .then((response) => {
+          console.log("Updated item:", response.data);
         })
-        .catch(error => {
-          console.error('Error:', error);
+        .catch((error) => {
+          console.error("Error:", error);
         });
     } else {
       alert("최소 주문수량은 1개 입니다.");
@@ -117,9 +122,11 @@ const Cart = () => {
     const selectedItem = item.selectedItem;
 
     const originalPrice = selectedItem.item_price || 0;
-    const salePrice = originalPrice - originalPrice * (selectedItem.item_discount_rate / 100);
+    const salePrice =
+      originalPrice - originalPrice * (selectedItem.item_discount_rate / 100);
 
-    const quantity = selectedItem.item_quantity == null ? 1 : selectedItem.item_quantity;
+    const quantity =
+      selectedItem.item_quantity == null ? 1 : selectedItem.item_quantity;
 
     const totalPrice = salePrice * quantity;
 
@@ -161,37 +168,45 @@ const Cart = () => {
             <table>
               <thead>
                 <tr>
-                  <th>상품/옵션 정보</th>
+                  <th>선택</th>
+                  <th>상품 정보</th>
+                  <th>옵션 정보</th>
                   <th>수량</th>
                   <th>상품금액</th>
                   <th>합계금액</th>
-                  <th></th>
+                  <th>삭제</th>
                 </tr>
               </thead>
-
-              {cartItems.map((item, index) => (
-                <CartItem
-                  key={index}
-                  selectedItem={item.selectedItem}
-                  quantity={item.item_quantity}
-                  onIncrease={(event) => handleIncrease(index, event)}
-                  onDecrease={(event) => handleDecrease(index, event)}
-                  totalPrice={calculateTotalPrice(item)}
-                  handleDelete={() => handleDelete(index)}
-                />
-              ))}
-
+              <tbody>
+                {cartItems.map((item, index) => (
+                  <CartItem
+                    key={index}
+                    selectedItem={item.selectedItem}
+                    quantity={item.item_quantity}
+                    onIncrease={(event) => handleIncrease(index, event)}
+                    onDecrease={(event) => handleDecrease(index, event)}
+                    totalPrice={calculateTotalPrice(item)}
+                    handleDelete={() => handleDelete(index)}
+                  />
+                ))}
+              </tbody>
             </table>
             <CartItemPrice
               totalPrice={calculateTotalCartPrice(cartItems)}
-              delivery_price={delivery_price} />
+              delivery_price={delivery_price}
+              quantity={cartItems.length}
+            />
               <Link
                 to="/payment"
                 state={{
                   selectedItem: cartItems,
                 }}
               >
-              <input type="button" value="구매하기" className="order" />
+              <input
+                type="button"
+                value="선택상품 구매하기"
+                className="order"
+              />
             </Link>
           </form>
         )}
