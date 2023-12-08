@@ -42,7 +42,7 @@ public class Qna extends BaseEntity {
 
 	private String qna_reply;
 
-	private String qna_img;
+	//private String qna_img;
 
 	private int qna_view;
 

@@ -22,6 +22,10 @@ public class QnaServiceImpl implements QnaService {
 	
 	private final QnaRepository repository;
 
+	@Override
+	public void replyinsert(int qna_seq, String qna_reply) {
+		repository.replyinsert(qna_seq, qna_reply);
+	}
 	
 	// ** selectList
 	@Override
@@ -52,10 +56,12 @@ public class QnaServiceImpl implements QnaService {
 	
 	// ** delete
 	@Override
-	public int delete(int qna_seq) {
+	public int qdelete(int qna_seq) {
 		repository.deleteById(qna_seq);
 		return qna_seq;
 	}
+	
+	
 	
 } // class
 

@@ -33,12 +33,12 @@
 		<td><input type="text" name="qna_title" size="50"></td></tr>	
 	<tr height="60"><th bgcolor="Violet">Content</th>
 		<td><textarea rows="10" cols="1500" name="qna_content"></textarea></td></tr>
-	<tr height="60">
+	<!-- <tr height="60">
 		<th bgcolor="Violet">Image</th>
 		<td>
 			<input type="file" name="qna_image" accept=image/*">
 		</td>
-	</tr>
+	</tr> -->
 	
 	<tr height="40"><th></th>
 		<td><input type="submit" value="등록">&nbsp;&nbsp;&nbsp;
@@ -48,9 +48,9 @@
 </table>
 </form>
 <hr> <!-- 이미지 미리보기 -->
-<c:if test="${not empty requestScope.qna_image}">
+<%-- <c:if test="${not empty requestScope.qna_image}">
         <img src="${requestScope.qna_image}" alt="Uploaded Image" width="200">
-</c:if>
+</c:if> --%>
 <hr>
 <c:if test="${not empty requestScope.message}">
 => ${requestScope.message}

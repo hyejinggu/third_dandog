@@ -45,8 +45,8 @@
     border-bottom: 2px solid #ffa900;
 }
 
-/* 세 번째 td 행의 길이를 60%로 조정 */
-#board td:nth-child(3) {
+/* n 번째 td 행의 길이를 60%로 조정 */
+#board td:nth-child(4) {
     width: 50%;
     text-align: left;
     /* 왼쪽 정렬 추가 */

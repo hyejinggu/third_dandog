@@ -1,12 +1,23 @@
 package com.i4.dandog.controller;
 
+import java.io.Console;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.i4.dandog.entity.Member;
@@ -14,13 +25,15 @@ import com.i4.dandog.entity.Qna;
 import com.i4.dandog.service.QnaService;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @AllArgsConstructor // @Autowired 를 사용하지 않아도 됨
 @RequestMapping(value="/qna") // "/~" 로 시작하는 모든 요청을 처리
 @Controller
+@Log4j2 
 public class QnaController {
 	
-	QnaService service;
+	QnaService qservice;
 	
 	// ** Board_Cri_paging
 //	@GetMapping("/qcriList")
@@ -57,10 +70,12 @@ public class QnaController {
 	//    단, 클래스명의 첫글자를 소문자로 ...  ${boardDTO.root}
 	//      그러므로 아래와같은 구문은 필요없음.
 	//     model.addAttribute("apple", dto);
-	@GetMapping(value="/replyInsert")
-	public void replyInsert(Qna entity) {
-		// viewName 생략
+	@PostMapping(value="/replyinsert")
+	public String replyinsert(Qna entity) {
 		
+		qservice.replyinsert(entity.getQna_seq(), entity.getQna_reply());
+		String uri="redirect:qnaList";
+		return uri;
 	}
 	
 	
@@ -92,7 +107,7 @@ public class QnaController {
 	@GetMapping (value="/qnaList")
 	public void qnalist(Model model) {
 		System.out.println("** QnaList **");
-		model.addAttribute("qnai", service.selectList());
+		model.addAttribute("qnai", qservice.selectList());
 		
 	}
 	
@@ -113,20 +128,20 @@ public class QnaController {
 	public String qdetail(HttpServletRequest request, Model model, Qna entity) {
 		// 1) Detail Service 처리
 		//dto.setId("검색id");
-		entity = service.selectOne(entity.getQna_seq());
+		entity = qservice.selectOne(entity.getQna_seq());
 		
 		// 2) 조회수 증가
 		// => get loginID
-		String loginID = (String)request.getSession().getAttribute("loginID");
-		
-		// => 조회수 증가 조건
-		if (!"admin".equals(loginID) &&
-			! entity.getUser_id().equals(loginID) &&
-			! "U".equals(request.getParameter("jCode"))) {
-			// => 조회수 증가 처리
-			entity.setQna_view(entity.getQna_view()+1);
-			service.save(entity);
-		}
+//		String loginID = (String)request.getSession().getAttribute("loginID");
+//		
+//		// => 조회수 증가 조건
+//		if (!"admin".equals(loginID) &&
+//			! entity.getUser_id().equals(loginID) &&
+//			! "U".equals(request.getParameter("jCode"))) {
+//			// => 조회수 증가 처리
+//			entity.setQna_view(entity.getQna_view()+1);
+//			service.save(entity);
+//		}
 		
 		// 3) view 처리
 		// => 글 수정화면 요청인 경우 구분
@@ -153,7 +168,7 @@ public class QnaController {
 		String uri="redirect:qnaList"; // 성공
 		
 		// 2. Service 처리
-		if (service.save(entity)>0) {
+		if (qservice.save(entity)>0) {
 			rttr.addFlashAttribute("message", "~ 새글등록 성공!! ~");
 		}else {
 			model.addAttribute("message", "~ 새글등록 실패!! 다시 하세요 ~");
@@ -175,7 +190,7 @@ public class QnaController {
 		String uri="qna/qnaDetail";
 		
 		// => Service 처리
-		if (service.save(entity) > 0) {
+		if (qservice.save(entity) > 0) {
 			model.addAttribute("message", "~ 글 수정 성공 ~");
 		}else {
 			model.addAttribute("message", "~ 글 수정 실패! 다시 하세요 ~");
@@ -184,21 +199,72 @@ public class QnaController {
 		return uri;
 	} // qUpdate
 	
+	
+	
 	// ** Board Delete: 글 삭제
-	@GetMapping(value="/qdelete")
-	public String qdelete(Qna entity, Model model, RedirectAttributes rttr) {
+//	@GetMapping(value="/qdelete")
+//	public String qdelete(Qna entity, Model model, RedirectAttributes rttr) {
+//		
+//		String uri = "redirect:qnaList";
+//		
+//		if (qservice.delete(entity.getQna_seq())>0) {
+//			rttr.addFlashAttribute("message", "~ 글삭제 성공! ~");
+//		}else {
+//				rttr.addFlashAttribute("message", "~ 글삭제 실패! ~");
+//			}
+//		return uri;
+//	} // qdelete
+	
+	
+//	@DeleteMapping("/qdelete/qna_seq")
+//	public ResponseEntity<?> qdelete(@PathVariable("qna_seq") int qna_seq, Qna entity) {
+//		entity.setQna_seq(qna_seq);
+//		if(qservice.qdelete(entity) > 0) {
+//			log.info("qdelete HttpStatus.OK = " + HttpStatus.OK);
+//			return new ResponseEntity<>("삭제 성공", HttpStatus.OK);
+//		}else {
+//			log.info("qdelete HttpStatus.BAD_GATEWAY = " + HttpStatus.BAD_GATEWAY);
+//			return new ResponseEntity<>("삭제 실패, Data_Notfound", HttpStatus.BAD_GATEWAY);
+//		}
+//	}
+	
+	
+//	@PostMapping("/qdelete")
+//	public String qdelete(@RequestParam(name = "selectedItems", required = false) List<Integer> selectedItems) {
+//	    if (selectedItems != null && !selectedItems.isEmpty()) {
+//	        // 선택된 항목 삭제 처리
+//	        qservice.deleteSelectedItems(selectedItems);
+//	        // 삭제 후 리다이렉트 또는 다른 처리
+//	        
+//	    }
+//	    return "redirect:/qnaList";
+//	}
+//
+//	
+	
+// ======== 글 삭제 =======
+	@PostMapping(value = "/qdelete", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String qdelete(@RequestBody Map<String, List<String>> requestMap, Model model) {
+	    try {
+	        List<String> valueArr = requestMap.get("valueArr");
+	        if (valueArr != null) {
+	            log.info("** " + valueArr.size());
+	            for (String qna_seq : valueArr) {
+	                qservice.qdelete(Integer.parseInt(qna_seq));                
+	                log.info("delete 성공! 질문 글번호: " + qna_seq);
+	            }
+	            model.addAttribute("message", "글 삭제 성공");            
+	        } else {
+	            model.addAttribute("message", "삭제하실 글을 선택하세요.");
+	        }
+			
+		} catch (Exception e) {
+			log.info("** delete Exception => "+e.toString());
+			model.addAttribute("message", "글 삭제 실패");
+		}
 		
-		String uri = "redirect:qnaList";
-		
-		if (service.delete(entity.getQna_seq())>0) {
-			rttr.addFlashAttribute("message", "~ 글삭제 성공! ~");
-		}else {
-				rttr.addFlashAttribute("message", "~ 글삭제 실패! ~");
-			}
-		return uri;
-	} // qdelete
-	
-	
-	
-}
+	    return "redirect:qnaList";
+	} // delete
+}//class
+
 

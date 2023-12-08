@@ -80,18 +80,6 @@ const BoardQna = () => {
     // 검색어 입력후 공지사항 눌렀을때 다시 초기 테이블(항목이 나오게)로 돌아가기 함수
     // const [boardArray, setBoardArray] = useState([]);
     const handleInitialTable = () => {
-
-        // useEffect(() => {
-        //     axios
-        //         .get("/qnar/qnaList")
-        //         .then((res) => {
-        //             alert("** qnaList 성공 **");
-        //             setBoardArray(res.data);
-        //             console.log(res.data);
-        //         })
-        //         .catch((res) => console.log(res));
-        // }, [openQuestion, searchText]);
-
         setFilteredBoardArray([]); // 초기 테이블 항목을 보여주기 위해 필터링된 배열 초기화
         setShowInitialTable(true); // 초기 테이블 내용 보여주기
         setSearchText(""); // 검색어 초기
@@ -139,10 +127,12 @@ const BoardQna = () => {
                         <tr>
                             <th></th>
                             <th>번호</th>
+                            <th>카테고리</th>
                             <th>제목</th>
                             <th>작성자</th>
                             <th>작성일</th>
                             <th>조회수</th>
+                            <th>답변상태</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -161,27 +151,26 @@ const BoardQna = () => {
                                         onClick={() => toggleAnswer(index)}>
                                         <td></td>
                                         <td>{item.qna_seq}</td>
+                                        <td>{item.qna_category}</td>
                                         <td>{item.qna_title}</td>
                                         <td>{item.user_id}</td>
                                         <td>{item.regdate}</td>
                                         <td>{item.qna_view}</td>
+                                        <td>{item.answer_state}</td>
                                     </tr>
 
                                     {openQuestion === index && (
-                                        // <tr className="answer">
-                                        //     {/* tr.answer의 시작점을 tr.question_1.show-answer의 세 번째 td와 같도록 수정 */}
-                                        //     <td></td>
-                                        //     <td></td>
-                                        //     <td colSpan="4">
-                                        //         {/*  */}
-                                        //         <span>{item.answer}</span>
-                                        //     </td>
-                                        // </tr>
                                         <tr className="answer">
                                             <td></td>
                                             <td></td>
+                                            <td>{item.qna_category}</td>
                                             {/* <td colSpan={2}></td> */}
-                                            <td>{item.qna_content}</td>
+                                            <td>
+                                                <div>[질문] {item.qna_content}</div>
+                                                <br></br>
+                                                {item.qna_reply ? <div>[답변] {item.qna_reply}</div> : null}
+                                            </td>
+
                                             {/* <td colSpan={3}></td> */}
                                             <td></td>
                                             <td></td>
@@ -199,6 +188,7 @@ const BoardQna = () => {
                                             onClick={() => toggleAnswer(index)}>
                                             <td></td>
                                             <td>{item.qna_seq}</td>
+                                            <td>{item.qna_category}</td>
                                             <td>{item.qna_title}</td>
                                             <td>{item.user_id}</td>
                                             <td>{item.regdate}</td>
@@ -217,8 +207,14 @@ const BoardQna = () => {
                                             <tr className="answer">
                                                 <td></td>
                                                 <td></td>
+                                                <td>{item.qna_category}</td>
                                                 {/* <td colSpan={2}></td> */}
-                                                <td>{item.qna_content}</td>
+                                                <td>
+                                                    <div>[질문] {item.qna_content}</div>
+                                                    <br></br>
+                                                    {item.qna_reply ? <div>[답변] {item.qna_reply}</div> : null}
+                                                </td>
+
                                                 {/* <td colSpan={3}></td> */}
                                                 <td></td>
                                                 <td></td>
