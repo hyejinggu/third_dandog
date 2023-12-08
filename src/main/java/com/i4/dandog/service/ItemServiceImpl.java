@@ -54,6 +54,18 @@ public class ItemServiceImpl implements ItemService {
 		return repository.findByOrderByRegdate(inputValue, category);
 	}
 
+	
+	// ColorSize
+	@Override
+	public List<String> findColors(String item_name) {
+		return repository.findColors(item_name);
+	}
+	
+	@Override
+	public List<String> findSizes(String item_name) {
+		return repository.findSizes(item_name);
+	}
+	
 	// =============================================================
 
 	@Override
