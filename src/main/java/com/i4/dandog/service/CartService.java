@@ -13,6 +13,8 @@ public interface CartService {
 
 	// selectOne
 	Cart selectOne(CartKeyId keyId);
+	
+	void updateOption(String loginId, int originalItemNo, int itemNoToUpdate);
 
 	// insert
 	void save(Cart entity);

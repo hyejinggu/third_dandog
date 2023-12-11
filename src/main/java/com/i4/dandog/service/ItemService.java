@@ -12,6 +12,7 @@ public interface ItemService {
 	
 	// selectOne
 	Item selectOne(int item_no);
+	int updateOption(String itemName, String selectedColor, String selectedSize);
 	
 	// insert
 	int save(Item entity);
@@ -27,4 +28,6 @@ public interface ItemService {
 	
 	List<String> findSizes(String item_name);
 	List<String> findColors(String item_name);
+	
+	
 }

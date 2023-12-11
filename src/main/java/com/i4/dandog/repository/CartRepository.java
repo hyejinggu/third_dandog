@@ -28,8 +28,18 @@ public interface CartRepository extends JpaRepository<Cart, CartKeyId> {
 			@Param("item_quantity") int item_quantity);
 	
 	
-	@Query("SELECT new com.i4.dandog.domain.CartDTO(c.user_id, c.item_no, c.item_quantity, i.item_img1, i.item_name, i.item_price, i.item_discount_rate) "
+	@Query("SELECT new com.i4.dandog.domain.CartDTO(c.user_id, c.item_no, c.item_quantity, "
+			+ "i.item_img1, i.item_name, i.item_price, i.item_discount_rate, i.options_color, i.options_size) "
 			+ "FROM Cart c JOIN Item i ON c.item_no = i.item_no AND c.user_id = :user_id " + "ORDER BY c.item_no")
 	List<CartDTO> findByUser_id(@Param("user_id") String user_id);
 
+	
+	 @Transactional
+	 @Modifying
+	 @Query("UPDATE Cart c SET c.item_no = :itemNoToUpdate WHERE c.item_no = :originalItemNo AND c.user_id = :loginId")
+	 int updateOption(@Param("originalItemNo") int originalItemNo, 
+			 @Param("itemNoToUpdate") int itemNoToUpdate,
+			 @Param("loginId") String loginId
+			);
+	    
 }

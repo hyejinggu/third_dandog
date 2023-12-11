@@ -35,47 +35,49 @@ public class QnaRestController {
 	public List<Qna> qnalist(Model model) {
 		System.out.println("** QnaList **");
 		return qservice.selectList();
-		
 	}
+
 	
-	public List<Qna> Qna(@RequestParam(name = "category") String category) {
-		System.out.println("**" + category + "question");
+	@PostMapping (value="/createQuestion1") // 검색버튼 옆 조회할때 필요함. value 이름 달라야 됨
+	public List<Qna> createQuestion1(Qna entity)  {
+		System.out.println("** createQuestion1 => " + entity);
 		
-		List<Qna> questions;
-		
-		switch (category) {
-			case "OP":
-				questions = qservice.findByCategory("OP"); // 주문/결제 Order/Payment
-				break;
-			case "S":
-				questions = qservice.findByCategory("S"); // 배송 Shipping
-				break;
-			case "CR":
-				questions = qservice.findByCategory("CR"); // 취소/반품 Cancellation/Return
-				break;
-			case "EA":
-				questions = qservice.findByCategory("EA"); // 교환/AS  Exchange/As
-				break;
-			case "M":
-				questions = qservice.findByCategory("M"); // 회원 Member
-				break;
-			case "PE":
-				questions = qservice.findByCategory("PE"); // 적립금/이벤트  Point/Event
-				break;	
-			case "E":
-				questions = qservice.findByCategory("E"); // 기타
-				break;	
-			default:
-				questions = qservice.findByCategory("OP"); 
-		}
-		return questions;
+//		List<Qna> questions; 
+//		
+//		switch (qna_category) {
+//			case "OP":
+//				questions = qservice.findByCategory("OP"); // 주문/결제 Order/Payment
+//				break;
+//			case "S":
+//				questions = qservice.findByCategory("S"); // 배송 Shipping
+//				break;
+//			case "CR":
+//				questions = qservice.findByCategory("CR"); // 취소/반품 Cancellation/Return
+//				break;
+//			case "EA":
+//				questions = qservice.findByCategory("EA"); // 교환/AS  Exchange/As
+//				break;
+//			case "M":
+//				questions = qservice.findByCategory("M"); // 회원 Member
+//				break;
+//			case "PE":
+//				questions = qservice.findByCategory("PE"); // 적립금/이벤트  Point/Event
+//				break;	
+//			case "E":
+//				questions = qservice.findByCategory("E"); // 기타
+//				break;	
+//			default:
+//				questions = qservice.findByCategory("OP"); 
+//		}
+		return null;
 	}
 	
 	//
-	@PostMapping("/createQuestion") 
-	public String creatQuestion(Model model, Qna entity) throws Exception {
+	@PostMapping("/createQuestion")
+	public String creatQuestion(Model model, Qna entity) throws Exception { //이미지사용할때
 		
-		System.out.println("** Create => "+entity);
+		System.out.println("** createQuestion  => "+entity);
+		
 //		// ** MultipartFile ***********************
 				//String realPath = "C:\\MTest\\MyWork\\demoJ01\\src\\main\\webapp\\resources\\uploadImages\\";
 //				// => 기본 이미지 지정하기
@@ -109,6 +111,7 @@ public class QnaRestController {
 			return "다시 등록해주세요";
 		}//try
 	}//creatQuestion
+
 				
 }//class
 

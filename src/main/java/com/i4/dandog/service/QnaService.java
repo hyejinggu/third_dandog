@@ -5,6 +5,8 @@ import java.util.List;
 import com.i4.dandog.entity.Qna;
 
 public interface QnaService {
+	
+	public void replyinsert(int qna_seq, String qna_reply);
 
 	public List<Qna> selectList();
 	
@@ -14,9 +16,9 @@ public interface QnaService {
 
 	public int save(Qna entity);
 
-	public int delete(int qna_seq);
+	public int qdelete(int qna_seq);
 
-
+	
 	
 
 }

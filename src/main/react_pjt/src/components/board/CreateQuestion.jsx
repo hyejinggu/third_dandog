@@ -120,7 +120,7 @@ const CreateQuestion = () => {
                         <th bgcolor="Violet">Qna_Category</th>
                         <td>
                             <select
-                                name="qna_Category" id="q_board_select"
+                                name="qna_category" id="q_board_select"
                                 value={qna_Category}
                                 onChange={(e) => setQna_Category(e.target.value)}
                             >

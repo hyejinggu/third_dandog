@@ -2,7 +2,10 @@ package com.i4.dandog.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -44,7 +47,11 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	@Query("select i.options_size from Item i where i.item_name = :item_name")
 	public List<String> findSizes(@Param("item_name") String item_name);
 	
-	
+
+	@Query("select i.item_no from Item i where i.item_name = :itemName "
+			+ "and i.options_color = :selectedColor and i.options_size = :selectedSize")
+	public int updateOption(@Param("itemName") String itemName, 
+			@Param("selectedColor") String selectedColor, @Param("selectedSize") String selectedSize);
 	
 	
 }
