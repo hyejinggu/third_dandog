@@ -12,5 +12,7 @@ public interface OrderDetailService {
     
     void delete(int order_detail_no);
     
-    void updateOrderState(int order_detail_no, String order_state);
+//    void updateOrderState(int order_detail_no, String order_state);
+    
+	int save(OrderDetail entity);
 }

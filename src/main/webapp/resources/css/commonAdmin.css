@@ -80,3 +80,17 @@
     border-bottom: 3px solid #ffa900;
     line-height: 50px;
 }
+
+
+
+.title {
+	width: 100%;
+}
+
+.title h2 {
+	width: 100%;
+	font-size: 20px;
+	margin-top: 10px;
+	border-bottom: 3px solid #ffa900;
+	line-height: 50px;
+}

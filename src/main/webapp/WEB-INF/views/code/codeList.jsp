@@ -13,10 +13,10 @@
 </head>
 <body>
 <%-- 	<%@ include file="../header.jsp"%> --%>
-	<div class="adminItemContainer">
+	<div class="title">
 		<h2>코드 관리</h2>
+		<h3>Code List</h3>
 	</div>
-	<h2>Code List</h2>
 	<c:if test="${not empty requestScope.message}">
 		<h3>${requestScope.message}</h3>
 	</c:if>

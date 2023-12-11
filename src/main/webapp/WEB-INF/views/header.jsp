@@ -31,7 +31,7 @@
 							<p class="textlink" onclick="getItemList()">상품 관리</p>
 							<span onclick="getItemList()">상품 목록</span>
 							<span onclick="getItemInsert()">상품 등록</span>
-							<span onclick="getcodeList()">코드 추가</span>
+							<span onclick="getcodeList()">코드 관리</span>
 						<li>
 							<p class="textlink" onclick="getAdminOrder()">주문 관리</p>
 						</li>

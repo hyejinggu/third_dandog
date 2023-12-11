@@ -2,7 +2,10 @@ package com.i4.dandog.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -32,6 +35,11 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 
 	@Query("SELECT m FROM Member m WHERE m.user_id = :user_id")
 	List<Member> findByUser_id(@Param("user_id") String user_id);
+	
+	@Transactional
+	@Modifying 
+	@Query("update Member m set m.point = :point WHERE m.user_id = :user_id")
+	void pointUpdate(@Param("user_id") String user_id, @Param("point") int point);
 
 
 }

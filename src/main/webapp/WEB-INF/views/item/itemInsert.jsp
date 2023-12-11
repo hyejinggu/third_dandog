@@ -9,10 +9,10 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/itemAdmin.css">
 </head>
 <body>
-	<div class="adminItemContainer">
+	<div class="title">
 		<h2>상품 관리</h2>
+		<h3>Item Insert</h3>
 	</div>
-	<h2>Item Insert Form</h2>
 	<form action="/item/insert" method="post" enctype="multipart/form-data">
 		<table class="item_table">
 			<tr>

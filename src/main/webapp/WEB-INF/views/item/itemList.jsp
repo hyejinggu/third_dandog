@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <title>Item List</title>
     <link rel="stylesheet" type="text/css" href="/resources/css/itemAdmin.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/commonAdmin.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/resources/js/item.js"></script>
     <script>
@@ -17,34 +18,37 @@
     </script>
 </head>
 <body>
-<div class="adminItemContainer">
+<div class="title">
     <h2>상품 관리</h2>
+	<h3>Item List</h3>
 </div>
-<h2>Item List</h2>
 <c:if test="${not empty requestScope.message}">
     <h3>${requestScope.message}</h3>
 </c:if>
-<div>
-<form id="searchForm">
-    <select id="i_search_category">
-        <option value="all">전체</option>
-        <c:forEach var="category" items="${fn:split('Snack,Toy,Living,Stroll', ',')}">
-            <option value="${category}" ${param.search_category == category ? "selected" : ""}>${category}</option>
-        </c:forEach>
-    </select>
-    <select id="i_search_field">
-        <option value="name" ${param.search_field == 'name' ? 'selected' : ''}>상품 이름</option>
-        <option value="no" ${param.search_field == 'no' ? 'selected' : ''}>상품 번호</option>
-    </select>
-    <input placeholder="검색어 입력" id="i_search_value" value="${param.search_value}"/>
-    <input type="button" onclick="searchItemList()" value="적용"/>
-    <input type="reset" value="취소" onclick="getItemList()"/>
-</form>
+<div class="search_wrap">
+	<form id="searchForm">
+	    <select id="i_search_category">
+	        <option value="all">전체</option>
+	        <c:forEach var="category" items="${fn:split('Snack,Toy,Living,Stroll', ',')}">
+	            <option value="${category}" ${param.search_category == category ? "selected" : ""}>${category}</option>
+	        </c:forEach>
+	    </select>
+	    <select id="i_search_field">
+	        <option value="name" ${param.search_field == 'name' ? 'selected' : ''}>상품 이름</option>
+	        <option value="no" ${param.search_field == 'no' ? 'selected' : ''}>상품 번호</option>
+	    </select>
+	    <input placeholder="검색어 입력" id="i_search_value" value="${param.search_value}"/>
+	    <input type="button" onclick="searchItemList()" value="적용"/>
+	    <input type="reset" value="취소" onclick="getItemList()"/>
+	</form>
 </div>
 <table class="item_table">
     <tr>
         <!-- 페이징 처리 추가 -->
-        <th>삭제</th>
+        <th>
+    		<label for="selectall">전체</label><br>
+			<input type="checkbox" id="selectall" value='selectall' onclick='select_item(this)'/>
+		</th>
         <th>번호</th>
         <th>카테고리</th>
         <th>이름</th>
@@ -103,11 +107,7 @@
     </c:if>
 </table>
 
-<div>
-    <input type="checkbox" id="selectall" value='selectall' onclick='select_item(this)'/>
-    <label for="selectall">전체 선택</label>
-</div>
-<input type="submit" value="delete_item" onclick="deleteItem()"/>
+<input type="submit" value="선택 삭제" onclick="deleteItem()"/>
 
 <h4>
     <a href="/home">Home으로 가기</a>
