@@ -62,11 +62,27 @@ export default function SearchAll() {
           </div>
           <div className={styles.communityResults}>
             <h2>커뮤니티 검색 결과</h2>
-            {/* 커뮤니티 검색 결과를 여기에 나열 */}
             <ul>
-              <li>{lounges.lounge_no}</li>
-              <li>토론 글 2</li>
-              {/* ... */}
+              <li>
+                <span>제목 및 내용</span>
+                <span>작성자</span>
+                <span>등록일</span>
+                <span>추천수</span>
+                <span>조회수</span>
+              </li>
+              {lounges.map((i) => (
+                <li key={i.lounge_no}>
+                  <span>
+                    <p>{i.lounge_title}</p>
+                    <p>{i.lounge_content}</p>
+                  </span>
+                  <span>{i.user_id}</span>
+                  <span>{i.regdate}</span>
+                  <span>{i.lounge_likes}</span>
+                  <span>{i.lounge_hits}</span>
+                  {/* 추가 필요한 정보들도 이와 같이 출력할 수 있습니다 */}
+                </li>
+              ))}
             </ul>
           </div>
         </div>

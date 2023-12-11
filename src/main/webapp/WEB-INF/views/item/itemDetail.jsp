@@ -6,10 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Item Detail</title>
+<link rel="stylesheet" type="text/css" href="/resources/css/commonAdmin.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/itemAdmin.css">
 <script src="/resources/js/item.js"></script>
 </head>
 <body>
-	<h2>Item Detail</h2>
+	<div class="title">
+    	<h2>상품 관리</h2>
+		<h3>Item Detail</h3>
+	</div>
 	<c:if test="${not empty requestScope.message}">
 		<h3>${requestScope.message}</h3>
 	</c:if>

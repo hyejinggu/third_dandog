@@ -7,15 +7,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Item Insert</title>
-<link rel="stylesheet" type="text/css"
-	href="/resources/css/codeAdmin.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/codeAdmin.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/commonAdmin.css">
 <script src="/resources/js/code.js"></script>
 </head>
 <body>
-	<div class="adminItemContainer">
-		<h2>상품 관리</h2>
+	<div class="title">
+		<h2>코드 관리</h2>
+		<h3>Code Insert Form</h3>
 	</div>
-	<h2>Item Insert Form</h2>
 	<form action="/code/insert" method="post" id="code_insert_form" >
 		<table class="code_table">
 			<tr>
