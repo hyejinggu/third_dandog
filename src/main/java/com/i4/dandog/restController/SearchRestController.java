@@ -53,22 +53,22 @@ public class SearchRestController {
 	}
 	
 	
-	@GetMapping("/myposting/{user_id}")
-	public ResponseEntity<Map<String, List<? extends Object>>> searchMyPosting(@PathVariable String user_id) {
-	    try {
-	    	log.info("user_id: " + user_id);
-	        List<Lounge> searchedLounges = lService.findByCategoryLoungeContents(user_id);
-	        List<Lounge> searchedLounges = lService.findByCategoryLoungeContents(user_id);
-	        
-	        Map<String, List<? extends Object>> result = new HashMap<>();
-	        result.put("lounges", searchedLounges);
-	        result.put("neighborhood", searchedLounges);
-
-	        return ResponseEntity.ok(result);
-	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-	    }
-	}
+//	@GetMapping("/myposting/{user_id}")
+//	public ResponseEntity<Map<String, List<? extends Object>>> searchMyPosting(@PathVariable String user_id) {
+//	    try {
+//	    	log.info("user_id: " + user_id);
+//	        List<Lounge> searchedLounges = lService.findByCategoryLoungeContents(user_id);
+//	        List<Lounge> searchedLounges = lService.findByCategoryLoungeContents(user_id);
+//	        
+//	        Map<String, List<? extends Object>> result = new HashMap<>();
+//	        result.put("lounges", searchedLounges);
+//	        result.put("neighborhood", searchedLounges);
+//
+//	        return ResponseEntity.ok(result);
+//	    } catch (Exception e) {
+//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//	    }
+//	}
 
 
 
