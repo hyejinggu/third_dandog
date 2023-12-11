@@ -77,6 +77,7 @@ const BoardQna = () => {
     //     }
     // }; // ... (펼치기/접기 로직)
 
+    // 로그인한 아이디가 글쓴이와 같거나 
     const handleAnswerToggle = (index, user_id) => {
         //alert("*** " + user_id + " , " + sessionStorage.getItem('loginId'))
         if (sessionStorage.getItem('loginId') == 'manager' || sessionStorage.getItem('loginId') == user_id)
