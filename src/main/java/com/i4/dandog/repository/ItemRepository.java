@@ -1,11 +1,10 @@
 package com.i4.dandog.repository;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -14,12 +13,14 @@ import com.i4.dandog.entity.Item;
 public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	@Query("select i from Item i where (:searchCategory is null or i.item_category = :searchCategory) and lower(i.item_name) like lower(concat('%', :searchValue, '%')) order by item_no desc")
-	List<Item> findByCategoryAndItemName(@Param("searchCategory") String searchCategory,
-			@Param("searchValue") String searchValue);
+	Page<Item> findByCategoryAndItemName(@Param("searchCategory") String searchCategory,
+			@Param("searchValue") String searchValue,
+			Pageable pageable);
 
 	@Query("select i from Item i where (:searchCategory is null or i.item_category = :searchCategory) and i.item_no = :searchValue order by item_no desc")
-	List<Item> findByCategoryItemNo(@Param("searchCategory") String searchCategory,
-			@Param("searchValue") int searchValue);
+	Page<Item> findByCategoryItemNo(@Param("searchCategory") String searchCategory,
+			@Param("searchValue") int searchValue,
+			Pageable pageable);
 	
 	
 // =========================== Rest Controller에서 사용 =====================================

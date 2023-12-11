@@ -1,19 +1,20 @@
 "use strict"
 
 
-function getItemList() {
-	let url = "/item/itemList";
+function getItemList(pageNumber) {
+	pageNumber = pageNumber || 0;
 
-	axios.get(url
-	).then(response => {
-		document.getElementById("resultArea1").innerHTML = response.data;
-	}).catch(err => {
-		alert("response 실패: " + err.message)
-	});
+    let url = `/item/itemList?page=${pageNumber}`;
 
-	document.getElementById("resultArea2").innerHTML = "";
+    axios.get(url
+    ).then(response => {
+        document.getElementById("resultArea1").innerHTML = response.data;
+    }).catch(err => {
+        alert("response 실패: " + err.message)
+    });
 
-} // getItemInsert
+    // document.getElementById("resultArea2").innerHTML = "";
+}
 
 
 function getItemInsert() {

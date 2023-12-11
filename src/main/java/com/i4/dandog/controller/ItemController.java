@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,18 +44,39 @@ public class ItemController {
 	// ======== 상품 리스트 =======
 	@GetMapping("/itemList")
 	public String itemList(
-            @RequestParam(name = "search_category", defaultValue = "all") String searchCategory,
-            @RequestParam(name = "search_field", defaultValue = "name") String searchField,
-            @RequestParam(name = "search_value", defaultValue = "") String searchValue,
-            Model model) {
-		if (searchCategory.equals("all")) {
-			searchCategory = null;
-		}
+	        @RequestParam(name = "search_category", defaultValue = "all") String searchCategory,
+	        @RequestParam(name = "search_field", defaultValue = "name") String searchField,
+	        @RequestParam(name = "search_value", defaultValue = "") String searchValue,
+	        @RequestParam(name = "page", defaultValue = "0") int page,
+	        @RequestParam(name = "size", defaultValue = "10") int size,
+	        Model model) {
 
-		model.addAttribute("itemList", service.selectList(searchCategory, searchField, searchValue));
-		model.addAttribute("itemImgList", iservice.selectList());
-		
-		return "/item/itemList";
+	    if (searchCategory.equals("all")) {
+	        searchCategory = null;
+	    }
+
+	    // 페이지네이션을 위해 Pageable 객체 생성
+	    Pageable pageable = PageRequest.of(page, size);
+
+	    Page<Item> itemPage;
+
+	    if ("no".equals(searchField)) {
+	        int intSearchValues = Integer.parseInt(searchValue);
+	        itemPage = service.findByCategoryItemNo(searchCategory, intSearchValues, pageable);
+	    } else {
+	        itemPage = service.findByCategoryAndItemName(searchCategory, searchValue, pageable);
+	    }
+
+	    model.addAttribute("itemList", itemPage.getContent());
+	    model.addAttribute("itemImgList", iservice.selectList());
+
+	    // 페이지 관련 정보를 모델에 추가
+	    model.addAttribute("itemPage", itemPage);
+	    model.addAttribute("currentPage", itemPage.getNumber());
+	    model.addAttribute("totalPages", itemPage.getTotalPages());
+	    model.addAttribute("totalItems", itemPage.getTotalElements());
+
+	    return "/item/itemList";
 	}
 	
 	
