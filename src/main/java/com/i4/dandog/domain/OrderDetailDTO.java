@@ -19,5 +19,7 @@ public class OrderDetailDTO {
 	
 	private ItemOrder itemOrder;
 	private List<OrderDetail> orderDetail;
+	private int point;
+	
 	
 }

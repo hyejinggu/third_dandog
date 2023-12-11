@@ -123,4 +123,9 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 	
+	@Override
+	public 	void pointUpdate(String user_id, int point) {
+		repository.pointUpdate(user_id, point);
+	}
+	
 } // class

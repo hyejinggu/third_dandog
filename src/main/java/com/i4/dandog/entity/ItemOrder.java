@@ -47,7 +47,5 @@ public class ItemOrder extends BaseEntity {
 	@Column(name = "regdate", updatable = false)
 	private LocalDateTime regdate;
 	
-	@Transient
-	private OrderDetailDTO orders;
 }
 
