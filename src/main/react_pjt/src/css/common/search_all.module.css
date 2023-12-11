@@ -71,5 +71,12 @@
   border-bottom: none;
 }
 
-/* 예시에서는 각 결과 섹션의 배경색, 헤더 색상, 리스트 스타일 등을 조정했습니다.
-     원하는 디자인에 맞게 추가적인 스타일을 조정하세요. */
+.communityResults li {
+  display: grid;
+  grid-template-columns: 2fr repeat(4, 1fr);
+}
+
+.communityResults li span p:first-child {
+  font-weight: bold;
+  font-size: 1.1em;
+}

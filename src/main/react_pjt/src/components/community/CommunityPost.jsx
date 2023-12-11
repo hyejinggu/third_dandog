@@ -23,8 +23,10 @@ export default function CommunityPost({ loungeArray }) {
               </Link>
             </td>
             <td>
-              <h4>{post.lounge_title}</h4>
-              <p>{post.lounge_content}</p>
+              <Link to="/community/loungepostdetail" state={{ post: post }}>
+                <h4>{post.lounge_title}</h4>
+                <p>{post.lounge_content}</p>
+              </Link>
             </td>
             <td>{post.user_id}</td>
             <td>{`${year}-${month}-${day}`}</td>

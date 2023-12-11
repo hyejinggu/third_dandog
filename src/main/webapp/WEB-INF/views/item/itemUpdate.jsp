@@ -6,9 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Item Update</title>
+<link rel="stylesheet" type="text/css" href="/resources/css/itemAdmin.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/commonAdmin.css">
 </head>
 <body>
-	<h2>Item Update Form (수정 페이지!!)</h2>
+	<div class="title">
+	    <h2>상품 관리</h2>
+		<h3>Item Update</h3>
+	</div>
 	<c:if test="${not empty requestScope.message}">
 		<h3>${requestScope.message}</h3>
 	</c:if>
