@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,11 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/itemAdmin.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/resources/js/item.js"></script>
+    <script>
+/*     window.onload = function () {
+        searchItemList();
+    }; */
+    </script>
 </head>
 <body>
 <div class="adminItemContainer">
@@ -19,19 +25,21 @@
     <h3>${requestScope.message}</h3>
 </c:if>
 <div>
-    <select name="search_category" id="i_search_category">
+<form id="searchForm">
+    <select id="i_search_category">
         <option value="all">전체</option>
-        <option value="Snack">간식, 사료</option>
-        <option value="Toy">장난감</option>
-        <option value="Living">리빙, 패션</option>
-        <option value="Stroll">산책, 케어</option>
+        <c:forEach var="category" items="${fn:split('Snack,Toy,Living,Stroll', ',')}">
+            <option value="${category}" ${param.search_category == category ? "selected" : ""}>${category}</option>
+        </c:forEach>
     </select>
-    <select name="search_field" id="i_search_field">
-        <option value="name">상품 이름</option>
-        <option value="no">상품 번호</option>
+    <select id="i_search_field">
+        <option value="name" ${param.search_field == 'name' ? 'selected' : ''}>상품 이름</option>
+        <option value="no" ${param.search_field == 'no' ? 'selected' : ''}>상품 번호</option>
     </select>
-    <input name="search_value" placeholder="검색어 입력" id="i_search_value"/>
-    <span onclick="searchItemList()">검색</span>
+    <input placeholder="검색어 입력" id="i_search_value" value="${param.search_value}"/>
+    <input type="button" onclick="searchItemList()" value="적용"/>
+    <input type="reset" value="취소" onclick="getItemList()"/>
+</form>
 </div>
 <table class="item_table">
     <tr>
@@ -79,7 +87,7 @@
     		<div class="pagination_wrap" >
 			<c:if test="${not empty requestScope.itemPage}">
 			    <c:forEach var="pageNumber" begin="0" end="${requestScope.itemPage.totalPages - 1}">
-			        <span onclick="getItemList(${pageNumber})"
+			        <span onclick="searchItemList(${pageNumber})"
 			              class="${pageNumber == requestScope.itemPage.number ? 'currentPage' : ''}">
 			            ${pageNumber + 1}
 			        </span>
