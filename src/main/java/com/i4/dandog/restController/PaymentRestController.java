@@ -1,6 +1,12 @@
 package com.i4.dandog.restController;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+
+import javax.transaction.Transactional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +20,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.i4.dandog.domain.OrderDetailDTO;
+import com.i4.dandog.entity.ItemOrder;
 import com.i4.dandog.entity.Member;
+import com.i4.dandog.entity.OrderDetail;
 import com.i4.dandog.entity.ShippingAddress;
 import com.i4.dandog.entity.ShippingAddressKeyId;
 import com.i4.dandog.repository.ShippingAddressRepository;
+import com.i4.dandog.service.ItemOrderService;
 import com.i4.dandog.service.MemberService;
+import com.i4.dandog.service.OrderDetailService;
 import com.i4.dandog.service.ShippingAddressService;
 
 import lombok.AllArgsConstructor;
@@ -33,6 +44,8 @@ public class PaymentRestController {
 	ShippingAddressRepository addressRepository;
 	ShippingAddressService service;
 	MemberService mservice;
+	OrderDetailService oservice;
+	ItemOrderService ioservice;
 
 	@GetMapping("/getAddress")
 	public ResponseEntity<List<ShippingAddress>> getAddressForUser(@RequestParam String user_id) {
@@ -83,5 +96,68 @@ public class PaymentRestController {
 	    }
 	}
 	
+	@PostMapping("/orderInsert")
+	public ResponseEntity<String> orderInsert(OrderDetailDTO orderDtail) {
+//		System.out.println("************" + Arrays.toString(itemOrder.getOrders()));
+		try {
+			
+			// 1. itemOrder를 먼저 저장
+	        ioservice.save(orderDtail.getItemOrder());
+
+	        // 2. orderDetail의 주문 번호를 itemOrder의 주문 번호로 설정
+//	        orderDetail.setOrder_num(itemOrder.getOrder_num());
+	        
+	        for (OrderDetail orders : orderDtail.getOrderDetail()) {
+	        // 2. orderDetail의 주문 번호를 itemOrder의 주문 번호로 설정
+	        orders.setOrder_num(orderDtail.getItemOrder().getOrder_num());
+	            oservice.save(orders);
+	         }
+
+	        // 3. orderDetail 저장
+//	        oservice.save(orderDetail);
+	        return ResponseEntity.ok("주문이 성공적으로 완료되었습니다.");
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("주문 업데이트 중 오류 발생: " + e.getMessage());
+	    }
+	}
+	
+//	@PostMapping("/orderInsert")
+//	   public String orderInsert(@RequestBody OrderDetailDTO request) {
+//
+//	      ItemOrder itemOrder = request.getItemOrder();
+//	      List<OrderDetail> orderDetail = request.getOrderDetail();
+//
+//	      try {
+//
+//	         Random rn = new Random();
+//	         String num = rn.nextInt(1000) + "";
+//
+//	         String orderId = "T" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "B" + num;
+//
+//	         itemOrder.setOrder_num(orderId);
+////	         itemOrder.setOrder_date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+//
+//	         for (OrderDetail dentity : orderDetail) {
+//	        	 dentity.setOrder_num(orderId);
+//
+////	            dentity.setOrder_id(orderId);
+//
+//	            oservice.save(dentity);
+//
+//	            System.out.println(dentity);
+//
+//	         }
+//
+//	         oservice.save(itemOrder);
+//
+//
+//	         System.out.println("** orderList insert 성공");
+//	         return "완료";
+//
+//	      } catch (Exception e) {
+//	         System.out.println("** OrderList insert Exception => " + e.toString());
+//	         return "실패";
+//	      }
+//	   }
 
 }

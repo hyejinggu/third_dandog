@@ -1,19 +1,25 @@
 package com.i4.dandog.entity;
 
+//import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.data.annotation.CreatedDate;
+
+import com.i4.dandog.domain.OrderDetailDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-
-import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "Item_Order")
@@ -21,21 +27,27 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ItemOrder {
+public class ItemOrder extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int order_num;
     private String user_id;
-    private int item_no;
     private int total_price;
-    private Date order_date;
     private String payment;
-    private String shipping_msg;
     private String recipient_name;
     private String recipient_phone;
     private int post_code;
-    private String userAddress1;
-    private String userAddress2;
+    private String user_address1;
+    private String user_address2;
+    private String order_state;
+    private String pay_state;
+    
+	@CreatedDate
+	@Column(name = "regdate", updatable = false)
+	private LocalDateTime regdate;
+	
+	@Transient
+	private OrderDetailDTO orders;
 }
 

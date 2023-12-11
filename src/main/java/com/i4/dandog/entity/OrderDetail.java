@@ -1,15 +1,12 @@
 package com.i4.dandog.entity;
 
-import java.time.LocalDate;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.CreatedDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,9 +28,9 @@ public class OrderDetail {
 	private int item_no;
 	private int item_quantity;
 	private int item_price;
-	private String order_state;
+	private String review_state;
+	private String option_size;
+	private String option_color;
 	
-	@CreatedDate
-	@Column(name = "regdate", updatable = false)
-	private LocalDate regdate;
+
 }

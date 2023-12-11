@@ -309,11 +309,9 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
 
 const Payment = () => {
     const location = useLocation();
-    const [totalOrderPrice, setTotalOrderPrice] = useState(0);
 
     const selectedItem = location.state.selectedItem;
     const quantity = location.state.quantity;
-    console.log(selectedItem);
 
     const calculateTotalPrice = (item) => {
         if (!item || !item.selectedItem) {
@@ -322,7 +320,6 @@ const Payment = () => {
         }
 
         const selectedItem = item.selectedItem;
-        console.log(selectedItem);
 
         const originalPrice = selectedItem.item_price || 0;
         const salePrice = originalPrice - originalPrice * (selectedItem.item_discount_rate / 100);
@@ -413,49 +410,38 @@ const Payment = () => {
     const [modalMessage, setModalMessage] = useState('');
 
     const handlePurchase = async () => {
+        const url = "/payment/orderInsert";
+
         try {
-            const response = await axios.post('/payment/purchase', {
-                // 주문자 정보
-                user_id: sessionStorage.loginId,
-                user_name: userData[0].user_name,
-                user_email: userData[0].user_email,
-                user_phonenum: userData[0].user_phonenum,
-
-                // 배송지 정보
-                recipient_name: selectedAddress.recipient_name || userData[0].user_name,
-                recipient_phone: selectedAddress.recipient_phone || userData[0].user_phonenum,
-                user_address1: selectedAddress.user_address1 || userData[0].user_address1,
-                user_address2: selectedAddress.user_address2 || userData[0].user_address2,
-                post_code: selectedAddress.post_code || userData[0].post_code,
-
-                // 주문 상품 정보
-                item_name: selectedItem.item_name,
-                // item_quantity: quantity,
-                item_price: selectedItem.item_price,
-                item_discount_rate: selectedItem.item_discount_rate,
-
-                // 결제 정보
-                payment_method: document.getElementById('payment-method').value, // 결제 방법 선택란의 값을 가져옴
-            });
+            const formData = new FormData(document.getElementById('order'));
+            formData.append('order_state', '배송대기');
+            formData.append('pay_state', '결제대기');
+            formData.append('review_state', '작성대기');
+            formData.append('user_id', sessionStorage.loginId);
+            for (const pair of formData.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            }
+            const response = await axios.post(url, formData);
 
             console.log('주문 성공:', response.data);
             setModalMessage('상품 구매가 완료되었습니다.');
             setIsModalOpen(true);
-
-
-            // 주문 성공 후 필요한 처리 (예: 주문 완료 모달 열기 등)
         } catch (error) {
-            console.error('주문 중 오류 발생:', error);
-            // 주문 실패 시 필요한 처리
+            console.error('주문 실패:', error);
+
+            if (error.response && error.response.status === 502) {
+                alert('[입력 오류] 다시 시도하세요.');
+            } else {
+                alert('[시스템 오류] 잠시 후에 다시 시도하세요.');
+            }
         }
     };
-
 
     return (
         <div>
             <h2 className={styles.title}>주문/결제</h2>
 
-            <form action="" method="" className={styles.main}>
+            <form action="" id="order" method="post" className={styles.main}>
                 {/* <!--배송지정보--> */}
 
 
@@ -493,14 +479,19 @@ const Payment = () => {
                                         <th>
                                             <label htmlFor="text">주소 : </label>
                                         </th>
-                                        <td colSpan="">
-                                            {i.user_address1 === null &&
-                                                <input type="text" id="address" name="address" value="배송지를 선택해주세요" />
-                                            }
-                                            {i.user_address1 !== null &&
-                                                < input type="text" id="address" name="address" value={`${i.user_address1} ${i.user_address2} (${i.post_code})`} />
-                                            }
-                                        </td>
+
+                                        {i.user_address1 === null &&
+                                            <td colSpan="">
+                                                <input type="text" value="배송지를 선택해주세요" />
+                                            </td>
+                                        }
+                                        {i.user_address1 !== null &&
+                                            <td colSpan="">
+                                                < input type="text" id="user_address1" name="user_address1" value={i.user_address1} />
+                                                < input type="text" id="user_address2" name="user_address2" value={i.user_address2} />
+                                                < input type="text" id="post_code" name="post_code" value={i.post_code} />
+                                            </td>
+                                        }
                                     </tr>
                                 </table>
                             ))
@@ -527,7 +518,9 @@ const Payment = () => {
                                         <label htmlFor="text">주소 : </label>
                                     </th>
                                     <td colSpan="">
-                                        <input type="text" id="address" name="address" value={`${selectedAddress.user_address1} ${selectedAddress.user_address2} (${selectedAddress.post_code})`} />
+                                        < input type="text" id="user_address1" name="user_address1" value={selectedAddress.user_address1} />
+                                        < input type="text" id="user_address2" name="user_address2" value={selectedAddress.user_address2} />
+                                        < input type="text" id="post_code" name="post_code" value={selectedAddress.post_code} />
                                     </td>
                                 </tr>
                             </table>
@@ -542,10 +535,10 @@ const Payment = () => {
                         <h2 className={styles.title}>주문자 정보</h2>
                         <tr>
                             <th>
-                                <label htmlFor="payment-method">결제방법</label>
+                                <label htmlFor="payment">결제방법</label>
                             </th>
                             <td>
-                                <select id="payment-method" name="payment-method">
+                                <select id="payment" name="payment">
                                     <option value="credit-card">신용카드</option>
                                     <option value="bank-transfer">계좌이체</option>
                                     <option value="tel">휴대전화</option>
@@ -602,19 +595,29 @@ const Payment = () => {
                                     <tr key={index}>
                                         <td>
                                             <h3 className={styles.name}>{i.selectedItem.item_name}</h3>
+                                            <input hidden id="item_no" name="item_no" value={i.selectedItem.item_no} />
                                         </td>
                                         <td>
-                                            <span className={styles.quantity}>수량 : {i.selectedItem.item_quantity}개</span>
+                                            <span className={styles.quantity}>
+                                                수량 : {i.selectedItem.item_quantity}개
+                                            </span>
+                                            <input hidden id="item_quantity" name="item_quantity" value={i.selectedItem.item_quantity} />
                                         </td>
                                         <td>
                                             <ul>
                                                 <li>
-                                                    <span className={styles.sale_info}>{i.selectedItem.item_discount_rate}%</span>
-                                                    <span className={styles.normal_pr}>{i.selectedItem.item_price?.toLocaleString("ko")}원</span>
-                                                    <span className={styles.present_pr}>{(
-                                                        i.selectedItem.item_price -
-                                                        (i.selectedItem.item_price * i.selectedItem.item_discount_rate) / 100
-                                                    )?.toLocaleString("ko")}원</span>
+                                                    <span className={styles.sale_info}>
+                                                        {i.selectedItem.item_discount_rate}%
+                                                    </span>
+                                                    <span className={styles.normal_pr}>
+                                                        {i.selectedItem.item_price?.toLocaleString("ko")}원
+                                                    </span>
+                                                    <span className={styles.present_pr}>
+                                                        {(i.selectedItem.item_price -
+                                                            (i.selectedItem.item_price * i.selectedItem.item_discount_rate) / 100
+                                                        )?.toLocaleString("ko")}원
+                                                    </span>
+                                                    <input hidden id="item_price" name="item_price" value={i.selectedItem.item_price - (i.selectedItem.item_price * i.selectedItem.item_discount_rate) / 100} />
                                                 </li>
                                                 <li>
                                                     <span className={styles.free_delivery}>2500원(50,000원 이상 구매시 무료)</span>
@@ -630,19 +633,23 @@ const Payment = () => {
                                 <tr>
                                     <td>
                                         <h3 className={styles.name}>{selectedItem.item_name}</h3>
+                                        <input hidden id="item_no" name="item_no" value={selectedItem.item_no} />
                                     </td>
                                     <td>
-                                        <span className={styles.quantity}>수량 : {quantity}개</span>
+                                        <span className={styles.quantity} id="item_quantity" name="item_quantity" value={quantity} >수량 : {quantity}개</span>
+                                        <input hidden id="item_quantity" name="item_quantity" value={quantity} />
                                     </td>
                                     <td>
                                         <ul>
                                             <li>
                                                 <span className={styles.sale_info}>{selectedItem.item_discount_rate}%</span>
                                                 <span className={styles.normal_pr}>{selectedItem.item_price?.toLocaleString("ko")}원</span>
-                                                <span className={styles.present_pr}>{(
-                                                    selectedItem.item_price -
-                                                    (selectedItem.item_price * selectedItem.item_discount_rate) / 100
-                                                )?.toLocaleString("ko")}원</span>
+                                                <span className={styles.present_pr}>
+                                                    {(selectedItem.item_price -
+                                                        (selectedItem.item_price * selectedItem.item_discount_rate) / 100
+                                                    )?.toLocaleString("ko")}원
+                                                </span>
+                                                <input hidden id="item_price" name="item_price" value={selectedItem.item_price - (selectedItem.item_price * selectedItem.item_discount_rate) / 100} />
                                             </li>
                                             <li>
                                                 <span className={styles.free_delivery}>2500원(50,000원 이상 구매시 무료)</span>
@@ -650,7 +657,8 @@ const Payment = () => {
                                         </ul>
                                     </td>
                                     <td className={styles.total}>
-                                            <span>{totalPrice()?.toLocaleString("ko")}원</span>
+                                        <span>{totalPrice()?.toLocaleString("ko")}원</span>
+                                        <input hidden id="total_price" name="total_price" value={(selectedItem.item_price - (selectedItem.item_price * selectedItem.item_discount_rate) / 100) * quantity} />
                                         <span>(배송비 포함금액)</span>
                                     </td>
                                 </tr>
@@ -670,9 +678,10 @@ const Payment = () => {
                                             <span className="delivery_price">
                                                 {(calculateTotalCartPrice(selectedItem) >= 50000 ? 0 : 3000)?.toLocaleString("ko")}원
                                             </span>
-                                            <span className="total_price2">
+                                            <span className="total_price2" >
                                                 {(calculateTotalCartPrice(selectedItem) >= 50000 ? calculateTotalCartPrice(selectedItem) : calculateTotalCartPrice(selectedItem) + 3000)?.toLocaleString("ko")}원
                                             </span>
+                                            <input hidden id="total_price" name="total_price" value={calculateTotalCartPrice(selectedItem) >= 50000 ? calculateTotalCartPrice(selectedItem) : calculateTotalCartPrice(selectedItem) + 3000} />
                                         </div>
                                         <div className="price_info">
                                             <ul>

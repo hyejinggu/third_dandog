@@ -32,13 +32,20 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         orderDetailRepository.deleteById(order_detail_no);
     }
     
-    @Override
-    public void updateOrderState(int order_detail_no, String order_state) {
-        OrderDetail orderDetail = orderDetailRepository.findById(order_detail_no).orElse(null);
-
-        if (orderDetail != null) {
-            orderDetail.setOrder_state(order_state);
-            orderDetailRepository.save(orderDetail);
-        }
-    }
+//    @Override
+//    public void updateOrderState(int order_detail_no, String order_state) {
+//        OrderDetail orderDetail = orderDetailRepository.findById(order_detail_no).orElse(null);
+//
+//        if (orderDetail != null) {
+//            orderDetail.setOrder_state(order_state);
+//            orderDetailRepository.save(orderDetail);
+//        }
+//    }
+    
+	@Override
+	public int save(OrderDetail entity) {
+		orderDetailRepository.save(entity);
+        return entity.getOrder_detail_no();
+	}
+	
 }
