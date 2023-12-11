@@ -17,6 +17,9 @@ function getAdminBoard() {
 
 //===========================================================
 
+
+//============================================================
+// qna 체크박스 삭제
 function select_qna(select_qna) {
 	const checkboxes
 		= document.querySelectorAll('.qna_check');

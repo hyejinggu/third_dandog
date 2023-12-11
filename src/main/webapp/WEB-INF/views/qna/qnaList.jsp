@@ -28,14 +28,7 @@
 			value="${q.qna_seq}" /></td>
 			<td>${q.qna_seq}</td>
 			<th>${q.qna_category}</th>
-			<td> <a href="/qna/qdetail?qna_seq=${q.qna_seq}">${q.qna_title}</a>
-			<%-- <c:if test="${not empty sessionScope.loginID}">
-					<a href="qdetail?qna_seq=${q.qna_seq}">${q.qna_title}</a>
-			 	 </c:if>    
-				<c:if test="${empty sessionScope.loginID}">
-					${q.qna_title}
-			 	</c:if> --%>
-			</td>
+			<td> <a href="/qna/qdetail?qna_seq=${q.qna_seq}">${q.qna_title}</a></td>
 			<td>${q.user_id}</td><td>${q.regdate}</td><td>${q.qna_view}</td><td>${q.answer_state}</td>
 		</tr>	
 		</c:forEach>
@@ -64,8 +57,6 @@
 &nbsp;<a href="qna/qnaInsert">Qna등록테스트</a>&nbsp; <!-- 테스트 후 삭제, 리액트에서 고객센터 정보받아와야함 -->
 <!-- &nbsp;<a href="qna/replyInsert">Reply등록</a>&nbsp; -->
 <!-- &nbsp;<span class="textlink" onclick="qna/replyInsert()">replyInsert</span>&nbsp; -->
-
-
 
 </body>
 </html>

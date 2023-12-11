@@ -69,13 +69,19 @@ const BoardQna = () => {
     }; // 엔터키 처리 로직
 
     // 답변 펼치기/접기 함수
-    const toggleAnswer = (index) => {
-        if (openQuestion === index) {
-            setOpenQuestion(null); // 같은 질문을 클릭하면 닫기
-        } else {
-            setOpenQuestion(index); // 다른 질문을 클릭하면 해당 질문 열기
-        }
-    }; // ... (펼치기/접기 로직)
+    // const toggleAnswer = (index) => {
+    //     if (openQuestion === index) {
+    //         setOpenQuestion(null); // 같은 질문을 클릭하면 닫기
+    //     } else {
+    //         setOpenQuestion(index); // 다른 질문을 클릭하면 해당 질문 열기
+    //     }
+    // }; // ... (펼치기/접기 로직)
+
+    const handleAnswerToggle = (index, user_id) => {
+        //alert("*** " + user_id + " , " + sessionStorage.getItem('loginId'))
+        if (sessionStorage.getItem('loginId') == 'manager' || sessionStorage.getItem('loginId') == user_id)
+        setOpenQuestion((prevIndex) => (prevIndex === index ? null : index));
+    };
 
     // 검색어 입력후 공지사항 눌렀을때 다시 초기 테이블(항목이 나오게)로 돌아가기 함수
     // const [boardArray, setBoardArray] = useState([]);
@@ -148,11 +154,17 @@ const BoardQna = () => {
                             boardArray.map((item, index) => (
                                 <React.Fragment key={item.qna_seq}>
                                     <tr className={`question_1 ${openQuestion === index ? "show-answer" : ""}`}
-                                        onClick={() => toggleAnswer(index)}>
+                                        onClick={() => handleAnswerToggle(index, item.user_id )}>
                                         <td></td>
                                         <td>{item.qna_seq}</td>
                                         <td>{item.qna_category}</td>
-                                        <td>{item.qna_title}</td>
+                                        <td>
+                                            {((sessionStorage.getItem('loginId') === item.user_id) || (sessionStorage.getItem('isAdmin') === "true")) ? (
+                                                <a href={`qdetail?qna_seq=${item.qna_seq}`}>{item.qna_title}</a>
+                                            ) : (
+                                                <span>{item.qna_title}</span>
+                                            )}
+                                        </td>
                                         <td>{item.user_id}</td>
                                         <td>{item.regdate}</td>
                                         <td>{item.qna_view}</td>
@@ -185,7 +197,7 @@ const BoardQna = () => {
                                 .map((item, index) => (
                                     <React.Fragment key={item.number}>
                                         <tr className={`question_1 ${openQuestion === index ? "show-answer" : ""}`}
-                                            onClick={() => toggleAnswer(index)}>
+                                            onClick={() => handleAnswerToggle(index)}>
                                             <td></td>
                                             <td>{item.qna_seq}</td>
                                             <td>{item.qna_category}</td>
