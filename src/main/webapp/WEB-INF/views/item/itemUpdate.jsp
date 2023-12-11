@@ -18,7 +18,7 @@
 		<h3>${requestScope.message}</h3>
 	</c:if>
 	<form action="/item/update" method="post" enctype="multipart/form-data" id="item_update_form" >
-		<table class="item_table">
+		<table class="table item_update">
 		<c:set var="i" value="${requestScope.itemDetail}" />
 		<c:if test="${not empty requestScope.itemDetail}">
 			<tr>

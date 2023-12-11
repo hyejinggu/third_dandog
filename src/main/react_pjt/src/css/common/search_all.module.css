@@ -73,7 +73,7 @@
 
 .communityResults li {
   display: grid;
-  grid-template-columns: 2fr repeat(4, 1fr);
+  grid-template-columns: 2fr repeat(3, 1fr);
 }
 
 .communityResults li span p:first-child {

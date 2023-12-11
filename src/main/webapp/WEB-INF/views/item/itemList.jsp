@@ -42,7 +42,7 @@
 	    <input type="reset" value="취소" onclick="getItemList()"/>
 	</form>
 </div>
-<table class="item_table">
+<table class="table item_list">
     <tr>
         <!-- 페이징 처리 추가 -->
         <th>
@@ -51,16 +51,15 @@
 		</th>
         <th>번호</th>
         <th>카테고리</th>
-        <th>이름</th>
+        <th class="item_name_col">이름</th>
         <th>가격</th>
         <th>사이즈</th>
         <th>컬러</th>
         <th>판매 수량</th>
         <th>할인율</th>
+        <th>등록일</th>
         <th>대표사진1</th>
         <th>대표사진2</th>
-        <th>기타 상품 사진</th>
-        <th>등록일</th>
     </tr>
     <c:if test="${not empty requestScope.itemList}">
         <c:forEach var="i" items="${requestScope.itemList}">
@@ -74,14 +73,9 @@
                 <td>${i.options_color}</td>
                 <td>${i.item_sales_volume}</td>
                 <td>${i.item_discount_rate}%</td>
+                <td>${i.regdate.year}-${i.regdate.monthValue}-${i.regdate.dayOfMonth}</td>
                 <td><img alt="itemImage1" src="/${i.item_img1}" width="50" height="70"></td>
                 <td><img alt="itemImage2" src="/${i.item_img2}" width="50" height="70"></td>
-                <td><c:forEach var="img" items="${requestScope.itemImgList}">
-                        <c:if test="${i.item_no == img.item_no}">
-                            <img alt="itemImages" src="/${img.item_img}" width="50" height="70">
-                        </c:if>
-                    </c:forEach></td>
-                <td>${i.regdate.year}-${i.regdate.monthValue}-${i.regdate.dayOfMonth}</td>
             </tr>
         </c:forEach>
     </c:if>

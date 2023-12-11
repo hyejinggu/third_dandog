@@ -15,7 +15,7 @@
 
 	<form action="/community/loungeUpload" method="post" enctype="multipart/form-data" >
 		<input type="hidden" name="user_id" value="admin" >
-		<table>
+		<table class="table">
 
 			<tr height="40">
 				<th>제목</th>

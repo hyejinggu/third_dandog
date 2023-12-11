@@ -27,7 +27,7 @@
 	</select>
 	<input name="search_value" placeholder="검색어 입력" id="n_search_value" />
 	<span onclick="searchNeighborList()">검색</span>
-	<table border="1" style="width: 100%">
+	<table class="table">
 		<tr>
 			<th>선택</th>
 			<th>번호</th>

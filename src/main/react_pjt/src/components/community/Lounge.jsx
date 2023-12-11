@@ -3,7 +3,7 @@ import styles from "../../css/subpage/community_lounge.module.css";
 import Pagination from "../item/Pagination";
 import CommunityPost from "./CommunityPost";
 import SideBar from "./SideBar";
-import React, { useReducer, useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import axios from "axios";
 export default function Lounge() {

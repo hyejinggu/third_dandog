@@ -28,6 +28,7 @@ import FindPw from "./components/login/FindPw";
 // 마이페이지
 import MyPage from "./components/mypage/MyPage";
 import UpdateProfile from "./components/mypage/UpdateProfile";
+import MyPosting from "./components/mypage/MyPosting";
 
 // 게시판
 import BoardFaq from "./components/board/BoardFaq";
@@ -68,6 +69,7 @@ function App() {
         {/* 마이페이지, 회원정보 수정 */}
         <Route path="/myPage/*" element={<MyPage />} />
         <Route path="/UpdateProfile/*" element={<UpdateProfile />} />
+        <Route path="/myposting/*" element={<MyPosting />} />
 
         {/* 로그인 */}
         <Route path="/findid/*" element={<FindId />} />

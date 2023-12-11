@@ -1,3 +1,4 @@
+import styles from "../../css/subpage/community_lounge.module.css";
 import { Link } from "react-router-dom";
 
 export default function CommunityPost({ loungeArray }) {
@@ -14,12 +15,16 @@ export default function CommunityPost({ loungeArray }) {
             <td>{loungeArray.length - index}</td>
             <td>
               <Link to="/community/loungepostdetail" state={{ post: post }}>
-                <div>
-                  <img
-                    src={`/images/community/${post.lounge_img}`}
-                    alt={`Lounge ${index + 1}`}
-                  />
-                </div>
+                {post.lounge_img ? (
+                  <div>
+                    <img
+                      src={`/images/community/${post.lounge_img}`}
+                      alt={`Lounge ${index + 1}`}
+                    />
+                  </div>
+                ) : (
+                  <div className={styles.no_image}>이미지가 없는 글입니다.</div>
+                )}
               </Link>
             </td>
             <td>

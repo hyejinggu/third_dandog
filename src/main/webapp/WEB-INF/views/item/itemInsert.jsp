@@ -14,7 +14,7 @@
 		<h3>Item Insert</h3>
 	</div>
 	<form action="/item/insert" method="post" enctype="multipart/form-data">
-		<table class="item_table">
+		<table class="table item_update">
 			<tr>
 				<th>아이템 카테고리</th>
 				<td><select name="item_category">
