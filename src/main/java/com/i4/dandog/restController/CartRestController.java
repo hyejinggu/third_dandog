@@ -94,6 +94,30 @@ public class CartRestController {
         }
     }
     
+    
+    // 장바구니 옵션 업데이트
+    @PostMapping("/updateColorSize/{loginId}/{itemNo}/{itemName}/{selectedColor}/{selectedSize}")
+    public ResponseEntity<Integer> updateColorSize(	
+    	@PathVariable String loginId,
+    	@PathVariable String itemNo,
+        @PathVariable String itemName,
+        @PathVariable String selectedColor,
+        @PathVariable String selectedSize
+    ) {
+        int originalItemNo = Integer.parseInt(itemNo);
+        log.info("**************** originalItemNo: " + originalItemNo);
+    	int itemNoToUpdate = itemService.updateOption(itemName, selectedColor, selectedSize);
+    	
+    	
+    	log.info("********************** itemNoToUpdate: " + itemNoToUpdate);
+    	cartService.updateOption(loginId, originalItemNo, itemNoToUpdate);
+
+        return ResponseEntity.ok(itemNoToUpdate);
+    }
+    
+    
+    
+    
     // 장바구니 아이템 수량 업데이트 엔드포인트
     @PostMapping("/onIncrease/{user_id}/{item_no}/{item_quantity}")
     public ResponseEntity<CartDTO> onIncrease(

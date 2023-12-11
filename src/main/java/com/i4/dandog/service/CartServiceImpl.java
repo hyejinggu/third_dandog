@@ -29,6 +29,12 @@ public class CartServiceImpl implements CartService {
     	else return null;
     }
     
+    
+    @Override
+    public void updateOption(String loginId, int originalItemNo, int itemNoToUpdate) {
+    	repository.updateOption(originalItemNo, itemNoToUpdate, loginId);
+    }
+    
     @Override
     public void save(Cart entity) {
     	repository.save(entity);
@@ -37,13 +43,13 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartDTO onIncrease(String user_id, int item_no, int item_quantity) {
         repository.onIncrease(user_id, item_no, item_quantity);
-        return new CartDTO(user_id, item_no, item_quantity, "item_img1", "item_name", 1000, 10);
+        return new CartDTO(user_id, item_no, item_quantity, "item_img1", "item_name", 10000, 10, "OneColor", "F");
     }
     
     @Override
     public CartDTO onDecrease(String user_id, int item_no, int item_quantity) {
         repository.onDecrease(user_id, item_no, item_quantity);
-        return new CartDTO(user_id, item_no, item_quantity, "item_img1", "item_name", 1000, 10);
+        return new CartDTO(user_id, item_no, item_quantity, "item_img1", "item_name", 10000, 10, "OneColor", "F");
     }
     
     @Override

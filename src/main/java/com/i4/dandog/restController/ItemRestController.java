@@ -52,7 +52,6 @@ public class ItemRestController {
 	        	itemList = service.findByOrderByRegdate(inputValue, category);
 	    }
 	    
-	    System.out.println("************" + itemList);
 	    return itemList;
 	}
 	
@@ -67,7 +66,6 @@ public class ItemRestController {
 	    result.put("Color", new ArrayList<>(new HashSet<>(colors)));
 	    result.put("Size", new ArrayList<>(new HashSet<>(sizes)));
 
-	    log.info("**********************" + result);
 	    // **********************{Color=[Black, White], Size=[S, M]}
 	    
 	    return result;

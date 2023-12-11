@@ -76,6 +76,11 @@ public class ItemServiceImpl implements ItemService {
 		else
 			return null;
 	}
+	
+	@Override
+	public int updateOption(String itemName, String selectedColor, String selectedSize) {
+		return repository.updateOption(itemName, selectedColor, selectedSize);
+	}
 
 	@Override
 	public int save(Item entity) {

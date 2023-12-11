@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 const CartItem = ({
+  key,
   selectedItem,
   onIncrease,
   onDecrease,
   totalPrice,
   handleDelete,
+  setIsChecked,
+  isChecked,
+  itemNo, // itemNo 프롭 추가
+  updateItemNo, // updateItemNo 프롭 추가
 }) => {
   const loginId = sessionStorage.getItem("loginId");
   const [colorSize, setColorSize] = useState({ Color: [], Size: [] });
   const itemName = selectedItem.item_name;
+  const [selectedColor, setSelectedColor] = useState(
+    selectedItem.options_color
+  );
+  const [selectedSize, setSelectedSize] = useState(selectedItem.options_size);
 
   // 상품 옵션 정보 가져오기
   useEffect(() => {
@@ -30,12 +40,57 @@ const CartItem = ({
     };
 
     fetchData();
-  }, []);
+  }, [selectedItem]);
+
+  // 색상 및 사이즈 선택 변경 핸들러
+  const handleOptionChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name === "colorOption") {
+      setSelectedColor(value);
+    } else if (name === "sizeOption") {
+      setSelectedSize(value);
+    }
+  };
+
+  useEffect(() => {
+    const updateColorSizeOnServer = async () => {
+      try {
+        console.log("전송 데이터:", {
+          loginId,
+          itemName,
+          selectedColor,
+          selectedSize,
+        });
+        const response = await axios.post(
+          `/restCart/updateColorSize/${loginId}/${itemNo}/${itemName}/${selectedColor}/${selectedSize}`
+        );
+        updateItemNo(response.data);
+        Navigate("/cart");
+      } catch (error) {
+        console.error("서버에 업데이트하는 동안 오류 발생:", error);
+      }
+    };
+
+    //   // 호출 전에 필요한 데이터가 존재하는지 확인
+    //   if (loginId && itemNo && itemName && selectedColor && selectedSize) {
+    updateColorSizeOnServer();
+    //   }
+  }, [selectedColor, selectedSize]);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
 
   return (
     <tr>
       <td>
-        <input type="checkbox" className="cart_check" />
+        <input
+          type="checkbox"
+          className="cart_check"
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+        />
       </td>
       <td className="first_block">
         <div>
@@ -50,11 +105,13 @@ const CartItem = ({
         <div>
           <span>사이즈</span>
           <span className="cart_opt">
-            <select name="sizeOption">
+            <select
+              name="sizeOption"
+              value={selectedSize}
+              onChange={handleOptionChange}
+            >
               {colorSize.Size.map((size, index) => (
-                <option key={index} value={size}>
-                  {size}
-                </option>
+                <option value={size}>{size}</option>
               ))}
             </select>
           </span>
@@ -62,11 +119,13 @@ const CartItem = ({
         <div>
           <span>색상</span>
           <span className="cart_opt">
-            <select name="colorOption" className="cart_opt">
+            <select
+              name="colorOption"
+              value={selectedColor}
+              onChange={handleOptionChange}
+            >
               {colorSize.Color.map((color, index) => (
-                <option key={index} value={color}>
-                  {color}
-                </option>
+                <option value={color}>{color}</option>
               ))}
             </select>
           </span>
@@ -89,7 +148,7 @@ const CartItem = ({
         </span>
       </td>
       <td className="total">{totalPrice.toLocaleString()}원</td>
-      <td>
+      <td className="xxx">
         <input type="button" onClick={handleDelete} value="X" />
       </td>
     </tr>

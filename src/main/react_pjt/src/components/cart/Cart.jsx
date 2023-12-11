@@ -10,6 +10,10 @@ const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const loginId = sessionStorage.getItem("loginId");
+  const [colorSize, setColorSize] = useState({});
+  const [checkboxStates, setCheckboxStates] = useState({});
+  const [isChecked, setIsChecked] = useState(false);
+  const [itemNos, setItemNos] = useState([]);
 
   // 장바구니 정보 가져오기
   useEffect(() => {
@@ -25,7 +29,11 @@ const Cart = () => {
             item_name: cartDTO.item_name,
             item_price: cartDTO.item_price,
             item_discount_rate: cartDTO.item_discount_rate,
+            options_color: cartDTO.options_color,
+            options_size: cartDTO.options_size,
           };
+
+          setItemNos((prevItemNos) => [...prevItemNos, cartDTO.item_no]);
 
           return { selectedItem };
         });
@@ -36,6 +44,59 @@ const Cart = () => {
         console.error("API 요청 중 오류 발생:", error);
       });
   }, [loginId]);
+
+  // const [itemNo, setItemNo] = useState(cartItems.item_no);
+  // 상품 옵션 정보 가져오기
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // cartItems 배열의 각 요소에 대해 비동기 작업 수행
+        const colorSizePromises = cartItems.map(async (item) => {
+          const colorSizeResponse = await axios.get(
+            `/item/getColorSize?item_name=${item.item_name}`
+          );
+
+          // 각 요소에 대한 colorSize를 반환
+          return {
+            item_name: item.item_name,
+            Color: colorSizeResponse.data.Color || [],
+            Size: colorSizeResponse.data.Size || [],
+          };
+        });
+
+        // 모든 비동기 작업이 완료될 때까지 기다린 후 결과를 얻음
+        const colorSizeResults = await Promise.all(colorSizePromises);
+
+        // 결과를 사용하여 colorSize를 업데이트
+        const updatedColorSize = {};
+        colorSizeResults.forEach((result) => {
+          updatedColorSize[result.item_name] = {
+            Color: result.Color,
+            Size: result.Size,
+          };
+        });
+
+        setColorSize(updatedColorSize);
+      } catch (error) {
+        console.error("데이터를 가져오는 동안 오류 발생:", error);
+      }
+    };
+
+    fetchData();
+  }, [cartItems]);
+
+  const handleCheckboxChange = () => {
+    const newCheckboxStates = {};
+    const newIsChecked = !isChecked;
+
+    // Set the new state for all checkboxes
+    for (let i = 0; i < cartItems.length; i++) {
+      newCheckboxStates[i] = newIsChecked;
+    }
+
+    setCheckboxStates(newCheckboxStates);
+    setIsChecked(newIsChecked);
+  };
 
   // 상품 삭제
   const handleDelete = (index) => {
@@ -172,7 +233,10 @@ const Cart = () => {
             <table>
               <thead>
                 <tr>
-                  <th>선택</th>
+                  <th>
+                    <input type="checkbox" onChange={handleCheckboxChange} />
+                    선택
+                  </th>
                   <th>상품 정보</th>
                   <th>옵션 정보</th>
                   <th>수량</th>
@@ -191,6 +255,23 @@ const Cart = () => {
                     onDecrease={(event) => handleDecrease(index, event)}
                     totalPrice={calculateTotalPrice(item)}
                     handleDelete={() => handleDelete(index)}
+                    colorSize={colorSize}
+                    setIsChecked={(isChecked) => {
+                      setCheckboxStates((prev) => ({
+                        ...prev,
+                        [index]: isChecked,
+                      }));
+                    }}
+                    isChecked={checkboxStates[index] || false}
+                    itemNo={itemNos[index]}
+                    updateItemNo={(newValue) => {
+                      // Update item_no in the itemNos state
+                      setItemNos((prevItemNos) => {
+                        const newItemNos = [...prevItemNos];
+                        newItemNos[index] = newValue;
+                        return newItemNos;
+                      });
+                    }}
                   />
                 ))}
               </tbody>
@@ -203,7 +284,9 @@ const Cart = () => {
             <Link
               to="/payment"
               state={{
-                selectedItem: cartItems,
+                selectedItem: cartItems.filter(
+                  (item, index) => checkboxStates[index]
+                ),
               }}
             >
               <input
