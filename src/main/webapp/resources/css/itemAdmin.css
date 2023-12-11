@@ -1,51 +1,3 @@
-/* .adminPageWrap {
-	width: 100%;
-	margin-bottom: 50px;
-}
-
-.adminPageWrap .title {
-	margin-bottom: 40px;
-}
-
-.adminPageHeader {
-	width: 100%;
-	height: 150px;
-	background-color: #fff8d0;
-	border: #ffa900 2px solid;
-	margin-bottom: 20px;
-	border-radius: 8px;
-}
-
-.adminPageHeader ul {
-	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
-	padding: 0;
-}
-
-.adminPageHeader ul>li {
-	width: 20%;
-	padding: 20px;
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	justify-content: center;
-}
-
-.adminPageHeader ul>li:hover p {
-	color: #e39400;
-	cursor: pointer;
-    text-decoration: underline;
-}
-
-.adminPageHeader ul>li p {
-	color: #ffa900;
-	font-weight: bold;
-	line-height: 30px;
-	font-size: 20px;
-} */
-
-
 
 .adminItemContainer {
 	width: 100%;
@@ -112,3 +64,25 @@
 .item_table td {
 	border: 1px solid #ffa900;
 }
+
+.pagination_wrap {
+	display: flex;
+	justify-content: center;
+}
+
+.pagination_wrap span {
+	cursor:pointer;
+	display: inline-block;
+	background-color: #fff;
+	margin: 10px;
+	text-align: center;
+}
+
+.normalPage {
+	color: #cdcdcd;
+}
+
+.currentPage {
+   font-weight: bold;
+   color:  #ffa900;;
+ }

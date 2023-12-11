@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>** Qna Detail **</title>
-
+<script src="/resources/js/board.js"></script>
 </head>
 <body>
 <h2>** Qna Detail & Reply 등록 **</h2>
@@ -33,7 +33,7 @@
 	<tr height="40"><th bgcolor="Plum">조회수</th>
 		<td>${requestScope.qnai.qna_view}</td></tr>
 	
-	<tr height="40"><th bgcolor="lime">REPLY</th>
+	<tr height="40"><th bgcolor="Orange">REPLY</th>
 		<td><textarea rows="5" cols="50" name="qna_reply">
 		${requestScope.qnai.qna_reply}
 		</textarea>
@@ -56,7 +56,7 @@
 => ${requestScope.message}
 </c:if>
 <hr>
-	<td class="textlink" onclick="qdelete('${q.qna_seq}')">삭제</td>
+	<input type="submit" value="삭제" onclick="qdelete(${requestScope.qnai.qna_seq})"/>
 	<%-- <a href="qdelete?seq=${requestScope.qnai.qna_seq}&root=${qnai.root}">글삭제</a> --%>
 	
 <hr>

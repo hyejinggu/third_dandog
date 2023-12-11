@@ -35,27 +35,27 @@ public class SearchRestController {
 //	NoticeService nService;
 
 	 // 전체 검색
-	@GetMapping("/{searchValue}")
-	public ResponseEntity<Map<String, List<? extends Object>>> deleteCartItem(@PathVariable String searchValue) {
-	    try {
-	    	log.info("searchValue: " + searchValue);
-	        List<Item> searchedItems = iService.selectList(null, null, searchValue);
-	        List<Lounge> searchedLounges = lService.findByCategoryLoungeContents(null, searchValue);
-
-	        log.info("searchedItems: " + searchedItems);
-	        log.info("searchedLounges: " + searchedLounges);
-	        
-	        Map<String, List<? extends Object>> result = new HashMap<>();
-	        result.put("items", searchedItems);
-	        result.put("lounges", searchedLounges);
-	        
-	        log.info("*******************result: " + result);
-
-	        return ResponseEntity.ok(result);
-	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-	    }
-	}
+//	@GetMapping("/{searchValue}")
+//	public ResponseEntity<Map<String, List<? extends Object>>> deleteCartItem(@PathVariable String searchValue) {
+//	    try {
+//	    	log.info("searchValue: " + searchValue);
+//	        List<Item> searchedItems = iService.findByCategoryAndItemName(null, searchValue, null);
+//	        List<Lounge> searchedLounges = lService.findByCategoryLoungeContents(null, searchValue);
+//
+//	        log.info("searchedItems: " + searchedItems);
+//	        log.info("searchedLounges: " + searchedLounges);
+//	        
+//	        Map<String, List<? extends Object>> result = new HashMap<>();
+//	        result.put("items", searchedItems);
+//	        result.put("lounges", searchedLounges);
+//	        
+//	        log.info("*******************result: " + result);
+//
+//	        return ResponseEntity.ok(result);
+//	    } catch (Exception e) {
+//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//	    }
+//	}
 
 
 

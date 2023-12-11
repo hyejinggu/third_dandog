@@ -189,6 +189,7 @@ const BoardFaq = () => {
                         <tr>
                             <th></th>
                             <th>번호</th>
+                            <th>카테고리</th>
                             <th>제목</th>
                             <th>작성자</th>
                             <th>작성일</th>
@@ -211,6 +212,7 @@ const BoardFaq = () => {
                                         onClick={() => toggleAnswer(index)}>
                                         <td></td>
                                         <td>{item.number}</td>
+                                        <td>{item.qna_category}</td>
                                         <td>{item.title}</td>
                                         <td>{item.writer}</td>
                                         <td>{item.date}</td>
@@ -219,6 +221,7 @@ const BoardFaq = () => {
                                     {openQuestion === index && (
                                         <tr className="answer">
                                             {/* tr.answer의 시작점을 tr.question_1.show-answer의 세 번째 td와 같도록 수정 */}
+                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td colSpan="4">
@@ -238,6 +241,7 @@ const BoardFaq = () => {
                                             onClick={() => toggleAnswer(index)}>
                                             <td></td>
                                             <td>{item.number}</td>
+                                            <td>{item.qna_category}</td>
                                             <td>{item.title}</td>
                                             <td>{item.writer}</td>
                                             <td>{item.date}</td>
@@ -246,6 +250,7 @@ const BoardFaq = () => {
                                         {openQuestion === index && (
                                             <tr className="answer">
                                                 {/* tr.answer의 시작점을 tr.question_1.show-answer의 세 번째 td와 같도록 수정 */}
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td colSpan="4">
@@ -265,10 +270,7 @@ const BoardFaq = () => {
                     <a href="#">2</a>
                     <a href="#">3</a>
                 </div>
-
-                <div className="button">
-                    <input type="submit" value="글쓰기" />
-                </div>
+                <br></br>
             </div>
         </main>
     );

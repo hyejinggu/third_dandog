@@ -1,19 +1,43 @@
 "use strict"
 
 
-function getItemList() {
-	let url = "/item/itemList";
+function getItemList(pageNumber) {
+	pageNumber = pageNumber || 0;
 
-	axios.get(url
-	).then(response => {
-		document.getElementById("resultArea1").innerHTML = response.data;
-	}).catch(err => {
-		alert("response 실패: " + err.message)
-	});
+    let url = `/item/itemList?page=${pageNumber}`;
 
-	document.getElementById("resultArea2").innerHTML = "";
+    axios.get(url
+    ).then(response => {
+        document.getElementById("resultArea1").innerHTML = response.data;
+    }).catch(err => {
+        alert("response 실패: " + err.message)
+    });
 
-} // getItemInsert
+    // document.getElementById("resultArea2").innerHTML = "";
+}
+
+
+
+function searchItemList(pageNumber) {
+    pageNumber = pageNumber || 0;
+
+    // 폼 데이터 가져오기
+    let searchCategory = document.getElementById("i_search_category").value;
+    let searchField = document.getElementById("i_search_field").value;
+    let searchValue = document.getElementById("i_search_value").value;
+
+    // URL에 쿼리 문자열 추가
+    let url = `/item/itemList?page=${pageNumber}&search_category=${searchCategory}&search_field=${searchField}&search_value=${searchValue}`;
+
+    axios.get(url)
+        .then(response => {
+            document.getElementById("resultArea1").innerHTML = response.data;
+        })
+        .catch(err => {
+            alert("response 실패: " + err.message);
+        });
+}
+
 
 
 function getItemInsert() {
@@ -93,29 +117,6 @@ function updateItem() {
 }
 
 
-
-
-
-function searchItemList() {
-	let url = "/item/itemList";
-
-	// 폼 데이터 가져오기
-	let searchCategory = document.getElementById("i_search_category").value;
-	let searchField = document.getElementById("i_search_field").value;
-	let searchValue = document.getElementById("i_search_value").value;
-
-
-	// URL에 쿼리 문자열 추가
-	url += `?search_category=${searchCategory}&search_field=${searchField}&search_value=${searchValue}`;
-
-	axios.get(url)
-		.then(response => {
-			document.getElementById("resultArea1").innerHTML = response.data;
-		})
-		.catch(err => {
-			alert("response 실패: " + err.message);
-		});
-}
 
 
 // ========================================================================
