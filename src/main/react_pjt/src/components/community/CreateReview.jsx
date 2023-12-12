@@ -14,7 +14,7 @@ const CreatePost = () => {
   const [postContent, setPostContent] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [starRatings, setStarRatings] = useState([1, 1, 1, 1, 1]); // 모든 별이 선택된 상태로 시작
-  const [selectedRating, setSelectedRating] = useState(0); // 기본적으로 5점 선택
+  const [selectedRating, setSelectedRating] = useState(5); // 기본적으로 5점 선택
 
   const handleStarClick = (index) => {
     const updatedRatings = starRatings.map((rating, i) => {

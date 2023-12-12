@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.i4.dandog.entity.Item;
 import com.i4.dandog.entity.Lounge;
+import com.i4.dandog.entity.NeighborhoodReview;
 import com.i4.dandog.service.ItemService;
 import com.i4.dandog.service.LoungeService;
 import com.i4.dandog.service.NeighborhoodReviewService;
@@ -53,22 +54,22 @@ public class SearchRestController {
 	}
 	
 	
-//	@GetMapping("/myposting/{user_id}")
-//	public ResponseEntity<Map<String, List<? extends Object>>> searchMyPosting(@PathVariable String user_id) {
-//	    try {
-//	    	log.info("user_id: " + user_id);
-//	        List<Lounge> searchedLounges = lService.findByCategoryLoungeContents(user_id);
-//	        List<Lounge> searchedLounges = lService.findByCategoryLoungeContents(user_id);
-//	        
-//	        Map<String, List<? extends Object>> result = new HashMap<>();
-//	        result.put("lounges", searchedLounges);
-//	        result.put("neighborhood", searchedLounges);
-//
-//	        return ResponseEntity.ok(result);
-//	    } catch (Exception e) {
-//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//	    }
-//	}
+	@GetMapping("/myposting/{user_id}")
+	public ResponseEntity<Map<String, List<? extends Object>>> searchMyPosting(@PathVariable String user_id) {
+	    try {
+	    	log.info("user_id: " + user_id);
+	        List<Lounge> searchedLounges = lService.findByCategoryUserId(null, user_id);
+	        List<NeighborhoodReview> searchedNeighbors = rService.findByCategoryUserId(null, user_id);
+	        
+	        Map<String, List<? extends Object>> result = new HashMap<>();
+	        result.put("lounges", searchedLounges);
+	        result.put("neighbors", searchedNeighbors);
+
+	        return ResponseEntity.ok(result);
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	    }
+	}
 
 
 
