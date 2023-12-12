@@ -56,7 +56,7 @@ public class MemberServiceImpl implements MemberService {
 	public String withdraw(String user_id) {
 		Optional<Member> existingMember = repository.findById(user_id);
 		if (existingMember.isPresent()) {
-			repository.deleteById(user_id);
+			repository.updateWithdraw(user_id);
 			return user_id;
 		} else {
 			return "삭제할 회원이 존재하지 않습니다.";

@@ -43,7 +43,7 @@ const UpdatePw = () => {
         sessionStorage.removeItem("loginId");
         navigate("/login");
       } else {
-        alert("비밀번호 변경 실패");
+        alert("비밀번호 변경 실패 (기존 비밀번호를 확인하세요.)");
       }
     } catch (error) {
       console.error("Error updating member details:", error);

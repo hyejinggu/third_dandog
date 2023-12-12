@@ -40,6 +40,12 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 	@Modifying 
 	@Query("update Member m set m.point = :point WHERE m.user_id = :user_id")
 	void pointUpdate(@Param("user_id") String user_id, @Param("point") int point);
+	
+	@Transactional
+	@Modifying
+	@Query("update Member m set m.withdrawal_date = current_timestamp where m.user_id = :user_id")
+	void updateWithdraw(@Param("user_id") String user_id);
+
 
 
 }

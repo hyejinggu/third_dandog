@@ -35,18 +35,12 @@ public class MemberRestController {
 	private final PasswordEncoder passwordEncoder;
 
 	 @DeleteMapping("/withdraw/{user_id}")
-	    public ResponseEntity<String> withdraw(@PathVariable String user_id, HttpServletRequest request) {
+	    public ResponseEntity<String> withdraw(@PathVariable String user_id) {
 	        try {
 	            // 삭제할 회원이 존재하는지 확인
 	            Optional<String> existingMemberId = Optional.ofNullable(memberService.withdraw(user_id));
 	            if (!existingMemberId.isPresent()) {
 	                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("회원이 존재하지 않습니다.");
-	            }
-
-	            // 세션 만료시키기
-	            HttpSession session = request.getSession(false);
-	            if (session != null) {
-	                session.invalidate();
 	            }
 
 	            // 회원 삭제

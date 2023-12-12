@@ -122,8 +122,8 @@ const UpdateProfile = () => {
         },
       });
 
-      sessionStorage.clear();
       alert("탈퇴가 완료되었습니다.");
+      sessionStorage.removeItem("loginId");
       navigate("/main");
     } catch (error) {
       console.error("회원 탈퇴 실패:", error);
