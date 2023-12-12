@@ -4,6 +4,8 @@ import React, { useState, useRef, useContext } from "react";
 //import { CreateQuestionContext } from "./Board";
 import Modal from "../common/Modal";
 import axios from "axios";
+import BoardQna from "./BoardQna";
+
 
 const CreateQuestion = () => {
     //const { addPostFromLocalStorage } = useContext(CreateQuestionContext);
@@ -84,85 +86,89 @@ const CreateQuestion = () => {
         setIsModalOpen(true);
     }
 
-    //const history = useHistory();
+        // 취소
+        const handleCancel = () => {
+        };
+    
+        //const history = useHistory();
 
-    return (
-        <div >
-            <div>
-                {isModalOpen && (
-                    <Modal
-                        isModalOpen={isModalOpen}
-                        setIsModalOpen={setIsModalOpen}
-                        modalContent={"글 작성이 완료되었습니다."}
-                        modalAfterPath={"/board/boardqna/*"}
-                    />
-                )}
-            </div>
-            <h2>** Qna_Insert **</h2>
+        return (
+            <div >
+                <div>
+                    {isModalOpen && (
+                        <Modal
+                            isModalOpen={isModalOpen}
+                            setIsModalOpen={setIsModalOpen}
+                            modalContent={"글 작성이 완료되었습니다."}
+                            modalAfterPath={"/board/boardqna/*"}
+                        />
+                    )}
+                </div>
+                <h2>** Qna_Insert **</h2>
 
-            <form id="question_form">
-                <table>
-                    <tr height="40">
-                        <th bgcolor="Violet">User_ID</th>
-                        <td>
-                            <input
-                                type="text"
-                                name="user_id"
-                                id="id"
-                                value={loginId}
-                                readOnly
-                                size="20"
-                                onChange={(e) => setUser_id(e.target.value)}
-                            />
-                        </td>
-                    </tr>
-                    <tr height="40">
-                        <th bgcolor="Violet">Qna_Category</th>
-                        <td>
-                            <select
-                                name="qna_category" id="q_board_select"
-                                value={qna_Category}
-                                onChange={(e) => setQna_Category(e.target.value)}
-                            >
-                                <option value="OP">주문/결제</option>
-                                <option value="S">배송</option>
-                                <option value="CR">취소/반품</option>
-                                <option value="EA">교환/AS</option>
-                                <option value="M">회원</option>
-                                <option value="PE">적립금/이벤트</option>
-                                <option value="E">기타</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr height="40">
-                        <th bgcolor="Violet">Title</th>
-                        <td>
-                            <input
-                                type="text"
-                                name="qna_title"
-                                id="qtitle"
-                                value={qna_title}
-                                size="50"
-                                onChange={(e) => setQna_title(e.target.value)}
-                                ref={titleRef}
-                            />
-                        </td>
-                    </tr>
-                    <tr height="60">
-                        <th bgcolor="Violet">Content</th>
-                        <td>
-                            <textarea
-                                rows="10"
-                                cols="1500"
-                                name="qna_content"
-                                id="qcontent"
-                                value={qna_content} //
-                                onChange={(e) => setQna_content(e.target.value)}
-                                ref={contentRef}
-                            ></textarea>
-                        </td>
-                    </tr>
-                    {/* <tr height="60">
+                <form id="question_form">
+                    <table>
+                        <tr height="40">
+                            <th bgcolor="Violet">User_ID</th>
+                            <td>
+                                <input
+                                    type="text"
+                                    name="user_id"
+                                    id="id"
+                                    value={loginId}
+                                    readOnly
+                                    size="20"
+                                    onChange={(e) => setUser_id(e.target.value)}
+                                />
+                            </td>
+                        </tr>
+                        <tr height="40">
+                            <th bgcolor="Violet">Qna_Category</th>
+                            <td>
+                                <select
+                                    name="qna_category" id="q_board_select"
+                                    value={qna_Category}
+                                    onChange={(e) => setQna_Category(e.target.value)}
+                                >
+                                    <option value="OP">주문/결제</option>
+                                    <option value="S">배송</option>
+                                    <option value="CR">취소/반품</option>
+                                    <option value="EA">교환/AS</option>
+                                    <option value="M">회원</option>
+                                    <option value="PE">적립금/이벤트</option>
+                                    <option value="E">기타</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr height="40">
+                            <th bgcolor="Violet">Title</th>
+                            <td>
+                                <input
+                                    type="text"
+                                    name="qna_title"
+                                    id="qtitle"
+                                    value={qna_title}
+                                    size="50"
+                                    onChange={(e) => setQna_title(e.target.value)}
+                                    ref={titleRef}
+                                />
+                            </td>
+                        </tr>
+                        <tr height="60">
+                            <th bgcolor="Violet">Content</th>
+                            <td>
+                                <textarea
+                                    rows="10"
+                                    cols="1500"
+                                    name="qna_content"
+                                    id="qcontent"
+                                    value={qna_content} //
+                                    onChange={(e) => setQna_content(e.target.value)}
+                                    ref={contentRef}
+                                ></textarea>
+                            </td>
+                        </tr>
+                        {/* <tr height="60">
                         <th bgcolor="Violet">Image</th>
                         <td>
                             <input
@@ -172,39 +178,42 @@ const CreateQuestion = () => {
                             />
                         </td>
                     </tr> */}
-                    <tr height="40">
-                        <th></th>
-                        <td>
-                            <button type="submit" onClick={handleSubmit}>
-                                등록
-                            </button>
-                            <button type="reset">
-                                취소
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-            </form>
+                        <tr height="40">
+                            <th></th>
+                            <td>
+                                <button type="submit" onClick={handleSubmit}>
+                                    등록
+                                </button>
 
-            {/* 이미지 미리보기 */}
-            {/* {qna_image && (
+                                <Link to="board/boardqna">
+                                <button type="reset" onClick={handleCancel}>
+                                    취소
+                                </button>
+                                </Link>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+                {/* 이미지 미리보기 */}
+                {/* {qna_image && (
                 <img src={qna_image} alt="Uploaded Image" width="200" />
             )} */}
 
-            <hr />
+                <hr />
 
-            {/* 메시지 출력 */}
-            {message && <div>{`=> ${message}`}</div>}
+                {/* 메시지 출력 */}
+                {message && <div>{`=> ${message}`}</div>}
 
-            <hr />
+                <hr />
 
-            {/* 이전으로 및 홈 링크 */}
-            <div>
-                <a href="javascript:history.go(-1)">이전으로</a>&nbsp;
-                <a href="/home">Home</a>
+                {/* 이전으로 및 홈 링크 */}
+                <div>
+                    <a href="javascript:history.go(-1)">이전으로</a>&nbsp;
+                    <a href="/home">Home</a>
+                </div>
             </div>
-        </div>
-    );
-};
+        );
+    };
 
 export default CreateQuestion;
