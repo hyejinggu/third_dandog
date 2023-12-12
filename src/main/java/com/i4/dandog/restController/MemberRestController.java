@@ -88,6 +88,25 @@ public class MemberRestController {
 	}
 
 
+	@PostMapping("/updatePw")
+    public ResponseEntity<Boolean> updatePassword(@RequestBody Map<String, String> passwordRequest) {
+
+        String user_id = passwordRequest.get("loginId");
+        String orgPassword = passwordRequest.get("orgPassword");
+        String newPassword = passwordRequest.get("newPassword");
+        
+        Member member = memberService.selectOne(user_id);
+       
+        if (passwordEncoder.matches(orgPassword, member.getUser_password())) {
+        	member.setUser_password(passwordEncoder.encode(newPassword));
+        	memberService.save(member);
+        } else {
+        	return ResponseEntity.ok(false);
+        }
+
+        return ResponseEntity.ok(true);
+    }
+	
 	@PostMapping("/updateRest")
 	public ResponseEntity<String> memberUpdateProfile(@RequestBody Member entity) {
 		try {
@@ -136,7 +155,6 @@ public class MemberRestController {
 			String id = request.getUser_id();
 			String password = request.getUser_password();
 
-			// 가정: username에 해당하는 Member 정보를 가져옴
 			Member member = memberService.selectOne(id);
 
 			if (member != null && passwordEncoder.matches(password, member.getUser_password())) {

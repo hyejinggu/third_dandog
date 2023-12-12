@@ -28,6 +28,7 @@ import FindPw from "./components/login/FindPw";
 // 마이페이지
 import MyPage from "./components/mypage/MyPage";
 import UpdateProfile from "./components/mypage/UpdateProfile";
+import UpdatePw from "./components/mypage/UpdatePw";
 import MyPosting from "./components/mypage/MyPosting";
 
 // 게시판
@@ -69,6 +70,7 @@ function App() {
         {/* 마이페이지, 회원정보 수정 */}
         <Route path="/myPage/*" element={<MyPage />} />
         <Route path="/UpdateProfile/*" element={<UpdateProfile />} />
+        <Route path="/updatepw/*" element={<UpdatePw />} />
         <Route path="/myposting/*" element={<MyPosting />} />
 
         {/* 로그인 */}
