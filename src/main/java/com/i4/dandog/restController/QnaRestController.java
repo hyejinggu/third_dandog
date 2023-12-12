@@ -117,8 +117,8 @@ public class QnaRestController {
 	
 	
 	//내 글 보기
-	@GetMapping("/qnaList/{loginid}")
-	   public ResponseEntity<List<Qna>> qnaList(@PathVariable("loginid") String loginid) {
+	@GetMapping("/myQuestions/{loginId}")
+	   public ResponseEntity<List<Qna>> qnaList(@PathVariable("loginId") String loginid) {
 	         // 리액트에서 넘어온 notice_code 정보 확인
 	         log.info(loginid);
 	      try {
@@ -135,6 +135,7 @@ public class QnaRestController {
 	      }
 	   }//qnaList
 
+	//@PostMapping (value="/qnaList") delete
 				
 }//class
 

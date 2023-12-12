@@ -35,6 +35,7 @@ import MyPosting from "./components/mypage/MyPosting";
 import BoardFaq from "./components/board/BoardFaq";
 import BoardQna from "./components/board/BoardQna";
 import CreateQuestion from "./components/board/CreateQuestion";
+import MyQuestion from "./components/board/MyQuestion";
 
 // 장바구니
 import EmptyItem from "./components/cart/EmptyItem";
@@ -72,7 +73,8 @@ function App() {
         <Route path="/UpdateProfile/*" element={<UpdateProfile />} />
         <Route path="/updatepw/*" element={<UpdatePw />} />
         <Route path="/myposting/*" element={<MyPosting />} />
-
+        <Route path="/myquestion/*" element={<MyQuestion />} />
+        
         {/* 로그인 */}
         <Route path="/findid/*" element={<FindId />} />
         <Route path="/findpw/*" element={<FindPw />} />
@@ -81,7 +83,8 @@ function App() {
         <Route path="/board/boardfaq/" element={<BoardFaq />} />
         <Route path="/board/boardqna/" element={<BoardQna />} />
         <Route path="/board/createquestion/" element={<CreateQuestion />} />
-
+        
+        
         {/* 회원가입 */}
         <Route path="/agree/*" element={<Agree />} />
         <Route path="/profile/*" element={<Profile />} />

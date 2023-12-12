@@ -285,8 +285,8 @@ const BoardQna = () => {
                 </div>
 
                 <div className="button">
-                    <Link to="/board/createquestion">
-                        <input type="button" value="내글보기" onClick={handleCreateQuestion} />
+                    <Link to="/myquestion">
+                        <input type="button" value="내글보기"  />
                     </Link>
                 </div>
             </div>
