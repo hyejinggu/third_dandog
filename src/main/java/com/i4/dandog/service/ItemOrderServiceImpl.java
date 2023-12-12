@@ -1,5 +1,7 @@
 package com.i4.dandog.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.i4.dandog.entity.ItemOrder;
@@ -45,4 +47,11 @@ public class ItemOrderServiceImpl implements ItemOrderService {
 		repository.save(entity);
 		return entity.getOrder_num();
 	}
+
+//	@Override
+//	public List<ItemOrder> getOrderInquiryForUser(String user_id) {
+//		List<ItemOrder> userOrders = repository.selectUserOrder(user_id);
+//
+//		return userOrders;
+//	}
 }
