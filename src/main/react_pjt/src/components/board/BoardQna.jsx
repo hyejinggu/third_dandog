@@ -18,6 +18,36 @@ const BoardQna = () => {
     const [boardArray, setBoardArray] = useState([]);
     //const boardList = boardArray;
 
+    // 카테고리별 검색시 필요
+    // useEffect(() => {
+    //     setInputValue("");
+    //     switch (qna_Category) {
+    //         case "주문/결제":
+    //             queryCategory = "OP";
+    //             break;
+    //         case "배송":
+    //             queryCategory = "S";
+    //             break;
+    //         case "취소/반품":
+    //             queryCategory = "CR";
+    //             break;
+    //         case "교환":
+    //             queryCategory = "EA";
+    //             break;
+    //         case "회원":
+    //             queryCategory = "M";
+    //             break;
+    //         case "적립금/이벤트":
+    //             queryCategory = "PE";
+    //             break;
+    //         case "기타":
+    //             queryCategory = "E";
+    //             break;
+    //     }
+
+
+    // })
+
     console.log('boardArray' + boardArray);
     useEffect(() => {
         axios
@@ -46,15 +76,17 @@ const BoardQna = () => {
       setShowInitialTable(false); // 검색 결과를 보여준 후 초기 테이블 숨기기
     }; */
 
-    // 검색 함수
+    // 검색 함수 ** 배열안에 모든 질문을 담을수없으니 
     // answer 의 JSX 내용을 문자열로 변환하기 위해서는 .props.children을 활용
     const handleSearch = (e) => {
         e.preventDefault();
         const filteredItems = boardArray.filter((item) => {
-            const answerText = typeof item.answer === 'string' ? item.answer : item.answer.props.children.join(" "); // JSX일 경우 문자열로 변환
-            return (
-                item.title.includes(searchText) || answerText.includes(searchText)
-            );
+            if (item.answer) {
+                const answerText = typeof item.answer === 'string' ? item.answer : item.answer.props.children.join(" "); // JSX일 경우 문자열로 변환
+                return 
+                item.qna_title.includes(searchText) || answerText.includes(searchText);
+            }
+            return false; 
         });
         setFilteredBoardArray(filteredItems);
         setShowInitialTable(false); // 검색 결과를 보여준 후 초기 테이블 숨기기
@@ -77,7 +109,7 @@ const BoardQna = () => {
     //     }
     // }; // ... (펼치기/접기 로직)
 
-    // 로그인한 아이디가 글쓴이와 같거나 
+    // 사용자페이지 로그인한 아이디가 글쓴이와 같거나 관리자일때만 qnaList의 질문답변이 노출되도록 설정함
     const handleAnswerToggle = (index, user_id) => {
         //alert("*** " + user_id + " , " + sessionStorage.getItem('loginId'))
         if (sessionStorage.getItem('loginId') == 'manager' || sessionStorage.getItem('loginId') == user_id)
@@ -249,6 +281,12 @@ const BoardQna = () => {
                 <div className="button">
                     <Link to="/board/createquestion">
                         <input type="button" value="글쓰기" onClick={handleCreateQuestion} />
+                    </Link>
+                </div>
+
+                <div className="button">
+                    <Link to="/board/createquestion">
+                        <input type="button" value="내글보기" onClick={handleCreateQuestion} />
                     </Link>
                 </div>
             </div>

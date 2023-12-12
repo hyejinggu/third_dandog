@@ -22,4 +22,8 @@ public interface QnaRepository extends JpaRepository<Qna, Integer>{
     @Query("update Qna q SET q.qna_reply = :reply, q.answer_state='답변완료' where q.qna_seq = :seq")
 	void replyinsert(@Param("seq") int qna_seq, @Param("reply") String qna_reply);
 	
+	@Query(nativeQuery = true,
+			value =  "select * from qna q where q.user_id = :userId")
+	public List<Qna> findAllByUserId(String userId);
+	
 }
