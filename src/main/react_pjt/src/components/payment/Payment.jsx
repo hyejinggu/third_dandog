@@ -51,7 +51,8 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
     // 기본 배송지 설정
     const handleDefualtAddress = (user_address1, user_address2, post_code) => {
         axios
-            .post(`/payment/addDefaultAddress?user_id=${sessionStorage.loginId}`, {
+            .post(`/payment/updateAddress`, {
+                user_id: sessionStorage.loginId,
                 user_address1,
                 user_address2,
                 post_code,
