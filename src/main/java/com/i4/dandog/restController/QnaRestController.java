@@ -6,8 +6,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -111,6 +114,26 @@ public class QnaRestController {
 			return "다시 등록해주세요";
 		}//try
 	}//creatQuestion
+	
+	
+	//내 글 보기
+	@GetMapping("/qnaList/{loginid}")
+	   public ResponseEntity<List<Qna>> qnaList(@PathVariable("loginid") String loginid) {
+	         // 리액트에서 넘어온 notice_code 정보 확인
+	         log.info(loginid);
+	      try {
+	    	  // QnaService에서 해당 로그인 ID로 작성한 글 목록을 조회하는 메서드를 호출
+	         List<Qna> getQnaList = qservice.findByloginId(loginid);
+	         System.out.println("** getQnaList => "+getQnaList.get(0));
+	         
+	           // 요청받은 정보에서 현재 조회수를 조회
+	         return ResponseEntity.ok(getQnaList); //getQnaList
+
+	      } catch (Exception e) {
+	         log.error("회원 문의내역 조회 중 오류 발생: " + e.toString());
+	           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	      }
+	   }//qnaList
 
 				
 }//class

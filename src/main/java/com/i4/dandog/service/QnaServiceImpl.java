@@ -23,6 +23,13 @@ public class QnaServiceImpl implements QnaService {
 	private final QnaRepository repository;
 
 	@Override
+	public List<Qna> findByloginId(String loginid) {
+		return repository.findAllByUserId(loginid);
+	}
+	
+	
+	
+	@Override
 	public void replyinsert(int qna_seq, String qna_reply) {
 		repository.replyinsert(qna_seq, qna_reply);
 	}

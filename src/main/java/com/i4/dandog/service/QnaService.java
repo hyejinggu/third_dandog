@@ -18,7 +18,7 @@ public interface QnaService {
 
 	public int qdelete(int qna_seq);
 
-	
+	public List<Qna> findByloginId(String loginid);
 	
 
 }
