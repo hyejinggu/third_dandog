@@ -36,10 +36,10 @@ import lombok.extern.log4j.Log4j2;
 public class MyPageRestController {
 	ItemOrderService ioservice;
 
-//	@GetMapping("/getorderinquiry")
-//	public ResponseEntity<List<ItemOrder>> getOrderInquiryForUser(@RequestParam String user_id) {
-//		List<ItemOrder> iorder = ioservice.getOrderInquiryForUser(user_id);
-//		return ResponseEntity.ok(iorder);
-//	}
+	@GetMapping("/getorderinquiry")
+	public ResponseEntity<List<ItemOrder>> getOrderInquiryForUser(@RequestParam String user_id) {
+		List<ItemOrder> iorder = ioservice.getOrderInquiryForUser(user_id);
+		return ResponseEntity.ok(iorder);
+	}
 	
 }

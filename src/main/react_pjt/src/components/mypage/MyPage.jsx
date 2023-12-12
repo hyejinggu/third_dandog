@@ -61,8 +61,10 @@ const MyPage = () => {
             배송조회
           </li>
           <li>
+            <Link to="/OrderInquiry">
             <img src={"/images/myPage/delete.png"} alt="" />
             주문조회
+            </Link>
           </li>
           <li>
             <Link to="/myposting">
