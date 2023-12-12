@@ -16,6 +16,6 @@ public interface ItemOrderService {
     
 int save(ItemOrder entity);
 	
-//List<ItemOrder> getOrderInquiryForUser(String user_id);
+List<ItemOrder> getOrderInquiryForUser(String user_id);
 
 }

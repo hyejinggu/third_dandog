@@ -48,10 +48,10 @@ public class ItemOrderServiceImpl implements ItemOrderService {
 		return entity.getOrder_num();
 	}
 
-//	@Override
-//	public List<ItemOrder> getOrderInquiryForUser(String user_id) {
-//		List<ItemOrder> userOrders = repository.selectUserOrder(user_id);
-//
-//		return userOrders;
-//	}
+	@Override
+	public List<ItemOrder> getOrderInquiryForUser(String user_id) {
+		List<ItemOrder> userOrders = repository.selectUserOrder(user_id);
+
+		return userOrders;
+	}
 }
