@@ -27,7 +27,7 @@
 	<input name="search_value" placeholder="검색어 입력" id="l_search_value" />
 	<span onclick="searchLoungeList()">검색</span>
 
-	<table border="1" style="width: 90%">
+	<table class="table">
 		<tr>
 			<th>선택</th>
 			<th>번호</th>

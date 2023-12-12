@@ -125,8 +125,9 @@
   border-right: 1px solid rgb(210, 210, 210);
 }
 
-.post_wrap table td {
-  height: 230px;
+.post_wrap table td .no_image {
+  color: gray;
+  font-size: 0.8em;
 }
 
 .post_wrap table tbody td img {

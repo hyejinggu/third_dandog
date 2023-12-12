@@ -14,7 +14,7 @@
 	<h2>lounge Insert</h2>
 
 	<form action="/community/eventUpload" method="post" enctype="multipart/form-data" >
-		<table>
+		<table class="table">
 
 			<tr height="40">
 				<td>이벤트 이름</td>

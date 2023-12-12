@@ -11,10 +11,21 @@
   margin: 20px;
 }
 
+.title_wrap select,
+.title_wrap input,
+.brand_star_wrap input {
+  border: none;
+  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin-right: 10px;
+  padding: 5px;
+}
+
 /* focus */
 .title_wrap select:focus,
 .title_wrap input:focus,
-.content_wrap textarea:focus {
+.content_wrap textarea:focus,
+.brand_star_wrap input:focus {
   border: 1px solid rgb(255, 169, 0);
 }
 

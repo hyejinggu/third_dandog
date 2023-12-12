@@ -40,7 +40,6 @@ const CreatePost = () => {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((response) => {
-          alert(`response.data : ${response.data}`);
           // location.reload();
         })
         .catch((err) => {
@@ -63,13 +62,18 @@ const CreatePost = () => {
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
             modalContent={"글 작성이 완료되었습니다."}
-            modalAfterPath={"/community/lounge/*"}
+            modalAfterPath={"/community/neighborhood"}
           />
         )}
       </div>
       <h2>리뷰 작성</h2>
       <div className={styles.form_wrap}>
         <form onSubmit={handleSubmit} id="review_form">
+          <input
+            type="hidden"
+            value={sessionStorage.getItem("loginId")}
+            name="user_id"
+          />
           <table>
             <tr className={styles.title_wrap}>
               <th>
@@ -100,7 +104,7 @@ const CreatePost = () => {
                 </span>
               </td>
             </tr>
-            <tr>
+            <tr className={styles.brand_star_wrap}>
               <th>
                 <label htmlFor="brand">상호명</label>
               </th>
@@ -123,6 +127,11 @@ const CreatePost = () => {
                       ★
                     </span>
                   ))}
+                  <input
+                    type="hidden"
+                    value={selectedRating}
+                    name="neighbor_rating"
+                  />
                 </div>
               </td>
             </tr>

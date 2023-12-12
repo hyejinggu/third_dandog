@@ -76,13 +76,20 @@ const ItemList = () => {
     }
   };
 
-  // const [array, dispatch] = useReducer(arrayReducer, itemList);
+  // pagination 구현
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
+  const listPerPage = 16; // 페이지 당 게시글 개수
+  const totalPages = Math.ceil(itemList.length / listPerPage); // 전체 페이지 번호
 
-  // // 페이지 이동(onClick)에 따라 보여지는 배열 바꿔주기
-  // const [page, setPage] = useState(1);
-  // const itemsPerPage = 16;
-  // const startIndex = (page - 1) * itemsPerPage;
-  // const displayedItemInfo = array.slice(startIndex, startIndex + itemsPerPage);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const getPaginatedData = () => {
+    const startIndex = (currentPage - 1) * listPerPage;
+    const endIndex = startIndex + listPerPage;
+    return itemList.slice(startIndex, endIndex);
+  };
 
   // return 시작
   return (
@@ -117,12 +124,16 @@ const ItemList = () => {
       </div>
 
       <div className={styles.item_wrap}>
-        <ItemInfo itemList={itemList} />
+        <ItemInfo itemList={getPaginatedData()} />
       </div>
       <p className={styles.item_count}>총 {itemList.length}개의 상품</p>
 
       {/* <RecentSeenItem /> */}
-      <Pagination setPage={""} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

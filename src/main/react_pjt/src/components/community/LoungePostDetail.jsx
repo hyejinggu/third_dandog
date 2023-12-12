@@ -29,7 +29,7 @@ const LoungePostDetail = () => {
   }, [post]);
 
   const handleGoBack = () => {
-    navigate(-1); // This is equivalent to history.goBack()
+    navigate("/community"); // This is equivalent to history.goBack()
   };
 
   if (!post) {
@@ -100,7 +100,12 @@ const LoungePostDetail = () => {
             <th scope="row">내용</th>
             <td colspan="3">
               <div className={styles.gridContainer}>
-                <img src={`/images/community/${post.lounge_img}`} alt="" />
+                {post.lounge_img && (
+                  <img
+                    src={`/images/community/${post.lounge_img}`}
+                    alt={`lounge image`}
+                  />
+                )}
                 <span>{post.lounge_content}</span>
               </div>
             </td>

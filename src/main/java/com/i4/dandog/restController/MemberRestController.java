@@ -35,18 +35,12 @@ public class MemberRestController {
 	private final PasswordEncoder passwordEncoder;
 
 	 @DeleteMapping("/withdraw/{user_id}")
-	    public ResponseEntity<String> withdraw(@PathVariable String user_id, HttpServletRequest request) {
+	    public ResponseEntity<String> withdraw(@PathVariable String user_id) {
 	        try {
 	            // 삭제할 회원이 존재하는지 확인
 	            Optional<String> existingMemberId = Optional.ofNullable(memberService.withdraw(user_id));
 	            if (!existingMemberId.isPresent()) {
 	                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("회원이 존재하지 않습니다.");
-	            }
-
-	            // 세션 만료시키기
-	            HttpSession session = request.getSession(false);
-	            if (session != null) {
-	                session.invalidate();
 	            }
 
 	            // 회원 삭제
@@ -88,6 +82,25 @@ public class MemberRestController {
 	}
 
 
+	@PostMapping("/updatePw")
+    public ResponseEntity<Boolean> updatePassword(@RequestBody Map<String, String> passwordRequest) {
+
+        String user_id = passwordRequest.get("loginId");
+        String orgPassword = passwordRequest.get("orgPassword");
+        String newPassword = passwordRequest.get("newPassword");
+        
+        Member member = memberService.selectOne(user_id);
+       
+        if (passwordEncoder.matches(orgPassword, member.getUser_password())) {
+        	member.setUser_password(passwordEncoder.encode(newPassword));
+        	memberService.save(member);
+        } else {
+        	return ResponseEntity.ok(false);
+        }
+
+        return ResponseEntity.ok(true);
+    }
+	
 	@PostMapping("/updateRest")
 	public ResponseEntity<String> memberUpdateProfile(@RequestBody Member entity) {
 		try {
@@ -136,7 +149,6 @@ public class MemberRestController {
 			String id = request.getUser_id();
 			String password = request.getUser_password();
 
-			// 가정: username에 해당하는 Member 정보를 가져옴
 			Member member = memberService.selectOne(id);
 
 			if (member != null && passwordEncoder.matches(password, member.getUser_password())) {

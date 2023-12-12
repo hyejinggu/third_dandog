@@ -94,3 +94,24 @@
 	border-bottom: 3px solid #ffa900;
 	line-height: 50px;
 }
+
+
+
+.table {
+	border-collapse: collapse;
+	border: 2px solid #ffa900;
+	background-color: #fff;
+	border-radius: 5px;
+	margin-bottom: 15px;
+	width: 80%;
+}
+
+.table th {
+	background-color: #fff8d0;
+	border: 1px solid #ffa900;
+}
+
+.table td {
+	text-align: center;
+	border: 1px solid #ffa900;
+}

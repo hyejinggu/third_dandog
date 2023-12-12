@@ -32,7 +32,7 @@
 		<input type="submit" value="검색" onclick="searchEventList()" />
 	</div>
 
-	<table border="1" style="width: 90%">
+	<table class="table">
 		<tr>
 			<th>선택</th>
 			<th>번호</th>
