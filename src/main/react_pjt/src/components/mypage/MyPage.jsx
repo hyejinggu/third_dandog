@@ -78,12 +78,16 @@ const MyPage = () => {
           </li>
 
           <li>
+            <Link to="/board/createquestion">
             <img src={"/images/myPage/question.png"} alt="" />
-            1:1 문의하기
+              1:1 문의하기
+            </Link>
           </li>
           <li>
+            <Link to="/myquestion">
             <img src={"/images/myPage/answer.png"} alt="" />
-            1:1 답변확인
+              1:1 답변확인
+            </Link>
           </li>
         </ul>
       </div>
