@@ -53,6 +53,9 @@ const BoardQna = () => {
         axios
             .post("/qnar/qnaList")
             .then((res) => {
+                // 게시글을 qna_seq 기준으로 오름차순 정렬
+                //const sortedBoardArray = res.data.sort((a, b) => a.qna_seq - b.qna_seq);
+                //setBoardArray(sortedBoardArray);
                 setBoardArray(res.data);
                 console.log('res.data : ' + res.data);
             })
