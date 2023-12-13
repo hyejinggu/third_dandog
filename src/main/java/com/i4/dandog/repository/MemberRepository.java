@@ -31,8 +31,23 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 //            + ":searchField = 'user_id' and m.user_id = :searchValue)")
 //    List<Member> searchMembers(@Param("searchField") String searchField, @Param("searchValue") String searchValue);
 
+	
+	// 아이디 찾기
+	@Query("select user_id from Member where user_name = :user_name and user_phonenum = :user_phone "
+			+ "and user_birthday = :user_birth")
+	String findUserId(@Param("user_name") String user_name, @Param("user_phone") String user_phone,
+			@Param("user_birth") String user_birth);
 
-
+	// 비밀번호 찾기
+	@Query("select user_email from Member where user_id = :userId and user_email = :userEmail "
+			+ "and user_birthday = :userBirth")
+	String findUserEmail(@Param("userId") String userId, @Param("userEmail") String userEmail,
+			@Param("userBirth") String userBirth);
+	
+	
+	
+	// =======================================================================
+	
 	@Query("SELECT m FROM Member m WHERE m.user_id = :user_id")
 	List<Member> findByUser_id(@Param("user_id") String user_id);
 	

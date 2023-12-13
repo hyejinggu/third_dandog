@@ -5,6 +5,8 @@ import "../../css/join/join.css";
 const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [mailAddress, setMailAddress] = useState("");
+  const [mailDomain, setMailDomain] = useState("");
 
   const [required_check, setRequired_check] = useState(true);
 
@@ -14,13 +16,15 @@ const Profile = () => {
     user_month: "01",
     user_day: "01",
     user_phonenum: "",
-    user_email: "",
+    user_email_address: "",
+    user_email_domain: "",
   });
 
   const [errors, setErrors] = useState({
     user_name: "",
     user_phonenum: "",
-    user_email: "",
+    user_email_address: "",
+    user_email_domain: "",
   });
 
   const handleChange = (e) => {
@@ -37,7 +41,6 @@ const Profile = () => {
         [name]: value,
       }));
     }
-
     validateField(name, value);
   };
 
@@ -51,7 +54,7 @@ const Profile = () => {
         user_name: formValue.user_name,
         user_birthday: `${formValue.user_year}${formValue.user_month}${formValue.user_day}`,
         user_phonenum: formValue.user_phonenum,
-        user_email: `${formValue.user_email}`,
+        user_email: `${formValue.user_email_address}@${formValue.user_email_domain}`,
       };
 
       console.log("데이터 배열:", dataToSend);
@@ -82,12 +85,15 @@ const Profile = () => {
         newErrors.user_phonenum = !value
           ? "핸드폰 번호를 입력해주세요."
           : value.length < 10 || value.length > 11
-            ? "휴대폰 번호를 정확히 입력해주세요."
-            : "";
+          ? "휴대폰 번호를 정확히 입력해주세요."
+          : "";
         break;
 
-      case "user_email":
-        newErrors.user_email = !value ? "이메일을 입력해주세요." : "";
+      case "user_email_address":
+        newErrors.user_email_address = !value ? "이메일을 입력해주세요." : "";
+        break;
+      case "user_email_domain":
+        newErrors.user_email_domain = !value ? "이메일을 입력해주세요." : "";
         break;
 
       default:
@@ -102,14 +108,16 @@ const Profile = () => {
 
     validateField("user_name", formValue.user_name);
     validateField("user_phonenum", formValue.user_phonenum);
-    validateField("user_email", formValue.user_email);
+    validateField("user_email_address", formValue.user_email_address);
+    validateField("user_email_domain", formValue.user_email_domain);
 
     setErrors(newErrors);
 
     return (
       formValue.user_name !== "" &&
       formValue.user_phonenum !== "" &&
-      formValue.user_email !== "" &&
+      formValue.user_email_address !== "" &&
+      formValue.user_email_domain !== "" &&
       Object.values(newErrors).every((error) => error === "")
     );
   };
@@ -285,7 +293,6 @@ const Profile = () => {
                   onChange={handleChange}
                   value={formValue.user_day}
                 >
-
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -342,19 +349,51 @@ const Profile = () => {
             </tr>
             <tr>
               <th>
-                <label htmlFor="user_email" className="required">이메일 주소</label>
+                <label htmlFor="user_email" className="required">
+                  이메일 주소
+                </label>
               </th>
-              <td >
+              <td>
                 <input
                   type="email"
-                  name="user_email"
-                  id="user_email"
-                  className="user_email" value={formValue.user_email}
+                  name="user_email_address"
+                  id="user_email_address"
+                  className="user_email"
+                  value={formValue.user_email_address}
                   onChange={handleChange}
                 />
+                <span>&nbsp;@&nbsp;</span>
+                <input
+                  type="email"
+                  name="user_email_domain"
+                  id="user_email_domain"
+                  className="user_email"
+                  value={formValue.user_email_domain}
+                  onChange={handleChange}
+                />
+                <select
+                  value={formValue.user_email_domain}
+                  onChange={(e) =>
+                    handleChange({
+                      target: {
+                        name: "user_email_domain",
+                        value: e.target.value,
+                      },
+                    })
+                  }
+                >
+                  <option value="">직접 입력</option>
+                  <option value="naver.com">naver.com</option>
+                  <option value="google.com">google.com</option>
+                  <option value="daum.com">daum.com</option>
+                  <option value="nate.com">nate.com</option>
+                </select>
               </td>
-              {errors.user_email && (
-                <div className="error">{errors.user_email}</div>
+              {errors.user_email_address && (
+                <div className="error">{errors.user_email_address}</div>
+              )}
+              {errors.user_email_domain && (
+                <div className="error">{errors.user_email_domain}</div>
               )}
             </tr>
           </tbody>

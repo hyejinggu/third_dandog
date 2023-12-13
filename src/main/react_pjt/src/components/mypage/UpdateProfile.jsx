@@ -6,9 +6,11 @@ import "../../css/join/join.css";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
 const UpdateProfile = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [memberData, setMemberData] = useState({});
-  const navigate = useNavigate();
+  const loginId = sessionStorage.getItem("loginId");
   const [formValue, setFormValue] = useState({
     user_id: "",
     user_name: "",
@@ -22,9 +24,6 @@ const UpdateProfile = () => {
     ani_type: "",
     ani_info: "",
   });
-
-  const loginId = sessionStorage.getItem("loginId");
-  const location = useLocation();
 
   useEffect(() => {
     const fetchMemberDetails = async () => {
@@ -112,9 +111,6 @@ const UpdateProfile = () => {
   const handleWithdraw = async (e) => {
     e.preventDefault();
     try {
-      // 세션 스토리지에서 로그인한 사용자의 아이디를 가져옴
-      const loginId = sessionStorage.getItem("loginId");
-
       // 서버의 회원 탈퇴 엔드포인트로 DELETE 요청을 보냄
       const response = await axios.delete(`/member/withdraw/${loginId}`, {
         headers: {

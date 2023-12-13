@@ -3,14 +3,8 @@ package com.i4.dandog.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
-import com.i4.dandog.entity.Item;
 import com.i4.dandog.entity.Member;
 import com.i4.dandog.repository.MemberRepository;
 
@@ -21,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepository repository;
+	
 
 	// ** id 중복확인
 	@Override
@@ -74,7 +69,20 @@ public class MemberServiceImpl implements MemberService {
 	public void processData(Member member) {
 		repository.save(member);
 	}
+	
+	// ** 아이디 찾기
+	@Override
+	public String findUserId(String user_name, String user_phone, String user_birth) {
+		return repository.findUserId(user_name, user_phone, user_birth);
+	}
 
+	// ** 비밀번호 찾기
+	@Override
+	public String findUserEmail(String userId, String userEmail, String userBirth) {
+		return repository.findUserEmail(userId, userEmail, userBirth);
+	}
+	
+	//==========================================================================
 	// ** 관리자 delete
 	@Override
 	public String deleteById(String user_id) {

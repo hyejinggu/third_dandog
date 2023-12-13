@@ -1,15 +1,12 @@
 package com.i4.dandog.restController;
 
+import java.security.SecureRandom;
 import java.util.Map;
 import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.i4.dandog.entity.Member;
+import com.i4.dandog.service.EmailService;
 import com.i4.dandog.service.MemberService;
 
 import lombok.AllArgsConstructor;
@@ -33,6 +31,7 @@ public class MemberRestController {
 
 	private final MemberService memberService;
 	private final PasswordEncoder passwordEncoder;
+	private final EmailService mailService;
 
 	 @DeleteMapping("/withdraw/{user_id}")
 	    public ResponseEntity<String> withdraw(@PathVariable String user_id) {
@@ -165,5 +164,72 @@ public class MemberRestController {
 			return "Error processing data";
 		}
 	}
+	
+	@PostMapping("/findid")
+	public String findId(@RequestBody Map<String, String> findIdRequest) {
+		try {
+			String user_name = findIdRequest.get("userName");
+			String user_phone = findIdRequest.get("userPhone");
+			String user_birth = findIdRequest.get("userBirth");
+			
+			String user_id = memberService.findUserId(user_name, user_phone, user_birth);
+			
+			return user_id;
+			
+		} catch (Exception e) {
+			log.error("Error processing data", e);
+			// 실패한 응답
+			return "Error processing data";
+		}
+	}
+	
+	
+	@PostMapping("/findpw")
+	public String findPw(@RequestBody Map<String, String> findIdRequest) {
+		try {
+			String userId = findIdRequest.get("userId");
+			String mailAddress = findIdRequest.get("mailAddress");
+			String mailDomain = findIdRequest.get("mailDomain");
+			String userBirth = findIdRequest.get("userBirth");
+			
+			String userEmail = mailAddress + "@" + mailDomain;
+			log.info("+++++++++++++++++++userEmail: " + userEmail);
+			userEmail = memberService.findUserEmail(userId, userEmail, userBirth);
+			if (userEmail != null) {
+				String randomPw = generateTempKey(8);
+				log.info("*********임시 비밀번호!: " + randomPw);
+				// 생성한 임시 비밀번호를 암호화하여 저장
+				Member member = memberService.selectOne(userId);
+			    member.setUser_password(passwordEncoder.encode(randomPw));
+		        memberService.save(member);
+				
+				
+				// 메일 발송 서비스 실행
+				mailService.sendMail(userEmail, userId, randomPw);
+				return "임시 비밀번호를 보냈습니다.";
+			} else {
+				return "이메일을 다시 확인해주세요.";
+			}
+			
+		} catch (Exception e) {
+			log.error("Error processing data", e);
+			// 실패한 응답
+			return "Error processing data";
+		}
+	}
+	
+    public static String generateTempKey(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder tempKey = new StringBuilder();
+
+        SecureRandom random = new SecureRandom();
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            tempKey.append(characters.charAt(index));
+        }
+
+        return tempKey.toString();
+    }
+	
 
 }
