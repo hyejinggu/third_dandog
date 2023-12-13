@@ -66,7 +66,7 @@ public class ItemRestController {
 	    result.put("Color", new ArrayList<>(new HashSet<>(colors)));
 	    result.put("Size", new ArrayList<>(new HashSet<>(sizes)));
 
-	    // **********************{Color=[Black, White], Size=[S, M]}
+	    // **********{Color=[Black, White], Size=[S, M]}
 	    
 	    return result;
 	}
