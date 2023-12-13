@@ -34,7 +34,7 @@ public class EmailServiceImpl implements EmailService {
                     "<br/>비밀번호 찾기를 통한 임시 비밀번호입니다." +
                     "<br/>임시비밀번호 :   <h2>" + randomPw + "</h2>" +
                     "<br/>로그인 후 비밀번호 변경을 해주세요." +
-                    "<a href='http://localhost:3000/login'>로그인 페이지</a>";
+                    "<br/><a href='http://localhost:3000/login'>로그인 페이지 바로가기</a>";
 
             helper.setText(htmlContent, true);
 

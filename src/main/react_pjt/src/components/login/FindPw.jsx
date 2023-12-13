@@ -32,8 +32,6 @@ const FindPw = () => {
       })
       .then((response) => {
         alert(response.data);
-        // setUserId(response.data);
-        // setIsModalOpen(true);
       });
   }
 

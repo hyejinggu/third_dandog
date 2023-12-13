@@ -193,11 +193,9 @@ public class MemberRestController {
 			String userBirth = findIdRequest.get("userBirth");
 			
 			String userEmail = mailAddress + "@" + mailDomain;
-			log.info("+++++++++++++++++++userEmail: " + userEmail);
 			userEmail = memberService.findUserEmail(userId, userEmail, userBirth);
 			if (userEmail != null) {
 				String randomPw = generateTempKey(8);
-				log.info("*********임시 비밀번호!: " + randomPw);
 				// 생성한 임시 비밀번호를 암호화하여 저장
 				Member member = memberService.selectOne(userId);
 			    member.setUser_password(passwordEncoder.encode(randomPw));
@@ -206,7 +204,7 @@ public class MemberRestController {
 				
 				// 메일 발송 서비스 실행
 				mailService.sendMail(userEmail, userId, randomPw);
-				return "임시 비밀번호를 보냈습니다.";
+				return userEmail + "로 임시 비밀번호를 보냈습니다.";
 			} else {
 				return "이메일을 다시 확인해주세요.";
 			}
