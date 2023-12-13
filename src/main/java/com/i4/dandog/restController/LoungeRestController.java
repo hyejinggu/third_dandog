@@ -34,10 +34,7 @@ public class LoungeRestController {
 	public List<Lounge> loungeList(@RequestParam(name = "category") String category, 
 			@RequestParam(name = "sort") String sort,
 			@RequestParam(name = "filterValue") String filterValue,
-			@RequestParam(name = "inputValue") String inputValue
-			) {
-//		List<Lounge> loungeList; 
-//		loungeList = service.findByDynamicQuery(category, inputValue, filterValue, sort);
+			@RequestParam(name = "inputValue") String inputValue ) {
 	    
 	    return service.findByDynamicQuery(category, inputValue, filterValue, sort);
 	}

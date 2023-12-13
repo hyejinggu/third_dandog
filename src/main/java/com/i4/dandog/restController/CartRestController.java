@@ -105,11 +105,9 @@ public class CartRestController {
         @PathVariable String selectedSize
     ) {
         int originalItemNo = Integer.parseInt(itemNo);
-        log.info("**************** originalItemNo: " + originalItemNo);
+        
     	int itemNoToUpdate = itemService.updateOption(itemName, selectedColor, selectedSize);
-    	
-    	
-    	log.info("********************** itemNoToUpdate: " + itemNoToUpdate);
+    
     	cartService.updateOption(loginId, originalItemNo, itemNoToUpdate);
 
         return ResponseEntity.ok(itemNoToUpdate);
