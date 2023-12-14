@@ -14,8 +14,8 @@ public interface NeighborhoodReviewService {
 	// 정렬, 필터
 //	List<String> sortAndFilterWithCategory(String sorting, 
 //			String filter, String neighbor_category);
-	List<NeighborhoodReview> starFilterWithCategory(double filter, String category);
-	List<NeighborhoodReview> sortWithCategory(String sorting, String category);
+	List<String> starFilterWithCategory(double filter, String category);
+	List<String> sortWithCategory(String sorting, String category);
 	
 	
 	

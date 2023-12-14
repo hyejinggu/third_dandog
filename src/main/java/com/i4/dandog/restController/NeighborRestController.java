@@ -46,12 +46,12 @@ public class NeighborRestController {
 	
 	
 	@GetMapping("/review")
-	public List<NeighborhoodReview> sortAndFilterWithCategory(
+	public List<String> sortAndFilterWithCategory(
 			@RequestParam(name = "sorting") String sorting,
 			@RequestParam(name = "filter") String filter_,
 			@RequestParam(name = "category") String category) {
 
-		List<NeighborhoodReview> reviews;		
+		List<String> reviews;		
 		
 		log.info("+++++++++++sorting: " + sorting);
 		
@@ -64,7 +64,7 @@ public class NeighborRestController {
 			reviews = nservice.sortWithCategory(sorting, category);
 		}
 		
-
+		log.info("review!!!!!!!!!!!!!!!!!!!!!!: " + reviews);
 		return reviews;
 	}
 

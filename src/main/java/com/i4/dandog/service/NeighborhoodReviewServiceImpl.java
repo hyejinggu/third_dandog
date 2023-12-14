@@ -42,12 +42,12 @@ public class NeighborhoodReviewServiceImpl implements NeighborhoodReviewService 
 //		return customRepository.sortAndFilterWithCategory(sorting, filter, neighbor_category);
 //	}
 	@Override
-	public List<NeighborhoodReview> starFilterWithCategory(double filter, String category) {
+	public List<String> starFilterWithCategory(double filter, String category) {
 		return customRepository.starFilterWithCategory(filter, category);
 	}
 	
 	@Override
-	public List<NeighborhoodReview> sortWithCategory(String sorting, String category) {
+	public List<String> sortWithCategory(String sorting, String category) {
 		return customRepository.sortWithCategory(sorting, category);
 	}
 	

@@ -25,13 +25,9 @@ public class RepositoryCustomImpl implements RepositoryCustom {
 		this.entityManager = entityManager;
 	}
 
-
-
-
-	// =====================================================
 	
 	@Override
-    public List<NeighborhoodReview> starFilterWithCategory(double filter, String category) {
+    public List<String> starFilterWithCategory(double filter, String category) {
         if (filter == 0.0) {
             // If filter is 0.0, return all results
             return getAllReviewsByCategory(category);
@@ -42,7 +38,7 @@ public class RepositoryCustomImpl implements RepositoryCustom {
     }
 
     @Override
-    public List<NeighborhoodReview> sortWithCategory(String sorting, String category) {
+    public List<String> sortWithCategory(String sorting, String category) {
         // Implement your sorting logic here and return the result
         return getReviewsSortedByCategory(sorting, category);
     }
@@ -50,27 +46,29 @@ public class RepositoryCustomImpl implements RepositoryCustom {
     
     // ========= 함수 ============
     
-    private List<NeighborhoodReview> getAllReviewsByCategory(String category) {
-        String jpql = "SELECT r FROM NeighborhoodReview r WHERE r.neighbor_category = :category";
+    private List<String> getAllReviewsByCategory(String category) {
+        String jpql = "SELECT r.neighbor_brand_name FROM NeighborhoodReview r WHERE r.neighbor_category = :category"
+        		+ " GROUP BY r.neighbor_brand_name";
         Query query = entityManager.createQuery(jpql, NeighborhoodReview.class); // 여기서 반환 타입 명시
         query.setParameter("category", category);
         return query.getResultList();
     }
 
-    private List<NeighborhoodReview> getReviewsByCategoryWithMinimumRating(String category, double filter) {
-        String jpql = "SELECT r FROM NeighborhoodReview r WHERE r.neighbor_category = :category GROUP BY r.neighbor_brand_name HAVING AVG(r.neighbor_rating) >= :filter";
+    private List<String> getReviewsByCategoryWithMinimumRating(String category, double filter) {
+        String jpql = "SELECT r.neighbor_brand_name, AVG(r.neighbor_rating) as rating FROM NeighborhoodReview r WHERE r.neighbor_category = :category "
+        		+ "GROUP BY r.neighbor_brand_name HAVING AVG(r.neighbor_rating) >= :filter";
         Query query = entityManager.createQuery(jpql, NeighborhoodReview.class); // 여기서 반환 타입 명시
         query.setParameter("category", category);
         query.setParameter("filter", filter);
         return query.getResultList();
     }
 
-    private List<NeighborhoodReview> getReviewsSortedByCategory(String sorting, String category) {
-        String jpql = "SELECT r, COUNT(rr) " +
+    private List<String> getReviewsSortedByCategory(String sorting, String category) {
+        String jpql = "SELECT r.neighbor_brand_name, COUNT(rr) as count " +
                       "FROM NeighborhoodReview r " +
                       "LEFT JOIN NeighborhoodReview rr ON rr.neighbor_brand_name = r.neighbor_brand_name " +
                       "WHERE r.neighbor_category = :category " +
-                      "GROUP BY r " +
+                      "GROUP BY r.neighbor_brand_name " +
                       "ORDER BY ";
 
         switch (sorting) {
@@ -91,9 +89,9 @@ public class RepositoryCustomImpl implements RepositoryCustom {
 
         List<Object[]> resultList = query.getResultList();
 
-        // Convert the result to List<NeighborhoodReview>
+        // Convert the result to List<String>
         return resultList.stream()
-                .map(result -> (NeighborhoodReview) result[0])
+                .map(result -> (String) result[0])
                 .collect(Collectors.toList());
     }
     
