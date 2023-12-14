@@ -12,10 +12,18 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [loginId, setLoginId] = useState("");
+  const [rememberId, setRememberId] = useState(false); // 추가된 부분
 
   function handleLogin(e) {
     e.preventDefault();
+
+    // 만약 rememberId가 true인 경우, userId를 localStorage에 저장
+    if (rememberId) {
+      localStorage.setItem("rememberedUserId", userId);
+    } else {
+      localStorage.removeItem("rememberedUserId");
+    }
+
     const url = "/member/login";
     const data = {
       user_id: userId,
@@ -43,6 +51,20 @@ const Login = () => {
         setErrorMessage("로그인 중 오류가 발생했습니다.");
       });
   }
+
+  // 체크박스 변경을 처리하는 함수
+  const handleCheckboxChange = (e) => {
+    setRememberId(e.target.checked);
+  };
+
+  // 컴포넌트가 마운트될 때 localStorage에서 rememberedUserId를 불러오기
+  useEffect(() => {
+    const rememberedUserId = localStorage.getItem("rememberedUserId");
+    if (rememberedUserId) {
+      setUserId(rememberedUserId);
+      setRememberId(true);
+    }
+  }, []);
 
   return (
     <main className="login">
@@ -81,7 +103,14 @@ const Login = () => {
           {errorMessage && <p className="error_message">{errorMessage}</p>}
 
           <div className="saveId">
-            <input type="checkbox" name="idsave" value="idsave" />
+            <input
+              type="checkbox"
+              id="idsave"
+              name="idsave"
+              value="idsave"
+              checked={rememberId}
+              onChange={handleCheckboxChange}
+            />
             <label htmlFor="idsave" name="idsave" id="idsave">
               아이디 저장
             </label>

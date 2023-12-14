@@ -30,12 +30,20 @@ public interface MemberService {
 
 	// ** id 중복체크
 	boolean isIdDuplicate(String user_id);
-
+	
+	// 아이디 찾기
+	String findUserId(String user_name, String user_phone, String user_birth);
+	
+	// 비밀번호 찾기
+	String findUserEmail(String userId, String userEmail, String userBirth);
+	
+	
+	// ==================================================================
+	
 	// ** 관리자 delete
 	String deleteById(String user_id);
 
 	// ** 관리자 Search
-//	List<Member> searchMembers(String searchField, String searchValue);
 	List<Member> searchMembersId(String searchValue);
 	List<Member> searchMembersName(String searchValue);
 

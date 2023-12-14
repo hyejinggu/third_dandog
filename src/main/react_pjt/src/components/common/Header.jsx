@@ -20,13 +20,21 @@ const Header = () => {
   };
 
   useEffect(() => {
-    if (sessionStorage.getItem("loginId") != null) {
+    const loginId = sessionStorage.getItem("loginId");
+    if (loginId != null) {
       setLogin("로그아웃");
-      if (sessionStorage.getItem("loginId") == "manager") {
+      if (loginId == "manager") {
         setJoin("관리자 페이지");
       } else {
         setJoin("마이페이지");
       }
+    }
+  });
+
+  useEffect(() => {
+    if (sessionStorage.getItem("loginId") == null) {
+      setLogin("로그인");
+      setJoin("회원가입");
     }
   });
 
@@ -95,7 +103,10 @@ const Header = () => {
             )}
           </li>
           <li>
-            <Link to={login === "로그인" ? "/login" : "/cart"} onClick={handleCartLinkClick}>
+            <Link
+              to={login === "로그인" ? "/login" : "/cart"}
+              onClick={handleCartLinkClick}
+            >
               <img src="/images/header/cart_img.png" alt="" />
               장바구니
             </Link>

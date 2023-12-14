@@ -84,6 +84,10 @@
   float: left;
 }
 
+.login .login_container .login_box .saveId input {
+  margin-right: 5px;
+}
+
 .login .login_container .login_box .idpwfind li {
   color: #b0a1a1;
 }
