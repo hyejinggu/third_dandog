@@ -21,6 +21,16 @@ import lombok.extern.log4j.Log4j2;
 public class QnaServiceImpl implements QnaService {
 	
 	private final QnaRepository repository;
+	
+	@Override
+	public List<Qna> selectsearchAllList(String searchText) {
+		return repository.selectsearchAllList(searchText);
+	}
+	
+	@Override
+	public List<Qna> selectsearchList(String selectedQna_category, String searchText) {
+		return repository.selectsearchList(selectedQna_category, searchText);
+	}
 
 	@Override
 	public List<Qna> findByloginId(String loginid) {

@@ -33,7 +33,18 @@ public class QnaRestController {
 
 	QnaService qservice;
 	
-	// ** QnaList
+	// ** QnaSearchList
+	@GetMapping (value="/qnasearchList/{selectedQna_category}/{searchText}")
+	public List<Qna> qnasearchList(@PathVariable("selectedQna_category") String selectedQna_category,
+			@PathVariable("searchText") String searchText) {
+		System.out.println("** qnasearchList => "+ selectedQna_category + searchText);
+		if(selectedQna_category.equals("ALL"))
+			return qservice.selectsearchAllList(searchText);
+		else
+		return qservice.selectsearchList(selectedQna_category,searchText);
+	}
+	
+	// ** QnaList //select는 getMapping 으로 만들기
 	@PostMapping (value="/qnaList")
 	public List<Qna> qnalist(Model model) {
 		System.out.println("** QnaList **");

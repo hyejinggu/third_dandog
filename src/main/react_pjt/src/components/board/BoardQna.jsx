@@ -6,6 +6,7 @@ import axios from "axios";
 
 // 게시판 글 목록 배열
 const BoardQna = () => {
+    const [selectedQna_category, setSelectedQna_category] = useState("ALL");
     const [openQuestion, setOpenQuestion] = useState(null); // 선택된 질문의 인덱스를 저장
     const [searchText, setSearchText] = useState(""); // 검색어를 위한 새 상태
     const [filteredBoardArray, setFilteredBoardArray] = useState([]);
@@ -44,8 +45,6 @@ const BoardQna = () => {
     //             queryCategory = "E";
     //             break;
     //     }
-
-
     // })
 
     console.log('boardArray' + boardArray);
@@ -55,7 +54,9 @@ const BoardQna = () => {
             .then((res) => {
                 // 게시글을 qna_seq 기준으로 오름차순 정렬
                 const sortedBoardArray = res.data.sort((a, b) => b.qna_seq - a.qna_seq);
-                setBoardArray(sortedBoardArray);
+                setFilteredBoardArray(sortedBoardArray);
+                setShowInitialTable(false);
+                //setSearchText("");
                 //setBoardArray(res.data);
                 console.log('res.data : ' + res.data);
             })
@@ -83,17 +84,45 @@ const BoardQna = () => {
     // answer 의 JSX 내용을 문자열로 변환하기 위해서는 .props.children을 활용
     const handleSearch = (e) => {
         e.preventDefault();
-        const filteredItems = boardArray.filter((item) => {
-            if (item.answer) {
-                const answerText = typeof item.answer === 'string' ? item.answer : item.answer.props.children.join(" "); // JSX일 경우 문자열로 변환
-                return 
-                item.qna_title.includes(searchText) || answerText.includes(searchText);
-            }
-            return false; 
-        });
-        setFilteredBoardArray(filteredItems);
+
+        // const selectedCategory = selectedQna_category;
+
+        // 서버에서 검색조건(qna_category, search)에 해당하는 목록 가져오기
+
+        const filterRequest = {
+            qna_category: selectedQna_category,
+            searchText: searchText,
+        };
+
+
+        alert(`category=${selectedQna_category}, searchText=${searchText}`);
+        axios
+            .get(`/qnar/qnasearchList/${selectedQna_category}/${searchText}`)
+            .then((res) => {
+                // 게시글을 qna_seq 기준으로 내림차순 정렬
+                const sortedBoardArray = res.data.sort((a, b) => b.qna_seq - a.qna_seq);
+                setFilteredBoardArray(sortedBoardArray);
+                setShowInitialTable(false);
+                //setSearchText("");
+                //setBoardArray(res.data);
+                console.log('res.data : ' + res.data);
+            })
+            .catch((res) => console.log('** res.data.err : ' + res));
+
+        //
+        // const filteredItems = boardArray.filter((item) => {
+        //     if (item.answer) {
+        //         const answerText = typeof item.answer === 'string' ? item.answer : item.answer.props.children.join(" "); // JSX일 경우 문자열로 변환
+        //         return (
+        //             (selectedQna_category === "" || item.qna_category === selectedQna_category) &&
+        //             (item.qna_title.includes(searchText) || answerText.includes(searchText))
+        //         );
+        //     }
+        //     return false; 
+        // });
+        // setFilteredBoardArray(filteredItems);
         setShowInitialTable(false); // 검색 결과를 보여준 후 초기 테이블 숨기기
-        setSearchText(""); // 검색 후 검색창의 검색어 초기화
+        //setSearchText(""); // 검색 후 검색창의 검색어 초기화
     }; // 검색 로직
 
     // 엔터 키 눌렀을 때 검색 실행
@@ -104,23 +133,23 @@ const BoardQna = () => {
     }; // 엔터키 처리 로직
 
     // 답변 펼치기/접기 함수
-    // const toggleAnswer = (index) => {
-    //     if (openQuestion === index) {
-    //         setOpenQuestion(null); // 같은 질문을 클릭하면 닫기
-    //     } else {
-    //         setOpenQuestion(index); // 다른 질문을 클릭하면 해당 질문 열기
-    //     }
-    // }; // ... (펼치기/접기 로직)
+    const toggleAnswer = (index) => {
+        if (openQuestion === index) {
+            setOpenQuestion(null); // 같은 질문을 클릭하면 닫기
+        } else {
+            setOpenQuestion(index); // 다른 질문을 클릭하면 해당 질문 열기
+        }
+    }; // ... (펼치기/접기 로직)
 
     // 사용자페이지 로그인한 아이디가 글쓴이와 같거나 관리자일때만 qnaList의 질문답변이 노출되도록 설정함
     const handleAnswerToggle = (index, user_id) => {
         //alert("*** " + user_id + " , " + sessionStorage.getItem('loginId'))
         if (sessionStorage.getItem('loginId') == 'manager' || sessionStorage.getItem('loginId') == user_id)
-        setOpenQuestion((prevIndex) => (prevIndex === index ? null : index));
+            setOpenQuestion((prevIndex) => (prevIndex === index ? null : index));
     };
 
     // 검색어 입력후 공지사항 눌렀을때 다시 초기 테이블(항목이 나오게)로 돌아가기 함수
-    // const [boardArray, setBoardArray] = useState([]);
+
     const handleInitialTable = () => {
         setFilteredBoardArray([]); // 초기 테이블 항목을 보여주기 위해 필터링된 배열 초기화
         setShowInitialTable(true); // 초기 테이블 내용 보여주기
@@ -149,6 +178,20 @@ const BoardQna = () => {
 
                 {/* 검색창 */}
                 <form action="#" method="get" onSubmit={handleSearch}>
+                    <select
+                        name="qna_category"
+                        onChange={(e) => setSelectedQna_category(e.target.value)}>
+
+                        <option value="ALL">전체</option>
+                        <option value="OP">주문/결제</option>
+                        <option value="S">배송</option>
+                        <option value="CR">취소/반품</option>
+                        <option value="EA">교환</option>
+                        <option value="M">회원</option>
+                        <option value="PE">적립금/이벤트</option>
+                        <option value="E">기타</option>
+                    </select>
+
                     <input
                         type="search"
                         name="search"
@@ -162,7 +205,8 @@ const BoardQna = () => {
                     />
                     <input type="submit" value="검색" onClick={handleSearch} />
                 </form>
-                <form action="#" method="post"></form>
+
+                {/* <form action="#" method="post"></form> */}
 
                 <table>
                     <thead>
@@ -190,7 +234,7 @@ const BoardQna = () => {
                             boardArray.map((item, index) => (
                                 <React.Fragment key={item.qna_seq}>
                                     <tr className={`question_1 ${openQuestion === index ? "show-answer" : ""}`}
-                                        onClick={() => handleAnswerToggle(index, item.user_id )}>
+                                        onClick={() => handleAnswerToggle(index, item.user_id)}>
                                         <td></td>
                                         <td>{item.qna_seq}</td>
                                         <td>{item.qna_category}</td>
@@ -289,7 +333,7 @@ const BoardQna = () => {
 
                 <div className="button">
                     <Link to="/myquestion">
-                        <input type="button" value="내글보기"  />
+                        <input type="button" value="내글보기" />
                     </Link>
                 </div>
             </div>
