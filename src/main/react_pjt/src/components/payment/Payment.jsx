@@ -49,17 +49,19 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
     }, []);
 
     // 기본 배송지 설정
-    const handleDefualtAddress = (user_address1, user_address2, post_code) => {
+    const handleDefualtAddress = (selectedAddress) => {
         axios
-            .post(`/payment/addDefaultAddress?user_id=${sessionStorage.loginId}`, {
-                user_address1,
-                user_address2,
-                post_code,
+            .post(`/payment/updateAddress`, {
+                user_id: sessionStorage.loginId,
+                user_address1: selectedAddress.user_address1,
+                user_address2: selectedAddress.user_address2,
+                post_code: selectedAddress.post_code,
             })
             .then((response) => {
                 // 성공적으로 응답을 받았을 때 처리
                 alert(`기본 배송지로 설정되었습니다.`);
                 closeModal();
+                window.location.reload();
             })
             .catch((error) => {
                 // 에러 발생 시 처리
@@ -289,8 +291,8 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
                             </td>
                             <div className={styles.button} >
                                 {userData.map((u, index) => (
-                                    i.post_code !== u.post_code &&
-                                    <input type="button" value="기본배송지로 선택" onClick={() => handleDefualtAddress(i.user_address1, i.user_address2, i.post_code)} />
+                                    i.user_address1 + i.user_address1 + i.post_code !== u.user_address1 + u.user_address1 + u.post_code &&
+                                    <input type="button" value="기본배송지로 선택" onClick={() => handleDefualtAddress(i)} />
                                 ))}
                                 <input type="button" value="삭제" />
                                 <input type="button" value="선택" onClick={() => handleSelectAddress(i)} />
@@ -426,12 +428,13 @@ const Payment = () => {
                     item_no: i.selectedItem.item_no,
                     item_price: i.selectedItem.item_price,
                     item_quantity: i.selectedItem.item_quantity,
-                    review_state: '작성대기'
+                    review_state: '작성대기',
                 }))) : (
                 orderDetail = [{
                     item_no: selectedItem.item_no,
                     item_price: selectedItem.item_price,
                     item_quantity: quantity,
+                    review_state: '작성대기',
                 }]
             )
 
@@ -1059,9 +1062,8 @@ const Payment = () => {
                             isModalOpen={isModalOpen}
                             setIsModalOpen={setIsModalOpen}
                             modalContent={modalMessage}
-                            modalAfterPath="/main/*"
+                            modalAfterPath={"/"}
                         />
-
                     )}
                 </div>
             </form>

@@ -1,10 +1,9 @@
 package com.i4.dandog.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.i4.dandog.entity.Item;
@@ -22,15 +21,16 @@ public class ItemServiceImpl implements ItemService {
 
 	// ============ Controller에서 사용 ============
 	@Override
-	public Page<Item> findByCategoryAndItemName(String searchCategory, String searchValue, Pageable pageable) {
-		return repository.findByCategoryAndItemName(searchCategory, searchValue, pageable);
+	public List<Item> selectList(String searchCategory, String searchField, String searchValues) {
+		log.info("================================" + searchField);
+		if ("no".equals(searchField)) {
+			log.info("진입 성공 **************");
+			int intSearchValues = Integer.parseInt(searchValues);
+			return repository.findByCategoryItemNo(searchCategory, intSearchValues);
+		}
+		return repository.findByCategoryAndItemName(searchCategory, searchValues);
 	}
-	@Override
-	public Page<Item> findByCategoryItemNo(String searchCategory, int searchValue, Pageable pageable) {
-		return repository.findByCategoryItemNo(searchCategory, searchValue, pageable);
-	}
-	
-	
+
 	// ============ Rest Controller에서 사용 ============
 	// 아이템 불러오기
 	@Override
@@ -53,18 +53,6 @@ public class ItemServiceImpl implements ItemService {
 		return repository.findByOrderByRegdate(inputValue, category);
 	}
 
-	
-	// ColorSize
-	@Override
-	public List<String> findColors(String item_name) {
-		return repository.findColors(item_name);
-	}
-	
-	@Override
-	public List<String> findSizes(String item_name) {
-		return repository.findSizes(item_name);
-	}
-	
 	// =============================================================
 
 	@Override
@@ -74,11 +62,6 @@ public class ItemServiceImpl implements ItemService {
 			return result.get();
 		else
 			return null;
-	}
-	
-	@Override
-	public int updateOption(String itemName, String selectedColor, String selectedSize) {
-		return repository.updateOption(itemName, selectedColor, selectedSize);
 	}
 
 	@Override
