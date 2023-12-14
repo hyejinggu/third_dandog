@@ -5,7 +5,6 @@ import java.util.List;
 import com.i4.dandog.entity.OrderDetail;
 
 public interface OrderDetailService {
-    List<OrderDetail> getAllOrders();
     
     OrderDetail selectOne(int order_detail_no);
     

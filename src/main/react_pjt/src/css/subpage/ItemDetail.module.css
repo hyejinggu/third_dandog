@@ -350,6 +350,12 @@ select[id="option"] {
     padding-top: 0;
 }
 
+.section3>.empty_review_wrap {
+    padding: 50px;
+    height: 400px;
+    padding-top: 0;
+}
+
 .section3 .review span:first-child {
     font-size: 20px;
     font-weight: bold;

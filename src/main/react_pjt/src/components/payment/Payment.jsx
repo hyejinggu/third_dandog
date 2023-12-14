@@ -314,6 +314,8 @@ const Payment = () => {
 
     const selectedItem = location.state.selectedItem;
     const quantity = location.state.quantity;
+    const options_size = location.state.options_size;
+    const options_color = location.state.options_color;
 
     const calculateTotalPrice = (item) => {
         if (!item || !item.selectedItem) {
@@ -428,12 +430,16 @@ const Payment = () => {
                     item_no: i.selectedItem.item_no,
                     item_price: i.selectedItem.item_price,
                     item_quantity: i.selectedItem.item_quantity,
+                    option_size: i.selectedItem.options_size,
+                    option_color: i.selectedItem.options_color,
                     review_state: '작성대기',
                 }))) : (
                 orderDetail = [{
                     item_no: selectedItem.item_no,
                     item_price: selectedItem.item_price,
                     item_quantity: quantity,
+                    option_size: options_size,
+                    option_color: options_color,
                     review_state: '작성대기',
                 }]
             )
@@ -655,9 +661,8 @@ const Payment = () => {
                                 selectedItem.map((i, index) => (
                                     <tr key={index}>
                                         <td>
-                                                <h3 className={styles.name}>{i.selectedItem.item_name}</h3>
-                                                컬러: {i.selectedItem.option_color}
-                                                사이즈: {i.selectedItem.option_size}
+                                            <h3 className={styles.name}>{i.selectedItem.item_name}</h3>
+                                            컬러: {i.selectedItem.options_color} | 사이즈: {i.selectedItem.options_size}
                                             <input hidden id="item_no" name="item_no" value={i.selectedItem.item_no} />
                                         </td>
                                         <td>
@@ -696,6 +701,7 @@ const Payment = () => {
                                 <tr>
                                     <td>
                                         <h3 className={styles.name}>{selectedItem.item_name}</h3>
+                                        컬러: {options_color} | 사이즈: {options_size}
                                         <input hidden id="item_no" name="item_no" value={selectedItem.item_no} />
                                     </td>
                                     <td>

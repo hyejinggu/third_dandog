@@ -18,11 +18,8 @@ import lombok.extern.log4j.Log4j2;
 public class ItemOrderServiceImpl implements ItemOrderService {
 
 	private final ItemOrderRepository repository;
-//
-//    @Override
-//    public List<OrderDetail> getAllOrders() {
-//        return orderDetailRepository.findAll();
-//    }
+
+
 //
 //    @Override
 //    public OrderDetail selectOne(int order_detail_no) {
@@ -67,4 +64,11 @@ public class ItemOrderServiceImpl implements ItemOrderService {
 	        // 변경된 주문 정보 저장
 	        repository.save(itemOrder);
 	}
+	
+	//*-------------------------------관리자--------------------------------*
+
+	  @Override
+	  public List<ItemOrder> getAllOrders() {
+	      return repository.findAll();
+	  }
 }

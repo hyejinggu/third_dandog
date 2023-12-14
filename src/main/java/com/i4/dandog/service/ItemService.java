@@ -8,8 +8,6 @@ import org.springframework.data.domain.Pageable;
 import com.i4.dandog.entity.Item;
 
 public interface ItemService {
-	
-	List<Item> selectList(String searchCategory, String searchField, String searchValues);
 
 	// selectList
 	Page<Item> findByCategoryItemNo(String searchCategory, int searchValues, Pageable pageable);

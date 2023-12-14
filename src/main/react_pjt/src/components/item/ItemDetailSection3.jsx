@@ -21,7 +21,19 @@ const ItemDetailSection3 = ({ item_name }) => {
     };
 
     fetchData();
-  }, [item_name]); // item_no를 의존성 배열에 추가
+  }, [item_name]);
+
+  // 리뷰 수 및 별점 평균 계산
+  const [reviewCount, setReviewCount] = useState(reviews.length);
+  const [averageRating, setAverageRating] = useState(0);
+
+  useEffect(() => {
+    setReviewCount(reviews.length);
+
+    const totalRating = reviews.reduce((total, review) => total + review.review_star, 0);
+    const avgRating = reviewCount > 0 ? totalRating / reviewCount : 0;
+    setAverageRating(avgRating);
+  }, [reviews, reviewCount]);
 
 
   const [sortBy, setSortBy] = useState("popular"); // 기본 정렬: 인기순
@@ -61,60 +73,66 @@ const ItemDetailSection3 = ({ item_name }) => {
           상품Q&A
         </ScrollLink>
       </nav>
-      <div className={styles.review_wrap}>
-        <div className={styles.review}>
-          <span>REVIEW</span>
-          <span>(4)</span>
-          <hr />
+      {reviews.length === 0 ? (
+        <div className={styles.empty_review_wrap}>
+          리뷰가 없습니다
         </div>
-        <div className={styles.total_score}>
-          <div className={styles.grades_1}>
-            <span>3.0</span>
-            <p>
-              <strong>100%</strong>의 구매자가 이 상품을 좋아합니다.
-            </p>
+      ) : (
+        <div className={styles.review_wrap}>
+          <div className={styles.review}>
+            <span>REVIEW</span>
+              <span>{`(${reviewCount} 개의 리뷰)`}</span>
+            <hr />
+          </div>
+          <div className={styles.total_score}>
+            <div className={styles.grades_1}>
+                <span>{averageRating.toFixed(1)}</span>
+              <p>
+                  <strong>{averageRating.toFixed(1) * 20}%</strong>의 구매자가 이 상품을 좋아합니다.
+              </p>
+            </div>
+          </div>
+
+          <div className={styles.user_review}>
+            <ul className={styles.review_header}>
+              <li
+                onClick={() => sortReviews("popular")}
+                className={sortBy === "popular" ? styles.checking : null}
+              >
+                인기순
+              </li>
+              <li
+                onClick={() => sortReviews("latest")}
+                className={sortBy === "latest" ? styles.checking : null}
+              >
+                최신순
+              </li>
+              <li
+                onClick={() => sortReviews("rating")}
+                className={sortBy === "rating" ? styles.checking : null}
+              >
+                별점순
+              </li>
+            </ul>
+
+            {reviews.map((review, index) => (
+              <ul key={index}>
+                <li className={styles.grades_3}>
+                  별점 :
+                  {Array.from({ length: review.review_star }, (_, index) => (
+                    <span key={index}>&#9733;</span> // 별 모양의 유니코드를 사용해서 표현
+                  ))}
+                </li>
+                <li className={styles.user_text_review}>{review.review_content}</li>
+                <li className={styles.user_info}>작성일: {new Date(review.regdate).toLocaleDateString()}</li>
+                <li className={styles.user_info}>user : {review.user_id}</li>
+                {/* <li className={styles.user_info}>추천 수: {review.recommendations}</li> */}
+              </ul>
+            ))
+            }
           </div>
         </div>
-
-        <div className={styles.user_review}>
-          <ul className={styles.review_header}>
-            <li
-              onClick={() => sortReviews("popular")}
-              className={sortBy === "popular" ? styles.checking : null}
-            >
-              인기순
-            </li>
-            <li
-              onClick={() => sortReviews("latest")}
-              className={sortBy === "latest" ? styles.checking : null}
-            >
-              최신순
-            </li>
-            <li
-              onClick={() => sortReviews("rating")}
-              className={sortBy === "rating" ? styles.checking : null}
-            >
-              별점순
-            </li>
-          </ul>
-
-          {reviews.map((review, index) => (
-            <ul key={index}>
-              <li className={styles.grades_3}>
-                별점 :
-                {Array.from({ length: review.review_star }, (_, index) => (
-                  <span key={index}>&#9733;</span> // 별 모양의 유니코드를 사용해서 표현
-                ))}
-              </li>
-              <li className={styles.user_text_review}>{review.review_content}</li>
-              <li className={styles.user_info}>날짜: {review.regdate}</li>
-              <li className={styles.user_info}>user : {review.user_id}</li>
-              {/* <li className={styles.user_info}>추천 수: {review.recommendations}</li> */}
-            </ul>
-            ))
-        }
-        </div>
-      </div>
+      )}
     </section>
   );
 };

@@ -49,10 +49,24 @@ const ItemDetail = () => {
   };
 
   const [mainImage, setMainImage] = useState(selectedItem.item_img1); // 초기 메인 이미지
-
+  
   const handleImageClick = (imageUrl) => {
     setMainImage(imageUrl); // 클릭한 이미지를 메인 이미지로 설정
   };
+  
+  const [opSi, setOpSi] = useState(selectedItem.options_size); // 초기 메인 이미지
+  const [opCo, setOpCo] = useState(selectedItem.options_color); // 초기 메인 이미지
+
+  const handleOpCoChange = (event) => {
+    setOpCo(event.target.value); // 수량 변경 시 상태 업데이트
+  };
+
+  const handleOpSiChange = (event) => {
+    setOpSi(event.target.value); // 수량 변경 시 상태 업데이트
+  };
+
+  console.log(opSi);
+  console.log(opCo);
 
   const loginId = sessionStorage.getItem("loginId");
 
@@ -62,7 +76,7 @@ const ItemDetail = () => {
       navigate("/login");
     } else {
       axios
-        .post(`/restCart/addCart/${loginId}/${selectedItem.item_name}/${selectedItem.options_size}/${selectedItem.options_color}/${quantity}`, {
+        .post(`/restCart/addCart/${loginId}/${selectedItem.item_name}/${opSi}/${opCo}/${quantity}`, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -144,7 +158,7 @@ const ItemDetail = () => {
             {/* 사이즈 */}
             <div>사이즈</div>
             <div>
-              <select id="option" name="sizeOption">
+              <select id="option" name="sizeOption" value={opSi} onChange={handleOpSiChange}>
                 {colorSize.Size.map((size, index) => (
                   <option key={index} value={size}>
                     {size}
@@ -155,7 +169,7 @@ const ItemDetail = () => {
             {/* 컬러 */}
             <div>컬러</div>
             <div>
-              <select id="option" name="colorOption">
+              <select id="option" name="colorOption" value={opCo} onChange={handleOpCoChange}>
                 {colorSize.Color.map((color, index) => (
                   <option key={index} value={color}>
                     {color}
@@ -188,6 +202,8 @@ const ItemDetail = () => {
                 state={{
                   selectedItem: selectedItem,
                   quantity: quantity,
+                  options_size: opSi,
+                  options_color: opCo,
                 }}
               >
                 <input

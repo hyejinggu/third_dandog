@@ -23,10 +23,10 @@
 			<tr>
 				<td>${order.regdate}</td>
 				<td><a
-					href="orderdetail?order_detail_no=${order.order_detail_no}">${order.order_detail_no}</a></td>
+					href="orderdetail?order_num=${order.order_num}">${order.order_num}</a></td>
 				<td>${order.order_state}</td>
 				<td><a
-					href="orderdelete?order_detail_no=${order.order_detail_no}">삭제</a></td>
+					href="orderdelete?order_num=${order.order_num}">삭제</a></td>
 			</tr>
 		</c:forEach>
 	</table>

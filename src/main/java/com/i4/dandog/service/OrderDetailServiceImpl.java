@@ -17,10 +17,10 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     private final OrderDetailRepository orderDetailRepository;
 
-    @Override
-    public List<OrderDetail> getAllOrders() {
-        return orderDetailRepository.findAll();
-    }
+//    @Override
+//    public List<OrderDetail> getAllOrders() {
+//        return orderDetailRepository.findAll();
+//    }
 
     @Override
     public OrderDetail selectOne(int order_detail_no) {
