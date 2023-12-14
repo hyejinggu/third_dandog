@@ -7,7 +7,7 @@ import com.i4.dandog.entity.Lounge;
 public interface LoungeService {
 
     
-	List<Lounge> findByDynamicQuery(String category, String inputValue, String filterValue, String sort);
+	List<Lounge> findByLoungeDynamicQuery(String category, String inputValue, String filterValue, String sort);
 	
 	List<Lounge> findByCategoryLoungeContents(String category, String inputValue);
 	List<Lounge> findByCategoryUserId(String category, String inputValue);

@@ -23,14 +23,48 @@ public class NeighborRestController {
 
 	NeighborhoodReviewService nservice;
 
-	@GetMapping("/review")
-	public List<NeighborhoodReview> neighborhoodReview(@RequestParam(name = "category") String category) {
-		System.out.println("************" + category + "Review");
+//	@GetMapping("/review")
+//	public List<NeighborhoodReview> neighborhoodReview(@RequestParam(name = "category") String category) {
+//
+//		List<NeighborhoodReview> reviews;
+//
+//		reviews = nservice.findByCategory(category);
+//
+//		return reviews;
+//	}
+	
+	
+	@GetMapping("/brand")
+	public List<NeighborhoodReview> selectedPlaceReview(@RequestParam(name = "selectedPlace") String selectedPlace) {
 
 		List<NeighborhoodReview> reviews;
 
-		reviews = nservice.findByCategory(category);
+		reviews = nservice.findBySelectedPlace(selectedPlace);
 
+		return reviews;
+	}
+	
+	
+	@GetMapping("/review")
+	public List<String> sortAndFilterWithCategory(
+			@RequestParam(name = "sorting") String sorting,
+			@RequestParam(name = "filter") String filter_,
+			@RequestParam(name = "category") String category) {
+
+		List<String> reviews;		
+		
+		log.info("+++++++++++sorting: " + sorting);
+		
+		if ("star".equals(sorting)) {
+			log.info("이곳은 star 영역");
+			double filter = Double.parseDouble(filter_);
+			reviews = nservice.starFilterWithCategory(filter, category);
+		} else {
+			log.info("이곳은 basic, review 영역");
+			reviews = nservice.sortWithCategory(sorting, category);
+		}
+		
+		log.info("review!!!!!!!!!!!!!!!!!!!!!!: " + reviews);
 		return reviews;
 	}
 

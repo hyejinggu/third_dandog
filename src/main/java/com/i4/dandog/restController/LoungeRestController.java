@@ -36,7 +36,7 @@ public class LoungeRestController {
 			@RequestParam(name = "filterValue") String filterValue,
 			@RequestParam(name = "inputValue") String inputValue ) {
 	    
-	    return service.findByDynamicQuery(category, inputValue, filterValue, sort);
+	    return service.findByLoungeDynamicQuery(category, inputValue, filterValue, sort);
 	}
 
 	@GetMapping("/updateHits")

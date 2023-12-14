@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.i4.dandog.entity.Lounge;
 import com.i4.dandog.repository.LoungeRepository;
-import com.i4.dandog.repository.LoungeRepositoryCustom;
+import com.i4.dandog.repository.RepositoryCustom;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -17,12 +17,12 @@ import lombok.extern.log4j.Log4j2;
 public class LoungeServiceImpl implements LoungeService {
 
 	private final LoungeRepository loungeRepository;
-	private final LoungeRepositoryCustom loungeRepositoryCustom;
+	private final RepositoryCustom customRepository;
 
 	
 	@Override
-	public List<Lounge> findByDynamicQuery(String category, String inputValue, String filterValue, String sort) {
-		return loungeRepositoryCustom.findByDynamicQuery(category, inputValue, filterValue, sort);
+	public List<Lounge> findByLoungeDynamicQuery(String category, String inputValue, String filterValue, String sort) {
+		return customRepository.findByLoungeDynamicQuery(category, inputValue, filterValue, sort);
 	}
 	
 	//========================================================================
