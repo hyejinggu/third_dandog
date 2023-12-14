@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.i4.dandog.domain.ReviewInfoDTO;
 import com.i4.dandog.entity.NeighborhoodReview;
 import com.i4.dandog.repository.NeighborhoodReviewRepository;
 import com.i4.dandog.repository.RepositoryCustom;
@@ -24,30 +25,26 @@ public class NeighborhoodReviewServiceImpl implements NeighborhoodReviewService 
 		return repository.findAll();
 	}
 	
-//	@Override
-//	public List<NeighborhoodReview> findByCategory(String neighbor_category) {
-//		return repository.findByCategory(neighbor_category);
-//	}
-	
-	
+	// 카카오맵에서 선택된 장소 찾기
 	@Override
 	public List<NeighborhoodReview> findBySelectedPlace(String selectedPlace) {
 		return repository.findBySelectedPlace(selectedPlace);
 	}
 	
-	// 정렬, 검색
-//	@Override
-//	public List<String> sortAndFilterWithCategory(String sorting, String filter_, String neighbor_category){
-//		double filter = Double.parseDouble(filter_);
-//		return customRepository.sortAndFilterWithCategory(sorting, filter, neighbor_category);
-//	}
+	// 상호명별 리뷰 찾기
 	@Override
-	public List<String> starFilterWithCategory(double filter, String category) {
+	public List<NeighborhoodReview> findReviewByBrand(String neighborBrandName) {
+		return repository.findReviewByBrand(neighborBrandName);
+	}
+	
+	// 정렬, 검색
+	@Override
+	public List<ReviewInfoDTO> starFilterWithCategory(double filter, String category) {
 		return customRepository.starFilterWithCategory(filter, category);
 	}
 	
 	@Override
-	public List<String> sortWithCategory(String sorting, String category) {
+	public List<ReviewInfoDTO> sortWithCategory(String sorting, String category) {
 		return customRepository.sortWithCategory(sorting, category);
 	}
 	

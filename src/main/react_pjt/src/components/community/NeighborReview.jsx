@@ -5,54 +5,53 @@ import axios from "axios";
 
 const NeighborReview = ({ category, selectedPlace }) => {
   const [neighborArray, setNeighborArray] = useState([]);
+  const [queryCategory, setQueryCategory] = useState("beauty");
   const [sortingOption, setSortingOption] = useState("basic");
-  const [ratingFilter, setRatingFilter] = useState("0.0");
+  const [ratingFilter, setRatingFilter] = useState("1.0");
+  const [clickedIndex, setClickedIndex] = useState(null);
 
-  const [showReviewDetails, setShowReviewDetails] = useState(false);
+  const [detailedReviewData, setDetailedReviewData] = useState([]);
   const [selectedReview, setSelectedReview] = useState(null);
-
-  let queryCategory = "beauty";
 
   // 카테고리 변경 axios
   useEffect(() => {
-    setSortingOption("new");
-    setRatingFilter("all");
+    setSortingOption("basic");
+    setRatingFilter("1.0");
+
+    let newQueryCategory = "beauty"; // default value
 
     switch (category) {
       case "뷰티, 미용":
-        queryCategory = "beauty";
+        newQueryCategory = "beauty";
         break;
       case "병원":
-        queryCategory = "hospital";
+        newQueryCategory = "hospital";
         break;
       case "카페, 호텔":
-        queryCategory = "cafe";
+        newQueryCategory = "cafe";
         break;
       case "훈련, 시터":
-        queryCategory = "training";
+        newQueryCategory = "training";
         break;
       default:
-        queryCategory = "beauty";
+        newQueryCategory = "beauty";
         break;
     }
 
-    axios
-      .get(
-        `/neighbor/review?category=${queryCategory}&sorting=basic&filter=0.0`
-      )
-      .then((res) => {
-        setNeighborArray(res.data);
-        console.log(res.data);
-      })
-      .catch((res) => console.log(res));
+    setQueryCategory(newQueryCategory);
+    handleReviewList(`?category=${newQueryCategory}&sorting=basic&filter=1.0`);
   }, [category]);
 
-  // 리뷰 정렬 및 필터링
   const handleFilterApply = () => {
+    handleReviewList(
+      `?category=${queryCategory}&sorting=${sortingOption}&filter=${ratingFilter}`
+    );
+  };
+
+  // 상호 정렬 및 필터링
+  const handleReviewList = (requestURL) => {
     axios
-      .get(
-        `/neighbor/review?category=${queryCategory}&sorting=${sortingOption}&filter=${ratingFilter}`
-      )
+      .get(`/neighbor/review${requestURL}`)
       .then((res) => {
         setNeighborArray(res.data);
         console.log(res.data);
@@ -60,11 +59,19 @@ const NeighborReview = ({ category, selectedPlace }) => {
       .catch((res) => console.log(res));
   };
 
-  const handleReviewClick = (review) => {
-    // Toggle the state to show/hide the review details
-    setShowReviewDetails(!showReviewDetails);
-    // Save the selected review for display if needed
-    setSelectedReview(review);
+  // 상호명별 리뷰 리스트 찾기
+  const handleReviewClick = (it, index) => {
+    setSelectedReview(it);
+    setClickedIndex(index);
+
+    axios
+      .get(`/neighbor/reviewDetails?neighborBrandName=${it.neighborBrandName}`)
+      .then((res) => {
+        setDetailedReviewData(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching detailed review data:", error);
+      });
   };
 
   // 선택된 장소 리뷰 가져오기 axios
@@ -72,7 +79,7 @@ const NeighborReview = ({ category, selectedPlace }) => {
     axios
       .get("/neighbor/brand?selectedPlace=" + selectedPlace)
       .then((res) => {
-        setNeighborArray(res.data);
+        setDetailedReviewData(res.data);
         console.log(res.data);
       })
       .catch((res) => console.log(res));
@@ -109,14 +116,14 @@ const NeighborReview = ({ category, selectedPlace }) => {
           value={ratingFilter}
           onChange={(e) => setRatingFilter(e.target.value)}
         >
-          <option value="0.0">별점⭐</option>
+          <option value="1.0">별점⭐</option>
           <option value="4.5">4.5이상</option>
           <option value="4.0">4.0이상</option>
           <option value="3.5">3.5이상</option>
         </select>
       );
     } else {
-      return null; // Return null to hide the select element
+      return null;
     }
   };
 
@@ -138,37 +145,64 @@ const NeighborReview = ({ category, selectedPlace }) => {
         </div>
         <div className={styles.brand_review_wrap}>
           <div className={styles.brand_wrap}>
-            <div className={styles.review_list}>
+            <div className={styles.brand_list}>
               <span>상호명</span>
-              <span>리뷰 보기</span>
               <span>평균 별점</span>
             </div>
             <ul>
               {getPaginatedData().map((it, index) => (
-                <li key={it.neighbor_no} className={styles.neighbor_review}>
-                  <span>{it.neighbor_brand_name}</span>
-                  <span onClick={() => handleReviewClick(it)}>
-                    <p>리뷰</p>
-                    <p>{it.Brand}</p>
-                  </span>
-                  <span>{it.neighbor_rating}</span>
-                  {/* <span>{formatDate(it.regdate)}</span> */}
+                <li
+                  key={index}
+                  className={`${styles.neighbor_brand} ${
+                    clickedIndex === index ? styles.brand_clicked : ""
+                  }`}
+                >
+                  <div onClick={() => handleReviewClick(it, index)}>
+                    <span>{it.neighborBrandName}</span>
+                    <div className={styles.review_counting}>
+                      <span>리뷰</span>
+                      <span>[{it.reviewCount}]</span>
+                    </div>
+                  </div>
+                  <span>{parseFloat(it.averageRating).toFixed(1)}</span>
                 </li>
               ))}
             </ul>
+            {/* 페이지 이동 */}
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            ></Pagination>
           </div>
-          <div className={styles.brand_review_wrap}>
-            {showReviewDetails ? <li>리뷰 안보기</li> : "리뷰 보기"}
+          <div className={styles.review_list_wrap}>
+            <div className={styles.review_list_container}>
+              <div className={styles.review_list}>
+                <span>제목</span>
+                <span>내용</span>
+                <span>별점</span>
+                <span>등록일</span>
+                <span>작성자</span>
+              </div>
+              <ul>
+                {detailedReviewData.map((it, index) => (
+                  <li key={it.neighbor_no} className={styles.neighbor_review}>
+                    <span>{it.neighbor_title}</span>
+                    <span>{it.neighbor_content}</span>
+                    <span>{it.neighbor_rating}</span>
+                    <span>{formatDate(it.regdate)}</span>
+                    <span>{it.user_id}</span>
+                  </li>
+                ))}
+              </ul>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              ></Pagination>
+            </div>
           </div>
         </div>
-      </div>
-      <div>
-        {/* 페이지 이동 */}
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        ></Pagination>
       </div>
     </div>
   );

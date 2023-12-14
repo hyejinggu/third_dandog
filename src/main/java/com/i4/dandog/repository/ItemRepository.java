@@ -25,6 +25,15 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	
 // =========================== Rest Controller에서 사용 =====================================
 
+//	// 베스트 셀러
+//	@Query(value = "SELECT * "
+//			+ "FROM Item i WHERE i.item_category = :category "
+//			+ "GROUP BY i.item_name ORDER BY sales DESC", nativeQuery = true)
+//	List<Item> getBestSeller(@Param("category") String category);
+
+	
+	
+	
 	@Query("select i from Item i where item_name like %:inputValue% and item_category = :category order by i.item_sales_volume desc")
 	public List<Item> findByOrderByItemSalesVolumeDesc(@Param("inputValue") String inputValue,
 			@Param("category") String category);

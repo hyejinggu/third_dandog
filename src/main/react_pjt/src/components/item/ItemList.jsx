@@ -18,26 +18,24 @@ const ItemList = () => {
 
   useEffect(() => {
     setInputValue("");
-    handleItemList(
-      `/item/getItemList?category=${category}&sort=${itemSort}&inputValue`
-    );
+    handleItemList(`?category=${category}&sort=${itemSort}&inputValue`);
   }, [category]);
 
   useEffect(() => {
     handleItemList(
-      `/item/getItemList?category=${category}&sort=${itemSort}&inputValue=${inputValue}`
+      `?category=${category}&sort=${itemSort}&inputValue=${inputValue}`
     );
   }, [itemSort]);
 
   const handleInputValue = () => {
     handleItemList(
-      `/item/getItemList?category=${category}&sort=${itemSort}&inputValue=${inputValue}`
+      `?category=${category}&sort=${itemSort}&inputValue=${inputValue}`
     );
   };
 
   const handleItemList = (requestURL) => {
     axios
-      .get(`${requestURL}`)
+      .get(`/item/getItemList${requestURL}`)
       .then((res) => {
         setItemList(res.data);
         setItemList((prevItemList) => {
