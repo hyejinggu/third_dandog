@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.i4.dandog.entity.NeighborhoodReview;
 import com.i4.dandog.repository.NeighborhoodReviewRepository;
+import com.i4.dandog.repository.RepositoryCustom;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,19 +17,43 @@ import lombok.RequiredArgsConstructor;
 public class NeighborhoodReviewServiceImpl implements NeighborhoodReviewService {
 	
 	private final NeighborhoodReviewRepository repository;
+	private final RepositoryCustom customRepository;
 	
 	@Override
 	public List<NeighborhoodReview> selectList() {
 		return repository.findAll();
 	}
 	
+//	@Override
+//	public List<NeighborhoodReview> findByCategory(String neighbor_category) {
+//		return repository.findByCategory(neighbor_category);
+//	}
+	
+	
 	@Override
-	public List<NeighborhoodReview> findByCategory(String neighbor_category) {
-		return repository.findByCategory(neighbor_category);
+	public List<NeighborhoodReview> findBySelectedPlace(String selectedPlace) {
+		return repository.findBySelectedPlace(selectedPlace);
+	}
+	
+	// 정렬, 검색
+//	@Override
+//	public List<String> sortAndFilterWithCategory(String sorting, String filter_, String neighbor_category){
+//		double filter = Double.parseDouble(filter_);
+//		return customRepository.sortAndFilterWithCategory(sorting, filter, neighbor_category);
+//	}
+	@Override
+	public List<NeighborhoodReview> starFilterWithCategory(double filter, String category) {
+		return customRepository.starFilterWithCategory(filter, category);
+	}
+	
+	@Override
+	public List<NeighborhoodReview> sortWithCategory(String sorting, String category) {
+		return customRepository.sortWithCategory(sorting, category);
 	}
 	
 	
-	// 관리자 검색
+	
+	// ======== 관리자 검색
 	@Override
 	public List<NeighborhoodReview> findByCategoryUserId(String searchCategory, String searchValue) {
 		return repository.findByCategoryUserId(searchCategory, searchValue);

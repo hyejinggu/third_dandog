@@ -9,9 +9,17 @@ public interface NeighborhoodReviewService {
 	// selectList
 	List<NeighborhoodReview> selectList();
 	
-	List<NeighborhoodReview> findByCategory(String neighbor_category);
+	List<NeighborhoodReview> findBySelectedPlace(String selectedPlace);
 	
-	// 관리자 검색
+	// 정렬, 필터
+//	List<String> sortAndFilterWithCategory(String sorting, 
+//			String filter, String neighbor_category);
+	List<NeighborhoodReview> starFilterWithCategory(double filter, String category);
+	List<NeighborhoodReview> sortWithCategory(String sorting, String category);
+	
+	
+	
+	// ======== 관리자 검색
 	List<NeighborhoodReview> findByCategoryUserId(String searchCategory, String searchValue);
 	List<NeighborhoodReview> findByCategoryLoungeContents(String searchCategory, String searchValue);
 	List<NeighborhoodReview> findByCategoryLoungeBrand(String searchCategory, String searchValue);

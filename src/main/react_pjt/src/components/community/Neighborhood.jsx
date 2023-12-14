@@ -10,6 +10,8 @@ import SideBar from "./SideBar";
 
 export default function Neighborhood() {
   const [category, setCategory] = useState("beauty");
+  const [selectedPlace, setSelectedPlace] = useState("");
+  const loginId = sessionStorage.getItem("loginId");
 
   return (
     <div className={styles.neighborhood_container}>
@@ -28,14 +30,16 @@ export default function Neighborhood() {
         </div>
 
         <div className={styles.right_side}>
-          <NeighborMap />
+          <NeighborMap setSelectedPlace={setSelectedPlace} />
 
-          <NeighborReview category={category} />
-          <div className={styles.review_btn}>
-            <span>
-              <NavLink to="/community/createreview">리뷰 작성</NavLink>
-            </span>
-          </div>
+          <NeighborReview category={category} selectedPlace={selectedPlace} />
+          {loginId && (
+            <div className={styles.review_btn}>
+              <span>
+                <NavLink to="/community/createreview">리뷰 작성</NavLink>
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import SideBar from "./SideBar";
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import axios from "axios";
+
 export default function Lounge() {
   const [loungeArray, setLoungeArray] = useState([]);
   const [sort, setSort] = useState("new");
