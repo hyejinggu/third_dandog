@@ -18,4 +18,6 @@ int save(ItemOrder entity);
 	
 List<ItemOrder> getOrderInquiryForUser(String user_id);
 
+void updateOrderState(int order_num, String order_state);
+
 }

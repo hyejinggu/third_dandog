@@ -6,10 +6,6 @@ import Pagination from "../item/Pagination";
 import axios from "axios";
 import styles from "../../css/myPage/OrderInquiry.module.css";
 
-
-
-
-
 const OrderInquiry = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
@@ -17,6 +13,7 @@ const OrderInquiry = () => {
 
     const [orderInquiryData, setOrderInquiryData] = useState([]);
 
+    // 데이터 불러오기
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -30,93 +27,45 @@ const OrderInquiry = () => {
         fetchData();
     }, []);
 
-    const [itemSort, setItemSort] = useState("");
-
-    const handleSort = (e) => {
-        switch (e.target.innerText) {
-            case "인기순":
-                setItemSort("popular");
-                break;
-            case "높은가격순":
-                setItemSort("high");
-                break;
-            case "낮은가격순":
-                setItemSort("low");
-                break;
-            case "신상품순":
-                setItemSort("new");
-                break;
-            default:
-                setItemSort("new");
-                break;
-        }
-    };
-
-    const [itemList, setItemList] = useState([]);
-    const [inputValue, setInputValue] = useState("");
-
-    const handleInputValue = () => {
-        handleItemList(
-            `/item/getItemList?category=${category}&sort=${itemSort}&inputValue=${inputValue}`
-        );
-    };
-
-    const handleItemList = (requestURL) => {
+    // 배송상태 변경 (구매확정 버튼)
+    const handleOrderStateChange = (seletedOrder) => {
         axios
-            .get(`${requestURL}`)
-            .then((res) => {
-                setItemList(res.data);
-                setItemList((prevItemList) => {
-                    const uniqueItemNames = [];
-                    const itemNamesSet = new Set();
-
-                    prevItemList.forEach((item) => {
-                        if (!itemNamesSet.has(item.item_name)) {
-                            itemNamesSet.add(item.item_name);
-                            uniqueItemNames.push(item);
-                        }
-                    });
-                    return uniqueItemNames;
-                });
+            .post(`/mypage/OrderStateChange`, {
+                order_num: seletedOrder.order_num,
+                order_state: '배송완료',
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
             })
-            .catch((res) => console.log(res));
+            .then((response) => {
+                // 서버 응답 성공 시
+                alert(`구매확정이 완료되었습니다.`);
+                window.location.reload();
+            })
+            .catch((error) => {
+                // 서버 응답 에러 시
+                console.error("에러 발생:", error);
+            })
     };
 
-    // const [array, dispatch] = useReducer(arrayReducer, itemList);
+    // 페이지네이션
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10; // 페이지당 표시할 아이템 수
 
-    // // 페이지 이동(onClick)에 따라 보여지는 배열 바꿔주기
-    // const [page, setPage] = useState(1);
-    // const itemsPerPage = 20;
-    // const startIndex = (page - 1) * itemsPerPage;
-    // const displayedItemInfo = array.slice(startIndex, startIndex + itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const displayedItems = orderInquiryData.slice(startIndex, endIndex);
+
+    const totalPages = Math.ceil(orderInquiryData.length / itemsPerPage);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
 
     return (
-        <div className = {styles.container}>
+        <div className={styles.container}>
             <h2 className={styles.title}>주문조회</h2>
-            <div className={styles.sort}>
-                <ul>
-                    <li onClick={(e) => handleSort(e)}>주문일순</li>
-                    <li onClick={(e) => handleSort(e)}>높은가격순</li>
-                    <li onClick={(e) => handleSort(e)}>낮은가격순</li>
-                    <li onClick={(e) => handleSort(e)}>배송상태순</li>
-                </ul>
-                <div className={styles.search_bar}>
-                    <div>
-                        <input
-                            type="text"
-                            placeholder="검색"
-                            // value={inputValue}
-                            // onChange={(e) => setInputValue(e.target.value)}
-                            // onKeyDown={(e) => {
-                            //     if (e.keyCode === 13) {
-                            //         handleInputValue();
-                            //     }
-                            // }}
-                        />
-                    </div>
-                    <span onClick={handleInputValue}>🔍</span>
-                </div>
-            </div>
             <div className={styles.main}>
                 <div>
                     <table>
@@ -131,8 +80,9 @@ const OrderInquiry = () => {
                             <th>배송상태</th>
                             <th>결제상태</th>
                             <th>상세보기</th>
+                            <th></th>
                         </tr>
-                        {orderInquiryData.map((i, index) => (
+                        {displayedItems.map((i, index) => (
                             <tr key={index}>
                                 <td>
                                     {i.order_num}
@@ -162,14 +112,28 @@ const OrderInquiry = () => {
                                     {i.pay_state}
                                 </td>
                                 <td>
-                                    <input type="button" value="상세보기" />
+                                    <Link to="/Orderdetail" state={{ order: i }}>
+                                        <input type="button" value="상세보기" />
+                                    </Link>
                                 </td>
+                                {i.order_state !== '배송완료' ? (
+                                    <td>
+                                        <input type="button" value="구매확정" onClick={() => handleOrderStateChange(i)} />
+                                    </td>
+                                ) : (
+                                    <td>
+                                    </td>
+                                )}
                             </tr>
                         ))}
                     </table>
                 </div>
             </div>
-            <Pagination setPage={""} />
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+            />
         </div>
     )
 }

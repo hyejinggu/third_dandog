@@ -48,4 +48,11 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         return entity.getOrder_detail_no();
 	}
 	
+	@Override
+	public List<OrderDetail> getOrderDetailForUser(int order_num) {
+		List<OrderDetail> OrderDetails = orderDetailRepository.selectUserOrderDetails(order_num);
+
+		return OrderDetails;
+	}
+	
 }

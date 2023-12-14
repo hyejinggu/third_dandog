@@ -17,4 +17,7 @@ public interface ItemOrderRepository extends JpaRepository<ItemOrder , Integer> 
 	@Modifying
 	@Query("SELECT io FROM ItemOrder io WHERE io.user_id = :user_id")
 	List<ItemOrder> selectUserOrder(@Param("user_id") String user_id);
+	
+	@Query("SELECT io FROM ItemOrder io WHERE io.order_num = :order_num")
+	ItemOrder findByOrder_num(@Param("order_num") int order_num);
 }
