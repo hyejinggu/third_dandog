@@ -20,11 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.i4.dandog.entity.Item;
 import com.i4.dandog.entity.ItemOrder;
+import com.i4.dandog.entity.ItemReview;
 import com.i4.dandog.entity.Member;
 import com.i4.dandog.entity.OrderDetail;
 import com.i4.dandog.entity.ShippingAddress;
 import com.i4.dandog.service.ItemOrderService;
+import com.i4.dandog.service.ItemReviewService;
+import com.i4.dandog.service.ItemService;
 import com.i4.dandog.service.MemberService;
 import com.i4.dandog.service.OrderDetailService;
 
@@ -38,6 +42,8 @@ import lombok.extern.log4j.Log4j2;
 public class MyPageRestController {
 	ItemOrderService ioservice;
 	OrderDetailService odservice;
+	ItemService iservice;
+	ItemReviewService irservice;
 
 	@GetMapping("/getorderinquiry")
 	public ResponseEntity<List<ItemOrder>> getOrderInquiryForUser(@RequestParam String user_id) {
@@ -63,4 +69,13 @@ public class MyPageRestController {
 	    }
 	}
 	
+	@GetMapping("/getitem")
+	public Item getItem(@RequestParam int item_no) {
+		return iservice.selectOne(item_no);
+	}
+	
+	@PostMapping("/createReview")
+	public int createReview(ItemReview entity) {
+		return irservice.save(entity);
+	}
 }

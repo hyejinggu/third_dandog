@@ -24,6 +24,8 @@ const Orderdetail = () => {
         fetchData();
     }, []);
 
+
+
     return (
         <div className={styles.container}>
             <h2 className={styles.title}>주문 상세</h2>
@@ -77,9 +79,9 @@ const Orderdetail = () => {
                             <th>옵션 컬러</th>
                             <th></th>
                         </tr>
-                        {orderDetailData.map((i, index) => {
-                            <Orderdetailc i={i} order={order} />
-                        })}
+                        {orderDetailData.map((item, index) => (
+                            <Orderdetailc key={index} item={item} order={order} />
+                        ))}
                     </table>
                 </div>
 

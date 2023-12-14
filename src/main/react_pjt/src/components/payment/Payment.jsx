@@ -428,12 +428,13 @@ const Payment = () => {
                     item_no: i.selectedItem.item_no,
                     item_price: i.selectedItem.item_price,
                     item_quantity: i.selectedItem.item_quantity,
-                    review_state: '작성대기'
+                    review_state: '작성대기',
                 }))) : (
                 orderDetail = [{
                     item_no: selectedItem.item_no,
                     item_price: selectedItem.item_price,
                     item_quantity: quantity,
+                    review_state: '작성대기',
                 }]
             )
 

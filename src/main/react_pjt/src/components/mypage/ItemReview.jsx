@@ -7,6 +7,7 @@ import axios from "axios";
 const ItemReview = () => {
   const location = useLocation();
   const order = location.state.order;
+  const item_name = location.state.item_name;
   // const { addPostFromLocalStorage } = useContext(CreatePostContext);
 
   // const [image, setImage] = useState(null);
@@ -29,14 +30,12 @@ const ItemReview = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!postTitle) {
-      titleRef.current.focus();
-    } else if (!postContent) {
+    if (!postContent) {
       contentRef.current.focus();
     } else {
-      let formData = new FormData(document.getElementById("review_form"));
+      const formData = new FormData(document.getElementById("review_form"));
 
-      let url = "/neighbor/createReview";
+      const url = "/mypage/createReview";
 
       axios
         .post(url, formData, {
@@ -44,6 +43,7 @@ const ItemReview = () => {
         })
         .then((response) => {
           // location.reload();
+          setIsModalOpen(true);
         })
         .catch((err) => {
           if (err.response.status == "502") {
@@ -53,7 +53,6 @@ const ItemReview = () => {
           }
         });
 
-      setIsModalOpen(true);
     }
   };
 
@@ -64,8 +63,8 @@ const ItemReview = () => {
           <Modal
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
-            modalContent={"글 작성이 완료되었습니다."}
-            modalAfterPath={"/community/neighborhood"}
+            modalContent={"리뷰 작성이 완료되었습니다."}
+            modalAfterPath={"/OrderInquiry"}
           />
         )}
       </div>
@@ -83,8 +82,9 @@ const ItemReview = () => {
                 <label htmlFor="brand">상품명</label>
               </th>
               <td>
-                <input type="text" id="item_no" name="item_no" value="" hidden />
-                <input type="text" value="djksjdks" readOnly />
+                <input type="text" id="item_no" name="item_no" value={order.item_no} hidden />
+                <input type="text" id="order_num" name="order_num" value={order.order_num} hidden />
+                <span>{item_name}</span>
               </td>
               <th>
                 <label htmlFor="rating">별점</label>
