@@ -365,8 +365,7 @@ select[id="option"] {
     margin-bottom: 50px;
 }
 
-.section3 .total_score .grades_1,
-.section3 .total_score .grades_2 {
+.section3 .total_score .grades_1{
     width: 50%;
     height: 150px;
     box-sizing: border-box;
@@ -374,10 +373,10 @@ select[id="option"] {
     padding: 20px;
 }
 
-.section3 .total_score .grades_1 {
+/* .section3 .total_score .grades_1 {
     padding: 43px;
     border-right: 1px solid #ffa900;
-}
+} */
 
 .section3 .total_score .grades_1 span {
     font-size: 40px;
@@ -394,26 +393,25 @@ select[id="option"] {
     line-height: 40px;
 }
 
-.section3 .total_score .grades_2 {
+/* .section3 .total_score .grades_2 {
     display: inline-block;
     text-align: left;
-}
+} */
 
-.section3 .total_score .grades_2 ul>li {
+/* .section3 .total_score .grades_2 ul>li {
     width: 100%;
     line-height: 20px;
     text-align: right;
-}
+} */
 
-.section3 .total_score .grades_2 ul>li span {
+/* .section3 .total_score .grades_2 ul>li span {
     display: inline-block;
     width: 80%;
     height: 15px;
-    /* background-color: #e5e5e5; */
     border-radius: 8px;
     margin: 0 15px;
     background-color: #ffa900;
-}
+} */
 
 .section3 .user_review .review_header {
     width: 100%;

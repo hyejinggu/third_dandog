@@ -655,7 +655,9 @@ const Payment = () => {
                                 selectedItem.map((i, index) => (
                                     <tr key={index}>
                                         <td>
-                                            <h3 className={styles.name}>{i.selectedItem.item_name}</h3>
+                                                <h3 className={styles.name}>{i.selectedItem.item_name}</h3>
+                                                컬러: {i.selectedItem.option_color}
+                                                사이즈: {i.selectedItem.option_size}
                                             <input hidden id="item_no" name="item_no" value={i.selectedItem.item_no} />
                                         </td>
                                         <td>

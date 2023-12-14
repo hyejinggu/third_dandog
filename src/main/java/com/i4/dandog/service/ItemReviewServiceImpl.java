@@ -1,5 +1,8 @@
 package com.i4.dandog.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.i4.dandog.entity.ItemReview;
@@ -19,6 +22,11 @@ public class ItemReviewServiceImpl implements ItemReviewService {
 	public int save(ItemReview entity) {
 		repository.save(entity);
 		return entity.getReview_no();
+	}
+	
+	@Override
+	public List<ItemReview> selectOne(String item_name) {
+		return repository.findByItem_name(item_name);
 	}
 
 //	@Override

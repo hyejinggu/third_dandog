@@ -78,4 +78,9 @@ public class MyPageRestController {
 	public int createReview(ItemReview entity) {
 		return irservice.save(entity);
 	}
+	
+	@GetMapping("/getreviews")
+	public List<ItemReview> getReview(String item_name) {
+		return irservice.selectOne(item_name);
+	}
 }

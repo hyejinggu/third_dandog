@@ -26,7 +26,7 @@ public class ItemReview extends BaseEntity {
 	
 	private String user_id;
 	
-	private int item_no;
+	private String item_name;
 	
 	private String review_content;
 	

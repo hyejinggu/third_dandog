@@ -55,22 +55,14 @@ const ItemDetail = () => {
   };
 
   const loginId = sessionStorage.getItem("loginId");
-  const cartRequest = {
-    user_id: loginId,
-    item_no: selectedItem.item_no,
-    item_quantity: quantity,
-    item_options_size: selectedItem.options_size,
-    item_options_color: selectedItem.options_color,
-  };
 
   const handleAddToCart = () => {
     if (!loginId) {
       alert("로그인이 필요합니다.");
       navigate("/login");
     } else {
-      console.log(cartRequest);
       axios
-        .post(`/restCart/addCart?user_id=${loginId}`, cartRequest, {
+        .post(`/restCart/addCart/${loginId}/${selectedItem.item_name}/${selectedItem.options_size}/${selectedItem.options_color}/${quantity}`, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -106,7 +98,7 @@ const ItemDetail = () => {
           <section className={styles.img_area}>
             {/* 메인 이미지 */}
             <div className={styles.main_img}>
-              <img src={`/images/subpage/${mainImage}`} alt="상품이미지" />
+              <img src={`/images/item/${mainImage}`} alt="상품이미지" />
             </div>
 
             {/* 서브 이미지들 */}
@@ -116,7 +108,7 @@ const ItemDetail = () => {
                   selectedItem.item_no === i.item_no && (
                     <img
                       key={index}
-                      src={`/images/subpage/${i.item_img}`}
+                      src={`/images/item/${i.item_img}`}
                       alt={`상품 이미지 ${index}`}
                       onClick={() => handleImageClick(i.item_img)} // 이미지 클릭 시 처리
                     />
@@ -218,7 +210,7 @@ const ItemDetail = () => {
         </div>
         <ItemDetailSection1 />
         <ItemDetailSection2 />
-        <ItemDetailSection3 />
+        <ItemDetailSection3 item_name={selectedItem.item_name} />
         <ItemDetailSection4 />
       </form>
       {/* <RecentSeenItem /> */}

@@ -82,7 +82,7 @@ const ItemReview = () => {
                 <label htmlFor="brand">상품명</label>
               </th>
               <td>
-                <input type="text" id="item_no" name="item_no" value={order.item_no} hidden />
+                <input type="text" id="item_name" name="item_name" value={item_name} hidden />
                 <input type="text" id="order_num" name="order_num" value={order.order_num} hidden />
                 <span>{item_name}</span>
               </td>
