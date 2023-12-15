@@ -61,7 +61,7 @@ const BoardQna = () => {
                 console.log('res.data : ' + res.data);
             })
             .catch((res) => console.log('** res.data.err : ' + res));
-    }, [searchText]); // 검색기능 FilteredBoardArray를 추가한 이후 openQuestion, 제외함 
+    }, [searchText]); // 검색기능 FilteredBoardArray를 추가한 이후 openQuestion, 있으면 다시 기본리스트 전체출력문제로 제외함 
 
     // CreateQuestion에서 글을 등록하는 로직 수행 후
     // 데이터를 다시 불러오기 위해 openQuestion 상태를 변경
