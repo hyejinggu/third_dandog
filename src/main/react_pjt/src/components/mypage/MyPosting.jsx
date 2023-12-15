@@ -6,6 +6,22 @@ import axios from "axios";
 export default function MyPoting() {
   const [neighbors, setNeighbors] = useState([]);
   const [lounges, setLounges] = useState([]);
+  const [selectedNeighbor, setSelectedNeighbor] = useState(null);
+  const [selectedLounge, setSelectedLounge] = useState(null);
+
+  const handleShowOptions = (item, type) => {
+    if (type === "neighbor") {
+      setSelectedNeighbor((prev) =>
+        prev === item.neighbor_no ? null : item.neighbor_no
+      );
+      setSelectedLounge(null);
+    } else if (type === "lounge") {
+      setSelectedLounge((prev) =>
+        prev === item.lounge_no ? null : item.lounge_no
+      );
+      setSelectedNeighbor(null);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +41,8 @@ export default function MyPoting() {
 
     fetchData();
   }, []);
+
+  const handleUpdateAndDelete = () => {};
 
   // 날짜 포맷팅 함수
   const formatDate = (dateString) => {
@@ -47,6 +65,7 @@ export default function MyPoting() {
                 <span>조회수</span>
                 <span>등록 날짜</span>
                 <span>카테고리</span>
+                <span>수정 및 삭제</span>
               </li>
               {lounges.map((i) => (
                 <Link to="/community/loungepostdetail" state={{ post: i }}>
@@ -62,6 +81,18 @@ export default function MyPoting() {
                     <span>{i.lounge_hits}</span>
                     <span>{formatDate(i.regdate)}</span>
                     <span>{i.lounge_category}</span>
+                    <span
+                      className={styles.show_options}
+                      onClick={() => handleShowOptions(i, "lounge")}
+                    >
+                      ...
+                      {selectedLounge === i.lounge_no && (
+                        <ul className={styles.update_delete_options}>
+                          <li>수정</li>
+                          <li>삭제</li>
+                        </ul>
+                      )}
+                    </span>
                   </li>
                 </Link>
               ))}
@@ -76,20 +107,33 @@ export default function MyPoting() {
                 <span>별점</span>
                 <span>등록 날짜</span>
                 <span>카테고리</span>
+                <span>수정 및 삭제</span>
               </li>
               {neighbors.map((i) => (
-                <Link to="/community/neighborhood">
-                  <li key={i.neighbor_no}>
-                    <span>{i.neighbor_brand_name}</span>
+                <li key={i.neighbor_no}>
+                  <span>{i.neighbor_brand_name}</span>
+                  <Link to="/community/neighborhood">
                     <span>
                       <p>{i.neighbor_title}</p>
                       <p>{i.neighbor_content}</p>
                     </span>
-                    <span>{i.neighbor_rating}</span>
-                    <span>{formatDate(i.regdate)}</span>
-                    <span>{i.neighbor_category}</span>
-                  </li>
-                </Link>
+                  </Link>
+                  <span>{i.neighbor_rating}</span>
+                  <span>{formatDate(i.regdate)}</span>
+                  <span>{i.neighbor_category}</span>
+                  <span
+                    className={styles.show_options}
+                    onClick={() => handleShowOptions(i, "neighbor")}
+                  >
+                    ...
+                    {selectedNeighbor === i.neighbor_no && (
+                      <ul className={styles.update_delete_options}>
+                        <li>수정</li>
+                        <li>삭제</li>
+                      </ul>
+                    )}
+                  </span>
+                </li>
               ))}
             </ul>
           </div>
