@@ -46,7 +46,7 @@ const FindPw = () => {
       </div>
       <div className="findPw_container">
         <div className="findPw_box">
-          <h2>비밀번호찾기</h2>
+          <h2>비밀번호 찾기</h2>
           <form onSubmit={(e) => handleFindPassword(e)}>
             <label htmlFor="id">아이디 : </label>
             <input
@@ -112,7 +112,7 @@ const FindPw = () => {
               />
               <input
                 type="button"
-                value="뒤로가기"
+                value="뒤로 가기"
                 onClick={handleGoBack}
                 className="find_button"
               />

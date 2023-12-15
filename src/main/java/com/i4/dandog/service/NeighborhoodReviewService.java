@@ -2,6 +2,9 @@ package com.i4.dandog.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.i4.dandog.domain.ReviewInfoDTO;
 import com.i4.dandog.entity.NeighborhoodReview;
 
@@ -24,9 +27,12 @@ public interface NeighborhoodReviewService {
 	
 	
 	// ======== 관리자 검색
-	List<NeighborhoodReview> findByCategoryUserId(String searchCategory, String searchValue);
-	List<NeighborhoodReview> findByCategoryLoungeContents(String searchCategory, String searchValue);
-	List<NeighborhoodReview> findByCategoryLoungeBrand(String searchCategory, String searchValue);
+	Page<NeighborhoodReview> findByCategoryUserId(
+			String searchCategory, String searchValue, Pageable pageable);
+	Page<NeighborhoodReview> findByCategoryLoungeContents(
+			String searchCategory, String searchValue, Pageable pageable);
+	Page<NeighborhoodReview> findByCategoryLoungeBrand(
+			String searchCategory, String searchValue, Pageable pageable);
 	
 	
 	

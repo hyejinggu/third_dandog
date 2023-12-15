@@ -1,0 +1,55 @@
+.search_wrap {
+  margin-bottom: 10px;
+}
+
+.event_list td:first-child,
+.event_list td:nth-child(2) {
+  width: 4%;
+}
+
+.event_list td:nth-child(3),
+.event_list td:nth-child(4),
+.event_list td:nth-child(5),
+.event_list td:nth-child(6) {
+  width: 8%;
+}
+
+.event_btn * {
+  border: none;
+  border-radius: 10px;
+  padding: 5px 10px;
+  background-color: rgba(128, 128, 128, 0.211);
+  cursor: pointer;
+  font-size: 15px;
+  margin-right: 10px;
+}
+
+.event_btn input {
+  color: crimson;
+}
+
+.event_btn input:hover,
+.event_btn span:hover {
+  font-weight: bold;
+}
+
+/* 
+.neighbor_list td p:nth-child(2) {
+  font-size: 0.8em;
+} */
+
+/* .expandable-row .full-text {
+  text-align: center;
+  display: block;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 300px;
+  margin: 0 auto;
+  white-space: nowrap;
+}
+
+.expandable-row.expanded .full-text {
+  display: block;
+  white-space: wrap;
+} */

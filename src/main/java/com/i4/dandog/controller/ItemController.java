@@ -51,13 +51,10 @@ public class ItemController {
 	        @RequestParam(name = "size", defaultValue = "10") int size,
 	        Model model) {
 
-	    if (searchCategory.equals("all")) {
-	        searchCategory = null;
-	    }
+	    if (searchCategory.equals("all")) searchCategory = null;
 
 	    // 페이지네이션을 위해 Pageable 객체 생성
 	    Pageable pageable = PageRequest.of(page, size);
-
 	    Page<Item> itemPage;
 
 	    if ("no".equals(searchField)) {

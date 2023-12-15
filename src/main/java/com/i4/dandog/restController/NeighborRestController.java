@@ -60,9 +60,7 @@ public class NeighborRestController {
 			@RequestParam(name = "neighborBrandName") String neighborBrandName) {
 
 		List<NeighborhoodReview> reviews;		
-		
 		reviews = nservice.findReviewByBrand(neighborBrandName);
-		log.info("==============리뷰 목록!!!: " + reviews);
 		
 		return reviews;
 	}
@@ -77,7 +75,6 @@ public class NeighborRestController {
 			model.addAttribute("message", "상품 등록 성공");
 			return "성공!!";
 		} catch (Exception e) {
-			log.info("insert Exception: " + e.toString());
 			model.addAttribute("message", "상품 등록 실패");
 			return "실패냐!!";
 		}

@@ -2,6 +2,8 @@ package com.i4.dandog.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.i4.dandog.entity.Lounge;
@@ -29,13 +31,13 @@ public class LoungeServiceImpl implements LoungeService {
 
 	
 	@Override
-	public List<Lounge> findByCategoryLoungeContents(String category, String inputValue) {
-		return loungeRepository.findByCategoryLoungeContents(category, inputValue);
+	public Page<Lounge> findByCategoryLoungeContents(String category, String inputValue, Pageable pageable) {
+		return loungeRepository.findByCategoryLoungeContents(category, inputValue, pageable);
 	}
 	
 	@Override
-	public List<Lounge> findByCategoryUserId(String category, String inputValue) {
-		return loungeRepository.findByCategoryUserId(category, inputValue);
+	public Page<Lounge> findByCategoryUserId(String category, String inputValue, Pageable pageable) {
+		return loungeRepository.findByCategoryUserId(category, inputValue, pageable);
 	}
 	
 	

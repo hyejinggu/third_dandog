@@ -3,6 +3,8 @@ package com.i4.dandog.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.i4.dandog.domain.ReviewInfoDTO;
@@ -52,19 +54,22 @@ public class NeighborhoodReviewServiceImpl implements NeighborhoodReviewService 
 	
 	// ======== 관리자 검색
 	@Override
-	public List<NeighborhoodReview> findByCategoryUserId(String searchCategory, String searchValue) {
-		return repository.findByCategoryUserId(searchCategory, searchValue);
+	public Page<NeighborhoodReview> findByCategoryUserId(
+			String searchCategory, String searchValue, Pageable pageable) {
+		return repository.findByCategoryUserId(searchCategory, searchValue, pageable);
 	}
 	
 	@Override
-	public List<NeighborhoodReview> findByCategoryLoungeContents(String searchCategory, String searchValue) {
-		return repository.findByCategoryLoungeContents(searchCategory, searchValue);
+	public Page<NeighborhoodReview> findByCategoryLoungeContents(
+			String searchCategory, String searchValue, Pageable pageable) {
+		return repository.findByCategoryLoungeContents(searchCategory, searchValue, pageable);
 	}  
 	
 	
 	@Override
-	public List<NeighborhoodReview> findByCategoryLoungeBrand(String searchCategory, String searchValue) {
-		return repository.findByCategoryLoungeBrand(searchCategory, searchValue);
+	public Page<NeighborhoodReview> findByCategoryLoungeBrand(
+			String searchCategory, String searchValue, Pageable pageable) {
+		return repository.findByCategoryLoungeBrand(searchCategory, searchValue, pageable);
 	}
 	
 	
