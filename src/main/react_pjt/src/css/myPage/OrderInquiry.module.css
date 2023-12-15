@@ -1,0 +1,121 @@
+
+/* common */
+.container * {
+    text-align: center;
+}
+
+.fs14 {
+    font-size: 14px;
+}
+
+.text_white {
+    color: white;
+}
+
+.text_center {
+    text-align: center;
+}
+
+.d_none {
+    display: none;
+}
+
+.d_flex {
+    display: flex;
+}
+
+/* layout */
+
+.title {
+    color: black;
+}
+
+.title {
+    color: #ffa900;
+    margin: 1em;
+}
+
+.main {
+    max-width: 1500px;
+    min-width: 1200px;
+    padding: 3em;
+    border-top: 1px solid #ffa900;
+    border-bottom: 1px solid #ffa900;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.main div>table {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.main input[type="button"] {
+    padding: 10px 20px;
+    border: 1px solid #ffa900;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #ffa900;
+    cursor: pointer;
+    box-sizing: border-box;
+    text-align: center;
+    height: 40px;
+    width: 100%;
+}
+
+.main input[type="button"]:hover {
+    transition: .5s;
+    background-color: #ffe344;
+}
+
+.container .OrderInquiry table {
+    width: 50%;
+}
+
+/* ===== 상단 카테고리, 정렬 영역 시작 ===== */
+
+.sort * {
+    display: inline-block;
+}
+
+.sort {
+    padding: 15px;
+    border-top: #ffa900 1px solid;
+    border-bottom: #ffa900 1px solid;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sort li {
+    height: 30px;
+    line-height: 30px;
+    font-weight: bold;
+    color: rgb(70, 70, 70);
+    background-color: #fffbee;
+    border: rgb(70, 70, 70) 1px solid;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
+    margin-right: 5px;
+
+    padding: 0 5px;
+    cursor: pointer;
+}
+
+.search_bar {
+    display: flex;
+}
+
+.search_bar input {
+    padding: 7px 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
+    border: 1px solid;
+}
+
+.search_bar span {
+    align-self: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    cursor: pointer;
+}

@@ -18,8 +18,9 @@ function getAdminCommunity() {
 
 //====================== lounge ===========================
 
-function getLoungeList() {
-	let url = "/community/loungeList";
+function getLoungeList(pageNumber) {
+	pageNumber = pageNumber || 0;
+	let url = `/community/loungeList?page=${pageNumber}`;
 
 	axios.get(url
 	).then(response => {
@@ -48,14 +49,15 @@ function loungeInsert() {
 
 
 
-function searchLoungeList() {
+function searchLoungeList(pageNumber) {
+	pageNumber = pageNumber || 0;
 	let url = "/community/loungeList";
 	
 	let searchCategory = document.getElementById("l_search_category").value;
 	let searchField = document.getElementById("l_search_field").value;
 	let searchValue = document.getElementById("l_search_value").value;
 	
-	url += `?search_category=${searchCategory}&search_field=${searchField}&search_value=${searchValue}`;
+	url += `?page=${pageNumber}&search_category=${searchCategory}&search_field=${searchField}&search_value=${searchValue}`;
 
 	axios.get(url)
 		.then(response => {

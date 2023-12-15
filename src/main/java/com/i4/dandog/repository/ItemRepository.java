@@ -13,18 +13,23 @@ import com.i4.dandog.entity.Item;
 public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	@Query("select i from Item i where (:searchCategory is null or i.item_category = :searchCategory) and lower(i.item_name) like lower(concat('%', :searchValue, '%')) order by item_no desc")
-	Page<Item> findByCategoryAndItemName(@Param("searchCategory") String searchCategory,
+	Page<Item> findByCategoryAndItemName(
+			@Param("searchCategory") String searchCategory,
 			@Param("searchValue") String searchValue,
 			Pageable pageable);
 
 	@Query("select i from Item i where (:searchCategory is null or i.item_category = :searchCategory) and i.item_no = :searchValue order by item_no desc")
-	Page<Item> findByCategoryItemNo(@Param("searchCategory") String searchCategory,
+	Page<Item> findByCategoryItemNo(
+			@Param("searchCategory") String searchCategory,
 			@Param("searchValue") int searchValue,
 			Pageable pageable);
 	
 	
 // =========================== Rest Controller에서 사용 =====================================
 
+
+	
+	
 	@Query("select i from Item i where item_name like %:inputValue% and item_category = :category order by i.item_sales_volume desc")
 	public List<Item> findByOrderByItemSalesVolumeDesc(@Param("inputValue") String inputValue,
 			@Param("category") String category);

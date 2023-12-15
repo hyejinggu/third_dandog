@@ -84,29 +84,102 @@
 
 /* =========================================================== */
 
-.review_wrap {
-  width: 90%;
-  /* background-color: cornflowerblue; */
+.review_content_wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.review_wrap ul {
+.review_wrap {
+  width: 80%;
+}
+
+.review_wrap .review_title {
+  margin-top: 10px;
+}
+
+.review_wrap .review_sorting {
+  display: flex;
+}
+
+.review_wrap .review_sorting select,
+.review_wrap .review_sorting button {
+  margin: 5px;
+  margin-bottom: 10px;
+}
+
+.brand_review_wrap {
+  display: flex;
+}
+
+.brand_wrap {
+  flex: 1;
+}
+.review_list_wrap {
+  flex: 2;
+  margin-left: 20px;
+}
+
+.review_wrap ul,
+.review_list_container ul {
   margin-bottom: 20px;
   display: grid;
-  grid-template-rows: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
 }
 
-.review_wrap li {
+.neighbor_brand,
+.brand_list {
   display: grid;
-  grid-template-columns: 1fr 2fr repeat(3, 1fr);
-  height: 100px;
+  height: 80px;
   align-items: center;
   font-size: 1.2em;
-  border-top: #ffa900 1px solid;
+  /* border-bottom: #ffa900 1px solid; */
 }
 
-.review_wrap li:first-of-type span {
+.brand_clicked {
+  background-color: #ffe3445b;
+  border-radius: 10px;
+}
+
+.brand_list {
+  grid-template-columns: repeat(2, 1fr);
   font-weight: bold;
   color: #ff9d00;
+  height: 50px;
+  border-top: #ffa900 2px solid;
+  border-bottom: #ffa900 2px solid;
+}
+
+.neighbor_brand {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.neighbor_brand div {
+  cursor: pointer;
+}
+
+.neighbor_brand > div:hover * {
+  font-weight: bold;
+}
+
+.review_list_container {
+  background-color: rgba(128, 128, 128, 0.086);
+  /* border-radius: 15px; */
+}
+
+.neighbor_review,
+.review_list {
+  display: grid;
+  align-items: center;
+  height: 50px;
+  border-bottom: 1px dotted gray;
+}
+
+.review_list,
+.neighbor_review {
+  grid-template-columns: repeat(5, 1fr);
+  font-size: 0.9em;
 }
 
 .review_title {
@@ -116,12 +189,15 @@
   font-weight: bold;
 }
 
-.neighbor_review p:first-child {
+.neighbor_brand span {
+  font-size: 0.9em;
   margin-bottom: 5px;
 }
 
-.neighbor_review span p:nth-child(2) {
-  font-size: 0.8em;
+.review_counting span {
+  font-size: 0.7em;
+  font-weight: bold;
+  color: rgb(16, 16, 158);
 }
 
 /* ============================================================== */
@@ -144,7 +220,7 @@
   border-radius: 10px;
   padding: 10px;
   cursor: pointer;
-  margin-right: 100px;
+  margin-right: 150px;
 }
 
 .review_btn a {

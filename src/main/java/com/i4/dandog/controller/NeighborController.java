@@ -3,6 +3,9 @@ package com.i4.dandog.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.i4.dandog.entity.NeighborhoodReview;
 import com.i4.dandog.service.NeighborhoodReviewService;
 
 import lombok.AllArgsConstructor;
@@ -32,17 +36,33 @@ public class NeighborController {
 			@RequestParam(name = "search_category", defaultValue = "all") String searchCategory,
             @RequestParam(name = "search_field", defaultValue = "contents") String searchField,
             @RequestParam(name = "search_value", defaultValue = "") String searchValue,
+	        @RequestParam(name = "page", defaultValue = "0") int page,
+	        @RequestParam(name = "size", defaultValue = "10") int size,
             Model model) {
-		log.info("************************ " +searchField);
 	
 		if (searchCategory.equals("all")) searchCategory = null;
+		
+		Pageable pageable = PageRequest.of(page, size);
+	    Page<NeighborhoodReview> neighborPage;
+		
 		if ("id".equals(searchField)) {
-			model.addAttribute("neighborList", service.findByCategoryUserId(searchCategory, searchValue));
+			neighborPage = service.findByCategoryUserId(searchCategory, searchValue, pageable);
+			model.addAttribute("neighborList", neighborPage.getContent());
 		} else if("contents".equals(searchField)) {
-			model.addAttribute("neighborList", service.findByCategoryLoungeContents(searchCategory, searchValue));			
+			neighborPage = service.findByCategoryLoungeContents(searchCategory, searchValue, pageable);
+			model.addAttribute("neighborList", neighborPage.getContent());			
 		} else {
-			model.addAttribute("neighborList", service.findByCategoryLoungeBrand(searchCategory, searchValue));	
+			neighborPage = service.findByCategoryLoungeBrand(searchCategory, searchValue, pageable);
+			model.addAttribute("neighborList", neighborPage.getContent());	
 		}
+		
+		
+	    // 페이지 관련 정보를 모델에 추가
+	    model.addAttribute("neighborPage", neighborPage);
+	    model.addAttribute("currentPage", neighborPage.getNumber());
+	    model.addAttribute("totalPages", neighborPage.getTotalPages());
+	    model.addAttribute("totalNeighbors", neighborPage.getTotalElements());
+		
 		
 		return "/neighbor/neighborList";
 	}

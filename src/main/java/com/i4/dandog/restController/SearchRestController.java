@@ -41,11 +41,11 @@ public class SearchRestController {
 	    try {
 	    	log.info("searchValue: " + searchValue);
 	        Page<Item> searchedItems = iService.findByCategoryAndItemName(null, searchValue, null);
-	        List<Lounge> searchedLounges = lService.findByCategoryLoungeContents(null, searchValue);
+	        Page<Lounge> searchedLounges = lService.findByCategoryLoungeContents(null, searchValue, null);
 	        
 	        Map<String, List<? extends Object>> result = new HashMap<>();
 	        result.put("items", searchedItems.getContent());
-	        result.put("lounges", searchedLounges);
+	        result.put("lounges", searchedLounges.getContent());
 
 	        return ResponseEntity.ok(result);
 	    } catch (Exception e) {
@@ -58,12 +58,12 @@ public class SearchRestController {
 	public ResponseEntity<Map<String, List<? extends Object>>> searchMyPosting(@PathVariable String user_id) {
 	    try {
 	    	log.info("user_id: " + user_id);
-	        List<Lounge> searchedLounges = lService.findByCategoryUserId(null, user_id);
-	        List<NeighborhoodReview> searchedNeighbors = rService.findByCategoryUserId(null, user_id);
+	        Page<Lounge> searchedLounges = lService.findByCategoryUserId(null, user_id, null);
+	        Page<NeighborhoodReview> searchedNeighbors = rService.findByCategoryUserId(null, user_id, null);
 	        
 	        Map<String, List<? extends Object>> result = new HashMap<>();
-	        result.put("lounges", searchedLounges);
-	        result.put("neighbors", searchedNeighbors);
+	        result.put("lounges", searchedLounges.getContent());
+	        result.put("neighbors", searchedNeighbors.getContent());
 
 	        return ResponseEntity.ok(result);
 	    } catch (Exception e) {

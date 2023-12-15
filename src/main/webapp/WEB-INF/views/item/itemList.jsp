@@ -67,7 +67,8 @@
                 <td><input type="checkbox" name="selectedItem" class="item_check" value="${i.item_no}"/></td>
                 <td>${i.item_no}</td>
                 <td>${i.item_category}</td>
-                <td onclick="getItemDetail(${i.item_no})">${i.item_name}</td>
+                <td onclick="getItemDetail(`${i.item_no}`)"
+                	class="item_name">${i.item_name}</td>
                 <td>${i.item_price}원</td>
                 <td>${i.options_size}</td>
                 <td>${i.options_color}</td>
@@ -85,7 +86,7 @@
     		<div class="pagination_wrap" >
 			<c:if test="${not empty requestScope.itemPage}">
 			    <c:forEach var="pageNumber" begin="0" end="${requestScope.itemPage.totalPages - 1}">
-			        <span onclick="searchItemList(${pageNumber})"
+			        <span onclick="searchItemList(`${pageNumber}`)"
 			              class="${pageNumber == requestScope.itemPage.number ? 'currentPage' : ''}">
 			            ${pageNumber + 1}
 			        </span>
@@ -103,8 +104,5 @@
 
 <input type="submit" value="선택 삭제" onclick="deleteItem()"/>
 
-<h4>
-    <a href="/home">Home으로 가기</a>
-</h4>
 </body>
 </html>

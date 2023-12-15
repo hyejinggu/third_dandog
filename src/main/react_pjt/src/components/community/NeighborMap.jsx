@@ -23,8 +23,9 @@ const getCurrentCoordinate = async () => {
   });
 };
 
-const NeighborMap = () => {
+const NeighborMap = ({ setSelectedPlace }) => {
   const [searchValue, setSearchValue] = useState("애견 미용");
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     setSearchValue(e.target.value);
@@ -180,7 +181,17 @@ const NeighborMap = () => {
         el.innerHTML = itemStr;
         el.className = "item";
 
+        // =================== 클릭 이벤트 핸들러 추가 ========================
+        el.addEventListener("click", function () {
+          handleClick(places.place_name);
+        });
         return el;
+      }
+
+      // 클릭 이벤트 핸들러 함수
+      function handleClick(placeName) {
+        console.log("=====" + placeName);
+        setSelectedPlace(placeName);
       }
 
       // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다

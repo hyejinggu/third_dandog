@@ -54,9 +54,16 @@ public class CartRestController {
 	
 	
 	// 장바구니에 상품 추가
-	@PostMapping("/addCart")
-	public String addToCart(@RequestBody Cart entity) {
-		cartService.addToCart(entity.getUser_id(), entity.getItem_no(), entity.getItem_quantity());
+	@PostMapping("/addCart/{loginId}/{itemName}/{selectedSize}/{selectedColor}/{itemQuantity}")
+	public String addToCart(
+			@PathVariable String loginId,
+	        @PathVariable String itemName,
+	        @PathVariable String selectedSize,
+	        @PathVariable String selectedColor,
+	        @PathVariable int itemQuantity
+	) {
+		int itemNoToUpdate = itemService.updateOption(itemName, selectedColor, selectedSize);
+		cartService.addToCart(loginId, itemNoToUpdate, itemQuantity);
 		return "redirect:/cart";
 	}
 

@@ -49,17 +49,19 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
     }, []);
 
     // 기본 배송지 설정
-    const handleDefualtAddress = (user_address1, user_address2, post_code) => {
+    const handleDefualtAddress = (selectedAddress) => {
         axios
-            .post(`/payment/addDefaultAddress?user_id=${sessionStorage.loginId}`, {
-                user_address1,
-                user_address2,
-                post_code,
+            .post(`/payment/updateAddress`, {
+                user_id: sessionStorage.loginId,
+                user_address1: selectedAddress.user_address1,
+                user_address2: selectedAddress.user_address2,
+                post_code: selectedAddress.post_code,
             })
             .then((response) => {
                 // 성공적으로 응답을 받았을 때 처리
                 alert(`기본 배송지로 설정되었습니다.`);
                 closeModal();
+                window.location.reload();
             })
             .catch((error) => {
                 // 에러 발생 시 처리
@@ -289,8 +291,8 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
                             </td>
                             <div className={styles.button} >
                                 {userData.map((u, index) => (
-                                    i.post_code !== u.post_code &&
-                                    <input type="button" value="기본배송지로 선택" onClick={() => handleDefualtAddress(i.user_address1, i.user_address2, i.post_code)} />
+                                    i.user_address1 + i.user_address1 + i.post_code !== u.user_address1 + u.user_address1 + u.post_code &&
+                                    <input type="button" value="기본배송지로 선택" onClick={() => handleDefualtAddress(i)} />
                                 ))}
                                 <input type="button" value="삭제" />
                                 <input type="button" value="선택" onClick={() => handleSelectAddress(i)} />
@@ -312,6 +314,8 @@ const Payment = () => {
 
     const selectedItem = location.state.selectedItem;
     const quantity = location.state.quantity;
+    const options_size = location.state.options_size;
+    const options_color = location.state.options_color;
 
     const calculateTotalPrice = (item) => {
         if (!item || !item.selectedItem) {
@@ -426,12 +430,17 @@ const Payment = () => {
                     item_no: i.selectedItem.item_no,
                     item_price: i.selectedItem.item_price,
                     item_quantity: i.selectedItem.item_quantity,
-                    review_state: '작성대기'
+                    option_size: i.selectedItem.options_size,
+                    option_color: i.selectedItem.options_color,
+                    review_state: '작성대기',
                 }))) : (
                 orderDetail = [{
                     item_no: selectedItem.item_no,
                     item_price: selectedItem.item_price,
                     item_quantity: quantity,
+                    option_size: options_size,
+                    option_color: options_color,
+                    review_state: '작성대기',
                 }]
             )
 
@@ -653,6 +662,7 @@ const Payment = () => {
                                     <tr key={index}>
                                         <td>
                                             <h3 className={styles.name}>{i.selectedItem.item_name}</h3>
+                                            컬러: {i.selectedItem.options_color} | 사이즈: {i.selectedItem.options_size}
                                             <input hidden id="item_no" name="item_no" value={i.selectedItem.item_no} />
                                         </td>
                                         <td>
@@ -691,6 +701,7 @@ const Payment = () => {
                                 <tr>
                                     <td>
                                         <h3 className={styles.name}>{selectedItem.item_name}</h3>
+                                        컬러: {options_color} | 사이즈: {options_size}
                                         <input hidden id="item_no" name="item_no" value={selectedItem.item_no} />
                                     </td>
                                     <td>
@@ -1059,9 +1070,8 @@ const Payment = () => {
                             isModalOpen={isModalOpen}
                             setIsModalOpen={setIsModalOpen}
                             modalContent={modalMessage}
-                            modalAfterPath="/main/*"
+                            modalAfterPath={"/"}
                         />
-
                     )}
                 </div>
             </form>

@@ -1,117 +1,149 @@
 #adminPage {
-    padding: 0;
-    margin: 0;
-    display: flex;
+  padding: 0;
+  margin: 0;
+  display: flex;
 }
 
 .adminPageWrap {
-    width: 100%;
-    height: 100%;
-    min-width: 1920px;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  min-width: 1920px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .adminPageWrap .title {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 .adminPageHeader {
-    width: 10%;
-    min-width: 200px;
-    height: 891px;
-    background-color: #f5f6f7;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px;
+  width: 10%;
+  min-width: 200px;
+  height: 891px;
+  background-color: #f5f6f7;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
 }
 
 .adminPageHeader ul {
-    width: 100%;
-    height: 100%;
-    padding: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
 }
 
-.adminPageHeader ul>li {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    cursor: pointer;
+.adminPageHeader ul > li {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
 }
 
-.adminPageHeader ul>li>span:hover {
-    border-bottom: 1px solid;
+.adminPageHeader ul > li > span:hover {
+  border-bottom: 1px solid;
 }
 
-
-.adminPageHeader ul>li p {
-    line-height: 30px;
-    border-bottom: 1px solid #e9eced;
-    font-size: 17px;
-    font-weight: bold;
+.adminPageHeader ul > li p {
+  line-height: 30px;
+  border-bottom: 1px solid #e9eced;
+  font-size: 17px;
+  font-weight: bold;
 }
 
-.adminPageHeader ul>li>span {
-    font-size: 15px;
-    line-height: 30px;
+.adminPageHeader ul > li > span {
+  font-size: 15px;
+  line-height: 30px;
 }
 
 .adminPageHeader {
-    float: left;
+  float: left;
 }
 
-
 #resultArea1 {
-    width: 87%;
-    max-width: 1400px;
-    min-width: 1400px;
-    float: right;
-    padding: 30px;
+  width: 87%;
+  max-width: 1400px;
+  min-width: 1400px;
+  float: right;
+  padding: 30px;
 }
 
 #resultArea1 h1 {
-    width: 100%;
-    font-size: 20px;
-    margin-top: 10px;
-    border-bottom: 3px solid #ffa900;
-    line-height: 50px;
+  width: 100%;
+  font-size: 20px;
+  margin-top: 10px;
+  border-bottom: 3px solid #ffa900;
+  line-height: 50px;
 }
 
-
-
 .title {
-	width: 100%;
+  width: 100%;
 }
 
 .title h2 {
-	width: 100%;
-	font-size: 20px;
-	margin-top: 10px;
-	border-bottom: 3px solid #ffa900;
-	line-height: 50px;
+  width: 100%;
+  font-size: 20px;
+  margin-top: 10px;
+  border-bottom: 3px solid #ffa900;
+  line-height: 50px;
 }
 
-
-
 .table {
-	border-collapse: collapse;
-	border: 2px solid #ffa900;
-	background-color: #fff;
-	border-radius: 5px;
-	margin-bottom: 15px;
-	width: 80%;
+  border-collapse: collapse;
+  border: 2px solid #ffa900;
+  background-color: #fff;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  width: 80%;
 }
 
 .table th {
-	background-color: #fff8d0;
-	border: 1px solid #ffa900;
+  background-color: #fff8d0;
+  border: 1px solid #ffa900;
 }
 
 .table td {
-	text-align: center;
-	border: 1px solid #ffa900;
+  text-align: center;
+  border: 1px solid #ffa900;
+}
+
+.pagination_wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination_wrap span {
+  cursor: pointer;
+  display: inline-block;
+  background-color: #fff;
+  margin: 10px;
+  text-align: center;
+}
+
+.normalPage {
+  color: #cdcdcd;
+}
+
+.currentPage {
+  font-weight: bold;
+  color: #ffa900;
+}
+
+.expandable_row .full_text {
+  text-align: center;
+  display: block;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 300px;
+  margin: 0 auto;
+  white-space: nowrap; /* 텍스트가 한 줄로 유지되도록 설정 */
+}
+
+.expandable_row.expanded .full_text {
+  display: block;
+  white-space: wrap;
 }

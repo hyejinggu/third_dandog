@@ -1,5 +1,7 @@
 package com.i4.dandog.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +21,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "item")
-@EqualsAndHashCode(callSuper=true)
+//@EqualsAndHashCode(callSuper=true)
 // @EqualsAndHashCode(callSuper=false)를 사용하면 슈퍼클래스의 
 // 필드들이 equals 및 hashCode에서 고려되지 않습니다. 
 // 슈퍼클래스의 필드들도 고려되어야 하는 경우라면 @EqualsAndHashCode(callSuper=true)를 사용
@@ -29,7 +31,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Item extends BaseEntity {
+public class Item {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,12 +57,18 @@ public class Item extends BaseEntity {
 	
 	private int item_stock;
 	
+	private LocalDateTime regdate;
+	
 	
 	
 	@Transient
 	private String[] options_sizes;
 	@Transient
 	private String[] options_colors;
+	
+	@Transient
+	private long sales;
+	
 	
 	@Transient // DB에는 따로 생성되지 않음
 	private MultipartFile uploadfileF1; // form의 Upload_File 정보를 전달받기 위한 필드

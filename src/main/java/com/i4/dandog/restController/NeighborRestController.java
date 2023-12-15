@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.i4.dandog.domain.ReviewInfoDTO;
 import com.i4.dandog.entity.NeighborhoodReview;
 import com.i4.dandog.service.NeighborhoodReviewService;
 
@@ -23,16 +24,47 @@ public class NeighborRestController {
 
 	NeighborhoodReviewService nservice;
 
-	@GetMapping("/review")
-	public List<NeighborhoodReview> neighborhoodReview(@RequestParam(name = "category") String category) {
-		System.out.println("************" + category + "Review");
+	
+	@GetMapping("/brand")
+	public List<NeighborhoodReview> selectedPlaceReview(@RequestParam(name = "selectedPlace") String selectedPlace) {
 
 		List<NeighborhoodReview> reviews;
 
-		reviews = nservice.findByCategory(category);
+		reviews = nservice.findBySelectedPlace(selectedPlace);
 
 		return reviews;
 	}
+	
+	
+	@GetMapping("/review")
+	public List<ReviewInfoDTO> sortAndFilterWithCategory(
+			@RequestParam(name = "sorting") String sorting,
+			@RequestParam(name = "filter") String filter_,
+			@RequestParam(name = "category") String category) {
+
+		List<ReviewInfoDTO> reviews;		
+		
+		if ("star".equals(sorting)) {
+			double filter = Double.parseDouble(filter_);
+			reviews = nservice.starFilterWithCategory(filter, category);
+		} else {
+			reviews = nservice.sortWithCategory(sorting, category);
+		}
+		
+		return reviews;
+	}
+	
+	
+	@GetMapping("/reviewDetails")
+	public List<NeighborhoodReview> findReviewByBrand(
+			@RequestParam(name = "neighborBrandName") String neighborBrandName) {
+
+		List<NeighborhoodReview> reviews;		
+		reviews = nservice.findReviewByBrand(neighborBrandName);
+		
+		return reviews;
+	}
+	
 
 	// createReview
 	@PostMapping("/createReview")
@@ -43,7 +75,6 @@ public class NeighborRestController {
 			model.addAttribute("message", "상품 등록 성공");
 			return "성공!!";
 		} catch (Exception e) {
-			log.info("insert Exception: " + e.toString());
 			model.addAttribute("message", "상품 등록 실패");
 			return "실패냐!!";
 		}

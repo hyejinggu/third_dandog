@@ -90,7 +90,7 @@
 			
 			<tr height="40">
 				<th></th>
-				<td><span onclick="itemUpdate(${i.item_no})">상품 수정</span></td>
+				<td><span onclick="itemUpdate(`${i.item_no}`)">상품 수정</span></td>
 			</tr>
 			</c:if>
 		</table>
@@ -99,8 +99,6 @@
 	<br>
 
 
-	<h4>
-		<a href="/home">Home으로 가기</a>
-	</h4>
+
 </body>
 </html>

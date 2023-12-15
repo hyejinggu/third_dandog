@@ -17,10 +17,10 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     private final OrderDetailRepository orderDetailRepository;
 
-    @Override
-    public List<OrderDetail> getAllOrders() {
-        return orderDetailRepository.findAll();
-    }
+//    @Override
+//    public List<OrderDetail> getAllOrders() {
+//        return orderDetailRepository.findAll();
+//    }
 
     @Override
     public OrderDetail selectOne(int order_detail_no) {
@@ -46,6 +46,13 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	public int save(OrderDetail entity) {
 		orderDetailRepository.save(entity);
         return entity.getOrder_detail_no();
+	}
+	
+	@Override
+	public List<OrderDetail> getOrderDetailForUser(int order_num) {
+		List<OrderDetail> OrderDetails = orderDetailRepository.selectUserOrderDetails(order_num);
+
+		return OrderDetails;
 	}
 	
 }

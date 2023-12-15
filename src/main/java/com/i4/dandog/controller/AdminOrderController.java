@@ -1,42 +1,44 @@
-//package com.i4.dandog.controller;
-//
-//
-//import java.io.IOException;
-//
-//import javax.servlet.http.HttpSession;
-//
-//import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//
-//import com.i4.dandog.entity.OrderDetail;
-//import com.i4.dandog.service.OrderDetailService;
-//
-//import lombok.AllArgsConstructor;
-//import lombok.extern.log4j.Log4j2;
-//
-//@Controller
-//@Log4j2
-//@AllArgsConstructor
-//@RequestMapping("/admin")
-//public class AdminOrderController {
-//    private OrderDetailService orderDetailService;
-//
-//    // 주문 목록 조회
-//    @GetMapping(value = "/orders")
-//    public String getOrderList(Model model) {
-//        model.addAttribute("orders", orderDetailService.getAllOrders());
-//        return "admin/adminOrder";
-//    }
-//    
-//    @GetMapping(value = "/orderdetail")
-//    public String orderdetail(Model model, OrderDetail entity) {
-//    	model.addAttribute("orderselect", orderDetailService.selectOne(entity.getOrder_detail_no()));
-//    	return "admin/adminOrderDetail";
-//    }
-//    
+package com.i4.dandog.controller;
+
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.i4.dandog.entity.OrderDetail;
+import com.i4.dandog.service.ItemOrderService;
+import com.i4.dandog.service.OrderDetailService;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
+@Controller
+@Log4j2
+@AllArgsConstructor
+@RequestMapping("/admin")
+public class AdminOrderController {
+	private ItemOrderService itemOrderService;
+    private OrderDetailService orderDetailService;
+
+    // 주문 목록 조회
+    @GetMapping(value = "/orders")
+    public String getOrderList(Model model) {
+        model.addAttribute("orders", itemOrderService.getAllOrders());
+        return "admin/adminOrder";
+    }
+    
+    @GetMapping(value = "/orderdetail")
+    public String orderdetail(Model model, OrderDetail entity) {
+    	model.addAttribute("orderselect", orderDetailService.selectOne(entity.getOrder_detail_no()));
+    	return "admin/adminOrderDetail";
+    }
+    
 //	@PostMapping(value="/orderupdate")
 //	public String orderUpdte(OrderDetail entity, Model model) throws IOException {
 //		model.addAttribute("orderselect", entity);
@@ -66,4 +68,4 @@
 //		
 //		return uri;
 //	} // mdelete
-//}
+}

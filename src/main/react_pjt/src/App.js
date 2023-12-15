@@ -30,6 +30,9 @@ import MyPage from "./components/mypage/MyPage";
 import UpdateProfile from "./components/mypage/UpdateProfile";
 import UpdatePw from "./components/mypage/UpdatePw";
 import MyPosting from "./components/mypage/MyPosting";
+import OrderInquiry from "./components/mypage/OrderInquiry";
+import Orderdetail from "./components/mypage/Orderdetail"; 
+import ItemReview from "./components/mypage/ItemReview";
 
 // 게시판
 import BoardFaq from "./components/board/BoardFaq";
@@ -74,6 +77,9 @@ function App() {
         <Route path="/updatepw/*" element={<UpdatePw />} />
         <Route path="/myposting/*" element={<MyPosting />} />
         <Route path="/myquestion/*" element={<MyQuestion />} />
+        <Route path="/OrderInquiry/*" element={<OrderInquiry />} />
+        <Route path="/Orderdetail/*" element={<Orderdetail />} />ItemReview
+        <Route path="/ItemReview/*" element={<ItemReview />} />
         
         {/* 로그인 */}
         <Route path="/findid/*" element={<FindId />} />

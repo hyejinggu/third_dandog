@@ -6,14 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Event</title>
+<link
+rel="stylesheet"
+type="text/css"
+href="/resources/css/eventAdmin.css"
+/>
 <script src="/resources/js/event.js"></script>
 </head>
 <body>
+	<div class="title">
+		<h2>커뮤니티 관리</h2>
+		<h3>Event</h3>
+	</div>
 
-	<h2>Event</h2>
-
-	<hr>
-	<div>
+	<div class="search_wrap">
 		<select name="search_category" id="e_search_category" onchange="toggleSearchOptions()">
 			<option value="name">이벤트 이름</option>
 			<option value="date">기간 검색</option>
@@ -32,9 +38,12 @@
 		<input type="submit" value="검색" onclick="searchEventList()" />
 	</div>
 
-	<table class="table">
+	<table class="table event_list">
 		<tr>
-			<th>선택</th>
+			<th>
+				<input type="checkbox" id="selectall" value='selectall' onclick='select_event(this)' /> 
+				<label for="selectall">전체</label>
+			</th>
 			<th>번호</th>
 			<th>이름</th>
 			<th>사진</th>
@@ -54,11 +63,9 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<div>
-		<input type="checkbox" id="selectall" value='selectall'
-			onclick='select_event(this)' /> <label for="selectall">전체 선택</label>
+	<div class="event_btn">
+		<input type="submit" value="이벤트 삭제" onclick="deleteEvent()" />
+		<span onclick="eventInsert()">이벤트 등록</span>
 	</div>
-	<input type="submit" value="이벤트 삭제" onclick="deleteEvent()" />
-	<div onclick="eventInsert()">이벤트 등록</div>
 </body>
 </html>
