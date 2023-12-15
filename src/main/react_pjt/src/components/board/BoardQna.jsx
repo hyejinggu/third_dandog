@@ -29,8 +29,7 @@ const BoardQna = () => {
             .catch((res) => console.log('** res.data.err : ' + res));
     }, [searchText]); // 검색기능 FilteredBoardArray를 추가한 이후 openQuestion, 있으면 다시 기본리스트 전체출력문제로 제외함 
 
-    // CreateQuestion에서 글을 등록하는 로직 수행 후
-    // 데이터를 다시 불러오기 위해 openQuestion 상태를 변경
+    // CreateQuestion에서 글을 등록하는 로직 수행 후, 데이터를 다시 불러오기 위해 openQuestion 상태를 변경
     const handleCreateQuestion = () => {
         setOpenQuestion(openQuestion === null ? 0 : null);}
 
@@ -42,7 +41,6 @@ const BoardQna = () => {
             qna_category: selectedQna_category,
             searchText: searchText,
         };
-
 
         alert(`category=${selectedQna_category}, searchText=${searchText}`);
         axios
@@ -57,21 +55,6 @@ const BoardQna = () => {
                 console.log('res.data : ' + res.data);
             })
             .catch((res) => console.log('** res.data.err : ' + res));
-
-        //
-        // const filteredItems = boardArray.filter((item) => {
-        //     if (item.answer) {
-        //         const answerText = typeof item.answer === 'string' ? item.answer : item.answer.props.children.join(" "); // JSX일 경우 문자열로 변환
-        //         return (
-        //             (selectedQna_category === "" || item.qna_category === selectedQna_category) &&
-        //             (item.qna_title.includes(searchText) || answerText.includes(searchText))
-        //         );
-        //     }
-        //     return false; 
-        // });
-        // setFilteredBoardArray(filteredItems);
-        //setShowInitialTable(false); // 검색 결과를 보여준 후 초기 테이블 숨기기
-        //setSearchText(""); // 검색 후 검색창의 검색어 초기화
     }; // 검색 로직
 
     // 엔터 키 눌렀을 때 검색 실행
@@ -171,15 +154,9 @@ const BoardQna = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {boardArray
-              // 검색기능 추가
-              .filter(
-                (item) =>
-                  item.title.includes(searchText) || item.answer.includes(searchText)
-              )
-              // */}
+                        
                         {showInitialTable ? (
-                            // 초기 테이블 항목 보여주기
+                            // 초기 테이블 항목 보여주기 title 행
                             boardArray.map((item, index) => (
                                 <React.Fragment key={item.qna_seq}>
                                     <tr className={`question_1 ${openQuestion === index ? "show-answer" : ""}`}
@@ -187,9 +164,9 @@ const BoardQna = () => {
                                         <td></td>
                                         <td>{item.qna_seq}</td>
                                         <td>{item.qna_category}</td>
-                                        <td>
+                                        <td> 
                                             {((sessionStorage.getItem('loginId') === item.user_id) || (sessionStorage.getItem('isAdmin') === "true")) ? (
-                                                //<a href={`qdetail?qna_seq=${item.qna_seq}`}>{item.qna_title}</a>
+                                                //<a href={`qdetail?qna_seq=${item.qna_seq}`}>{item.qna_title}</a> //a태그에서 Link to로 수정함
                                                 <Link to={{ pathname: "/board/boardqna", search: `?qna_seq=${item.qna_seq}` }}>{item.qna_title}</Link>
                                             ) : (
                                                 <span>{item.qna_title}</span>
@@ -200,20 +177,17 @@ const BoardQna = () => {
                                         <td>{item.qna_view}</td>
                                         <td>{item.answer_state}</td>
                                     </tr>
-
+                                    {/* 답변출력 */}
                                     {openQuestion === index && (
                                         <tr className="answer">
                                             <td></td>
                                             <td></td>
                                             <td>{item.qna_category}</td>
-                                            {/* <td colSpan={2}></td> */}
                                             <td>
                                                 <div>[질문] {item.qna_content}</div>
                                                 <br></br>
                                                 {item.qna_reply ? <div>[답변] {item.qna_reply}</div> : null}
                                             </td>
-
-                                            {/* <td colSpan={3}></td> */}
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -243,27 +217,15 @@ const BoardQna = () => {
                                         <td>{item.answer_state}</td>
                                     </tr>
                                     {openQuestion === index && (
-                                        // <tr className="answer">
-                                        //     {/* tr.answer의 시작점을 tr.question_1.show-answer의 세 번째 td와 같도록 수정 */}
-                                        //     <td></td>
-                                        //     <td></td>
-                                        //     <td colSpan="4">
-                                        //         {/*  */}
-                                        //         <span>{item.answer}</span>
-                                        //     </td>
-                                        // </tr>
                                         <tr className="answer">
                                             <td></td>
                                             <td></td>
                                             <td>{item.qna_category}</td>
-                                            {/* <td colSpan={2}></td> */}
                                             <td>
                                                 <div>[질문] {item.qna_content}</div>
                                                 <br></br>
                                                 {item.qna_reply ? <div>[답변] {item.qna_reply}</div> : null}
                                             </td>
-
-                                            {/* <td colSpan={3}></td> */}
                                             <td></td>
                                             <td></td>
                                             <td></td>
