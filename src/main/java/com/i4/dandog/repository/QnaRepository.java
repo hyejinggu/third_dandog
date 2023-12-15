@@ -14,6 +14,7 @@ import com.i4.dandog.entity.Qna;
 
 public interface QnaRepository extends JpaRepository<Qna, Integer>{
 	
+	
 	@Query("select q from Qna q where q.qna_title Like %:searchText%")
 	public List<Qna> selectsearchAllList(@Param("searchText") String searchText);
 	
@@ -33,9 +34,6 @@ public interface QnaRepository extends JpaRepository<Qna, Integer>{
 	public List<Qna> findAllByUserId(String userId);
 	
 	
-//	 public static List<Qna> findByCategoryAndSearch(String category, String searchText) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+
 	
 }

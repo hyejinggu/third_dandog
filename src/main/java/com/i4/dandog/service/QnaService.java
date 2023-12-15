@@ -6,6 +6,7 @@ import com.i4.dandog.entity.Qna;
 
 public interface QnaService {
 	
+	
 	public List<Qna> selectsearchAllList(String searchText);
 	
 	public List<Qna> selectsearchList(String selectedQna_category, String searchText);

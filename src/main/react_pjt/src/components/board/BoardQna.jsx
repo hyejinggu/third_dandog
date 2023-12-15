@@ -50,18 +50,18 @@ const BoardQna = () => {
     console.log('boardArray' + boardArray);
     useEffect(() => {
         axios
-            .post("/qnar/qnaList")
+            .get("/qnar/qnaList") //post에서 바꿈
             .then((res) => {
-                // 게시글을 qna_seq 기준으로 오름차순 정렬
+                // 게시글을 qna_seq 기준으로 내림차순 정렬
                 const sortedBoardArray = res.data.sort((a, b) => b.qna_seq - a.qna_seq);
-                setFilteredBoardArray(sortedBoardArray);
-                setShowInitialTable(false);
+                // setFilteredBoardArray(sortedBoardArray);
+                setShowInitialTable(true);
                 //setSearchText("");
-                //setBoardArray(res.data);
+                setBoardArray(sortedBoardArray);
                 console.log('res.data : ' + res.data);
             })
             .catch((res) => console.log('** res.data.err : ' + res));
-    }, [openQuestion, searchText]);
+    }, [searchText]); // 검색기능 FilteredBoardArray를 추가한 이후 openQuestion, 제외함 
 
     // CreateQuestion에서 글을 등록하는 로직 수행 후
     // 데이터를 다시 불러오기 위해 openQuestion 상태를 변경
@@ -121,7 +121,7 @@ const BoardQna = () => {
         //     return false; 
         // });
         // setFilteredBoardArray(filteredItems);
-        setShowInitialTable(false); // 검색 결과를 보여준 후 초기 테이블 숨기기
+        //setShowInitialTable(false); // 검색 결과를 보여준 후 초기 테이블 숨기기
         //setSearchText(""); // 검색 후 검색창의 검색어 초기화
     }; // 검색 로직
 
@@ -273,48 +273,54 @@ const BoardQna = () => {
                             ))
                         ) : (
                             // 필터링된 항목 보여주기
-                            filteredBoardArray
-                                .map((item, index) => (
-                                    <React.Fragment key={item.number}>
-                                        <tr className={`question_1 ${openQuestion === index ? "show-answer" : ""}`}
-                                            onClick={() => handleAnswerToggle(index)}>
+                            filteredBoardArray.map((item, index) => (
+                                <React.Fragment key={item.qna_seq}>
+                                    <tr className={`question_1 ${openQuestion === index ? "show-answer" : ""}`}
+                                        onClick={() => handleAnswerToggle(index, item.user_id)}>
+                                        <td></td>
+                                        <td>{item.qna_seq}</td>
+                                        <td>{item.qna_category}</td>
+                                        <td>
+                                            {((sessionStorage.getItem('loginId') === item.user_id) || (sessionStorage.getItem('isAdmin') === "true")) ? (
+                                                <a href={`qdetail?qna_seq=${item.qna_seq}`}>{item.qna_title}</a>
+                                            ) : (
+                                                <span>{item.qna_title}</span>
+                                            )}
+                                        </td>
+                                        <td>{item.user_id}</td>
+                                        <td>{item.regdate}</td>
+                                        <td>{item.qna_view}</td>
+                                        <td>{item.answer_state}</td>
+                                    </tr>
+                                    {openQuestion === index && (
+                                        // <tr className="answer">
+                                        //     {/* tr.answer의 시작점을 tr.question_1.show-answer의 세 번째 td와 같도록 수정 */}
+                                        //     <td></td>
+                                        //     <td></td>
+                                        //     <td colSpan="4">
+                                        //         {/*  */}
+                                        //         <span>{item.answer}</span>
+                                        //     </td>
+                                        // </tr>
+                                        <tr className="answer">
                                             <td></td>
-                                            <td>{item.qna_seq}</td>
+                                            <td></td>
                                             <td>{item.qna_category}</td>
-                                            <td>{item.qna_title}</td>
-                                            <td>{item.user_id}</td>
-                                            <td>{item.regdate}</td>
-                                            <td>{item.qna_view}</td>
-                                        </tr>
-                                        {openQuestion === index && (
-                                            // <tr className="answer">
-                                            //     {/* tr.answer의 시작점을 tr.question_1.show-answer의 세 번째 td와 같도록 수정 */}
-                                            //     <td></td>
-                                            //     <td></td>
-                                            //     <td colSpan="4">
-                                            //         {/*  */}
-                                            //         <span>{item.answer}</span>
-                                            //     </td>
-                                            // </tr>
-                                            <tr className="answer">
-                                                <td></td>
-                                                <td></td>
-                                                <td>{item.qna_category}</td>
-                                                {/* <td colSpan={2}></td> */}
-                                                <td>
-                                                    <div>[질문] {item.qna_content}</div>
-                                                    <br></br>
-                                                    {item.qna_reply ? <div>[답변] {item.qna_reply}</div> : null}
-                                                </td>
+                                            {/* <td colSpan={2}></td> */}
+                                            <td>
+                                                <div>[질문] {item.qna_content}</div>
+                                                <br></br>
+                                                {item.qna_reply ? <div>[답변] {item.qna_reply}</div> : null}
+                                            </td>
 
-                                                {/* <td colSpan={3}></td> */}
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        )}
-                                    </React.Fragment>
-                                ))
+                                            {/* <td colSpan={3}></td> */}
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    )}
+                                </React.Fragment>
+                            ))
                         )}
                     </tbody>
                 </table>
