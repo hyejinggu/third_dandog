@@ -12,40 +12,8 @@ const BoardQna = () => {
     const [filteredBoardArray, setFilteredBoardArray] = useState([]);
     // 필터링된 항목을 저장할 상태.검색버튼을 눌렀을때만 필터링. (boardArray) 쓸 경우 const 는 배열 밑에 위치하기
     const [showInitialTable, setShowInitialTable] = useState(true); // 초기 테이블 보여주기 여부를 저장하는 상태
-    // 위의 useState가 빈 배열로 바뀌고 아래 한 줄이 추가되면서 다시 배열의 위로 위치함.
-
-    // 게시판 글 목록 데이터 배열. table을 배열로 수정. const로 수정
 
     const [boardArray, setBoardArray] = useState([]);
-    //const boardList = boardArray;
-
-    // 카테고리별 검색시 필요
-    // useEffect(() => {
-    //     setInputValue("");
-    //     switch (qna_Category) {
-    //         case "주문/결제":
-    //             queryCategory = "OP";
-    //             break;
-    //         case "배송":
-    //             queryCategory = "S";
-    //             break;
-    //         case "취소/반품":
-    //             queryCategory = "CR";
-    //             break;
-    //         case "교환":
-    //             queryCategory = "EA";
-    //             break;
-    //         case "회원":
-    //             queryCategory = "M";
-    //             break;
-    //         case "적립금/이벤트":
-    //             queryCategory = "PE";
-    //             break;
-    //         case "기타":
-    //             queryCategory = "E";
-    //             break;
-    //     }
-    // })
 
     console.log('boardArray' + boardArray);
     useEffect(() => {
@@ -54,9 +22,7 @@ const BoardQna = () => {
             .then((res) => {
                 // 게시글을 qna_seq 기준으로 내림차순 정렬
                 const sortedBoardArray = res.data.sort((a, b) => b.qna_seq - a.qna_seq);
-                // setFilteredBoardArray(sortedBoardArray);
                 setShowInitialTable(true);
-                //setSearchText("");
                 setBoardArray(sortedBoardArray);
                 console.log('res.data : ' + res.data);
             })
@@ -66,29 +32,12 @@ const BoardQna = () => {
     // CreateQuestion에서 글을 등록하는 로직 수행 후
     // 데이터를 다시 불러오기 위해 openQuestion 상태를 변경
     const handleCreateQuestion = () => {
-        setOpenQuestion(openQuestion === null ? 0 : null);
-    }
+        setOpenQuestion(openQuestion === null ? 0 : null);}
 
-    // 검색 버튼을 누르면 필터링된 항목을 보여지게 하는 함수. boardArray 보다 앞에 위치해야 작동함.
-    /* const handleSearch = (e) => {
-      e.preventDefault();
-      const filteredItems = boardArray.filter(
-        (item) =>
-          item.title.includes(searchText) || item.answer.includes(searchText)
-      );
-      setFilteredBoardArray(filteredItems);
-      setShowInitialTable(false); // 검색 결과를 보여준 후 초기 테이블 숨기기
-    }; */
-
-    // 검색 함수 ** 배열안에 모든 질문을 담을수없으니 
-    // answer 의 JSX 내용을 문자열로 변환하기 위해서는 .props.children을 활용
     const handleSearch = (e) => {
         e.preventDefault();
 
-        // const selectedCategory = selectedQna_category;
-
         // 서버에서 검색조건(qna_category, search)에 해당하는 목록 가져오기
-
         const filterRequest = {
             qna_category: selectedQna_category,
             searchText: searchText,
@@ -240,7 +189,8 @@ const BoardQna = () => {
                                         <td>{item.qna_category}</td>
                                         <td>
                                             {((sessionStorage.getItem('loginId') === item.user_id) || (sessionStorage.getItem('isAdmin') === "true")) ? (
-                                                <a href={`qdetail?qna_seq=${item.qna_seq}`}>{item.qna_title}</a>
+                                                //<a href={`qdetail?qna_seq=${item.qna_seq}`}>{item.qna_title}</a>
+                                                <Link to={{ pathname: "/board/boardqna", search: `?qna_seq=${item.qna_seq}` }}>{item.qna_title}</Link>
                                             ) : (
                                                 <span>{item.qna_title}</span>
                                             )}
@@ -282,7 +232,7 @@ const BoardQna = () => {
                                         <td>{item.qna_category}</td>
                                         <td>
                                             {((sessionStorage.getItem('loginId') === item.user_id) || (sessionStorage.getItem('isAdmin') === "true")) ? (
-                                                <a href={`qdetail?qna_seq=${item.qna_seq}`}>{item.qna_title}</a>
+                                                <Link to={{ pathname: "/board/boardqna", search: `?qna_seq=${item.qna_seq}` }}>{item.qna_title}</Link>
                                             ) : (
                                                 <span>{item.qna_title}</span>
                                             )}
