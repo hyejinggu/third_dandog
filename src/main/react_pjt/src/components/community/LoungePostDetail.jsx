@@ -121,7 +121,10 @@ const LoungePostDetail = () => {
                 />
                 {post.user_id === loginId && (
                   <>
-                    <Link to="/community/loungepostedit" state={{ post: post }}>
+                    <Link
+                      to="/community/loungepostedit"
+                      state={{ lounge_no: post.lounge_no }}
+                    >
                       <input
                         className={styles.btn}
                         type="button"

@@ -7,12 +7,26 @@ import Modal from "../common/Modal";
 const LoungePostEdit = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const post = location.state.post;
-  const [postTitle, setPostTitle] = useState(post.lounge_title);
-  const [postContent, setPostContent] = useState(post.lounge_content);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const lounge_no = location.state.lounge_no;
+  const [post, setPost] = useState({});
 
-  // const loginId = sessionStorage.getItem("loginId");
+  useEffect(() => {
+    axios
+      .get(`/lounge/selectOne?lounge_no=${lounge_no}`)
+      .then((res) => {
+        console.log(res.data);
+        setPost(res.data);
+        setPostTitle(res.data.lounge_title);
+        setPostContent(res.data.lounge_content);
+        setSelectedCategory(res.data.lounge_category);
+      })
+      .catch((res) => console.log(res));
+  }, []);
+
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [postTitle, setPostTitle] = useState("");
+  const [postContent, setPostContent] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   function handleEdit() {
     let formData = new FormData(document.getElementById("lounge_update_form"));
@@ -77,12 +91,16 @@ const LoungePostEdit = () => {
             <tr>
               <th scope="row">카테고리</th>
               <td>
-                <input
-                  className={styles.readonly_input}
+                <select
                   name="lounge_category"
-                  value={post.lounge_category}
-                  readOnly
-                />
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                >
+                  <option value="free">자유 게시판</option>
+                  <option value="trouble">고민 상담소</option>
+                  <option value="sharing">지식 공유</option>
+                  <option value="friends">친구 찾기</option>
+                </select>
                 <input type="hidden" name="lounge_no" value={post.lounge_no} />
               </td>
 

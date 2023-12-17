@@ -15,9 +15,28 @@ const ItemList = () => {
   const [itemList, setItemList] = useState([]);
   const [itemSort, setItemSort] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     setInputValue("");
+    switch (category) {
+      case "snack":
+        setTitle("간식•사료");
+        break;
+      case "toy":
+        setTitle("장난감");
+        break;
+      case "living":
+        setTitle("리빙•패션");
+        break;
+      case "stroll":
+        setTitle("산책•케어");
+        break;
+      default:
+        setTitle("간식•사료");
+        break;
+    }
+
     handleItemList(`?category=${category}&sort=${itemSort}&inputValue`);
   }, [category]);
 
@@ -93,7 +112,7 @@ const ItemList = () => {
   return (
     <div className={styles.container}>
       <div className={styles.cate_wrap}>
-        <h2 className={styles.title}>장난감</h2>
+        <h2 className={styles.title}>{title}</h2>
       </div>
 
       <div className={styles.sort}>

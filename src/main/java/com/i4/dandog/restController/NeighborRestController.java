@@ -80,5 +80,26 @@ public class NeighborRestController {
 		}
 
 	}
+	
+	
+	@GetMapping("/delete")
+	public int deleteNeighborReview(
+			@RequestParam(name = "neighbor_no") String neighbor_no) {
+		
+		int neighborNo =  Integer.parseInt(neighbor_no);
+		return nservice.delete(neighborNo);
+		
+	}
+	
+	
+	@GetMapping("/selectOne")
+	public NeighborhoodReview selectOne(
+			@RequestParam(name = "neighbor_no") String neighbor_no) {
+		
+		int neighborNo =  Integer.parseInt(neighbor_no);
+		return nservice.selectOne(neighborNo);
+		
+	}
+	
 
 }

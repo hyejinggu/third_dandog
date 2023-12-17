@@ -83,4 +83,8 @@ public class MyPageRestController {
 	public List<ItemReview> getReview(String item_name) {
 		return irservice.selectOne(item_name);
 	}
+	
+	
+	
+	
 }
