@@ -1,0 +1,77 @@
+.search_wrap {
+  margin-bottom: 10px;
+}
+
+.item_list td:first-child,
+.item_list td:nth-child(2) {
+  width: 3%;
+}
+
+.item_list td:nth-child(3),
+.item_list td:nth-child(5),
+.item_list td:nth-child(7) {
+  width: 6%;
+}
+
+.item_list td:nth-child(4) {
+  width: 12%;
+}
+
+.item_list td:nth-child(6),
+.item_list td:nth-child(8),
+.item_list td:nth-child(9) {
+  width: 5%;
+}
+
+.item_list td:nth-child(10),
+.item_list td:nth-child(11),
+.item_list td:nth-child(12) {
+  width: 8%;
+}
+
+/* ========================================  */
+
+.table .item_name {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.table .item_name:hover {
+  text-decoration: underline;
+}
+
+.table.item_update {
+  width: 40%;
+}
+
+.item_update th {
+  width: 15%;
+}
+
+.item_update td {
+  width: 20%;
+  text-align: left;
+  padding: 5px;
+}
+
+.pagination_wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination_wrap span {
+  cursor: pointer;
+  display: inline-block;
+  background-color: #fff;
+  margin: 10px;
+  text-align: center;
+}
+
+.normalPage {
+  color: #cdcdcd;
+}
+
+.currentPage {
+  font-weight: bold;
+  color: #ffa900;
+}

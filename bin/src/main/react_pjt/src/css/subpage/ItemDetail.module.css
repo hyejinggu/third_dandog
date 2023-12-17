@@ -1,0 +1,484 @@
+/*========================================= common =========================================*/
+
+.detail_wrap{
+    /* min-width: 1200px; */
+    /* max-width: 1500px; */
+    /* width: 100%; */
+    /* margin: 50px auto; */
+    background-color: #ffffff;
+}
+
+.detail_wrap div:nth-child(0),
+.detail_wrap section {
+    width: 100%;
+    margin: 0 auto;
+    border-bottom: 2px solid #ffa900;
+}
+
+.detail_wrap section {
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}
+
+/*========================================= nav =========================================*/
+
+.nav {
+    width: 100%;
+}
+
+.nav {
+    width: 80%;
+    margin: 1em auto;
+    border-radius: 10px;
+    display: flex;
+}
+
+.nav>a {
+    width: 100%;
+    margin: 1em;
+    padding: 1em;
+    border: 1px solid #ffa900;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* .fixed_nav>a:hover, */
+.nav>a:hover,
+.detail_wrap input[type="button"]:hover,
+div>a>.button:hover {
+    transition: .5s;
+    background-color: #ffe344;
+}
+
+.section1>.nav>a:nth-child(1) {
+    background-color: #ffe344;
+}
+
+.section2>.nav>a:nth-child(2) {
+    background-color: #ffe344;
+}
+
+.section3>.nav>a:nth-child(3) {
+    background-color: #ffe344;
+}
+
+.section4>.nav>a:nth-child(4) {
+    background-color: #ffe344;
+}
+
+/* .fixed_nav {
+    text-align: center;
+    position: fixed;
+    left: 1em;
+    bottom: 10%;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.fixed_nav>a {
+    margin: 1em;
+    padding: 1em;
+    background-color: #ffffff;
+    border: 1px solid #ffa900;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+} */
+
+/*========================================= toparea =========================================*/
+
+.detail_wrap .top_area {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border-top: 2px solid #ffa900;
+}
+
+.detail_wrap .img_area {
+    /* height: 60vh; */
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-rows: .5fr 3.5fr .5fr .5fr;
+    grid-template-areas:
+        ". . ."
+        ". a ."
+        ". b ."
+        ". . ."
+}
+
+.img_area div:first-child {
+    grid-area: a;
+}
+
+.img_area div:nth-child(2) {
+    grid-area: b;
+}
+
+.main_img>img {
+    width: 500px;
+    height: 500px;
+    display: inline-block;
+    border: 1px solid #ffa900;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: bisque;
+}
+
+.sub_img>img {
+    width: 94px;
+    height: 94px;
+    display: inline-block;
+    border: 1px solid #ffa900;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: bisque;
+}
+
+.detail_wrap .info_area {
+    display: grid;
+    grid-template-columns: .5fr 1.5fr 3.5fr .5fr;
+    grid-template-rows: .5fr repeat(6, .5fr) repeat(3, .5fr);
+    grid-template-areas:
+        ". . . ."
+        ". a b ."
+        ". c d ."
+        ". e f ."
+        ". g h ."
+        ". i j ."
+        ". k l ."
+        ". m m ."
+        ". n n ."
+        ". . . .";
+}
+
+.info_area div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info_area div:nth-child(11) a {
+    width: 100%;
+}
+
+.info_area div:nth-child(12) a {
+    width: 100%;
+}
+
+.info_area div:nth-child(1) {
+    grid-area: a;
+}
+
+.info_area div:nth-child(2) {
+    grid-area: b;
+}
+
+.info_area div:nth-child(3) {
+    grid-area: c;
+}
+
+.info_area div:nth-child(4) {
+    grid-area: d;
+}
+
+.info_area div:nth-child(5) {
+    grid-area: e;
+}
+
+.info_area div:nth-child(6) {
+    grid-area: f;
+}
+
+.info_area div:nth-child(7) {
+    grid-area: g;
+}
+
+.info_area div:nth-child(8) {
+    grid-area: h;
+}
+
+.info_area div:nth-child(9) {
+    grid-area: i;
+}
+
+.info_area div:nth-child(10) {
+    grid-area: j;
+}
+
+.info_area div:nth-child(11) {
+    grid-area: k;
+}
+
+.info_area div:nth-child(12) {
+    grid-area: l;
+}
+
+.info_area div:nth-child(13) {
+    grid-area: m;
+}
+
+.info_area div:nth-child(14) {
+    grid-area: n;
+}
+
+.sale_info {
+    color: red;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.normal_pr {
+    color: gray;
+    text-decoration: line-through;
+}
+
+.present_pr {
+    font-weight: bold;
+}
+
+.info_area input {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+select[id="option"] {
+    /* margin: 3em auto; */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.info_area a {
+    width: 100%;
+}
+
+.info_area input[type="button"] {
+    width: 100%;
+    /* margin: 1em auto; */
+    padding: 10px 0;
+    border: 1px solid #ffa900;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #ffa900;
+    cursor: pointer;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/*========================================= 상품상세정보 =========================================*/
+
+.section1 button {
+    border: none;
+}
+
+.section1>h3 {
+    padding-top: 3em;
+}
+
+.Product_info {
+    margin: 1em auto;
+    padding: 1em;
+    border: 1px solid #ffa900;
+    border-radius: 10px;
+    width: 50%;
+}
+
+.Product_info>tr>th {
+    width: 50%;
+}
+
+.Product_info>tr>td {
+    width: 50%;
+}
+
+/*========================================= 상품구매안내 =========================================*/
+
+.purchase_info {
+    text-align: left;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 3em;
+    margin: 0 auto;
+
+}
+
+.purchase_info h3 {
+    padding: 50px;
+    text-align: center;
+}
+
+.purchase_info h4 {
+    text-align: center;
+}
+
+.purchase_left {
+    border-right: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+.purchase_info .purchase_left div:nth-child(1),
+.purchase_info .purchase_right div:nth-child(1) {
+    border-bottom: 1px dashed #ddd;
+}
+
+.purchase_info .purchase_right div,
+.purchase_info .purchase_left div {
+    padding: 1em;
+}
+
+/*========================================= 상품사용후기 =========================================*/
+
+.section3 {
+    padding: 0;
+    padding-top: 0;
+    box-sizing: border-box;
+}
+
+.section3 .review {
+    width: 100%;
+    height: 50px;
+    display: block;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.section3>.review_wrap {
+    padding: 50px;
+    padding-top: 0;
+}
+
+.section3>.empty_review_wrap {
+    padding: 50px;
+    height: 400px;
+    padding-top: 0;
+}
+
+.section3 .review span:first-child {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 30px;
+}
+
+.section3 .total_score {
+    width: 100%;
+    height: 150px;
+    display: block;
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 20px;
+    margin-bottom: 50px;
+}
+
+.section3 .total_score .grades_1{
+    width: 50%;
+    height: 150px;
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 20px;
+}
+
+/* .section3 .total_score .grades_1 {
+    padding: 43px;
+    border-right: 1px solid #ffa900;
+} */
+
+.section3 .total_score .grades_1 span {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.section3 .total_score .grades_1 span::before {
+    content: "★";
+    color: #ffe344;
+}
+
+.section3 .total_score .grades_1 span p {
+    display: block;
+    line-height: 40px;
+}
+
+/* .section3 .total_score .grades_2 {
+    display: inline-block;
+    text-align: left;
+} */
+
+/* .section3 .total_score .grades_2 ul>li {
+    width: 100%;
+    line-height: 20px;
+    text-align: right;
+} */
+
+/* .section3 .total_score .grades_2 ul>li span {
+    display: inline-block;
+    width: 80%;
+    height: 15px;
+    border-radius: 8px;
+    margin: 0 15px;
+    background-color: #ffa900;
+} */
+
+.section3 .user_review .review_header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+}
+
+.section3 .user_review .review_header>li {
+    width: 65px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.section3 .user_review .grades_3 {
+    text-align: left;
+    line-height: 30px;
+    margin-top: 20px;
+    line-height: 50px;
+    font-size: 18px;
+    font-weight: bold;
+}
+    
+.section3 .user_review .grades_3 span {
+    color: #ffe344;
+    font-size: 21px;
+
+}
+
+.section3 .user_review .user_text_review {
+    text-align: left;
+    line-height: 30px;
+    padding: 20px 0;
+}
+
+.user_info {
+    text-align: right;
+}
+
+.user_review li:nth-child(4) {
+    border-bottom: 1px solid #c8c8c8;
+}
+
+/*========================================= 상품 Q & A =========================================*/
+
+.section4 div {
+    padding: 10em;
+}
+
+.section4 input[type="button"] {
+    width: 80%;
+    margin-bottom: 3em;
+    padding: 10px 0;
+    background-color: #fff;
+    border: 1px solid #ffa900;
+    border-radius: 10px;
+    color: #ffa900;
+}
+
+.section4 input[type="button"]:hover {
+    transition: .5s;
+    background-color: #ffe344;
+}

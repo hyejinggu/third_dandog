@@ -1,0 +1,196 @@
+/* 메인 시작 */
+
+.lounge_container * {
+  text-align: center;
+}
+
+/* ===== 상단 카테고리, 정렬 영역 시작 ===== */
+
+.title {
+  margin: 50px 0;
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.title a {
+  margin: 0 30px;
+  padding: 3px;
+}
+
+.title .active {
+  border-bottom: 5px solid #ffa900;
+}
+
+.title a:hover {
+  border-bottom: 5px solid #ffa900;
+}
+
+/* ===== 상단 카테고리, 정렬 영역 시작 ===== */
+
+.sort * {
+  display: inline-block;
+}
+
+.sort {
+  padding: 15px;
+  border-top: #ffa900 1px solid;
+  border-bottom: #ffa900 1px solid;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sort li,
+.sort p {
+  height: 30px;
+  line-height: 30px;
+  font-weight: bold;
+  color: rgb(70, 70, 70);
+  border: rgb(70, 70, 70) 1px solid;
+  background-color: #fffbee;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
+  margin-right: 5px;
+
+  padding: 0 5px;
+  cursor: pointer;
+}
+
+/* ===== 사이드 바 ===== */
+.content_wrap {
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+  background-color: white;
+}
+
+/* 사이드 바 */
+.side_bar_wrap {
+  position: relative;
+}
+
+.side_bar {
+  margin: 100px auto;
+  width: 130px;
+  border-radius: 10px;
+  justify-self: center;
+  position: sticky;
+  top: 70px;
+  transition: margin-top ease-in-out 1s;
+}
+
+.side_bar li {
+  padding: 20px 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgb(255, 227, 68, 0.6);
+  border: #ffa900 1px solid;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.side_bar .sidebar_active {
+  background-color: #ffe344;
+}
+
+/* ===== 게시글 영역 시작 ===== */
+#wrap {
+  padding: 0 20px;
+}
+
+.post_wrap table {
+  border-collapse: collapse;
+}
+
+.post_wrap table th:nth-child(1),
+.post_wrap table th:nth-child(4),
+.post_wrap table th:nth-child(5),
+.post_wrap table th:nth-child(6),
+.post_wrap table th:nth-child(7) {
+  width: 7%;
+}
+
+.post_wrap table th,
+.post_wrap table td {
+  padding: 15px;
+  border-bottom: 1px solid rgb(210, 210, 210);
+}
+
+.post_wrap th:first-child,
+.post_wrap td:first-child {
+  border-left: 1px solid rgb(210, 210, 210);
+}
+.post_wrap th:last-child,
+.post_wrap td:last-child {
+  border-right: 1px solid rgb(210, 210, 210);
+}
+
+.post_wrap table td .no_image {
+  color: gray;
+  font-size: 0.8em;
+}
+
+.post_wrap table tbody td img {
+  object-fit: cover;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  vertical-align: middle;
+}
+
+.post_wrap table tbody td h4 {
+  font-size: 1.5em;
+  line-height: 2em;
+}
+
+.post_wrap table tbody td p {
+  white-space: pre-line;
+  height: 95px;
+  overflow: hidden;
+}
+
+.post_wrap table {
+  width: 100%;
+}
+
+.post_wrap table tbody tr:hover {
+  background-color: #f2f2f2;
+}
+
+/* ===== 검색 조건 및 글쓰기 영역 시작 ===== */
+.search_bar {
+  display: flex;
+  align-items: center;
+}
+
+.search_bar input {
+  margin: 0 10px;
+}
+
+.search_bar select,
+.search_bar input,
+.counting_post p {
+  padding: 7px 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
+  color: rgb(70, 70, 70);
+  border: rgb(70, 70, 70) 1px solid;
+  font-weight: bold;
+}
+
+.counting_post {
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.posting {
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 20px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
+  background-color: #ffe344;
+}

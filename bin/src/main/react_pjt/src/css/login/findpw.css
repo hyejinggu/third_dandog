@@ -1,0 +1,97 @@
+.findPw {
+  width: 100%;
+  padding: 0 50px;
+  box-sizing: border-box;
+  margin: 50px auto;
+  background-color: #fff;
+  height: 650px;
+  border-top: 2px solid #ffa900;
+  border-bottom: 2px solid #ffa900;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.findPw .img_container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.findPw .img_container img {
+  width: 750px;
+  height: 641px;
+  box-sizing: border-box;
+}
+
+.findPw .findPw_container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.findPw_container .findPw_box {
+  border-radius: 5px;
+  line-height: 30px;
+  display: grid;
+  grid-template-rows: 0.7fr 2fr;
+}
+
+.findPw_container .findPw_box form {
+  width: 70%;
+  justify-self: center;
+}
+
+.findPw_container .findPw_box h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.findPw_box .text_box {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #b0a1a1;
+}
+
+.findPw_box .mail_box,
+.mail_box_last {
+  width: 30%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #b0a1a1;
+}
+
+.mail_box_last {
+  margin-left: 5px;
+}
+
+.findPw_box .button_box {
+  display: flex;
+}
+
+.findPw_box .button_box input {
+  border: 1px solid #ffa900;
+  cursor: pointer;
+  background-color: #fff;
+  width: 100%;
+  height: 35px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.findPw_box .button_box input:first-child {
+  margin-right: 15px;
+}
+
+.findPw_box .button_box input:hover {
+  transition: 0.5s;
+  background-color: #ffe344;
+}

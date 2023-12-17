@@ -1,0 +1,104 @@
+.createpost_wrap * {
+  text-align: center;
+}
+
+.form_wrap {
+  margin: 50px;
+}
+
+.form_wrap form {
+  display: grid;
+  grid-template-rows: 1fr 5fr 1fr 0.8fr;
+  gap: 20px;
+  justify-items: start;
+}
+
+.form_wrap label {
+  font-size: 1.3em;
+  margin: 20px;
+}
+
+/* focus */
+.title_wrap select:focus,
+.title_wrap input:focus,
+.content_wrap textarea:focus {
+  border: 1px solid rgb(255, 169, 0);
+}
+
+/* 제목 영역 */
+.title_wrap {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 5fr 2fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.title_wrap select {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 3px 5px rgb(255, 169, 0, 0.4);
+}
+
+.title_wrap input {
+  padding: 10px;
+  border: none;
+  width: 90%;
+  text-align: left;
+  box-shadow: 0 3px 5px rgb(255, 169, 0, 0.4);
+}
+
+/* 내용 영역 */
+.content_wrap {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 6.5fr 2fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.content_wrap textarea {
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 3px 5px rgb(255, 169, 0, 0.4);
+  text-align: left;
+}
+
+/* image 영역 */
+.image_wrap {
+  margin-top: 50px;
+}
+
+.button_wrap {
+  display: grid;
+  width: 100%;
+  height: 100px;
+}
+
+.button_wrap button {
+  width: 100px;
+  height: 40px;
+  border: none;
+  background-color: rgb(255, 169, 0, 0.7);
+  margin-right: 20px;
+  justify-self: end;
+  box-shadow: 0 3px 5px rgb(255, 169, 0, 0.4);
+}
+
+.button_wrap button:hover {
+  background-color: #ffe344;
+  transition: 0.5s;
+}
+
+/* empty alert */
+.empty_alert {
+  color: red;
+  font-size: 0.9em;
+  font-style: italic;
+}

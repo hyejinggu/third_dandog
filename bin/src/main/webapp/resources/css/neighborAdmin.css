@@ -1,0 +1,51 @@
+.search_wrap {
+  margin-bottom: 10px;
+}
+
+.neighbor_list td:first-child,
+.neighbor_list td:nth-child(2),
+.neighbor_list td:nth-child(5) {
+  width: 3%;
+}
+
+.neighbor_list td:nth-child(3),
+.neighbor_list td:nth-child(6),
+.neighbor_list td:nth-child(7) {
+  width: 7%;
+}
+
+.neighbor_list td:nth-child(4) {
+  width: 15%;
+}
+
+.neighbor_list td:last-child {
+  width: 10%;
+}
+
+/* .neighbor_list tr td {
+  height: 10px;
+} */
+
+.neighbor_list td p {
+  margin: 5px;
+}
+
+.neighbor_list td p:first-child {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.neighbor_btn input {
+  border: none;
+  border-radius: 10px;
+  padding: 5px 10px;
+  background-color: rgba(128, 128, 128, 0.211);
+  cursor: pointer;
+  font-size: 15px;
+  margin-right: 10px;
+  color: crimson;
+}
+
+.neighbor_btn input:hover {
+  font-weight: bold;
+}

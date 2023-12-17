@@ -1,0 +1,48 @@
+@font-face {
+    font-family: 'Cafe24SsurroundAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+    background-color: #fffbee;
+}
+
+.checking {
+    color: #ffa900;
+    font-weight: bold;
+}
+
+.title {
+    margin: 50px 0;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+input[type=button] {
+    font-family: 'Cafe24SsurroundAir';
+}
+
+/* 메인 상품 가격 정보 디자인 */
+main .item_info_wrap h3 {
+    margin: 15px 0 5px;
+}
+
+main .item_info_wrap span:nth-of-type(1) {
+    color: red;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+main .item_info_wrap span:nth-of-type(2) {
+    color: gray;
+    text-decoration: line-through;
+    font-size: 0.8em;
+}
+
+main .item_info_wrap span:nth-of-type(3) {
+    font-weight: bold;
+}
