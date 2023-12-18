@@ -88,12 +88,11 @@
 				</td>
 			</tr>
 			
-			<tr height="40">
-				<th></th>
-				<td><span onclick="itemUpdate(`${i.item_no}`)">상품 수정</span></td>
-			</tr>
 			</c:if>
 		</table>
+		<div class="item_btn">
+			<span onclick="itemUpdate(`${i.item_no}`)">상품 수정</span>
+		</div>
 	</form>
 
 	<br>

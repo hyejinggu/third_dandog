@@ -175,13 +175,17 @@ const LoungePostEdit = () => {
               <td colSpan={3}>
                 <img
                   className={styles.origin_img}
-                  name="lounge_img"
                   src={
                     selectedImage
                       ? URL.createObjectURL(selectedImage)
                       : `/images/community/${post.lounge_img}`
                   }
                   alt="image"
+                />
+                <input
+                  type="hidden"
+                  name="lounge_img"
+                  value={post.lounge_img}
                 />
                 <input
                   type="file"

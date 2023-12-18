@@ -101,8 +101,9 @@
         </tr>
     </c:if>
 </table>
-
-<input type="submit" value="선택 삭제" onclick="deleteItem()"/>
+<div class="item_btn">
+	<input type="submit" value="선택 삭제" onclick="deleteItem()" class="delete_btn"/>
+</div>
 
 </body>
 </html>

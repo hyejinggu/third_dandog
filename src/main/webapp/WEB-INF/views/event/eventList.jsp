@@ -64,7 +64,7 @@ href="/resources/css/eventAdmin.css"
 		</c:forEach>
 	</table>
 	<div class="event_btn">
-		<input type="submit" value="이벤트 삭제" onclick="deleteEvent()" />
+		<input type="submit" value="이벤트 삭제" onclick="deleteEvent()" class="delete_btn" />
 		<span onclick="eventInsert()">이벤트 등록</span>
 	</div>
 </body>
