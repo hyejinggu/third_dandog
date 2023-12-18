@@ -3,15 +3,22 @@ package com.i4.dandog.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.i4.dandog.entity.ItemOrder;
-import com.i4.dandog.entity.OrderDetail;
+
 
 public interface ItemOrderService {
+	
+	// orderlist
+	Page<ItemOrder> findByDeliveryUserId(String searchDelivery, String searchValues, Pageable pageable);
+	Page<ItemOrder> findByDeliveryPayState(String searchDelivery, String searchValues, Pageable pageable);
 //    List<OrderDetail> getAllOrders();
 //    
 //    OrderDetail selectOne(int order_detail_no);
 //    
-//    void delete(int order_detail_no);
+    void delete(int order_num);
 //    
 //    void updateOrderState(int order_detail_no, String order_state);
     

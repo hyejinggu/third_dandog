@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +14,16 @@ import org.springframework.data.repository.query.Param;
 import com.i4.dandog.entity.ItemOrder;
 
 public interface ItemOrderRepository extends JpaRepository<ItemOrder , Integer> {
+	
+	@Query("select io from ItemOrder io where (:searchDelivery is null or io.order_state = :searchDelivery) and lower(io.user_id) like lower(concat('%', :searchValue, '%')) order by order_num desc")
+	Page<ItemOrder> findByDeliveryUserId(@Param("searchDelivery") String searchDelivery,
+			@Param("searchValue") String searchValue,
+			Pageable pageable);
+
+	@Query("select io from ItemOrder io where (:searchDelivery is null or io.order_state = :searchDelivery) and io.pay_state = :searchValue order by order_num desc")
+	Page<ItemOrder> findByDeliveryPayState(@Param("searchDelivery") String searchDelivery,
+			@Param("searchValue") String searchValue,
+			Pageable pageable);
 	
 	@Transactional
 	@Modifying

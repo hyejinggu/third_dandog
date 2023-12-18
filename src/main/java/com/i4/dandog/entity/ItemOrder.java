@@ -2,7 +2,6 @@ package com.i4.dandog.entity;
 
 //import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,11 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.springframework.data.annotation.CreatedDate;
-
-import com.i4.dandog.domain.OrderDetailDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

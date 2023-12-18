@@ -48,7 +48,8 @@
 
 .address_input input[type="text"],
 .address_input input[type="email"],
-.address_input select[id="payment-method"] {
+.address_input select[id="payment"],
+.address_input input[type="number"] {
     width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;

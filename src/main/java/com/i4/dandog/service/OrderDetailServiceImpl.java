@@ -28,8 +28,8 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     }
 
     @Override
-    public void delete(int order_detail_no) {
-        orderDetailRepository.deleteById(order_detail_no);
+    public void delete(int order_num) {
+        orderDetailRepository.deleteById(order_num);
     }
     
 //    @Override

@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,37 +51,46 @@ public class MyPageRestController {
 		List<ItemOrder> iOrder = ioservice.getOrderInquiryForUser(user_id);
 		return ResponseEntity.ok(iOrder);
 	}
-	
+
 	@GetMapping("/getorderdetail")
 	public ResponseEntity<List<OrderDetail>> getOrderDetailForUser(@RequestParam int order_num) {
 		List<OrderDetail> oDetail = odservice.getOrderDetailForUser(order_num);
 		return ResponseEntity.ok(oDetail);
 	}
-	
+
 	@PostMapping("/OrderStateChange")
 	public ResponseEntity<String> updateOrderState(@RequestBody ItemOrder itemOder) {
 
-	    try {
-	        // 주소 업데이트 메서드 호출
-	    	ioservice.updateOrderState(itemOder.getOrder_num(), itemOder.getOrder_state());
-	        return ResponseEntity.ok("배송상태가 성공적으로 변경되었습니다.");
-	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("배송상태 업데이트 중 오류 발생: " + e.getMessage());
-	    }
+		try {
+			// 주소 업데이트 메서드 호출
+			ioservice.updateOrderState(itemOder.getOrder_num(), itemOder.getOrder_state());
+			return ResponseEntity.ok("배송상태가 성공적으로 변경되었습니다.");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("배송상태 업데이트 중 오류 발생: " + e.getMessage());
+		}
 	}
-	
+
 	@GetMapping("/getitem")
 	public Item getItem(@RequestParam int item_no) {
 		return iservice.selectOne(item_no);
 	}
-	
+
 	@PostMapping("/createReview")
 	public int createReview(ItemReview entity) {
 		return irservice.save(entity);
 	}
-	
+
 	@GetMapping("/getreviews")
 	public List<ItemReview> getReview(String item_name) {
 		return irservice.selectOne(item_name);
+	}
+
+	@PostMapping("/orderdelete")
+	public void deleteOrder(@RequestParam int order_num) {
+			// 주문 상세 내역 삭제
+			odservice.delete(order_num);
+
+			// 주문 정보 삭제
+			ioservice.delete(order_num);
 	}
 }

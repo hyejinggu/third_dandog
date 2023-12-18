@@ -1,12 +1,12 @@
 package com.i4.dandog.service;
 
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.i4.dandog.entity.ItemOrder;
-import com.i4.dandog.entity.Member;
 import com.i4.dandog.repository.ItemOrderRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,6 +18,8 @@ import lombok.extern.log4j.Log4j2;
 public class ItemOrderServiceImpl implements ItemOrderService {
 
 	private final ItemOrderRepository repository;
+	
+	   
 
 
 //
@@ -26,10 +28,10 @@ public class ItemOrderServiceImpl implements ItemOrderService {
 //        return orderDetailRepository.findById(order_detail_no).orElse(null);
 //    }
 //
-//    @Override
-//    public void delete(int order_detail_no) {
-//        orderDetailRepository.deleteById(order_detail_no);
-//    }
+    @Override
+    public void delete(int order_num) {
+    	repository.deleteById(order_num);
+    }
 //    
 //    @Override
 //    public void updateOrderState(int order_detail_no, String order_state) {
@@ -71,4 +73,28 @@ public class ItemOrderServiceImpl implements ItemOrderService {
 	  public List<ItemOrder> getAllOrders() {
 	      return repository.findAll();
 	  }
+	  
+	    @Override
+	    public Page<ItemOrder> findByDeliveryUserId(String searchDelivery, String searchValue, Pageable pageable) {
+	        String query = "select io from ItemOrder io where (:searchDelivery is null or io.order_state = :searchDelivery) and lower(io.user_id) like lower(concat('%', :searchValue, '%')) order by order_num desc";
+	        log.info("findByDeliveryUserId query: {}", query);
+	        try {
+	            return repository.findByDeliveryUserId(searchDelivery, searchValue, pageable);
+	        } catch (Exception e) {
+	            log.error("Error in findByDeliveryUserId", e);
+	            throw e; // 예외가 발생하면 적절한 처리를 수행하세요.
+	        }
+	    }
+
+	    @Override
+	    public Page<ItemOrder> findByDeliveryPayState(String searchDelivery, String searchValue, Pageable pageable) {
+	        String query = "select io from ItemOrder io where (:searchDelivery is null or io.order_state = :searchDelivery) and io.pay_state = :searchValue order by order_num desc";
+	        log.info("findByDeliveryPayState query: {}", query);
+	        try {
+	            return repository.findByDeliveryPayState(searchDelivery, searchValue, pageable);
+	        } catch (Exception e) {
+	            log.error("Error in findByDeliveryPayState", e);
+	            throw e; // 예외가 발생하면 적절한 처리를 수행하세요.
+	        }
+	    }
 }
