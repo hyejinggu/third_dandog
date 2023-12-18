@@ -9,17 +9,17 @@ function ItemInfo({ itemList }) {
         {itemList.map((i, index) => (
           <li
             key={i.item_no}
-            // onClick={() => {
-            //   localStorage.getItem("recentItem")
-            //     ? localStorage.setItem(
-            //         "recentItem",
-            //         JSON.stringify([
-            //           i,
-            //           ...JSON.parse(localStorage.getItem("recentItem")),
-            //         ])
-            //       )
-            //     : localStorage.setItem("recentItem", JSON.stringify([i]));
-            // }}
+            onClick={() => {
+              sessionStorage.getItem("recentItem")
+                ? sessionStorage.setItem(
+                    "recentItem",
+                    JSON.stringify([
+                      i,
+                      ...JSON.parse(sessionStorage.getItem("recentItem")),
+                    ])
+                  )
+                : sessionStorage.setItem("recentItem", JSON.stringify([i]));
+            }}
           >
             <Link to="/itemdetail" state={{ item: i }}>
               <div className={styles.item_container}>
@@ -39,15 +39,6 @@ function ItemInfo({ itemList }) {
                     원
                   </span>
                 </div>
-                {/* <div className={styles.color}>
-                  {i.options_color.map((color, colorIdx) => (
-                    <span
-                      key={colorIdx}
-                      title={color}
-                      style={{ backgroundColor: color }}
-                    ></span>
-                  ))}
-                </div> */}
               </div>
             </Link>
           </li>

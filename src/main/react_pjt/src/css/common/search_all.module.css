@@ -5,9 +5,10 @@
 }
 
 .searched_area {
-  max-width: 1200px;
-  margin: 100px auto;
   width: 100%;
+  min-width: 1200px;
+  max-width: 1500px;
+  margin: 100px auto;
 }
 
 .resultsContainer {
@@ -21,7 +22,7 @@
 .communityResults {
   background-color: #fff;
   width: 100%;
-  padding: 20px;
+
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -31,11 +32,14 @@
 .communityResults h2 {
   color: #333;
   font-size: 1.5em;
-  margin-bottom: 10px;
+  margin: 30px;
 }
 
 .itemResults ul {
+  margin: 0 20px;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .itemResults ul li {
@@ -44,7 +48,7 @@
   text-align: center;
   border: 1px solid #eee;
   border-radius: 10px;
-  margin-right: 5px;
+  margin: 15px 25px;
 }
 
 .itemResults ul li img {
@@ -55,8 +59,7 @@
 .boardResults ul,
 .communityResults ul {
   list-style: none;
-  padding: 0;
-  margin: 0;
+  margin: 0 20px;
 }
 
 .itemResults li,
@@ -78,5 +81,26 @@
 
 .communityResults li span p:first-child {
   font-weight: bold;
-  font-size: 1.1em;
+  font-size: 1em;
+}
+
+.item_info_wrap h4 {
+  margin: 10px 0;
+}
+
+.item_info_wrap span:nth-of-type(1) {
+  color: red;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.item_info_wrap span:nth-of-type(2) {
+  color: gray;
+  text-decoration: line-through;
+  font-size: 0.8em;
+  margin: 10px 5px;
+}
+
+.item_info_wrap span:nth-of-type(3) {
+  font-weight: bold;
 }

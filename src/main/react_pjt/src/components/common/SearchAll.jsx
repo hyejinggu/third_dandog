@@ -41,13 +41,19 @@ export default function SearchAll() {
             <h2>상품 검색 결과</h2>
             <ul>
               {items.map((i) => (
-                <li key={i.item_no}>
+                <li key={i.item_no} className={styles.item_info_wrap}>
                   <Link to="/itemdetail" state={{ item: i }}>
                     <img src={`/images/item/${i.item_img1}`} alt="" />
-                    <p>{i.item_name}</p>
-                    <p>{i.item_category}</p>
-                    <p>{i.item_price}</p>
-                    {/* 추가 필요한 정보들도 이와 같이 출력할 수 있습니다 */}
+                    <h4>{i.item_name}</h4>
+                    <span>{i.item_discount_rate}%</span>
+                    <span>{i.item_price.toLocaleString("ko")}원</span>
+                    <span>
+                      {(
+                        i.item_price -
+                        (i.item_price * i.item_discount_rate) / 100
+                      ).toLocaleString("ko")}
+                      원
+                    </span>
                   </Link>
                 </li>
               ))}

@@ -149,3 +149,14 @@
   margin: 20px;
   padding: 0 5px;
 }
+
+.recent_seen {
+  display: flex;
+  justify-self: center;
+  margin: 20px;
+  margin-top: 80px;
+  transition: transform 0.9s ease;
+}
+.itemlist_wrap {
+  display: flex;
+}

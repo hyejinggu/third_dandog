@@ -1,10 +1,9 @@
 .recent_item_container {
   width: 150px;
   height: 200px;
-  position: sticky;
-  bottom: 300px;
+  /* position: absolute; */
   margin: 0;
-  float: right;
+  /* float: right; */
   text-align: center;
 }
 
@@ -24,4 +23,26 @@
 .recent_item_container li img {
   width: 80px;
   height: 80px;
+}
+
+.item_info_wrap h4 {
+  margin-top: 15px;
+}
+
+.item_info_wrap span:nth-of-type(1) {
+  color: red;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.item_info_wrap span:nth-of-type(2) {
+  color: gray;
+  text-decoration: line-through;
+  font-size: 0.7em;
+  margin: 10px 5px;
+}
+
+.item_info_wrap span:nth-of-type(3) {
+  font-weight: bold;
+  font-size: 0.8em;
 }

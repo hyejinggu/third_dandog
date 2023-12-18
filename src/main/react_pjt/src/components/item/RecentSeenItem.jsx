@@ -1,8 +1,9 @@
 import styles from "../../css/common/recent_item.module.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const RecentSeenItem = () => {
-  const seenItem = JSON.parse(localStorage.getItem("recentItem"));
+  const seenItem = JSON.parse(sessionStorage.getItem("recentItem"));
   const limitedSeenItems = seenItem?.slice(0, 3) || []; // 세 개의 아이템만 보이도록 제한
 
   const [isClosed, setIsClosed] = useState(false); // 상태 추가
@@ -20,19 +21,24 @@ const RecentSeenItem = () => {
     <div className={styles.recent_item_container}>
       <ul>
         <li onClick={closeItems}>✖</li>
-        {limitedSeenItems.map((item, index) => (
-          <li key={index}>
-            <span>{item.name}</span>
-            <div>
-              <img src={item.image[1]} alt="상품이미지" />
-            </div>
-            <span>
-              {(
-                item.normalPr -
-                (item.normalPr * item.saleInfo) / 100
-              ).toLocaleString("ko")}
-              원
-            </span>
+        {limitedSeenItems.map((i, index) => (
+          <li key={index} className={styles.item_info_wrap}>
+            <Link to="/itemdetail" state={{ item: i }}>
+              <h4>{i.item_name}</h4>
+              <div>
+                <img src={`/images/item/${i.item_img1}`} alt="상품이미지" />
+              </div>
+              <span>{i.item_discount_rate}%</span>
+              <span>{i.item_price.toLocaleString("ko")}원</span>
+              <br />
+              <span>
+                {(
+                  i.item_price -
+                  (i.item_price * i.item_discount_rate) / 100
+                ).toLocaleString("ko")}
+                원
+              </span>
+            </Link>
           </li>
         ))}
       </ul>

@@ -3,10 +3,21 @@ import RecentSeenItem from "./RecentSeenItem";
 import styles from "../../css/subpage/Itemlist.module.css";
 import Pagination from "./Pagination";
 import { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 const ItemList = () => {
+  const [scrollY, setScrollY] = useState(0);
+  const handleScroll = () => {
+    setScrollY(window.scrollY);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const category = searchParams.get("category");
@@ -114,47 +125,53 @@ const ItemList = () => {
 
   // return 시작
   return (
-    <div className={styles.container}>
-      <div className={styles.cate_wrap}>
-        <h2 className={styles.title}>{title}</h2>
-      </div>
-
-      <div className={styles.sort}>
-        <ul>
-          <li onClick={(e) => handleSort(e)}>인기순</li>
-          <li onClick={(e) => handleSort(e)}>높은가격순</li>
-          <li onClick={(e) => handleSort(e)}>낮은가격순</li>
-          <li onClick={(e) => handleSort(e)}>신상품순</li>
-        </ul>
-        <div className={styles.search_bar}>
-          <div>
-            <input
-              type="text"
-              placeholder="검색"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.keyCode === 13) {
-                  handleInputValue();
-                }
-              }}
-            />
-          </div>
-          <span onClick={handleInputValue}>🔍</span>
+    <div className={styles.itemlist_wrap}>
+      <div className={styles.container}>
+        <div className={styles.cate_wrap}>
+          <h2 className={styles.title}>{title}</h2>
         </div>
-      </div>
 
-      <div className={styles.item_wrap}>
-        <ItemInfo itemList={getPaginatedData()} />
-      </div>
-      <p className={styles.item_count}>총 {itemList.length}개의 상품</p>
+        <div className={styles.sort}>
+          <ul>
+            <li onClick={(e) => handleSort(e)}>인기순</li>
+            <li onClick={(e) => handleSort(e)}>높은가격순</li>
+            <li onClick={(e) => handleSort(e)}>낮은가격순</li>
+            <li onClick={(e) => handleSort(e)}>신상품순</li>
+          </ul>
+          <div className={styles.search_bar}>
+            <div>
+              <input
+                type="text"
+                placeholder="검색"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.keyCode === 13) {
+                    handleInputValue();
+                  }
+                }}
+              />
+            </div>
+            <span onClick={handleInputValue}>🔍</span>
+          </div>
+        </div>
 
-      {/* <RecentSeenItem /> */}
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+        <div className={styles.item_wrap}>
+          <ItemInfo itemList={getPaginatedData()} />
+        </div>
+        <p className={styles.item_count}>총 {itemList.length}개의 상품</p>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      </div>
+      <div
+        className={styles.recent_seen}
+        style={{ transform: `translateY(${scrollY}px)` }}
+      >
+        <RecentSeenItem />
+      </div>
     </div>
   );
 };

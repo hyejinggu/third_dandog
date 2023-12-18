@@ -159,9 +159,9 @@
   font-weight: bold;
 }
 
-.review_list_container {
+.review_list,
+.review_list_container ul {
   background-color: rgba(128, 128, 128, 0.086);
-  height: 90%;
 }
 
 .review_list > span {
