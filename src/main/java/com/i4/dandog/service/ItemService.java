@@ -24,6 +24,12 @@ public interface ItemService {
 	// delete
 	int delete(int item_no);
 	
+	
+	
+	//======================================================================
+	List<Item> getBestSeller(String category);
+	
+	
 	List<Item> findByOrderByItemSalesVolumeDesc(String inputValue, String category);
 	List<Item> findByOrderByItemPriceDesc(String inputValue, String category);
 	List<Item> findByOrderByItemPriceAsc(String inputValue, String category);

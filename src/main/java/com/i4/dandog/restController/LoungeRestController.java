@@ -82,6 +82,19 @@ public class LoungeRestController {
 		
 		return loungeLikes;
 	}
+	
+	@GetMapping("/selectOne")
+	public Lounge selectOne(@RequestParam(name = "lounge_no") String lounge_no, Lounge entity) {
+		int loungeNo = Integer.parseInt(lounge_no);
+		try {
+			entity = service.selectOne(loungeNo);
+			return entity;
+		} catch (Exception e) {
+			log.error("update ERROR lounge likes", e);
+			return entity;
+		}
+	}
+	
 
 	@PostMapping("/postUpdate")
 	public String postUpdate(Lounge entity) throws IOException {

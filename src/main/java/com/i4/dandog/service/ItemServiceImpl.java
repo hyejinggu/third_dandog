@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.i4.dandog.entity.Item;
 import com.i4.dandog.repository.ItemRepository;
+import com.i4.dandog.repository.RepositoryCustom;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -19,6 +20,8 @@ import lombok.extern.log4j.Log4j2;
 public class ItemServiceImpl implements ItemService {
 
    private final ItemRepository repository;
+   private final RepositoryCustom customRepository;
+   
 
    // ============ Controller에서 사용 ============
    @Override
@@ -32,6 +35,14 @@ public class ItemServiceImpl implements ItemService {
    
    
    // ============ Rest Controller에서 사용 ============
+   
+   // 베스트셀러
+   @Override
+	public List<Item> getBestSeller(String category) {
+		return customRepository.getBestSeller(category);
+	}
+   
+   
    // 아이템 불러오기
    @Override
    public List<Item> findByOrderByItemSalesVolumeDesc(String inputValue, String category) {

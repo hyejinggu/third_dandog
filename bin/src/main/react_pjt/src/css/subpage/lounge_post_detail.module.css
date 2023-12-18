@@ -1,0 +1,95 @@
+.post_detail_wrap *,
+.post_edit_wrap * {
+  text-align: center;
+  margin: auto;
+}
+
+.post_detail_wrap h2,
+.post_edit_wrap h2 {
+  margin-bottom: 50px;
+}
+
+.table {
+  border-collapse: collapse;
+  margin-bottom: 50px;
+  width: 80%;
+}
+
+.table th,
+.table td {
+  border: 3px solid rgb(255, 169, 0, 0.4);
+  padding: 10px;
+}
+
+.content_wrap {
+  height: 500px;
+}
+
+.content_wrap .gridContainer {
+  display: grid;
+  align-items: center;
+  gap: 10px; /* 열 사이의 간격을 설정합니다. */
+}
+
+.content_wrap .gridContainer img {
+  width: 200px;
+  height: 200px;
+  align-self: start; /* 왼쪽 정렬 */
+  justify-self: start;
+}
+
+.content_wrap .gridContainer span {
+  /* align-self: start;  */
+  text-align: left;
+}
+
+.table tr:last-child td {
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+.btn_wrap {
+  text-align: right;
+}
+
+.btn_wrap .btn {
+  background-color: white;
+  border: 1px solid #ffa900;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+  color: #d3860c;
+  margin-top: 10px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.btn_wrap .btn:hover {
+  transition: 0.5s;
+  background-color: #ffe344;
+}
+
+/* ============= lounge post edit ============== */
+
+.readonly_input {
+  background-color: #fffbee;
+  border: none;
+}
+
+.edit_input,
+.edit_textarea {
+  width: 100%;
+  border: 1px solid #ffe344;
+  border-radius: 10px;
+  padding: 5px 0;
+}
+
+.edit_textarea {
+  height: 500px;
+}
+
+.origin_img {
+  width: 150px;
+  height: 150px;
+}

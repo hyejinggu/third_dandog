@@ -33,7 +33,7 @@ public class NeighborhoodReview extends BaseEntity {
 	
 	private String neighbor_content;
 	
-	private String neighbor_rating;
+	private double neighbor_rating;
 	
 	private String neighbor_category;
 	

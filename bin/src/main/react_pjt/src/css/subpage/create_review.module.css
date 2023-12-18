@@ -1,0 +1,110 @@
+.createpost_wrap * {
+  text-align: center;
+}
+
+.form_wrap {
+  margin: 50px;
+}
+
+.form_wrap label {
+  font-size: 1.2em;
+  margin: 20px;
+}
+
+.title_wrap select,
+.title_wrap input,
+.brand_star_wrap input {
+  border: none;
+  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin-right: 10px;
+  padding: 5px;
+}
+
+/* focus */
+.title_wrap select:focus,
+.title_wrap input:focus,
+.content_wrap textarea:focus,
+.brand_star_wrap input:focus {
+  border: 1px solid rgb(255, 169, 0);
+}
+
+.form_wrap table {
+  width: 90%;
+}
+
+.form_wrap table td,
+.form_wrap table th {
+  border: 1px solid rgb(83, 83, 83);
+  padding: 10px;
+}
+
+.form_wrap table tr:last-child td {
+  border: none;
+}
+
+/* 별점 컨테이너 */
+.star_rating {
+  font-size: 30px;
+}
+
+/* 각 별 스타일 */
+.star {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  color: #ccc; /* 비활성화된 별의 색상 */
+}
+
+/* 전체 별 스타일 */
+.star::before {
+  content: "\2605"; /* 별 모양 유니코드 */
+  display: inline-block;
+  position: absolute;
+}
+
+/* 클릭된 별 스타일 */
+.star.full::before {
+  content: "\2605"; /* 클릭된 별의 색상을 별로 변경 */
+  color: gold; /* 클릭된 별의 색상 */
+}
+
+/* 내용 영역 */
+.content_wrap textarea {
+  padding: 10px;
+  width: 90%;
+  height: 300px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.button_wrap {
+  display: grid;
+}
+
+.button_wrap div {
+  width: 100px;
+  line-height: 40px;
+  border: none;
+  background-color: white;
+  border-radius: 10px;
+  margin-right: 20px;
+  justify-self: end;
+  border: #ffa900 1px solid;
+  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.button_wrap div:hover {
+  background-color: #ffe344;
+  transition: 0.5s;
+}
+
+/* empty alert */
+.empty_alert {
+  color: red;
+  font-size: 0.9em;
+  font-style: italic;
+}

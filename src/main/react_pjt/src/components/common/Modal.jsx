@@ -58,11 +58,11 @@ const Modal = ({
             </span>
           ) : requestMethod === "post" ? ( // requestMethod 방식에 따라 확인 버튼의 onClick 함수 달라짐
             <span className={styles.modal_btn} onClick={requestPost}>
-              확인:post
+              확인
             </span>
           ) : (
             <span className={styles.modal_btn} onClick={requestGet}>
-              확인:get
+              확인
             </span>
           )}
           {requestAxios == null ? (

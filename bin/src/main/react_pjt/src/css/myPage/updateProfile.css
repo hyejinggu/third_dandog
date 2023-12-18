@@ -1,0 +1,175 @@
+.update_id {
+  font-size: 12px;
+  color: red;
+  margin-left: 8px;
+}
+
+#updateProfile_form {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 50px auto;
+  background-color: #fff;
+  height: 650px;
+  border-top: 2px solid #ffa900;
+  border-bottom: 2px solid #ffa900;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: left;
+}
+
+#updateProfile_form table {
+  width: 100%;
+  height: auto;
+  /* display: flex; */
+  justify-content: space-evenly;
+}
+
+#updateProfile_form figure {
+  width: 1500px;
+  height: 100%;
+}
+
+#updateProfile_form .left_contents,
+#updateProfile_form .right_contents {
+  width: 50%;
+  padding: 70px;
+  box-sizing: border-box;
+  height: 650px;
+  float: left;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#updateProfile_form .left_contents {
+  float: left;
+  display: flex;
+}
+
+#updateProfile_form .right_contents {
+  float: right;
+  display: flex;
+}
+
+#updateProfile_form .left_contents tr,
+#updateProfile_form .right_contents tr {
+  padding: 5px 0 5px 0;
+  width: 100%;
+  display: block;
+}
+
+#updateProfile_form .left_contents tr th,
+#updateProfile_form .right_contents tr th {
+  display: flex;
+  justify-content: start;
+  width: 100%;
+}
+
+#updateProfile_form .left_contents tr th label,
+#updateProfile_form .right_contents tr th label {
+  font-size: 16px;
+  color: #929292;
+  width: 100%;
+  height: 20px;
+  padding: 10px 0 5px;
+  text-align: left;
+  font-weight: normal;
+  line-height: 28px;
+}
+
+#updateProfile_form .left_contents tr td,
+#updateProfile_form .right_contents tr td {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+}
+
+#updateProfile_form .left_contents tr td input,
+#updateProfile_form .left_contents tr td select,
+#updateProfile_form .right_contents tr td input {
+  font-size: 16px;
+  color: #000;
+  width: 100%;
+  max-width: 700px;
+  outline: none;
+  padding: 7px;
+  border-radius: 5px;
+  border: 1px solid #929292;
+  margin-right: 3px;
+}
+
+#updateProfile_form .left_contents .user_id {
+  color: #929292;
+  background-color: #f3f3f3;
+}
+
+#updateProfile_form .left_contents .user_birthday {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  max-width: 700px;
+  width: 100%;
+}
+
+#updateProfile_form .left_contents .user_birthday .user_year,
+#updateProfile_form .left_contents .user_birthday .user_month,
+#updateProfile_form .left_contents .user_birthday .user_day {
+  width: 33%;
+  padding: 7px;
+  border-radius: 5px;
+  border: 1px solid #929292;
+  cursor: pointer;
+}
+
+#updateProfile_form .right_contents tr .ani_bday {
+  float: left;
+  white-space: nowrap;
+  margin: 10px 0;
+}
+
+#updateProfile_form .right_contents tr .ani_bday input:nth-child(2) {
+  margin-left: 50px;
+}
+
+#updateProfile_form .right_contents tr .ani_type {
+  justify-content: start;
+}
+
+#updateProfile_form .right_contents tr .ani_type input[type="radio"] {
+  width: 20px;
+}
+
+#updateProfile_form .right_contents tr .ani_type label {
+  width: 20px;
+  white-space: nowrap;
+  flex-grow: 10;
+}
+
+#updateProfile_form .right_contents input[type="submit"],
+#updateProfile_form .left_contents .update_pw {
+  width: 100%;
+  height: 34px;
+  border: none;
+  border: 1px solid #ffa900;
+  background-color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  float: right;
+  text-align: center;
+}
+
+#updateProfile_form .right_contents input[type="submit"]:hover {
+  transition: 0.5s;
+  background-color: #ffe344;
+}
+
+#updateProfile_form .left_contents .update_pw {
+  line-height: 33px;
+  width: 60%;
+  background-color: #ffe344;
+}

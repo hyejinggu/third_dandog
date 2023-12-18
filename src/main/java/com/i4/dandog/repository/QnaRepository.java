@@ -13,8 +13,15 @@ import org.springframework.data.repository.query.Param;
 import com.i4.dandog.entity.Qna;
 
 public interface QnaRepository extends JpaRepository<Qna, Integer>{
+	
+	
+	@Query("select q from Qna q where q.qna_title Like %:searchText%")
+	public List<Qna> selectsearchAllList(@Param("searchText") String searchText);
+	
+	@Query("select q from Qna q where q.qna_category = :qna_category AND q.qna_title Like %:searchText%")
+	public List<Qna> selectsearchList(@Param("qna_category") String selectedQna_category, @Param("searchText") String searchText);
 
-	@Query("select q from Qna q where qna_category = :qna_category")
+	@Query("select q from Qna q where q.qna_category = :qna_category")
 	public List<Qna> findByCategory(@Param("qna_category") String qna_category);
 
 	@Modifying
@@ -25,5 +32,8 @@ public interface QnaRepository extends JpaRepository<Qna, Integer>{
 	@Query(nativeQuery = true,
 			value =  "select * from qna q where q.user_id = :userId")
 	public List<Qna> findAllByUserId(String userId);
+	
+	
+
 	
 }

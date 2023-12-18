@@ -71,6 +71,14 @@ public class ItemRestController {
 	    return result;
 	}
 	
+	@GetMapping("/bestseller")
+	public List<Item> getBestSeller(@RequestParam(name = "category") String category) {
+	    
+		List<Item> result = service.getBestSeller(category);
+	    
+	    return result;
+	}
+	
 	
 	
 

@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.i4.dandog.entity.Item;
 import com.i4.dandog.entity.Lounge;
 import com.i4.dandog.service.LoungeService;
 //import com.sun.org.apache.xpath.internal.operations.Mod;
@@ -34,15 +38,31 @@ public class LoungeController {
 			@RequestParam(name = "search_category", defaultValue = "all") String searchCategory,
             @RequestParam(name = "search_field", defaultValue = "contents") String searchField,
             @RequestParam(name = "search_value", defaultValue = "") String searchValue,
+	        @RequestParam(name = "page", defaultValue = "0") int page,
+	        @RequestParam(name = "size", defaultValue = "10") int size,
             Model model) {
-		log.info("************************ " +searchField);
 	
 		if (searchCategory.equals("all")) searchCategory = null;
+		
+		
+	    Pageable pageable = PageRequest.of(page, size);
+	    Page<Lounge> loungePage;
+
+		
 		if ("id".equals(searchField)) {
-			model.addAttribute("loungeList", service.findByCategoryUserId(searchCategory, searchValue));
+			loungePage = service.findByCategoryUserId(searchCategory, searchValue, pageable);
+			model.addAttribute("loungeList", loungePage.getContent());
 		} else {
-			model.addAttribute("loungeList", service.findByCategoryLoungeContents(searchCategory, searchValue));			
+			loungePage = service.findByCategoryLoungeContents(searchCategory, searchValue, pageable);
+			model.addAttribute("loungeList", loungePage.getContent());			
 		}
+		
+	    // 페이지 관련 정보를 모델에 추가
+	    model.addAttribute("loungePage", loungePage);
+	    model.addAttribute("currentPage", loungePage.getNumber());
+	    model.addAttribute("totalPages", loungePage.getTotalPages());
+	    model.addAttribute("totalLounges", loungePage.getTotalElements());
+		
 		
 		return "lounge/loungeList";
 	}
