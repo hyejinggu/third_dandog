@@ -7,7 +7,7 @@ const NeighborReview = ({ category, selectedPlace }) => {
   const [neighborArray, setNeighborArray] = useState([]);
   const [queryCategory, setQueryCategory] = useState("beauty");
   const [sortingOption, setSortingOption] = useState("basic");
-  const [ratingFilter, setRatingFilter] = useState("1.0");
+  const [ratingFilter, setRatingFilter] = useState("0.0");
   const [clickedIndex, setClickedIndex] = useState(null);
 
   const [detailedReviewData, setDetailedReviewData] = useState([]);
@@ -16,7 +16,7 @@ const NeighborReview = ({ category, selectedPlace }) => {
   // 카테고리 변경 axios
   useEffect(() => {
     setSortingOption("basic");
-    setRatingFilter("1.0");
+    setRatingFilter("0.0");
 
     let newQueryCategory = "beauty"; // default value
 
@@ -133,7 +133,7 @@ const NeighborReview = ({ category, selectedPlace }) => {
           value={ratingFilter}
           onChange={(e) => setRatingFilter(e.target.value)}
         >
-          <option value="1.0">별점⭐</option>
+          <option value="0.0">별점⭐</option>
           <option value="4.5">4.5이상</option>
           <option value="4.0">4.0이상</option>
           <option value="3.5">3.5이상</option>

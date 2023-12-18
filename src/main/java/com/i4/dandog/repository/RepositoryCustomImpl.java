@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -58,29 +58,29 @@ public class RepositoryCustomImpl implements RepositoryCustom {
 
     @Override
     public List<ReviewInfoDTO> sortWithCategory(String sorting, String category) {
-        // Implement your sorting logic here and return the result
         return getReviewsSortedByCategory(sorting, category);
     }
 
     
-    // ========= 함수 ============
+    // ======== 함수 =========
 
     private List<ReviewInfoDTO> getReviewsByCategoryWithMinimumRating(String category, double filter) {
         String jpql = "SELECT NEW com.i4.dandog.domain.ReviewInfoDTO(r.neighbor_brand_name, COUNT(r), AVG(r.neighbor_rating)) " +
                       "FROM NeighborhoodReview r " +
                       "WHERE r.neighbor_category = :category " +
                       "GROUP BY r.neighbor_brand_name " +
-                      "HAVING AVG(r.neighbor_rating) >= :filter";
-        
-        Query query = entityManager.createQuery(jpql, ReviewInfoDTO.class);
+                      "HAVING AVG(r.neighbor_rating) >= :filter " + 
+                      "ORDER BY AVG(r.neighbor_rating) DESC";
+         
+        TypedQuery<ReviewInfoDTO> query = entityManager.createQuery(jpql, ReviewInfoDTO.class);
         query.setParameter("category", category);
         query.setParameter("filter", filter);
         return query.getResultList();
     }
-    
+
     
     private List<ReviewInfoDTO> getReviewsSortedByCategory(String sorting, String category) {
-        String jpql = "SELECT r.neighbor_brand_name, AVG(r.neighbor_rating) " +
+        String jpql = "SELECT r.neighbor_brand_name, AVG(r.neighbor_rating), COUNT(r) " +
                       "FROM NeighborhoodReview r " +
                       "WHERE r.neighbor_category = :category " +
                       "GROUP BY r.neighbor_brand_name " +
@@ -91,7 +91,6 @@ public class RepositoryCustomImpl implements RepositoryCustom {
                 jpql += "r.neighbor_brand_name ASC";
                 break;
             case "review":
-                // Order by the number of reviews in descending order
                 jpql += "COUNT(r) DESC";
                 break;
             default:
@@ -99,7 +98,7 @@ public class RepositoryCustomImpl implements RepositoryCustom {
                 break;
         }
 
-        Query query = entityManager.createQuery(jpql);
+        TypedQuery<Object[]> query = entityManager.createQuery(jpql, Object[].class);
         query.setParameter("category", category);
 
         List<Object[]> results = query.getResultList();
@@ -108,8 +107,8 @@ public class RepositoryCustomImpl implements RepositoryCustom {
 
         for (Object[] result : results) {
             String brandName = (String) result[0];
-            Long reviewCount = getReviewCountByBrandName(brandName, category);
             Double averageRating = (Double) result[1];
+            Long reviewCount = ((Number) result[2]).longValue();
 
             ReviewInfoDTO dto = new ReviewInfoDTO(brandName, reviewCount, averageRating);
             dtos.add(dto);
@@ -117,52 +116,13 @@ public class RepositoryCustomImpl implements RepositoryCustom {
 
         return dtos;
     }
-
-    private Long getReviewCountByBrandName(String brandName, String category) {
-        String countJpql = "SELECT COUNT(r) FROM NeighborhoodReview r " +
-                          "WHERE r.neighbor_brand_name = :brandName " +
-                          "AND r.neighbor_category = :category";
-
-        Query countQuery = entityManager.createQuery(countJpql);
-        countQuery.setParameter("brandName", brandName);
-        countQuery.setParameter("category", category);
-
-        return (Long) countQuery.getSingleResult();
-    }
     
-    
-    
-//    private List<ReviewInfoDTO> getReviewsSortedByCategory(String sorting, String category) {
-//    	String jpql = "SELECT NEW com.i4.dandog.domain.ReviewInfoDTO(r.neighbor_brand_name, COUNT(r), AVG(r.neighbor_rating)) " +
-//    			"FROM NeighborhoodReview r " +
-//    			"LEFT JOIN NeighborhoodReview rr ON rr.neighbor_brand_name = r.neighbor_brand_name " +
-//    			"WHERE r.neighbor_category = :category " +
-//    			"GROUP BY r.neighbor_brand_name " +
-//    			"ORDER BY ";
-//    	
-//    	switch (sorting) {
-//    	case "basic":
-//    		jpql += "r.neighbor_brand_name ASC";
-//    		break;
-//    	case "review":
-//    		// Order by the number of reviews in descending order
-//    		jpql += "COUNT(rr) DESC";
-//    		break;
-//    	default:
-//    		jpql += "r.neighbor_brand_name ASC";
-//    		break;
-//    	}
-//    	
-//    	Query query = entityManager.createQuery(jpql, ReviewInfoDTO.class);
-//    	query.setParameter("category", category);
-//    	
-//    	return query.getResultList();
-//    }
     
     
     
     
     // ===================라운지=======================
+    
 	@Override
 	public List<Lounge> findByLoungeDynamicQuery(String category, String inputValue, String filterValue, String sort) {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -170,18 +130,15 @@ public class RepositoryCustomImpl implements RepositoryCustom {
 		Root<Lounge> root = query.from(Lounge.class);
 		List<Predicate> predicates = new ArrayList<>();
 
-		// Add conditions based on parameters
 		predicates.add(criteriaBuilder.equal(root.get("lounge_category"), category));
 
 		if ("all".equals(filterValue)) {
-			// Add OR condition for multiple fields
 			Predicate allFieldsPredicate = criteriaBuilder.or(
 					criteriaBuilder.like(root.get("lounge_content"), "%" + inputValue + "%"),
 					criteriaBuilder.like(root.get("lounge_title"), "%" + inputValue + "%"),
 					criteriaBuilder.like(root.get("user_id"), "%" + inputValue + "%"));
 			predicates.add(allFieldsPredicate);
 		} else {
-			// If filterValue is not "all", search only in the specified field
 			if (filterValue != null && !filterValue.isEmpty()) {
 				predicates.add(criteriaBuilder.like(root.get(filterValue), "%" + inputValue + "%"));
 			}
@@ -189,7 +146,6 @@ public class RepositoryCustomImpl implements RepositoryCustom {
 
 		query.where(predicates.toArray(new Predicate[0]));
 
-		// Add sorting conditions
 		if (sort != null && !sort.isEmpty()) {
 			if ("popular".equals(sort)) {
 				query.orderBy(criteriaBuilder.desc(root.get("lounge_hits")));

@@ -14,11 +14,11 @@ import com.i4.dandog.entity.NeighborhoodReview;
 import com.i4.dandog.service.NeighborhoodReviewService;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+//import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequestMapping("/neighbor")
-@Log4j2
+//@Log4j2
 @AllArgsConstructor
 public class NeighborRestController {
 
