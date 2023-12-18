@@ -33,7 +33,7 @@ href="/resources/css/loungeAdmin.css"
 			<option value="id">작성자</option>
 		</select>
 		<input name="search_value" placeholder="검색어 입력" id="l_search_value" />
-		<span onclick="searchLoungeList()">검색</span>
+		<button onclick="searchLoungeList()">검색</button>
 	</div>
 	<table class="table lounge_list">
 		<tr>
@@ -87,7 +87,7 @@ href="/resources/css/loungeAdmin.css"
 		</tr>
 	</table>
 	<div class="lounge_btn">
-		<input type="submit" value="게시글 삭제" onclick="deleteLounge()" />
+		<input type="submit" value="게시글 삭제" onclick="deleteLounge()" class="delete_btn" />
 		<span onclick="loungeInsert()">새글등록</span>
 	</div>
 </body>

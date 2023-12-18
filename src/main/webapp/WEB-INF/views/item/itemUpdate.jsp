@@ -17,7 +17,8 @@
 	<c:if test="${not empty requestScope.message}">
 		<h3>${requestScope.message}</h3>
 	</c:if>
-	<form action="/item/update" method="post" enctype="multipart/form-data" id="item_update_form" >
+	<form action="/item/update" method="post" enctype="multipart/form-data" 
+			id="item_update_form" onsubmit="return focusOnEmptyFields();">>
 		<table class="table item_update">
 		<c:set var="i" value="${requestScope.itemDetail}" />
 		<c:if test="${not empty requestScope.itemDetail}">
@@ -41,7 +42,7 @@
 				
 			</tr>
 			<tr>
-				<th>사이즈, 컬러 선택</th>
+				<th>사이즈, 컬러</th>
 				<td colspan="3">
 					<select name="options_size">
 						<c:forEach var="s" items="${requestScope.itemSizes}">
@@ -61,8 +62,10 @@
 				<td><input type="text" id="item_price" name="item_price" value="${i.item_price}"
 					placeholder="숫자만 입력">원</td>
 				<th>할인율 설정</th>
-				<td><input type="text" name="item_discount_rate" value="${i.item_discount_rate}"
-					placeholder="숫자로만 입력">%</td>
+				<td>
+					<input type="text" name="item_discount_rate" value="${i.item_discount_rate}"
+					 id="item_discount_rate" placeholder="숫자로만 입력">%
+				</td>
 			</tr>
 			<tr>
 				<th>재고 수량</th>
@@ -74,7 +77,7 @@
 			<tr>
 				<th>상품 설명</th>
 				<td colspan="3" >
-					<textarea cols="50" rows="5" name="item_desc" placeholder="500자 이하">${i.item_desc}</textarea>
+					<textarea cols="50" rows="5" id = "item_desc" name="item_desc" placeholder="500자 이하">${i.item_desc}</textarea>
 				</td>
 			</tr>
 			<tr>
@@ -98,32 +101,29 @@
 				    <div>
 				        <!-- 기존 이미지 표시 -->
 				        <div>
-				        <c:forEach var="img" items="${requestScope.itemImages}">
-				            <input id="selectedImages" type="checkbox" name="selectedImages" value="${img.image_no}">
-				        	<label for="selectedImages">
-				            	<img src="/${img.item_img}" class="select_img" width="100" height="100">
-				            	<input type="hidden" name="item_img" value="${img.item_img}">
-				            </label>
-				            
-				            <!-- 이미지 수정을 위한 체크박스 -->
-				        </c:forEach>
+					        <c:forEach var="img" items="${requestScope.itemImages}">
+					            <input id="selectedImages" type="checkbox" name="selectedImages" value="${img.image_no}">
+					        	<label for="selectedImages">
+					            	<img src="/${img.item_img}" class="select_img" width="100" height="100">
+					            	<input type="hidden" name="item_img" value="${img.item_img}">
+					            </label>
+					            
+					            <!-- 이미지 수정을 위한 체크박스 -->
+					        </c:forEach>
 				        </div>
-						<span>선택한 이미지만 업로드됩니다.</span>
+						<span class="etc_img_desc">선택한 이미지만 업로드됩니다.</span>
 					</div>
 			        <!-- 수정된 이미지 업로드를 위한 파일 입력 -->
 			        <input type="file" name="etcImages" id="etcImages" multiple>
 			    </td>
 			</tr>
 			
-			<tr>
-				<th></th>
-				<td colspan="3">
-					<input type="reset" value="취소"> 
-					<input type="submit" value="상품 수정" onclick="updateItem()">
-				</td>
-			</tr>
 			</c:if>
 		</table>
+		<div class="item_btn">
+			<input type="reset" value="취소" class="delete_btn"> 
+			<input type="submit" value="상품 수정" onclick="updateItem()">
+		</div>
 	</form>
 
 

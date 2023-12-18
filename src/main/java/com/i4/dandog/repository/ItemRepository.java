@@ -42,7 +42,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	public List<Item> findByOrderByItemPriceAsc(@Param("inputValue") String inputValue,
 			@Param("category") String category);
 
-	@Query("select i from Item i where item_name like %:inputValue% and item_category = :category order by i.regdate")
+	@Query("select i from Item i where item_name like %:inputValue% and item_category = :category order by i.regdate desc")
 	public List<Item> findByOrderByRegdate(@Param("inputValue") String inputValue, @Param("category") String category);
 
 	

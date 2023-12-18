@@ -58,6 +58,7 @@ public class ItemController {
 	    Page<Item> itemPage;
 
 	    if ("no".equals(searchField)) {
+//	    	if (searchValue)
 	        int intSearchValues = Integer.parseInt(searchValue);
 	        itemPage = service.findByCategoryItemNo(searchCategory, intSearchValues, pageable);
 	    } else {

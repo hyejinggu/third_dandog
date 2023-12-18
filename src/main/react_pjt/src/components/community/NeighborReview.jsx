@@ -72,6 +72,8 @@ const NeighborReview = ({ category, selectedPlace }) => {
       .catch((error) => {
         console.error("Error fetching detailed review data:", error);
       });
+
+    setRCurrentPage(1);
   };
 
   // 선택된 장소 리뷰 가져오기 axios
@@ -94,7 +96,7 @@ const NeighborReview = ({ category, selectedPlace }) => {
     return `${year}-${month}-${day}`;
   };
 
-  // pagination 구현
+  // brand pagination 구현
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const listPerPage = 5; // 페이지 당 게시글 개수
   const totalPages = Math.ceil(neighborArray.length / listPerPage); // 전체 페이지 번호
@@ -107,6 +109,21 @@ const NeighborReview = ({ category, selectedPlace }) => {
     const startIndex = (currentPage - 1) * listPerPage;
     const endIndex = startIndex + listPerPage;
     return neighborArray.slice(startIndex, endIndex);
+  };
+
+  // review pagination 구현
+  const [rcurrentPage, setRCurrentPage] = useState(1); // 현재 페이지 번호
+  const rlistPerPage = 8; // 페이지 당 게시글 개수
+  const rtotalPages = Math.ceil(detailedReviewData.length / rlistPerPage); // 전체 페이지 번호
+
+  const rhandlePageChange = (page) => {
+    setRCurrentPage(page);
+  };
+
+  const rgetPaginatedData = () => {
+    const startIndex = (rcurrentPage - 1) * rlistPerPage;
+    const endIndex = startIndex + rlistPerPage;
+    return detailedReviewData.slice(startIndex, endIndex);
   };
 
   const renderRatingFilterSelect = () => {
@@ -125,6 +142,30 @@ const NeighborReview = ({ category, selectedPlace }) => {
     } else {
       return null;
     }
+  };
+
+  const TruncatedContent = ({ content, maxLength }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+    const handleToggle = () => {
+      setIsExpanded(!isExpanded);
+    };
+    const shouldShowMoreButton = content.length > maxLength;
+    const truncatedText = isExpanded
+      ? content
+      : `${content.slice(0, maxLength)}`;
+
+    return (
+      <div>
+        <span className={styles.truncatedContent} onClick={handleToggle}>
+          {truncatedText}
+        </span>
+        {shouldShowMoreButton && !isExpanded && (
+          <span className={styles.readMore} onClick={handleToggle}>
+            ...[더보기]
+          </span>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -185,10 +226,13 @@ const NeighborReview = ({ category, selectedPlace }) => {
                 <span>작성자</span>
               </div>
               <ul>
-                {detailedReviewData.map((it, index) => (
+                {rgetPaginatedData().map((it, index) => (
                   <li key={it.neighbor_no} className={styles.neighbor_review}>
                     <span>{it.neighbor_title}</span>
-                    <span>{it.neighbor_content}</span>
+                    <TruncatedContent
+                      content={it.neighbor_content}
+                      maxLength={30}
+                    />
                     <span>{it.neighbor_rating}</span>
                     <span>{formatDate(it.regdate)}</span>
                     <span>{it.user_id}</span>
@@ -196,9 +240,9 @@ const NeighborReview = ({ category, selectedPlace }) => {
                 ))}
               </ul>
               <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
+                currentPage={rcurrentPage}
+                totalPages={rtotalPages}
+                onPageChange={rhandlePageChange}
               ></Pagination>
             </div>
           </div>
