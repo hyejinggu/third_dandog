@@ -31,7 +31,7 @@ import UpdateProfile from "./components/mypage/UpdateProfile";
 import UpdatePw from "./components/mypage/UpdatePw";
 import MyPosting from "./components/mypage/MyPosting";
 import OrderInquiry from "./components/mypage/OrderInquiry";
-import Orderdetail from "./components/mypage/Orderdetail"; 
+import Orderdetail from "./components/mypage/Orderdetail";
 import ItemReview from "./components/mypage/ItemReview";
 
 // 게시판
@@ -63,40 +63,33 @@ function App() {
         <Route path="/board/*" element={<Board />} />
         <Route path="/itemlist/*" element={<ItemList />} />
         <Route path="/itemdetail" element={<ItemDetail />} />
-
         {/* 커뮤니티 링크 */}
         <Route path="/community/*" element={<Community />} />
-
         {/* 상세페이지, 장바구니, 결제 */}
         <Route path="/cartitem/*" element={<CartItem />} />
         <Route path="/emptyItem/*" element={<EmptyItem />} />
-
         {/* 마이페이지, 회원정보 수정 */}
         <Route path="/myPage/*" element={<MyPage />} />
         <Route path="/UpdateProfile/*" element={<UpdateProfile />} />
         <Route path="/updatepw/*" element={<UpdatePw />} />
-        <Route path="/myposting/*" element={<MyPosting />} />
+        <Route path="/myposting" element={<MyPosting />} />
         <Route path="/myquestion/*" element={<MyQuestion />} />
         <Route path="/OrderInquiry/*" element={<OrderInquiry />} />
-        <Route path="/Orderdetail/*" element={<Orderdetail />} />ItemReview
+        <Route path="/Orderdetail/*" element={<Orderdetail />} />
+        ItemReview
         <Route path="/ItemReview/*" element={<ItemReview />} />
-        
         {/* 로그인 */}
-        <Route path="/findid/*" element={<FindId />} />
-        <Route path="/findpw/*" element={<FindPw />} />
-
+        <Route path="/findid" element={<FindId />} />
+        <Route path="/findpw" element={<FindPw />} />
         {/* 게시판 */}
         <Route path="/board/boardfaq/" element={<BoardFaq />} />
         <Route path="/board/boardqna/" element={<BoardQna />} />
         <Route path="/board/createquestion/" element={<CreateQuestion />} />
-        
-        
         {/* 회원가입 */}
         <Route path="/agree/*" element={<Agree />} />
         <Route path="/profile/*" element={<Profile />} />
         <Route path="/details/*" element={<Details />} />
         <Route path="/information/*" element={<Information />} />
-
         <Route path="/itemdetail" element={<ItemDetail />} />
         <Route path="/payment" element={<Payment />} />
       </Routes>

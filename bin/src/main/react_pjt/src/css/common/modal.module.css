@@ -32,14 +32,17 @@
 }
 
 .modal_btn_wrap {
-  display: flex;
-  justify-content: space-evenly;
+  /* width: 70%; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .modal_btn {
+  height: 20px;
+  width: 20%;
+  justify-self: center;
   cursor: pointer;
-  padding: 15px 20px;
-  margin: 20px;
+  padding: 15px 30px;
   background-color: #ffe344;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);

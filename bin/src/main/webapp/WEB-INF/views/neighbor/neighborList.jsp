@@ -42,7 +42,7 @@ prefix="c"%>
         placeholder="검색어 입력"
         id="n_search_value"
       />
-      <span onclick="searchNeighborList()">검색</span>
+      <button onclick="searchNeighborList()">검색</button>
     </div>
     <table class="table neighbor_list">
       <tr>

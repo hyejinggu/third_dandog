@@ -1,4 +1,5 @@
 import "../../css/board/board.css";
+import Pagination from "../item/Pagination";
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -9,29 +10,29 @@ const BoardQna = () => {
     const [selectedQna_category, setSelectedQna_category] = useState("ALL");
     const [openQuestion, setOpenQuestion] = useState(null); // 선택된 질문의 인덱스를 저장
     const [searchText, setSearchText] = useState(""); // 검색어를 위한 새 상태
-    const [filteredBoardArray, setFilteredBoardArray] = useState([]);
-    // 필터링된 항목을 저장할 상태.검색버튼을 눌렀을때만 필터링. (boardArray) 쓸 경우 const 는 배열 밑에 위치하기
-    const [showInitialTable, setShowInitialTable] = useState(true); // 초기 테이블 보여주기 여부를 저장하는 상태
-
     const [boardArray, setBoardArray] = useState([]);
+    //const [currentPage, setCurrentPage] = useState(1); // 아래 페이지네이션에 정의
+    //const listPerPage = 5;
 
     console.log('boardArray' + boardArray);
+
     useEffect(() => {
         axios
             .get("/qnar/qnaList") //post에서 바꿈
             .then((res) => {
                 // 게시글을 qna_seq 기준으로 내림차순 정렬
                 const sortedBoardArray = res.data.sort((a, b) => b.qna_seq - a.qna_seq);
-                setShowInitialTable(true);
+                //setShowInitialTable(true);
                 setBoardArray(sortedBoardArray);
                 console.log('res.data : ' + res.data);
             })
             .catch((res) => console.log('** res.data.err : ' + res));
-    }, [searchText]); // 검색기능 FilteredBoardArray를 추가한 이후 openQuestion, 있으면 다시 기본리스트 전체출력문제로 제외함 
+    }, []); // 검색기능 FilteredBoardArray를 추가한 이후 openQuestion, 있으면 다시 기본리스트 전체출력문제로 제외함 
 
     // CreateQuestion에서 글을 등록하는 로직 수행 후, 데이터를 다시 불러오기 위해 openQuestion 상태를 변경
     const handleCreateQuestion = () => {
-        setOpenQuestion(openQuestion === null ? 0 : null);}
+        setOpenQuestion(openQuestion === null ? 0 : null);
+    }
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -46,12 +47,9 @@ const BoardQna = () => {
         axios
             .get(`/qnar/qnasearchList/${selectedQna_category}/${searchText}`)
             .then((res) => {
-                // 게시글을 qna_seq 기준으로 내림차순 정렬
                 const sortedBoardArray = res.data.sort((a, b) => b.qna_seq - a.qna_seq);
-                setFilteredBoardArray(sortedBoardArray);
-                setShowInitialTable(false);
-                //setSearchText("");
-                //setBoardArray(res.data);
+                setBoardArray(sortedBoardArray);
+
                 console.log('res.data : ' + res.data);
             })
             .catch((res) => console.log('** res.data.err : ' + res));
@@ -80,14 +78,21 @@ const BoardQna = () => {
             setOpenQuestion((prevIndex) => (prevIndex === index ? null : index));
     };
 
-    // 검색어 입력후 공지사항 눌렀을때 다시 초기 테이블(항목이 나오게)로 돌아가기 함수
+    // *** pagination 구현
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
+    const listPerPage = 5; // 페이지 당 게시글 개수
+    const totalPages = Math.ceil(boardArray.length / listPerPage); // 전체 페이지 번호
 
-    const handleInitialTable = () => {
-        setFilteredBoardArray([]); // 초기 테이블 항목을 보여주기 위해 필터링된 배열 초기화
-        setShowInitialTable(true); // 초기 테이블 내용 보여주기
-        setSearchText(""); // 검색어 초기
-
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
     };
+
+    const getPaginatedData = () => {
+        const startIndex = (currentPage - 1) * listPerPage;
+        const endIndex = startIndex + listPerPage;
+        return boardArray.slice(startIndex, endIndex);
+    };
+
 
     // 고객센터 게시판 종류
     return (
@@ -95,16 +100,16 @@ const BoardQna = () => {
             <div id="board">
                 <h1 className="title">고객센터</h1>
 
-
+                {/* // onClick={handleInitialTable} */}
                 <div className="box_wrap">
                     <Link to="/board">
-                        <span className="box_a" onClick={handleInitialTable}>공지사항</span>
+                        <span className="box_a">공지사항</span>
                     </Link>
                     <Link to="/board/boardfaq">
-                        <span className="box_a" onClick={handleInitialTable}>FAQ</span>
+                        <span className="box_a">FAQ</span>
                     </Link>
                     <Link to="/board/boardqna">
-                        <span className="box_a" onClick={handleInitialTable}>QnA</span>
+                        <span className="box_a">QnA</span>
                     </Link>
                 </div>
 
@@ -153,95 +158,52 @@ const BoardQna = () => {
                             <th>답변상태</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        
-                        {showInitialTable ? (
-                            // 초기 테이블 항목 보여주기 title 행
-                            boardArray.map((item, index) => (
-                                <React.Fragment key={item.qna_seq}>
-                                    <tr className={`question_1 ${openQuestion === index ? "show-answer" : ""}`}
-                                        onClick={() => handleAnswerToggle(index, item.user_id)}>
+                        {getPaginatedData().map((item, index) => ( //boardArray.map
+                            <React.Fragment key={item.qna_seq}>
+                                <tr className={`question_1 ${openQuestion === index ? "show-answer" : ""}`}
+                                    onClick={() => handleAnswerToggle(index, item.user_id)}>
+                                    <td></td>
+                                    <td>{item.qna_seq}</td>
+                                    <td>{item.qna_category}</td>
+                                    <td>
+                                        {((sessionStorage.getItem('loginId') === item.user_id) || (sessionStorage.getItem('isAdmin') === "true")) ? (
+                                            <Link to={{ pathname: "/board/boardqna", search: `?qna_seq=${item.qna_seq}` }}>{item.qna_title}</Link>
+                                        ) : (
+                                            <span>{item.qna_title}</span>
+                                        )}
+                                    </td>
+                                    <td>{item.user_id}</td>
+                                    <td>{item.regdate}</td>
+                                    <td>{item.qna_view}</td>
+                                    <td>{item.answer_state}</td>
+                                </tr>
+                                {openQuestion === index && (
+                                    <tr className="answer">
                                         <td></td>
-                                        <td>{item.qna_seq}</td>
-                                        <td>{item.qna_category}</td>
-                                        <td> 
-                                            {((sessionStorage.getItem('loginId') === item.user_id) || (sessionStorage.getItem('isAdmin') === "true")) ? (
-                                                //<a href={`qdetail?qna_seq=${item.qna_seq}`}>{item.qna_title}</a> //a태그에서 Link to로 수정함
-                                                <Link to={{ pathname: "/board/boardqna", search: `?qna_seq=${item.qna_seq}` }}>{item.qna_title}</Link>
-                                            ) : (
-                                                <span>{item.qna_title}</span>
-                                            )}
-                                        </td>
-                                        <td>{item.user_id}</td>
-                                        <td>{item.regdate}</td>
-                                        <td>{item.qna_view}</td>
-                                        <td>{item.answer_state}</td>
-                                    </tr>
-                                    {/* 답변출력 */}
-                                    {openQuestion === index && (
-                                        <tr className="answer">
-                                            <td></td>
-                                            <td></td>
-                                            <td>{item.qna_category}</td>
-                                            <td>
-                                                <div>[질문] {item.qna_content}</div>
-                                                <br></br>
-                                                {item.qna_reply ? <div>[답변] {item.qna_reply}</div> : null}
-                                            </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    )}
-                                </React.Fragment>
-                            ))
-                        ) : (
-                            // 필터링된 항목 보여주기
-                            filteredBoardArray.map((item, index) => (
-                                <React.Fragment key={item.qna_seq}>
-                                    <tr className={`question_1 ${openQuestion === index ? "show-answer" : ""}`}
-                                        onClick={() => handleAnswerToggle(index, item.user_id)}>
                                         <td></td>
-                                        <td>{item.qna_seq}</td>
                                         <td>{item.qna_category}</td>
                                         <td>
-                                            {((sessionStorage.getItem('loginId') === item.user_id) || (sessionStorage.getItem('isAdmin') === "true")) ? (
-                                                <Link to={{ pathname: "/board/boardqna", search: `?qna_seq=${item.qna_seq}` }}>{item.qna_title}</Link>
-                                            ) : (
-                                                <span>{item.qna_title}</span>
-                                            )}
+                                            <div>[질문] {item.qna_content}</div>
+                                            <br></br>
+                                            {item.qna_reply ? <div>[답변] {item.qna_reply}</div> : null}
                                         </td>
-                                        <td>{item.user_id}</td>
-                                        <td>{item.regdate}</td>
-                                        <td>{item.qna_view}</td>
-                                        <td>{item.answer_state}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
-                                    {openQuestion === index && (
-                                        <tr className="answer">
-                                            <td></td>
-                                            <td></td>
-                                            <td>{item.qna_category}</td>
-                                            <td>
-                                                <div>[질문] {item.qna_content}</div>
-                                                <br></br>
-                                                {item.qna_reply ? <div>[답변] {item.qna_reply}</div> : null}
-                                            </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    )}
-                                </React.Fragment>
-                            ))
-                        )}
+                                )}
+                            </React.Fragment>
+                        ))}
                     </tbody>
                 </table>
 
-                <div className="page_shift">
+                {/* <div className="page_shift">
                     <a href="#">1</a>
                     <a href="#">2</a>
                     <a href="#">3</a>
-                </div>
+                </div> */}
 
                 <div className="button">
                     <Link to="/board/createquestion">
@@ -254,6 +216,14 @@ const BoardQna = () => {
                         <input type="button" value="내글보기" />
                     </Link>
                 </div>
+
+                {/* 페이지 이동 */}
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                ></Pagination>
+
             </div>
         </main>
     );

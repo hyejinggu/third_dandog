@@ -91,8 +91,7 @@ const UpdateProfile = () => {
         },
       });
 
-      // 성공적으로 요청이 완료된 경우에만 모달을 엽니다.
-      setIsModalOpen(true);
+      alert("회원 정보 수정 완료");
     } catch (error) {
       // 오류가 발생한 경우 콘솔에 오류를 출력하여 디버깅에 도움이 될 수 있습니다.
       console.error("Error updating member details:", error);
@@ -111,26 +110,31 @@ const UpdateProfile = () => {
   const handleWithdraw = async (e) => {
     e.preventDefault();
     try {
-      // 서버의 회원 탈퇴 엔드포인트로 DELETE 요청을 보냄
-      const response = await axios.delete(`/member/withdraw/${loginId}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      alert("탈퇴가 완료되었습니다.");
-      sessionStorage.removeItem("loginId");
-      navigate("/main");
+      setIsModalOpen(true);
     } catch (error) {
       console.error("회원 탈퇴 실패:", error);
-      // 회원 탈퇴 실패 시 에러 처리 등의 추가 작업 수행
       alert("회원 탈퇴에 실패했습니다.");
     }
+  };
+
+  const requestFunction = () => {
+    sessionStorage.removeItem("loginId");
   };
 
   // ==============================================================================
   return (
     <form action="/updateRest" id="updateProfile_form" method="post">
+      {isModalOpen && (
+        <Modal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          modalContent="정말 탈퇴하시겠습니까?"
+          modalAfterPath={"/main"}
+          requestAxios={`/member/withdraw/${loginId}`}
+          requestMethod={"get"}
+          requestFunction={requestFunction}
+        />
+      )}
       <figure>
         <table>
           <tbody>
@@ -459,14 +463,6 @@ const UpdateProfile = () => {
           </tbody>
         </table>
       </figure>
-      {isModalOpen && (
-        <Modal
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-          modalContent="회원 정보가 수정되었습니다."
-          modalAfterPath={"/main"}
-        />
-      )}
     </form>
   );
 };

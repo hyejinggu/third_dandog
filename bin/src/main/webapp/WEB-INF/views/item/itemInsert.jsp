@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Item Insert</title>
+<script src="/resources/js/item.js"></script>
 <link rel="stylesheet" type="text/css" href="/resources/css/itemAdmin.css">
 </head>
 <body>
@@ -13,16 +14,19 @@
 		<h2>상품 관리</h2>
 		<h3>Item Insert</h3>
 	</div>
-	<form action="/item/insert" method="post" enctype="multipart/form-data">
+	<form action="/item/insert" method="post" 
+			enctype="multipart/form-data" onsubmit="return focusOnEmptyFields();">
 		<table class="table item_update">
 			<tr>
 				<th>아이템 카테고리</th>
-				<td><select name="item_category">
+				<td>
+					<select name="item_category">
 						<option value="Snack">간식, 사료</option>
 						<option value="Toy">장난감</option>
 						<option value="Living">리빙, 패션</option>
 						<option value="Stroll">산책, 케어</option>
-				</select></td>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<th>상품 이름</th>
@@ -52,13 +56,13 @@
 			</tr>
 			<tr>
 				<th>상품 설명</th>
-				<td><textarea cols="50" rows="10" name="item_desc"
+				<td><textarea cols="50" rows="10" name="item_desc" id="item_desc"
 						placeholder="500자 이하"></textarea></td>
 			</tr>
 
 			<tr>
 				<th>할인율 설정</th>
-				<td><input type="text" name="item_discount_rate"
+				<td><input type="text" name="item_discount_rate" id="item_discount_rate"
 					placeholder="숫자로만 입력"></td>
 			</tr>
 			<tr>
@@ -86,14 +90,13 @@
 					<input type="file" name="etcImages" id="etcImages" multiple></td>
 			</tr>
 
-			<tr>
-				<th></th>
-				<td>
-					<input type="reset" value="취소">
-					<input type="submit" value="상품 등록">
-				</td>
-			</tr>
 		</table>
+
+		<div class="item_btn">
+			<input type="reset" value="취소" class="delete_btn">
+			<input type="submit" value="상품 등록">
+		</div>
+
 	</form>
 
 	<br>

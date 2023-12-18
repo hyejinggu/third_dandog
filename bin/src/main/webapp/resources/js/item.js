@@ -1,6 +1,35 @@
 "use strict"
 
 
+function focusOnEmptyFields() {
+  const fieldsToCheck = ["item_name", "item_price", "item_desc", "item_discount_rate", "item_stock"];
+  let hasEmptyField = false;
+
+  fieldsToCheck.forEach((fieldName) => {
+    const field = document.getElementById(fieldName);
+    if (field) {
+      const trimmedValue = field.value.trim();
+      if (trimmedValue === "") {
+        field.focus();
+        hasEmptyField = true;
+      } else if (fieldName === "item_price" || fieldName === "item_discount_rate" || fieldName === "item_stock") {
+        if (!isNumeric(trimmedValue)) {
+          alert(`${fieldName}숫자로 입력해주세요.`);
+          field.focus();
+          hasEmptyField = true;
+        }
+      }
+    }
+  });
+
+  return !hasEmptyField; // 모든 필드가 채워져 있으면 true 반환
+}
+
+function isNumeric(value) {
+  return !isNaN(parseFloat(value)) && isFinite(value);
+}
+
+
 function getItemList(pageNumber) {
 	pageNumber = pageNumber || 0;
 

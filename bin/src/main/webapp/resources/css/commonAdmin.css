@@ -132,6 +132,10 @@
   color: #ffa900;
 }
 
+.expandable_row {
+	cursor: pointer;
+}
+
 .expandable_row .full_text {
   text-align: center;
   display: block;

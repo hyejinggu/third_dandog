@@ -49,6 +49,29 @@ const OrderInquiry = () => {
             })
     };
 
+    // 주문취소
+    const handleOrderDelete = (seletedOrder) => {
+        let order_num = seletedOrder.order_num
+        axios
+            .post(`/mypage/orderdelete?order_num=${order_num}`, {},
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+            .then((response) => {
+                // 서버 응답 성공 시
+                alert(`주문취소가 완료되었습니다.`);
+                window.location.reload();
+            })
+            .catch((error) => {
+                // 서버 응답 에러 시
+                console.error("에러 발생:", error);
+                console.log("서버 응답:", error.response); // 추가된 부분
+                alert("주문취소 중 오류가 발생했습니다.");
+            })
+    };
+
     // 페이지네이션
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10; // 페이지당 표시할 아이템 수
@@ -80,7 +103,7 @@ const OrderInquiry = () => {
                             <th>배송상태</th>
                             <th>결제상태</th>
                             <th>상세보기</th>
-                            <th></th>
+                            {/* <th></th> */}
                         </tr>
                         {displayedItems.map((i, index) => (
                             <tr key={index}>
@@ -124,6 +147,9 @@ const OrderInquiry = () => {
                                     <td>
                                     </td>
                                 )}
+                                <td>
+                                    <input type="button" value="주문취소" onClick={() => handleOrderDelete(i)} />
+                                </td>
                             </tr>
                         ))}
                     </table>

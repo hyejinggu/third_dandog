@@ -24,7 +24,7 @@
   margin-right: 10px;
 }
 
-.event_btn input {
+.delete_btn {
   color: crimson;
 }
 
@@ -33,23 +33,3 @@
   font-weight: bold;
 }
 
-/* 
-.neighbor_list td p:nth-child(2) {
-  font-size: 0.8em;
-} */
-
-/* .expandable-row .full-text {
-  text-align: center;
-  display: block;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 300px;
-  margin: 0 auto;
-  white-space: nowrap;
-}
-
-.expandable-row.expanded .full-text {
-  display: block;
-  white-space: wrap;
-} */

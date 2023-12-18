@@ -13,7 +13,8 @@ const CreatePost = () => {
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState(new FormData()); // FormData 상태 추가
+  const [formData, setFormData] = useState(new FormData());
+  const [previewImage, setPreviewImage] = useState(null);
 
   const handleSubmit = () => {
     if (!postTitle) {
@@ -26,6 +27,18 @@ const CreatePost = () => {
       );
       setFormData(updatedFormData);
       setIsModalOpen(true);
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      setPreviewImage(URL.createObjectURL(file));
+
+      const updatedFormData = new FormData();
+      updatedFormData.append("lounge_imgf", file);
+      setFormData(updatedFormData);
     }
   };
 
@@ -90,6 +103,7 @@ const CreatePost = () => {
               <th scope="row">제목</th>
               <td colSpan={3}>
                 <input
+                  className={styles.title_input}
                   type="text"
                   name="lounge_title"
                   value={postTitle}
@@ -114,7 +128,18 @@ const CreatePost = () => {
             <tr>
               <th scope="row">첨부파일</th>
               <td colSpan={3}>
-                <input type="file" name="lounge_imgf" />
+                {previewImage && (
+                  <img
+                    src={previewImage}
+                    alt="Preview"
+                    className={styles.previewImage}
+                  />
+                )}
+                <input
+                  type="file"
+                  name="lounge_imgf"
+                  onChange={handleImageChange}
+                />
               </td>
             </tr>
             <tr>

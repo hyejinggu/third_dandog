@@ -11,13 +11,19 @@ const Modal = ({
   requestAxios,
   requestMethod,
   dataToRequest,
+  requestFunction,
 }) => {
   const navigate = useNavigate();
 
   if (!isModalOpen) return null;
+
   const closeModal = () => {
     setIsModalOpen(false);
     navigate(modalAfterPath);
+  };
+
+  const cancelModal = () => {
+    setIsModalOpen(false);
   };
 
   const requestGet = () => {
@@ -25,6 +31,9 @@ const Modal = ({
       .get(requestAxios)
       .then((response) => {
         setIsModalOpen(false);
+        if (requestFunction != null) {
+          requestFunction();
+        }
         navigate(modalAfterPath);
         console.log("요청 성공:", response.data);
       })
@@ -39,7 +48,7 @@ const Modal = ({
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((response) => {
-        alert(`response.data : ${response.data}`);
+        // alert(`response.data : ${response.data}`);
         navigate("/community");
       })
       .catch((err) => {
@@ -48,27 +57,27 @@ const Modal = ({
   };
 
   return (
-    <div className={styles.modal} onClick={closeModal}>
+    <div className={styles.modal} onClick={cancelModal}>
       <div className={styles.modal_wrap} onClick={(e) => e.stopPropagation()}>
         <p className={styles.modal_content}>{modalContent}</p>
-        <div className={styles.modal_btn_wrap}>
+        <div className={requestAxios == null ? "" : styles.modal_btn_wrap}>
           {requestAxios == null ? ( // requestAxios(보낼 요청 값) 없으면 기존 모달처럼 확인 버튼만 뜸
             <span className={styles.modal_btn} onClick={closeModal}>
               확인
             </span>
           ) : requestMethod === "post" ? ( // requestMethod 방식에 따라 확인 버튼의 onClick 함수 달라짐
             <span className={styles.modal_btn} onClick={requestPost}>
-              확인:post
+              확인
             </span>
           ) : (
             <span className={styles.modal_btn} onClick={requestGet}>
-              확인:get
+              확인get
             </span>
           )}
           {requestAxios == null ? (
             ""
           ) : (
-            <span className={styles.modal_btn} onClick={closeModal}>
+            <span className={styles.modal_btn} onClick={cancelModal}>
               취소
             </span>
           )}
@@ -78,7 +87,7 @@ const Modal = ({
   );
 }; // Modal
 
-// 모달을 사용하게 위해 props로 전달해 주어야 하는 것.
+// 모달을 사용 위해 props로 전달해 주어야 하는 것.
 Modal.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
