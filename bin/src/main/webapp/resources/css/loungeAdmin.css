@@ -30,6 +30,26 @@
   font-weight: bold;
 }
 
+.lounge_insert img {
+	width: 150px;
+}
+
+.lounge_insert {
+	width: 80%;
+}
+
+.lounge_insert th {
+	width: 30%;
+}
+
+.lounge_insert td {
+	width: 60%;
+}
+
+.lounge_insert select {
+	margin: 5px 10px;
+}
+
 .lounge_btn * {
   border: none;
   border-radius: 10px;
@@ -40,7 +60,7 @@
   margin-right: 10px;
 }
 
-.lounge_btn input {
+.delete_btn {
   color: crimson;
 }
 

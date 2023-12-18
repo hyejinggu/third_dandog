@@ -5,6 +5,7 @@ import CreatePost from "./CreatePost";
 import CreateReview from "./CreateReview";
 import LoungePostDetail from "./LoungePostDetail";
 import LoungePostEdit from "./LoungePostEdit";
+import NeighborReviewEdit from "./NeighborReviewEdit";
 import React, { useState, useEffect } from "react";
 
 import { Routes, Route } from "react-router-dom";
@@ -26,6 +27,7 @@ const Community = () => {
           <Route path="/neighborhood/*" element={<Neighborhood />} />
           <Route path="/createpost/" element={<CreatePost />} />
           <Route path="/createreview/" element={<CreateReview />} />
+          <Route path="/neighborreviewedit/" element={<NeighborReviewEdit />} />
         </Routes>
       </CreatePostContext.Provider>
     </div>

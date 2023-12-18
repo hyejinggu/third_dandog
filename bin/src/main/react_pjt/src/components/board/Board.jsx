@@ -143,7 +143,7 @@ const Board = () => {
           <input
             type="search"
             name="search"
-            id="board_search"
+            id="board_search" //id 다른 파일이랑 달라야하는지 찾기
             placeholder="검색어를 입력해주세요."
             // 검색기능 추가
             value={searchText}

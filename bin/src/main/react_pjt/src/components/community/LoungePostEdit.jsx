@@ -7,12 +7,27 @@ import Modal from "../common/Modal";
 const LoungePostEdit = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const post = location.state.post;
-  const [postTitle, setPostTitle] = useState(post.lounge_title);
-  const [postContent, setPostContent] = useState(post.lounge_content);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const lounge_no = location.state.lounge_no;
+  const [post, setPost] = useState({});
 
-  // const loginId = sessionStorage.getItem("loginId");
+  useEffect(() => {
+    axios
+      .get(`/lounge/selectOne?lounge_no=${lounge_no}`)
+      .then((res) => {
+        console.log(res.data);
+        setPost(res.data);
+        setPostTitle(res.data.lounge_title);
+        setPostContent(res.data.lounge_content);
+        setSelectedCategory(res.data.lounge_category);
+      })
+      .catch((res) => console.log(res));
+  }, []);
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [postTitle, setPostTitle] = useState("");
+  const [postContent, setPostContent] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   function handleEdit() {
     let formData = new FormData(document.getElementById("lounge_update_form"));
@@ -24,7 +39,7 @@ const LoungePostEdit = () => {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((response) => {
-        alert(`response.data : ${response.data}`);
+        // console.log(`response.data : ${response.data}`);
         navigate("/community");
       })
       .catch((err) => {
@@ -77,12 +92,16 @@ const LoungePostEdit = () => {
             <tr>
               <th scope="row">카테고리</th>
               <td>
-                <input
-                  className={styles.readonly_input}
+                <select
                   name="lounge_category"
-                  value={post.lounge_category}
-                  readOnly
-                />
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                >
+                  <option value="free">자유 게시판</option>
+                  <option value="trouble">고민 상담소</option>
+                  <option value="sharing">지식 공유</option>
+                  <option value="friends">친구 찾기</option>
+                </select>
                 <input type="hidden" name="lounge_no" value={post.lounge_no} />
               </td>
 
@@ -156,11 +175,23 @@ const LoungePostEdit = () => {
               <td colSpan={3}>
                 <img
                   className={styles.origin_img}
-                  name="lounge_img"
-                  src={`/images/item/${post.lounge_img}`}
-                  alt=""
+                  src={
+                    selectedImage
+                      ? URL.createObjectURL(selectedImage)
+                      : `/images/community/${post.lounge_img}`
+                  }
+                  alt="image"
                 />
-                <input type="file" name="lounge_imgf" />
+                <input
+                  type="hidden"
+                  name="lounge_img"
+                  value={post.lounge_img}
+                />
+                <input
+                  type="file"
+                  name="lounge_imgf"
+                  onChange={(e) => setSelectedImage(e.target.files[0])}
+                />
               </td>
             </tr>
             <tr>

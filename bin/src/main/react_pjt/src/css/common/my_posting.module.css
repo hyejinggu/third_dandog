@@ -55,7 +55,8 @@
 
 .loungeResults li {
   display: grid;
-  grid-template-columns: 1.5fr 2fr repeat(4, 1fr);
+  text-align: center;
+  grid-template-columns: 1fr 2fr repeat(2, 0.5fr) repeat(2, 1fr) 0.6fr;
 }
 
 .loungeResults li span p:first-child,
@@ -66,5 +67,29 @@
 
 .neighborResults li {
   display: grid;
-  grid-template-columns: repeat(2, 1.5fr) repeat(3, 1fr);
+  grid-template-columns: 1fr 1.5fr 0.5fr repeat(2, 1fr) 0.5fr;
+  text-align: center;
+}
+
+.show_options {
+  position: relative;
+  cursor: pointer;
+}
+.update_delete_options {
+  position: absolute;
+  left: 8px;
+}
+.update_delete_options li:hover {
+  font-weight: bold;
+  background-color: rgb(255, 239, 166);
+}
+
+.update_delete_options li {
+  font-size: 0.9em;
+  display: inline-block;
+  cursor: pointer;
+  background-color: white;
+  border-bottom: none;
+  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
+  border-radius: 10px;
 }

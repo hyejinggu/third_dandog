@@ -14,6 +14,15 @@
   width: 8%;
 }
 
+.event_list tr td img {
+	width: 90%;
+}
+
+.select_img {
+	width: 350px;
+	height: 150px;
+}
+
 .event_btn * {
   border: none;
   border-radius: 10px;
@@ -24,7 +33,7 @@
   margin-right: 10px;
 }
 
-.event_btn input {
+.delete_btn {
   color: crimson;
 }
 
@@ -33,23 +42,3 @@
   font-weight: bold;
 }
 
-/* 
-.neighbor_list td p:nth-child(2) {
-  font-size: 0.8em;
-} */
-
-/* .expandable-row .full-text {
-  text-align: center;
-  display: block;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 300px;
-  margin: 0 auto;
-  white-space: nowrap;
-}
-
-.expandable-row.expanded .full-text {
-  display: block;
-  white-space: wrap;
-} */

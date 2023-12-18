@@ -15,10 +15,29 @@ const ItemList = () => {
   const [itemList, setItemList] = useState([]);
   const [itemSort, setItemSort] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     setInputValue("");
-    handleItemList(`?category=${category}&sort=${itemSort}&inputValue`);
+    switch (category) {
+      case "snack":
+        setTitle("간식•사료");
+        break;
+      case "toy":
+        setTitle("장난감");
+        break;
+      case "living":
+        setTitle("리빙•패션");
+        break;
+      case "stroll":
+        setTitle("산책•케어");
+        break;
+      default:
+        setTitle("간식•사료");
+        break;
+    }
+
+    handleItemList(`?category=${category}&sort=new&inputValue`);
   }, [category]);
 
   useEffect(() => {
@@ -37,21 +56,25 @@ const ItemList = () => {
     axios
       .get(`/item/getItemList${requestURL}`)
       .then((res) => {
-        setItemList(res.data);
         setItemList((prevItemList) => {
-          const uniqueItemNames = [];
-          const itemNamesSet = new Set();
+          const itemMap = new Map();
 
-          prevItemList.forEach((item) => {
-            if (!itemNamesSet.has(item.item_name)) {
-              itemNamesSet.add(item.item_name);
-              uniqueItemNames.push(item);
+          res.data.forEach((item) => {
+            const itemName = item.item_name;
+
+            if (
+              !itemMap.has(itemName) ||
+              itemMap.get(itemName).item_no > item.item_no
+            ) {
+              itemMap.set(itemName, item);
             }
           });
+
+          const uniqueItemNames = Array.from(itemMap.values());
           return uniqueItemNames;
         });
       })
-      .catch((res) => console.log(res));
+      .catch((error) => console.error(error));
   };
 
   const handleSort = (e) => {
@@ -93,7 +116,7 @@ const ItemList = () => {
   return (
     <div className={styles.container}>
       <div className={styles.cate_wrap}>
-        <h2 className={styles.title}>장난감</h2>
+        <h2 className={styles.title}>{title}</h2>
       </div>
 
       <div className={styles.sort}>

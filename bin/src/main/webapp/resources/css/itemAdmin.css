@@ -29,6 +29,7 @@
   width: 8%;
 }
 
+
 /* ========================================  */
 
 .table .item_name {
@@ -41,7 +42,7 @@
 }
 
 .table.item_update {
-  width: 40%;
+  width: 50%;
 }
 
 .item_update th {
@@ -52,6 +53,16 @@
   width: 20%;
   text-align: left;
   padding: 5px;
+}
+
+.item_update tr img {
+	width: 150px;
+}
+
+.etc_img_desc {
+	display: block;
+	margin: 10px;
+	font-size: 14px;
 }
 
 .pagination_wrap {
@@ -74,4 +85,24 @@
 .currentPage {
   font-weight: bold;
   color: #ffa900;
+}
+
+
+.item_btn * {
+  border: none;
+  border-radius: 10px;
+  padding: 5px 10px;
+  background-color: rgba(128, 128, 128, 0.211);
+  cursor: pointer;
+  font-size: 15px;
+  margin-right: 10px;
+}
+
+.delete_btn {
+  color: crimson;
+}
+
+.item_btn input:hover,
+.item_btn span:hover {
+  font-weight: bold;
 }

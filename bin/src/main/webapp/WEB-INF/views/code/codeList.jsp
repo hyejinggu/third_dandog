@@ -38,9 +38,8 @@
 			</c:forEach>
 		</c:if>
 		<tr>
-			<td></td>
-			<td></td>
-			<td colspan="2" >
+
+			<td colspan="4" >
 				<input type="button" value="코드 추가하기" onclick="codeInsert()"/>
 			</td>
 		</tr>
@@ -53,8 +52,5 @@
 	<div>
 	</div>
 
-	<h4>
-		<a href="/home">Home으로 가기</a>
-	</h4>
 </body>
 </html>

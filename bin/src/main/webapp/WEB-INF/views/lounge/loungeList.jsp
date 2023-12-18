@@ -33,7 +33,7 @@ href="/resources/css/loungeAdmin.css"
 			<option value="id">작성자</option>
 		</select>
 		<input name="search_value" placeholder="검색어 입력" id="l_search_value" />
-		<span onclick="searchLoungeList()">검색</span>
+		<button onclick="searchLoungeList()">검색</button>
 	</div>
 	<table class="table lounge_list">
 		<tr>
@@ -52,12 +52,16 @@ href="/resources/css/loungeAdmin.css"
 		</tr>
 		<c:forEach var="l" items="${requestScope.loungeList}">
 			<tr>
-				<td><input type="checkbox" name="selectedItem" class="lounge_check"
-					value="${l.lounge_no}" /></td>
+				<td>
+					<input type="checkbox" name="selectedItem" class="lounge_check" value="${l.lounge_no}" />
+				</td>
 				<td>${l.lounge_no}</td>
 
-				<td><img alt="MyImage" src="/${l.lounge_img}" width="50"
-					height="70"></td>
+				<td>
+				<c:if test="${not empty l.lounge_img}">
+					<img alt="MyImage" src="/resources/images/community/${l.lounge_img}" width="50"	height="70">
+				</c:if>
+				</td>
 
 				<td class="expandable_row" onclick="showAllContents(event)">
 					<p>${l.lounge_title}</p>
@@ -87,7 +91,7 @@ href="/resources/css/loungeAdmin.css"
 		</tr>
 	</table>
 	<div class="lounge_btn">
-		<input type="submit" value="게시글 삭제" onclick="deleteLounge()" />
+		<input type="submit" value="게시글 삭제" onclick="deleteLounge()" class="delete_btn" />
 		<span onclick="loungeInsert()">새글등록</span>
 	</div>
 </body>

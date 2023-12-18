@@ -455,7 +455,7 @@ const Payment = () => {
                     user_address1: document.getElementById("user_address1").value,
                     user_address2: document.getElementById("user_address2").value,
                     order_state: '배송대기',
-                    pay_state: '결제대기',
+                    pay_state: document.getElementById("payment").value === 'bank-transfer' ? ('입금대기') : ("결제완료"),
                 },
                 orderDetail: orderDetail,
 
