@@ -30,6 +30,9 @@
   font-weight: bold;
 }
 
+.lounge_insert img {
+	width: 150px;
+}
 
 .lounge_insert {
 	width: 80%;

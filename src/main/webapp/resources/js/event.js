@@ -82,6 +82,21 @@ function searchEventList() {
 
 //==========================================================================
 
+
+// 이미지 미리보기
+function previewImage(input, imgId) {
+    var imgElement = document.getElementById(imgId);
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            imgElement.src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
+
 function select_event(select_event) {
 	const checkboxes
 		= document.querySelectorAll('.event_check');

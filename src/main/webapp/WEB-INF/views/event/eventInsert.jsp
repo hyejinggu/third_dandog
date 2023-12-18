@@ -26,8 +26,9 @@ href="/resources/css/eventAdmin.css"
 			<tr>
 				<th>이미지 첨부</th>
 				<td>
-					<img src="" class="select_img">
-					<input type="file" name="event_imgToUpload" id="event_imgToUpload" size="20">
+					<img src="" class="select_img" id="preview_img1"><br> 
+					<input type="file" name="event_imgToUpload" id="event_imgToUpload" size="20"
+					onchange="previewImage(this, 'preview_img1')">
 				</td>
 			</tr>
 			<tr>

@@ -56,8 +56,9 @@ href="/resources/css/eventAdmin.css"
 					class="event_check" value="${e.event_no}" /></td>
 				<td>${e.event_no}</td>
 				<td>${e.event_name}</td>
-				<td><img alt="EventImage" src="/${e.event_img}" width="50"
-					height="70"></td>
+				<td>
+					<img alt="EventImage" src="/resources/images/event/${e.event_img}">
+				</td>
 				<td>${e.e_reg_date}</td>
 				<td>${e.e_exp_date}</td>
 			</tr>

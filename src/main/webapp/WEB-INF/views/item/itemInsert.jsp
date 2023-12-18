@@ -70,25 +70,31 @@
 				<td><input type="text" id="item_stock" name="item_stock"
 					placeholder="숫자로만 입력"><br></td>
 			</tr>
-			<tr>
-				<th>상품 이미지1</th>
-				<td><img src="" class="select_img"><br> <input
-					type="file" name="uploadfileF1" id="uploadfileF1" size="20">
-				</td>
-			</tr>
-			<tr>
-				<th>상품 이미지2</th>
-				<td><img src="" class="select_img"><br> <input
-					type="file" name="uploadfileF2" id="uploadfileF2" size="20">
-				</td>
-			</tr>
-			<!-- 추가 상품 이미지 -->
-			<tr>
-				<th>상품 이미지3</th>
-				<td>
-					<img src="" class="select_img"><br> 
-					<input type="file" name="etcImages" id="etcImages" multiple></td>
-			</tr>
+            <tr>
+                <th>상품 이미지1</th>
+                <td>
+                    <img src="" id="preview_img1" class="select_img"><br>
+                    <input type="file" name="uploadfileF1" id="uploadfileF1" size="20" 
+                    onchange="previewImage(this, 'preview_img1')">
+                </td>
+            </tr>
+            <tr>
+                <th>상품 이미지2</th>
+                <td>
+                    <img src="" id="preview_img2" class="select_img"><br>
+                    <input type="file" name="uploadfileF2" id="uploadfileF2" size="20" 
+                    onchange="previewImage(this, 'preview_img2')">
+                </td>
+            </tr>
+            <!-- 추가 상품 이미지 -->
+            <tr>
+                <th>상품 이미지3</th>
+                <td>
+                    <img src="" id="preview_img3" class="select_img"><br>
+                    <input type="file" name="etcImages" id="etcImages" multiple 
+                    onchange="previewImage(this, 'preview_img3')">
+                </td>
+            </tr>
 
 		</table>
 

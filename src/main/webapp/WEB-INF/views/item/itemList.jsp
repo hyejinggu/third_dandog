@@ -75,8 +75,10 @@
                 <td>${i.item_sales_volume}</td>
                 <td>${i.item_discount_rate}%</td>
                 <td>${i.regdate.year}-${i.regdate.monthValue}-${i.regdate.dayOfMonth}</td>
-                <td><img alt="itemImage1" src="/${i.item_img1}" width="50" height="70"></td>
-                <td><img alt="itemImage2" src="/${i.item_img2}" width="50" height="70"></td>
+                 <c:if test="${not empty i.item_img1}">
+                	<td><img alt="itemImage1" src="/resources/images/item/${i.item_img1}" width="50" height="70"></td>
+                	<td><img alt="itemImage2" src="/resources/images/item/${i.item_img2}" width="50" height="70"></td>
+                </c:if>
             </tr>
         </c:forEach>
     </c:if>

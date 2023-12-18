@@ -14,6 +14,9 @@ import com.i4.dandog.entity.Event;
 public interface EventRepository extends JpaRepository<Event, Integer> {
 	
 	
+	@Query("select e from Event e order by e.e_exp_date desc")
+	List<Event> selectList();
+	
 	@Query("select e from Event e where e.event_name like %:searchValue%")
 	List<Event> findByEventName(@Param("searchValue") String searchValue);
 

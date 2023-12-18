@@ -52,12 +52,16 @@ href="/resources/css/loungeAdmin.css"
 		</tr>
 		<c:forEach var="l" items="${requestScope.loungeList}">
 			<tr>
-				<td><input type="checkbox" name="selectedItem" class="lounge_check"
-					value="${l.lounge_no}" /></td>
+				<td>
+					<input type="checkbox" name="selectedItem" class="lounge_check" value="${l.lounge_no}" />
+				</td>
 				<td>${l.lounge_no}</td>
 
-				<td><img alt="MyImage" src="/${l.lounge_img}" width="50"
-					height="70"></td>
+				<td>
+				<c:if test="${not empty l.lounge_img}">
+					<img alt="MyImage" src="/resources/images/community/${l.lounge_img}" width="50"	height="70">
+				</c:if>
+				</td>
 
 				<td class="expandable_row" onclick="showAllContents(event)">
 					<p>${l.lounge_title}</p>
