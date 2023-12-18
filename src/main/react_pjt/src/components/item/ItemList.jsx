@@ -37,7 +37,7 @@ const ItemList = () => {
         break;
     }
 
-    handleItemList(`?category=${category}&sort=${itemSort}&inputValue`);
+    handleItemList(`?category=${category}&sort=new&inputValue`);
   }, [category]);
 
   useEffect(() => {

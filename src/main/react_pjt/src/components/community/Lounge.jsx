@@ -36,6 +36,7 @@ export default function Lounge() {
     handleLoungeList(
       `/lounge/loungeList?category=${queryCategory}&sort=${sort}&filterValue&inputValue`
     );
+    setCurrentPage(1);
   }, [category]);
 
   useEffect(() => {

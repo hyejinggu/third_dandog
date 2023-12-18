@@ -72,6 +72,8 @@ const NeighborReview = ({ category, selectedPlace }) => {
       .catch((error) => {
         console.error("Error fetching detailed review data:", error);
       });
+
+    setRCurrentPage(1);
   };
 
   // 선택된 장소 리뷰 가져오기 axios
