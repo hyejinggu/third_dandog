@@ -77,6 +77,27 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
             });
     };
 
+    // 배송지 삭제
+    const deleteAddress = async (recipient_phone) => {
+        try {
+            await axios.get(`/payment/deleteAddress/${sessionStorage.loginId}/${recipient_phone}`);
+            console.log('주소가 성공적으로 삭제되었습니다.');
+            alert("배송지가 성공적으로 삭제되었습니다.");
+        } catch (error) {
+            console.error('주소를 삭제하는 데 실패했습니다:', error.message);
+        }
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`/payment/getAddress?user_id=${sessionStorage.loginId}`);
+                setaddressData(response.data);
+            } catch (error) {
+                console.error("데이터를 가져오는 동안 오류 발생:", error);
+            }
+        };
+
+        fetchData();
+    };
+
     // 배송지 선택
     const handleSelectAddress = (selectedAddress) => {
         if (selectedAddress) {
@@ -294,7 +315,7 @@ const AddressModal = ({ closeModal, onSelectAddress }) => {
                                     i.user_address1 + i.user_address1 + i.post_code !== u.user_address1 + u.user_address1 + u.post_code &&
                                     <input type="button" value="기본배송지로 선택" onClick={() => handleDefualtAddress(i)} />
                                 ))}
-                                <input type="button" value="삭제" />
+                                <input type="button" value="삭제" onClick={() => deleteAddress(i.recipient_phone)} />
                                 <input type="button" value="선택" onClick={() => handleSelectAddress(i)} />
                             </div>
                         </tr>
