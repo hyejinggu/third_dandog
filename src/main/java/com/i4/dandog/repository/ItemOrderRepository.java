@@ -20,7 +20,7 @@ public interface ItemOrderRepository extends JpaRepository<ItemOrder , Integer> 
 			@Param("searchValue") String searchValue,
 			Pageable pageable);
 
-	@Query("select io from ItemOrder io where (:searchDelivery is null or io.order_state = :searchDelivery) and io.pay_state = :searchValue order by order_num desc")
+	@Query("select io from ItemOrder io where (:searchDelivery is null or io.order_state = :searchDelivery) and io.pay_state like concat('%', :searchValue, '%') order by order_num desc")
 	Page<ItemOrder> findByDeliveryPayState(@Param("searchDelivery") String searchDelivery,
 			@Param("searchValue") String searchValue,
 			Pageable pageable);
@@ -32,4 +32,12 @@ public interface ItemOrderRepository extends JpaRepository<ItemOrder , Integer> 
 	
 	@Query("SELECT io FROM ItemOrder io WHERE io.order_num = :order_num")
 	ItemOrder findByOrder_num(@Param("order_num") int order_num);
+	
+	@Modifying
+    @Query("UPDATE ItemOrder io SET io.order_state = :order_state WHERE io.order_num = :order_num")
+	int orderStateChange(@Param("order_num") int order_num, @Param("order_state") String order_state);
+	
+	@Modifying
+	@Query("UPDATE ItemOrder io SET io.pay_state = :pay_state WHERE io.order_num = :order_num")
+	int orderPayChange(@Param("order_num") int order_num, @Param("pay_state") String pay_state);
 }

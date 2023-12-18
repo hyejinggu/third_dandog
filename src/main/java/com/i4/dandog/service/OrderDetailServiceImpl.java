@@ -17,19 +17,20 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     private final OrderDetailRepository orderDetailRepository;
 
-//    @Override
-//    public List<OrderDetail> getAllOrders() {
-//        return orderDetailRepository.findAll();
-//    }
-
     @Override
     public OrderDetail selectOne(int order_detail_no) {
         return orderDetailRepository.findById(order_detail_no).orElse(null);
     }
+    
+    @Override
+    public List<OrderDetail> getSelectOrderNum(int order_num) {
+    	return orderDetailRepository.findByOrderNum(order_num);
+    }
 
     @Override
-    public void delete(int order_num) {
-        orderDetailRepository.deleteById(order_num);
+    public void deleteOrderNum(int order_num) {
+        orderDetailRepository.deleteByOrderNum(order_num);
+//        orderDetailRepository.deleteByOrderNum(order_num);
     }
     
 //    @Override

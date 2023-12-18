@@ -37,4 +37,8 @@ void updateOrderState(int order_num, String order_state);
 
 List<ItemOrder> getAllOrders();
 
+void orderStateChange(int order_num, String order_state);
+
+void orderPayChange(int order_num, String pay_state);
+
 }

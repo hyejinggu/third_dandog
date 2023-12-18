@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>주문 관리자 페이지</title>
+<script src="/resources/js/orders.js"></script>
 </head>
 <body>
 	<div class="title">
@@ -28,14 +29,14 @@
 			</select>
 			
 			<select id="i_search_field">
+				<option value="id" ${param.search_field == 'id' ? 'selected' : ''}>주문자ID</option>
 				<option value="state"
 					${param.search_field == 'state' ? 'selected' : ''}>결제상태</option>
-				<option value="no" ${param.search_field == 'id' ? 'selected' : ''}>주문자ID</option>
 			</select>
 			
 			<input placeholder="검색어 입력" id="i_search_value" value="${param.search_value}" />
-			<input type="button" onclick="searchItemList()" value="적용" />
-			<input type="reset"	value="취소" onclick="getItemList()" />
+			<input type="button" onclick="searchOrders()" value="적용" />
+			<input type="reset"	value="취소" onclick="getAdminOrder()" />
 		</form>
 	</div>
 	<table class="table item_list">
@@ -43,7 +44,7 @@
 			<!-- 페이징 처리 추가 -->
 			<th><label for="selectall">전체</label><br> <input
 				type="checkbox" id="selectall" value='selectall'
-				onclick='select_item(this)' /></th>
+				onclick='select_order(this)' /></th>
 			<th>주문일</th>
 			<th>주문번호</th>
 			<th>주문자 id</th>
@@ -59,9 +60,9 @@
 			<c:forEach var="order" items="${requestScope.orderList}">
 				<tr>
 					<td><input type="checkbox" name="selectedItem"
-						class="item_check" value="${order.order_num}" /></td>
+						class="order_check" value="${order.order_num}" /></td>
 					<td>${order.regdate}</td>
-					<td><a href="orderdetail?order_num=${order.order_num}">${order.order_num}</a></td>
+					<td onclick="getOrderDetail(`${order.order_num}`)">${order.order_num}</td>
 					<td>${order.user_id}</td>
 					<td>${order.total_price}</td>
 					<td>${order.payment}</td>
@@ -69,8 +70,16 @@
 					<td>${order.recipient_phone}</td>
 					<td>${order.user_address1}${order.user_address2}
 						(${order.post_code})</td>
-					<td>${order.order_state}</td>
-					<td>${order.pay_state}</td>
+					<td>${order.order_state}
+					<c:if test="${order.order_state == '배송대기'}">
+						<input type="button" value="배송중변환" onclick="orderStateChange(${order.order_num})"/>
+					</c:if>
+					</td>
+					<td>${order.pay_state}
+					<c:if test="${order.pay_state == '입금대기'}">
+						<input type="button" value="결제완료변환" onclick="payStateChange(${order.order_num})"/>
+					</c:if>
+					</td>
 				</tr>
 			</c:forEach>
 		</c:if>
@@ -78,26 +87,25 @@
 			<!-- 페이징 버튼 추가 -->
 			<td colspan="13">
 				<div class="pagination_wrap">
-					<%-- <c:if test="${not empty requestScope.orderPage}">
+					<c:if test="${not empty requestScope.orderList}">
 						<c:forEach var="pageNumber" begin="0"
-							 end="${empty requestScope.orderPage ? 0 : requestScope.orderPage.totalPages - 1}">
-							end="${requestScope.orderPage.totalPages - 1}">
-							<span onclick="searchItemList(${pageNumber})"
-								class="${pageNumber == requestScope.itemPage.number ? 'currentPage' : ''}">
+							end="${empty requestScope.orderList ? 0 : requestScope.orderPage.totalPages - 1}">
+							<span onclick="searchOrders(`${pageNumber}`)"
+								class="${pageNumber == requestScope.orderPage.number ? 'currentPage' : ''}">
 								${pageNumber + 1} </span>
 						</c:forEach>
-					</c:if> --%>
+					</c:if> 
 				</div>
 			</td>
 		</tr>
-		<c:if test="${empty requestScope.orders}">
+		<c:if test="${empty requestScope.orderList}">
 			<tr>
 				<td colspan="13">출력할 데이터가 없습니다.</td>
 			</tr>
 		</c:if>
 	</table>
 
-	<input type="submit" value="선택 삭제" onclick="deleteItem()" />
+	<input type="submit" value="선택 삭제" onclick="deleteOrder()" />
 
 	<h4>
 		<a href="/home">Home으로 가기</a>

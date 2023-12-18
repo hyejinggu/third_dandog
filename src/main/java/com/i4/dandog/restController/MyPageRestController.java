@@ -87,10 +87,13 @@ public class MyPageRestController {
 
 	@PostMapping("/orderdelete")
 	public void deleteOrder(@RequestParam int order_num) {
-			// 주문 상세 내역 삭제
-			odservice.delete(order_num);
+		// 주문 상세 내역 삭제
+		irservice.deleteOrderNum(order_num);
 
-			// 주문 정보 삭제
-			ioservice.delete(order_num);
+		// 주문 상세 내역 삭제
+		odservice.deleteOrderNum(order_num);
+
+		// 주문 정보 삭제
+		ioservice.delete(order_num);
 	}
 }

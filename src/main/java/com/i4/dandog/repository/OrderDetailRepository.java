@@ -21,4 +21,12 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Intege
 	
 	@Query("SELECT od FROM OrderDetail od WHERE od.order_num = :order_num AND od.item_no = :item_no")
 	OrderDetail findByOrder_num(@Param("order_num") int order_num, @Param("item_no") int item_no);
+	
+	@Transactional
+	@Modifying
+	@Query("DELETE FROM OrderDetail od WHERE od.order_num = :order_num")
+	void deleteByOrderNum(@Param("order_num")int order_num);
+	
+	@Query("SELECT od FROM OrderDetail od WHERE od.order_num = :order_num")
+	List<OrderDetail> findByOrderNum(@Param("order_num") int order_num);
 }

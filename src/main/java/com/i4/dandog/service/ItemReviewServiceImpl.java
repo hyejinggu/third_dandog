@@ -29,10 +29,9 @@ public class ItemReviewServiceImpl implements ItemReviewService {
 		return repository.findByItem_name(item_name);
 	}
 
-//	@Override
-//	public int delete(int item_no) {
-//		repository.deleteById(item_no);
-//		return item_no;
-//	}
+	@Override
+	public void deleteOrderNum(int order_num) {
+		repository.deleteByOrderNum(order_num);
+	}
 
 }

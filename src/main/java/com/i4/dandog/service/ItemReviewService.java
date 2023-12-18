@@ -12,7 +12,7 @@ public interface ItemReviewService {
 	// selectOne
 	List<ItemReview> selectOne(String item_name);
 	
-//	// delete
-//	int delete(int item_no);
+	// delete
+	void deleteOrderNum(int order_num);
 	
 }

@@ -8,7 +8,9 @@ public interface OrderDetailService {
     
     OrderDetail selectOne(int order_detail_no);
     
-    void delete(int order_num);
+    List<OrderDetail> getSelectOrderNum(int order_num);
+    
+    void deleteOrderNum(int order_num);
     
 //    void updateOrderState(int order_detail_no, String order_state);
     
