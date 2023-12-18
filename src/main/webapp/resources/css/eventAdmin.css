@@ -14,6 +14,15 @@
   width: 8%;
 }
 
+.event_list tr td img {
+	width: 90%;
+}
+
+.select_img {
+	width: 350px;
+	height: 150px;
+}
+
 .event_btn * {
   border: none;
   border-radius: 10px;

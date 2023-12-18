@@ -18,7 +18,7 @@
 		<h3>${requestScope.message}</h3>
 	</c:if>
 	<form action="/item/update" method="post" enctype="multipart/form-data" 
-			id="item_update_form" onsubmit="return focusOnEmptyFields();">>
+			id="item_update_form" onsubmit="return focusOnEmptyFields();">
 		<table class="table item_update">
 		<c:set var="i" value="${requestScope.itemDetail}" />
 		<c:if test="${not empty requestScope.itemDetail}">
@@ -83,16 +83,20 @@
 			<tr>
 				<th>상품 이미지</th>
 				<td colspan="3">
-					<div>
-						<img src="/${i.item_img1}" class="select_img" width="100" height="100">
-						<input type="hidden" name="item_img1" value="${i.item_img1}">
-						<input type="file" name="uploadfileF1" id="uploadfileF1" size="20">
-					</div>
-					<div>
-						<img src="/${i.item_img2}" class="select_img" width="100" height="100"> 
-						<input type="hidden" name="item_img2" value="${i.item_img2}">
-						<input type="file" name="uploadfileF2" id="uploadfileF2" size="20">
-					</div>
+					<c:if test="${not empty i.item_img1}">
+						<div>
+							<img src="/resources/images/item/${i.item_img1}" id="preview_img1" class="select_img">
+							<input type="hidden" name="item_img1" value="${i.item_img1}">
+							<input type="file" name="uploadfileF1" id="uploadfileF1" size="20"
+							onchange="previewImage(this, 'preview_img1')">
+						</div>
+						<div>
+							<img src="/resources/images/item/${i.item_img2}" id="preview_img2" class="select_img"> 
+							<input type="hidden" name="item_img2" value="${i.item_img2}">
+							<input type="file" name="uploadfileF2" id="uploadfileF2" size="20"
+							onchange="previewImage(this, 'preview_img1')">
+						</div>
+					</c:if>
 				</td>
 			</tr>
 			<tr>
@@ -104,7 +108,7 @@
 					        <c:forEach var="img" items="${requestScope.itemImages}">
 					            <input id="selectedImages" type="checkbox" name="selectedImages" value="${img.image_no}">
 					        	<label for="selectedImages">
-					            	<img src="/${img.item_img}" class="select_img" width="100" height="100">
+					            	<img src="/resources/images/item/${img.item_img}" class="select_img" width="100" height="100">
 					            	<input type="hidden" name="item_img" value="${img.item_img}">
 					            </label>
 					            
@@ -114,7 +118,8 @@
 						<span class="etc_img_desc">선택한 이미지만 업로드됩니다.</span>
 					</div>
 			        <!-- 수정된 이미지 업로드를 위한 파일 입력 -->
-			        <input type="file" name="etcImages" id="etcImages" multiple>
+			        <img src="" id="preview_img3" class="select_img"><br>
+			        <input type="file" name="etcImages" id="etcImages" multiple onchange="previewImage(this, 'preview_img3')">
 			    </td>
 			</tr>
 			

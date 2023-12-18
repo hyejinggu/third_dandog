@@ -32,7 +32,7 @@ public class EventServiceImpl implements EventService {
 	
 	@Override
 	public List<Event> selectList() {
-		return repository.findAll();
+		return repository.selectList();
 	}
 	
 	@Override

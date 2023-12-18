@@ -47,8 +47,10 @@ href="/resources/css/loungeAdmin.css"
 			</tr>
 			<tr>
 				<th>이미지 첨부</th>
-				<td><img src="" class="select_img"><br> <input
-					type="file" name="lounge_imgf" id="lounge_imgf" size="20">
+				<td>
+					<img src="" class="select_img" id="preview_img1"><br> 
+					<input type="file" name="lounge_imgf" id="lounge_imgf" size="20"
+					 onchange="previewImage(this, 'preview_img1')">
 				</td>
 			</tr>
 

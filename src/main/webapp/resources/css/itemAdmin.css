@@ -55,6 +55,10 @@
   padding: 5px;
 }
 
+.item_update tr img {
+	width: 150px;
+}
+
 .etc_img_desc {
 	display: block;
 	margin: 10px;
