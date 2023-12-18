@@ -115,6 +115,10 @@
   padding: 5px 0;
 }
 
+.edit_input {
+  width: 80%;
+}
+
 .edit_textarea {
   height: 500px;
 }

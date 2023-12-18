@@ -69,7 +69,7 @@ function App() {
         <Route path="/cartitem/*" element={<CartItem />} />
         <Route path="/emptyItem/*" element={<EmptyItem />} />
         {/* 마이페이지, 회원정보 수정 */}
-        <Route path="/myPage" element={<MyPage />} />
+        <Route path="/myPage/*" element={<MyPage />} />
         <Route path="/UpdateProfile/*" element={<UpdateProfile />} />
         <Route path="/updatepw/*" element={<UpdatePw />} />
         <Route path="/myposting" element={<MyPosting />} />

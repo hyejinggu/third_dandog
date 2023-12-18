@@ -56,21 +56,25 @@ const ItemList = () => {
     axios
       .get(`/item/getItemList${requestURL}`)
       .then((res) => {
-        setItemList(res.data);
         setItemList((prevItemList) => {
-          const uniqueItemNames = [];
-          const itemNamesSet = new Set();
+          const itemMap = new Map();
 
-          prevItemList.forEach((item) => {
-            if (!itemNamesSet.has(item.item_name)) {
-              itemNamesSet.add(item.item_name);
-              uniqueItemNames.push(item);
+          res.data.forEach((item) => {
+            const itemName = item.item_name;
+
+            if (
+              !itemMap.has(itemName) ||
+              itemMap.get(itemName).item_no > item.item_no
+            ) {
+              itemMap.set(itemName, item);
             }
           });
+
+          const uniqueItemNames = Array.from(itemMap.values());
           return uniqueItemNames;
         });
       })
-      .catch((res) => console.log(res));
+      .catch((error) => console.error(error));
   };
 
   const handleSort = (e) => {

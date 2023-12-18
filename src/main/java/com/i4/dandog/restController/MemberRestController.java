@@ -33,7 +33,7 @@ public class MemberRestController {
 	private final PasswordEncoder passwordEncoder;
 	private final EmailService mailService;
 
-	 @DeleteMapping("/withdraw/{user_id}")
+	 @GetMapping("/withdraw/{user_id}")
 	    public ResponseEntity<String> withdraw(@PathVariable String user_id) {
 	        try {
 	            // 삭제할 회원이 존재하는지 확인

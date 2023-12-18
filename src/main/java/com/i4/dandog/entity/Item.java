@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Item {
+public class Item extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,7 +57,7 @@ public class Item {
 	
 	private int item_stock;
 	
-	private LocalDateTime regdate;
+//	private LocalDateTime regdate;
 	
 	
 	

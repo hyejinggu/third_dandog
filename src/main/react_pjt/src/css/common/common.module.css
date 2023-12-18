@@ -1,6 +1,7 @@
 @font-face {
   font-family: "Cafe24SsurroundAir";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff") format("woff");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -108,26 +109,27 @@ header nav {
 .menu_list ul {
   margin-top: 50px;
   justify-self: end;
+  white-space: nowrap;
 }
 
-.menu_list ul>li {
+.menu_list ul > li {
   display: inline-block;
   margin-right: 20px;
 }
 
-.menu_list ul>li a {
+.menu_list ul > li a {
   font-size: 0.9em;
   font-weight: bold;
 }
 
-.menu_list ul>li a img {
+.menu_list ul > li a img {
   width: 18px;
   height: 18px;
   margin: 2px 3px;
   vertical-align: middle;
 }
 
-.menu_list ul>li a:hover {
+.menu_list ul > li a:hover {
   text-decoration: underline;
 }
 
@@ -142,24 +144,24 @@ header nav {
   grid-template-columns: repeat(5, 1fr);
 }
 
-.gnb_list>li {
+.gnb_list > li {
   align-self: center;
   justify-self: center;
   cursor: pointer;
 }
 
-.gnb_list>li {
+.gnb_list > li {
   color: #333;
   font-weight: bold;
 }
 
-.gnb_list>li img {
+.gnb_list > li img {
   vertical-align: middle;
   width: 35px;
   margin-bottom: 5px;
 }
 
-.gnb_list>li:hover {
+.gnb_list > li:hover {
   font-size: 1.1em;
 }
 
