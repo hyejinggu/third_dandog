@@ -113,7 +113,7 @@ const BoardFaq = () => {
     // 고객센터 게시판 종류
     return (
         <main>
-            <div id="faq">
+            <div id="board">
                 <h1 className="title">고객센터</h1>
 
                 <div className="box_wrap">
