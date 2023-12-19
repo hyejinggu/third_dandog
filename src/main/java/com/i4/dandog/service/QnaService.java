@@ -2,6 +2,7 @@ package com.i4.dandog.service;
 
 import java.util.List;
 
+import com.i4.dandog.entity.Faq;
 import com.i4.dandog.entity.Qna;
 
 public interface QnaService {
@@ -25,5 +26,6 @@ public interface QnaService {
 
 	public List<Qna> findByloginId(String loginid);
 	
+	public List<Qna> findAllDesc();
 
 }

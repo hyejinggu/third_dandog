@@ -78,7 +78,7 @@ public class FaqServiceImpl implements FaqService {
 		return faq_seq;
 	}
 
-	// faqList 내림차순
+	// List 내림차순
 	@Override
 	public List<Faq> findAllDesc() {
 		return repository.findAllDesc();

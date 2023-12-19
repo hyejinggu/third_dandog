@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.i4.dandog.entity.Faq;
 import com.i4.dandog.entity.Qna;
 
 public interface QnaRepository extends JpaRepository<Qna, Integer>{
@@ -32,6 +33,9 @@ public interface QnaRepository extends JpaRepository<Qna, Integer>{
 	@Query(nativeQuery = true,
 			value =  "select * from qna q where q.user_id = :userId")
 	public List<Qna> findAllByUserId(String userId);
+	
+	@Query("select q from Qna q order by qna_seq desc")
+	public List<Qna> findAllDesc();
 	
 	
 

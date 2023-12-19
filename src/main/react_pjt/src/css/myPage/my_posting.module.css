@@ -74,10 +74,12 @@
   position: relative;
   cursor: pointer;
 }
+
 .update_delete_options {
   position: absolute;
   left: 8px;
 }
+
 .update_delete_options li:hover {
   font-weight: bold;
   background-color: rgb(255, 239, 166);

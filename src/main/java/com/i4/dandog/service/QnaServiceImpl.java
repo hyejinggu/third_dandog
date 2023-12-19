@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.i4.dandog.entity.Faq;
 import com.i4.dandog.entity.Member;
 import com.i4.dandog.entity.NeighborhoodReview;
 import com.i4.dandog.entity.Qna;
@@ -67,6 +68,12 @@ public class QnaServiceImpl implements QnaService {
 	public int save(Qna entity) {
 		repository.save(entity);
 		return entity.getQna_seq();
+	}
+	
+	// List 내림차순
+	@Override
+	public List<Qna> findAllDesc() {
+		return repository.findAllDesc();
 	}
 	
 	

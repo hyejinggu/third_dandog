@@ -1,3 +1,5 @@
+import "../../css/board/board.css";
+import "../../css/board/question_form.css";
 import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import React, { useState, useRef, useContext } from "react";
@@ -104,12 +106,12 @@ const CreateQuestion = () => {
                         />
                     )}
                 </div>
-                <h2>** Qna_Insert **</h2>
+                <h2 className="ctitle">** Qna_Insert **</h2>
 
                 <form id="question_form">
                     <table>
                         <tr height="40">
-                            <th bgcolor="Violet">User_ID</th>
+                            <th bgcolor="Orange">User_ID</th>
                             <td>
                                 <input
                                     type="text"
@@ -123,7 +125,7 @@ const CreateQuestion = () => {
                             </td>
                         </tr>
                         <tr height="40">
-                            <th bgcolor="Violet">Qna_Category</th>
+                            <th bgcolor="Orange">Qna_Category</th>
                             <td>
                                 <select
                                     name="qna_category" id="q_board_select"
@@ -141,7 +143,7 @@ const CreateQuestion = () => {
                             </td>
                         </tr>
                         <tr height="40">
-                            <th bgcolor="Violet">Title</th>
+                            <th bgcolor="Orange">Title</th>
                             <td>
                                 <input
                                     type="text"
@@ -155,7 +157,7 @@ const CreateQuestion = () => {
                             </td>
                         </tr>
                         <tr height="60">
-                            <th bgcolor="Violet">Content</th>
+                            <th bgcolor="Orange">Content</th>
                             <td>
                                 <textarea
                                     rows="10"
@@ -184,7 +186,7 @@ const CreateQuestion = () => {
                                 <button type="submit" onClick={handleSubmit}>
                                     등록
                                 </button>
-
+                                &nbsp;&nbsp;
                                 <Link to="board/boardqna">
                                 <button type="reset" onClick={handleCancel}>
                                     취소
@@ -199,19 +201,22 @@ const CreateQuestion = () => {
                 {/* {qna_image && (
                 <img src={qna_image} alt="Uploaded Image" width="200" />
             )} */}
-
+                <br></br>
                 <hr />
 
                 {/* 메시지 출력 */}
                 {message && <div>{`=> ${message}`}</div>}
-
+                
                 <hr />
-
+                
                 {/* 이전으로 및 홈 링크 */}
                 <div>
-                    <a href="javascript:history.go(-1)">이전으로</a>&nbsp;
+                    <br></br>
+                    <a href="javascript:history.go(-1)">이전으로</a>&nbsp;&nbsp;&nbsp;
                     <a href="/home">Home</a>
+                    
                 </div>
+                <br></br>
             </div>
         );
     };

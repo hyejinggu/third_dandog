@@ -54,7 +54,7 @@
 </c:if>	 -->
 <br>
 &nbsp;<a href="/home">Home</a>&nbsp;
-&nbsp;<a href="qna/qnaInsert">Qna등록테스트</a>&nbsp; <!-- 테스트 후 삭제, 리액트에서 고객센터 정보받아와야함 -->
+<!-- &nbsp;<a href="qna/qnaInsert">Qna등록테스트</a>&nbsp;  --><!-- 테스트 후 삭제, 리액트에서 고객센터 정보받아와야함 -->
 <!-- &nbsp;<a href="qna/replyInsert">Reply등록</a>&nbsp; -->
 <!-- &nbsp;<span class="textlink" onclick="qna/replyInsert()">replyInsert</span>&nbsp; -->
 

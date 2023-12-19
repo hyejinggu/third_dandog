@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import "../../css/board/MyQuestionsComponent.css";
 
 const MyQuestionsComponent = () => {
     const [myQuestions, setMyQuestions] = useState([]);
@@ -67,7 +68,7 @@ const MyQuestionsComponent = () => {
 
 
     return (
-        <div>
+        <div className='MyQ'>
             <h2>My Questions</h2>
             <table border="1">
                 <thead>

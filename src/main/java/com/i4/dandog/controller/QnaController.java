@@ -107,7 +107,7 @@ public class QnaController {
 	@GetMapping (value="/qnaList")
 	public void qnalist(Model model) {
 		System.out.println("** QnaList **");
-		model.addAttribute("qnai", qservice.selectList());
+		model.addAttribute("qnai", qservice.findAllDesc());
 		
 	}
 	
