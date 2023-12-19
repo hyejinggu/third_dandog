@@ -1,24 +1,33 @@
-//package com.i4.dandog.controller;
-//
-//import javax.servlet.http.HttpServletRequest;
-//
-//import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-//
-//import com.i4.dandog.entity.Faq;
-//import com.i4.dandog.entity.Member;
-//import lombok.AllArgsConstructor;
-//
-//@AllArgsConstructor // @Autowired 를 사용하지 않아도 됨
-//@RequestMapping(value="/faq") // "/~" 로 시작하는 모든 요청을 처리
-//@Controller
-//public class FaqController {
-//	
-//	FaqService service;
+package com.i4.dandog.controller;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.i4.dandog.entity.Faq;
+import com.i4.dandog.entity.Member;
+import com.i4.dandog.service.FaqService;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
+@AllArgsConstructor // @Autowired 를 사용하지 않아도 됨
+@RequestMapping(value="/faq") // "/~" 로 시작하는 모든 요청을 처리
+@Controller
+@Log4j2
+public class FaqController {
+	
+	FaqService fservice;
 //	
 //	// ** Board_Cri_paging
 ////	@GetMapping("/qcriList")
@@ -55,17 +64,22 @@
 //	//    단, 클래스명의 첫글자를 소문자로 ...  ${boardDTO.root}
 //	//      그러므로 아래와같은 구문은 필요없음.
 //	//     model.addAttribute("apple", dto);
-//	@GetMapping(value="/replyInsert")
-//	public void replyInsert(Faq entity) {
-//		// viewName 생략
+	
+//	@PostMapping(value="/fcontentinsert")
+//	public String fcontentinsert(Faq entity) {
 //		
+//		fservice.fcontentinsert(entity.getFaq_seq(), entity.getFaq_content());
+//		String uri="redirect:faqList";
+//		return uri;
 //	}
+	
 //	
-//	// ** BoardList
-//	@GetMapping (value="/faqList")
-//	public void qnalist(Model model) {
-//		model.addAttribute("banana", service.selectList());
-//	}
+	// ** FaqList
+	@GetMapping (value="/faqList")
+	public void faqlist(Model model) {
+		System.out.println("** FaqList **");
+		model.addAttribute("faqi", fservice.findAllDesc());
+	}
 //	
 //   // ** BoardDetail
 //   // => 조회수 증가 조건
@@ -80,11 +94,11 @@
 //
 //	// ** BoardDetail
 //	//@RequestMapping(value = "/bdetail", method=RequestMethod.GET)
-//	@GetMapping(value = "/qdetail")
-//	public String qdetail(HttpServletRequest request, Model model, Qna entity) {
+	@GetMapping(value = "/fdetail")
+	public String fdetail(HttpServletRequest request, Model model, Faq entity) {
 //		// 1) Detail Service 처리
 //		//dto.setId("검색id");
-//		entity = service.selectOne(entity.getQna_seq());
+		entity = fservice.selectOne(entity.getFaq_seq());
 //		
 //		// 2) 조회수 증가
 //		// => get loginID
@@ -101,59 +115,59 @@
 //		
 //		// 3) view 처리
 //		// => 글 수정화면 요청인 경우 구분
-//		model.addAttribute("apple", entity);
+		model.addAttribute("faqi", entity);
 //		//if (request.getParameter("jCode").equals("U"))
-//		if ("U".equals(request.getParameter("jCode")))	
-//			return  "qna/qnaUpdate";
-//		else return "qna/qnaDetail";
-//	} //qdetail
+		if ("U".equals(request.getParameter("jCode")))	
+			return  "faq/faqUpdate";
+		else return "faq/faqDetail";
+	} //fdetail
 //	
 //	// ** 새글등록: insert
-//	@GetMapping(value="/qnaInsert")
-//	public void qnaInsert() {
+	@GetMapping(value="/faqInsert")
+	public void faqInsert() {
 //		// viewName 생략 -> 요청명이 viewName 이 됨
-//	}
+	}
 //	
 //	// => Insert Service 처리: POST
 //	//@RequestMapping(value="/join", method=RequestMethod.POST)    // home.jsp 에 저장된 변수값 참고
-//	@PostMapping(value="/qinsert")
-//	public String qinsert(Qna entity, Model model, RedirectAttributes rttr) {
+	@PostMapping(value="/finsert")
+	public String finsert(Faq entity, Model model, RedirectAttributes rttr) {
 //	      // 1. 요청분석 & Service
 //	      // => 성공: boardList
 //	      // => 실패: 재입력 유도 (입력폼 으로, board/boardInsert.jsp)
-//		String uri="redirect:qnaList"; // 성공
+		String uri="redirect:faqList"; // 성공
 //		
 //		// 2. Service 처리
-//		if (service.save(entity)>0) {
-//			rttr.addFlashAttribute("message", "~ 새글등록 성공!! ~");
-//		}else {
-//			model.addAttribute("message", "~ 새글등록 실패!! 다시 하세요 ~");
-//			uri="qna/qnaInsert";
-//		}
+		if (fservice.save(entity)>0) {
+			rttr.addFlashAttribute("message", "~ 새글등록 성공!! ~");
+		}else {
+			model.addAttribute("message", "~ 새글등록 실패!! 다시 하세요 ~");
+			uri="faq/faqInsert";
+		}
 //		
 //		// 3. View
-//		return uri; //"" 안에 쓰면 그 파일을 views 에서 이 파일명을 찾으므로 이 주소의 파일로 가게 하려면 ""없이 써야함
-//	} //Join_Post
+		return uri; //"" 안에 쓰면 그 파일을 views 에서 이 파일명을 찾으므로 이 주소의 파일로 가게 하려면 ""없이 써야함
+	} //Join_Post
 //	
 //	// ** Board Update // 글 수정. 폼 떠야함
 //	// => 성공: boardDetail
 //	// => 실패: boardUpdate
-//	@PostMapping(value="/qupdate")
-//	public String qUpdate(Qna entity, Model model) {
+	@PostMapping(value="/fupdate")
+	public String fUpdate(Faq entity, Model model) {
 //		
 //		// => 처리결과에 따른 화면출력을 위해서 dto 의 값을 Attribute 에 보관
-//		model.addAttribute("apple", entity);
-//		String uri="qna/qnaDetail";
+		model.addAttribute("faqi", entity);
+		String uri="faq/faqDetail";
 //		
 //		// => Service 처리
-//		if (service.save(entity) > 0) {
-//			model.addAttribute("message", "~ 글 수정 성공 ~");
-//		}else {
-//			model.addAttribute("message", "~ 글 수정 실패! 다시 하세요 ~");
-//			uri="qna/qnaUpdate";
-//		}
-//		return uri;
-//	} // qUpdate
+		if (fservice.save(entity) > 0) {
+			model.addAttribute("message", "~ 글 수정 성공 ~");
+		}else {
+			model.addAttribute("message", "~ 글 수정 실패! 다시 하세요 ~");
+			uri="faq/faqUpdate";
+		}
+		return uri;
+	} // qUpdate
 //	
 //	// ** Board Delete: 글 삭제
 //	@GetMapping(value="/qdelete")
@@ -168,8 +182,29 @@
 //			}
 //		return uri;
 //	} // qdelete
-//	
-//	
-//	
 //}
 
+// ======== 글 삭제 =======
+	@PostMapping(value = "/fdelete", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String fdelete(@RequestBody Map<String, List<String>> requestMap, Model model) {
+	    try {
+	        List<String> valueArr = requestMap.get("valueArr");
+	        if (valueArr != null) {
+	            log.info("** " + valueArr.size());
+	            for (String faq_seq : valueArr) {
+	                fservice.fdelete(Integer.parseInt(faq_seq));                
+	                log.info("delete 성공! 질문 글번호: " + faq_seq);
+	            }
+	            model.addAttribute("message", "글 삭제 성공");            
+	        } else {
+	            model.addAttribute("message", "삭제하실 글을 선택하세요.");
+	        }
+			
+		} catch (Exception e) {
+			log.info("** delete Exception => "+e.toString());
+			model.addAttribute("message", "글 삭제 실패");
+		}
+		
+	    return "redirect:faqList";
+	} // delete
+}//class
