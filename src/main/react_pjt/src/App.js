@@ -76,12 +76,13 @@ function App() {
         <Route path="/myquestion/*" element={<MyQuestion />} />
         <Route path="/OrderInquiry/*" element={<OrderInquiry />} />
         <Route path="/Orderdetail/*" element={<Orderdetail />} />
-        ItemReview
+        {/* ItemReview */}
         <Route path="/ItemReview/*" element={<ItemReview />} />
         {/* 로그인 */}
         <Route path="/findid" element={<FindId />} />
         <Route path="/findpw" element={<FindPw />} />
         {/* 게시판 */}
+        <Route path="/board/board/" element={<Board />} />
         <Route path="/board/boardfaq/" element={<BoardFaq />} />
         <Route path="/board/boardqna/" element={<BoardQna />} />
         <Route path="/board/createquestion/" element={<CreateQuestion />} />

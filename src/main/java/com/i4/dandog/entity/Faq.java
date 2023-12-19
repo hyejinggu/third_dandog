@@ -24,6 +24,8 @@ public class Faq extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
 	private int faq_seq;
 	
+//	private String user_id;
+	
 	private String faq_category;
 	
 	private String faq_title;
@@ -31,8 +33,6 @@ public class Faq extends BaseEntity {
 	private String faq_content;
 	
 	private String faq_img;
-	
-	private int faq_view;
 	
 	private String etc;
 }

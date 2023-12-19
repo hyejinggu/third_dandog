@@ -19,13 +19,13 @@
         <th bgcolor="Violet">Qna_Category</th>
         <td>
             <select name="qna_Category">
-                <option value="주문/결제">주문/결제</option>
-                <option value="배송">배송</option>
-                <option value="취소/반품">취소/반품</option>
-                <option value="교환/AS">교환/AS</option>
-                <option value="회원">회원</option>
-                <option value="적립금/이벤트">적립금/이벤트</option>
-                <option value="기타">기타</option>
+                <option value="OP">주문/결제</option>
+                <option value="S">배송</option>
+                <option value="CR">취소/반품</option>
+                <option value="EA">교환/AS</option>
+                <option value="M">회원</option>
+                <option value="PE">적립금/이벤트</option>
+                <option value="E">기타</option>
             </select>
         </td>
      </tr>
@@ -57,6 +57,6 @@
 </c:if>
 <hr>
 &nbsp;<a href="javascript:history.go(-1)">이전으로</a>&nbsp;
-&nbsp;<a href="/home">Home</a>&nbsp;
+<!-- &nbsp;<a href="/home">Home</a>&nbsp; -->
 </body>
 </html>

@@ -160,3 +160,22 @@
     text-align: center;
     margin-top: 20px;
 }
+
+#board .custom-select {
+    height: 30px;
+    margin: 20px;
+}
+
+#board .button {
+    display: inline;
+    margin-left: 20px;
+}
+
+#board .qnabutton {
+    text-align: right;
+}
+
+.qnabutton .button input[type="button"]:hover {
+    transition: .5s;
+    background-color: #ffe344;
+}

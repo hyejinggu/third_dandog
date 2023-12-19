@@ -25,14 +25,14 @@ public class Notice extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int notice_seq;
 	
+	private String notice_category;
+	
 	// DB에 이미 테이블 속성을 입력해둬서 @Column 을 추가하지않아도 됨
 	private String notice_title;
 	
 	private String notice_content;
 	
 	private String notice_img;
-	
-	private int notice_view;
 	
 	private String etc;
 	
