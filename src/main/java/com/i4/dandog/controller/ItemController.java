@@ -120,29 +120,26 @@ public class ItemController {
 						newItem.setItem_price(entity.getItem_price());
 						newItem.setItem_sales_volume(entity.getItem_sales_volume());
 						newItem.setItem_stock(entity.getItem_stock());
+						newItem.setItem_img1(entity.getItem_img1());
+						newItem.setItem_img2(entity.getItem_img2());
 						
 						newItem.setOptions_color(colors[i]); // 컬러 설정
 						newItem.setOptions_size(sizes[j]); // 사이즈 설정
 						
 						String realPath = "D:\\teamproject\\dandog_pjt\\dandog\\src\\main\\react_pjt\\public\\images\\item\\";
+						String file1, file2 = "/basic.jpg"; // 기본 이미지 지정
+						String file3, file4 = "/basic.jpg"; // 기본 이미지 지정
+					
+						MultipartFile uploadfilef1 = entity.getUploadfileF1(); // 첫번째 상품 이미지
+						MultipartFile uploadfilef2 = entity.getUploadfileF2(); // 두번째 상품 이미지
 						if (i == 0 && j == 0) {
 							// 이미지 등록 (첫 번째 아이템에만 이미지 등록)
-							String file1, file2 = "/basic.jpg"; // 기본 이미지 지정
-							String file3, file4 = "/basic.jpg"; // 기본 이미지 지정
-							
-							MultipartFile uploadfilef1 = entity.getUploadfileF1(); // 첫번째 상품 이미지
-							MultipartFile uploadfilef2 = entity.getUploadfileF2(); // 두번째 상품 이미지
 
 							if (uploadfilef1 != null && !uploadfilef1.isEmpty()) {
 								// => image_File 을 선택함 -> 저장 (저장경로: relaPath+파일명)
 								// 물리적위치 저장 (file1)
 								file1 = realPath + uploadfilef1.getOriginalFilename(); // 저장경로 완성
 								uploadfilef1.transferTo(new File(file1)); // 해당경로에 저장(붙여넣기)
-								System.out.println("file1: " + file1);
-								
-								// Table 저장경로 완성 (file2)
-								file2 = uploadfilef1.getOriginalFilename();
-								System.out.println("file2: " + file2);
 							}
 							
 							if (uploadfilef2 != null && !uploadfilef2.isEmpty()) {
@@ -150,18 +147,17 @@ public class ItemController {
 								// 물리적위치 저장 (file1)
 								file3 = realPath + uploadfilef2.getOriginalFilename(); // 저장경로 완성
 								uploadfilef2.transferTo(new File(file3)); // 해당경로에 저장(붙여넣기)
-								System.out.println("file3: " + file3);
-								
-								// Table 저장경로 완성 (file2)
-								file4 = uploadfilef2.getOriginalFilename();
-								System.out.println("file4: " + file4);
 							}
 							
-							newItem.setItem_img1(file2);
-							newItem.setItem_img2(file4);
 						}
+						// Table 저장경로 완성 (file2)
+						file2 = uploadfilef1.getOriginalFilename();
+						// Table 저장경로 완성 (file2)
+						file4 = uploadfilef2.getOriginalFilename();
 						
-						// colors.length * sizes.length 만큼 save
+						newItem.setItem_img1(file2);
+						newItem.setItem_img2(file4);
+						
 						service.save(newItem);
 						
 						if (i == 0 && j == 0) {
@@ -214,8 +210,9 @@ public class ItemController {
 	}
 
 	@PostMapping(value = "/update")
-	public String update(Item entity, Model model, @RequestParam(value = "selectedImages", required = false) List<Integer> selectedImages,
-	        @RequestParam("etcImages") MultipartFile[] images) throws IOException {
+	public String update(Item entity, Model model, 
+			@RequestParam(value = "selectedImages", required = false) List<Integer> selectedImages,
+	        @RequestParam(name = "etcImages", required = false) MultipartFile[] images) throws IOException {
 
 		String uri = "redirect:/";
 

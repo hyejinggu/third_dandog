@@ -71,7 +71,7 @@ const Modal = ({
             </span>
           ) : (
             <span className={styles.modal_btn} onClick={requestGet}>
-              확인get
+              확인
             </span>
           )}
           {requestAxios == null ? (

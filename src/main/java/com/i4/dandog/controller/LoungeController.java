@@ -77,7 +77,7 @@ public class LoungeController {
 	public String loungeupload(Lounge entity, Model model) throws IOException {
 	    String uri = "redirect:/";
 
-	    String realPath = "D:\\teamproject\\third_dandog\\dandog\\src\\main\\react_pjt\\public\\images\\item\\";
+	    String realPath = "D:\\teamproject\\dandog_pjt\\dandog\\src\\main\\react_pjt\\public\\images\\item\\";
 	    MultipartFile lounge_imgf = entity.getLounge_imgf(); 
 	    if (lounge_imgf != null && !lounge_imgf.isEmpty()) {
 	        String fileName = lounge_imgf.getOriginalFilename();

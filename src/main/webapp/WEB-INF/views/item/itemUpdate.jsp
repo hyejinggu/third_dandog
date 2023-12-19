@@ -83,7 +83,7 @@
 			<tr>
 				<th>상품 이미지</th>
 				<td colspan="3">
-					<c:if test="${not empty i.item_img1}">
+					<%-- <c:if test="${not empty i.item_img1}"> --%>
 						<div>
 							<img src="/resources/images/item/${i.item_img1}" id="preview_img1" class="select_img">
 							<input type="hidden" name="item_img1" value="${i.item_img1}">
@@ -94,9 +94,9 @@
 							<img src="/resources/images/item/${i.item_img2}" id="preview_img2" class="select_img"> 
 							<input type="hidden" name="item_img2" value="${i.item_img2}">
 							<input type="file" name="uploadfileF2" id="uploadfileF2" size="20"
-							onchange="previewImage(this, 'preview_img1')">
+							onchange="previewImage(this, 'preview_img2')">
 						</div>
-					</c:if>
+					<%-- </c:if> --%>
 				</td>
 			</tr>
 			<tr>

@@ -134,9 +134,13 @@ function updateItem() {
     for (let i = 0; i < etcImages.length; i++) {
         formData.append("etcImages", etcImages[i]);
     }
+    formData.append("etcImages", etcImages);
 
-    axios.post(url, formData)
-        .then((response) => {
+    axios.post(url, formData, {
+    	headers: {
+        'Content-Type': 'multipart/form-data',
+    	}
+		}).then((response) => {
             console.log("업데이트 요청이 성공했습니다.", response);
             getEventList();
         })

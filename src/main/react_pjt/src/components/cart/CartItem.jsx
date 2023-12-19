@@ -94,10 +94,7 @@ const CartItem = ({
       </td>
       <td className="first_block">
         <div>
-          <img
-            src={`/images/subpage/${selectedItem.item_img}`}
-            alt="상품이미지"
-          />
+          <img src={`/images/item/${selectedItem.item_img}`} alt="상품이미지" />
           <span className="text-ellipsis">{selectedItem.item_name}</span>
         </div>
       </td>
