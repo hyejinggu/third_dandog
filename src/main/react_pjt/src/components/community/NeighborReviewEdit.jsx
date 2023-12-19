@@ -6,6 +6,7 @@ import axios from "axios";
 
 const NeighborReviewEdit = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const neighbor_no = location.state.neighbor_no;
   const [post, setPost] = useState({});
 
@@ -76,6 +77,10 @@ const NeighborReviewEdit = () => {
 
       setIsModalOpen(true);
     }
+  };
+
+  const handleGoBack = () => {
+    navigate(-1); // This is equivalent to history.goBack()
   };
 
   return (
@@ -183,7 +188,15 @@ const NeighborReviewEdit = () => {
             <tr>
               <td colSpan={4}>
                 <div className={styles.button_wrap}>
-                  <div onClick={handleSubmit}>작성 완료</div>
+                  <input
+                    className={styles.btn}
+                    type="button"
+                    onClick={handleGoBack}
+                    value={"취소하기"}
+                  />
+                  <span className={styles.btn} onClick={handleSubmit}>
+                    작성 완료
+                  </span>
                 </div>
               </td>
             </tr>

@@ -159,4 +159,9 @@
 }
 .itemlist_wrap {
   display: flex;
+  width: 100%;
+}
+
+.container {
+  flex: 0 0 100%;
 }

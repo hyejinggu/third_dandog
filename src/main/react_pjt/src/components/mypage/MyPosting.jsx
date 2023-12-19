@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "../../css/common/my_posting.module.css";
+import styles from "../../css/myPage/my_posting.module.css";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import Modal from "../common/Modal";
@@ -62,7 +62,7 @@ export default function MyPoting() {
   };
 
   return (
-    <div id="wrap">
+    <div className={styles.wrap}>
       {isModalOpen && (
         <Modal
           isModalOpen={isModalOpen}

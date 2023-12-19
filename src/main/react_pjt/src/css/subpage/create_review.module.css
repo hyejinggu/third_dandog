@@ -81,23 +81,26 @@
 }
 
 .button_wrap {
-  display: grid;
+  display: flex;
+  justify-content: end;
 }
 
-.button_wrap div {
+.button_wrap .btn {
   width: 100px;
-  line-height: 40px;
+  line-height: 2.6em;
   border: none;
   background-color: white;
   border-radius: 10px;
-  margin-right: 20px;
+  margin-top: 10px;
+  margin-left: 20px;
   justify-self: end;
   border: #ffa900 1px solid;
   box-shadow: 0 2px 5px rgb(0, 0, 0, 0.1);
   cursor: pointer;
+  font-size: 1em;
 }
 
-.button_wrap div:hover {
+.button_wrap .btn:hover {
   background-color: #ffe344;
   transition: 0.5s;
 }

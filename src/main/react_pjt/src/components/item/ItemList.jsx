@@ -47,7 +47,7 @@ const ItemList = () => {
         setTitle("간식•사료");
         break;
     }
-
+    setCurrentPage(1);
     handleItemList(`?category=${category}&sort=new&inputValue`);
   }, [category]);
 
@@ -122,6 +122,10 @@ const ItemList = () => {
     const endIndex = startIndex + listPerPage;
     return itemList.slice(startIndex, endIndex);
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [currentPage]);
 
   // return 시작
   return (

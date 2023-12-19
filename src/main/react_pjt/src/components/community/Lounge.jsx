@@ -95,6 +95,10 @@ export default function Lounge() {
     return loungeArray.slice(startIndex, endIndex);
   };
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [currentPage]);
+
   return (
     <div id="wrap" className={styles.lounge_container}>
       <div className={styles.title}>

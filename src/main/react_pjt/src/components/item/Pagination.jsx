@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../../css/common/pagination.module.css";
+import { useEffect } from "react";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const handlePageChange = (page, event) => {

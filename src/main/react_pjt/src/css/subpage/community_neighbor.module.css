@@ -179,6 +179,7 @@
 .review_list,
 .neighbor_review {
   display: grid;
+  width: 100%;
   align-items: center;
   grid-template-columns: 1.5fr 2fr repeat(3, 1fr);
   font-size: 0.9em;
