@@ -57,6 +57,6 @@
 </c:if>
 <hr>
 &nbsp;<a href="javascript:history.go(-1)">이전으로</a>&nbsp;
-&nbsp;<a href="/home">Home</a>&nbsp;
+<!-- &nbsp;<a href="/home">Home</a>&nbsp; -->
 </body>
 </html>
