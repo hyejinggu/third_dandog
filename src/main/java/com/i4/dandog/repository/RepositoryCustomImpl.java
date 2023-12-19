@@ -50,7 +50,7 @@ public class RepositoryCustomImpl implements RepositoryCustom {
 	
 	
 	
-	
+	// ======== 우리동네 정렬 =========
 	@Override
     public List<ReviewInfoDTO> starFilterWithCategory(double filter, String category) {
 		return getReviewsByCategoryWithMinimumRating(category, filter);
@@ -62,7 +62,7 @@ public class RepositoryCustomImpl implements RepositoryCustom {
     }
 
     
-    // ======== 함수 =========
+    // ======== 우리동네 함수 =========
 
     private List<ReviewInfoDTO> getReviewsByCategoryWithMinimumRating(String category, double filter) {
         String jpql = "SELECT NEW com.i4.dandog.domain.ReviewInfoDTO(r.neighbor_brand_name, COUNT(r), AVG(r.neighbor_rating)) " +

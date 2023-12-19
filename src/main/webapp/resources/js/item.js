@@ -142,7 +142,7 @@ function updateItem() {
     	}
 		}).then((response) => {
             console.log("업데이트 요청이 성공했습니다.", response);
-            getEventList();
+            getItemList();
         })
         .catch((error) => {
             console.error("업데이트 요청이 실패했습니다.", error);
