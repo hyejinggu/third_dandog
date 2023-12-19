@@ -116,6 +116,7 @@ const BoardQna = () => {
                 {/* 검색창 */}
                 <form action="#" method="get" onSubmit={handleSearch}>
                     <select
+                        className="custom-select"
                         name="qna_category"
                         onChange={(e) => setSelectedQna_category(e.target.value)}>
 
@@ -198,13 +199,9 @@ const BoardQna = () => {
                         ))}
                     </tbody>
                 </table>
+                <br></br>
 
-                {/* <div className="page_shift">
-                    <a href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                </div> */}
-
+            <div className="qnabutton">
                 <div className="button">
                     <Link to="/board/createquestion">
                         <input type="button" value="글쓰기" onClick={handleCreateQuestion} />
@@ -216,7 +213,8 @@ const BoardQna = () => {
                         <input type="button" value="내글보기" />
                     </Link>
                 </div>
-
+            </div>
+                    
                 {/* 페이지 이동 */}
                 <Pagination
                     currentPage={currentPage}

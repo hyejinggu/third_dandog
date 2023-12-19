@@ -129,6 +129,7 @@ const Board = () => {
         {/* 검색창 */}
         <form action="#" method="get" onSubmit={handleSearch}>
           <select
+            className="custom-select"
             name="notice_category"
             onChange={(e) => setSelectedNotice_category(e.target.value)}>
 
@@ -169,7 +170,6 @@ const Board = () => {
               {/* <th>조회수</th> */}
             </tr>
           </thead>
-
           <tbody>
             {getPaginatedData().map((item, index) => ( //noticeArray.map
               <React.Fragment key={item.notice_seq}>
@@ -185,11 +185,9 @@ const Board = () => {
                   <tr className={`answer ${openQuestion === index ? "show-answer" : ""}`}>
                     <td></td>
                     <td></td>
-                    <td>{item.notice_category}</td>
+                    <td></td>
                     <td>
-                      <div>[질문] {item.notice_content}</div>
-                      <br></br>
-                      {item.notice_reply ? <div>[답변] {item.notice}</div> : null}
+                      <div>{item.notice_content}</div>
                     </td>
                     <td></td>
                   </tr>

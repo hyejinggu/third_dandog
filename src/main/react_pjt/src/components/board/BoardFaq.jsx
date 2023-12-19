@@ -48,10 +48,11 @@ const BoardFaq = () => {
             .then((res) => {
                 const sortedFaqArray = res.data.sort((a, b) => b.faq_seq - a.faq_seq);
                 setFaqArray(sortedFaqArray);
-
                 console.log('res.data : ' + res.data);
             })
-            .catch((res) => console.log('** res.data.err : ' + res));
+            .catch((err) => {
+                alert("검색된 자료가 없습니다." + err.message);
+            });
     }; // 검색 로직
 
     //     const filteredItems = faqArray.filter((item) => {
@@ -131,6 +132,7 @@ const BoardFaq = () => {
                 {/* 검색창 */}
                 <form action="#" method="get" onSubmit={handleSearch}>
                     <select
+                        className="custom-select"
                         name="faq_category"
                         onChange={(e) => setSelectedFaq_category(e.target.value)}>
 
@@ -166,6 +168,8 @@ const BoardFaq = () => {
                             <th>번호</th>
                             <th>카테고리</th>
                             <th>제목</th>
+                            <th>비고</th>
+                            <th></th>
                             {/* <th>작성자</th> */}
                             {/* <th>작성일</th> */}
                             {/* <th>조회수</th> */}
@@ -180,18 +184,17 @@ const BoardFaq = () => {
                                     <td>{item.faq_seq}</td>
                                     <td>{item.faq_category}</td>
                                     <td>{item.faq_title}</td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                                 {openQuestion === index && (
                                     <tr className={`answer ${openQuestion === index ? "show-answer" : ""}`}>
                                         <td></td>
                                         <td></td>
-                                        <td>{item.faq_category}</td>
-                                        <td>
-                                            <div>[질문] {item.faq_content}</div>
-                                            <br></br>
-                                            {item.faq_reply ? <div>[답변] {item.faq_reply}</div> : null}
-                                        </td>
                                         <td></td>
+                                        <td>
+                                            <div>{item.faq_content}</div>
+                                        </td>
                                         <td></td>
                                         <td></td>
                                     </tr>
