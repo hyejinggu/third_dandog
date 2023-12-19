@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import "../../css/board/MyQuestionsComponent.css";
+import styles from "../../css/board/MyQuestion.module.css";
 
 const MyQuestionsComponent = () => {
     const [myQuestions, setMyQuestions] = useState([]);
@@ -68,9 +68,9 @@ const MyQuestionsComponent = () => {
 
 
     return (
-        <div className='MyQ'>
+        <div className={styles['my-questions-container']}>
             <h2>My Questions</h2>
-            <table border="1">
+            <table border="1" className={styles['my-questions-table']}>
                 <thead>
                     <tr>
                         {/* <th></th> */}
