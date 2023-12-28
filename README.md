@@ -4,11 +4,11 @@
 
     
 ## 배포용 주소 및 Github
-**- 2차 React 프로젝트 배포 주소: https://dandog-a1787.web.app/**
+**- 2차 프로젝트 React 프로젝트 배포 주소: https://dandog-a1787.web.app/**
 
-- 1차(HTML, CSS) Github 주소: https://github.com/jeseung2/teamproject
-- 2차(1차 + JavaScript, React) Github 주소: https://github.com/hyejinggu/second_teampjt
-- 3차(프론트엔드 + 백엔드) Github 주소: https://github.com/hyejinggu/third_dandog
+- 1차 프로젝트(HTML, CSS) Github 주소: https://github.com/jeseung2/teamproject
+- 2차 프로젝트(1차 + JavaScript, React) Github 주소: https://github.com/hyejinggu/second_teampjt
+- 3차 프로젝트(프론트엔드 + 백엔드) Github 주소: https://github.com/hyejinggu/third_dandog
     
 
 ## 팀원 소개
@@ -18,6 +18,16 @@
 - 설수현(1~2차 프로젝트 참여 후 3차 프로젝트 중도 하차)
     
 
-## 기획서 및 사용기술
-- Notion: https://opalescent-crayon-bbb.notion.site/DB-eb84acb725e544b29514a47a8fe24083?pvs=4
+## 사용기술
+프론트엔드
+- Language : Html5 · CSS3 JavaScript
+- FramWork : React
+- Library : 비동기 (Ajax) 구현 : Axios
+- API : Kakao Map · Daum PostCode
+
+백앤드
+- Language : JAVA · JSP · Servlet
+- FramWork : SpringBoot · JPA
+- 웹서버 : Apache Tomcat
+- 데이터베이스 : My SQL
 
