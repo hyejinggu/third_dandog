@@ -15,8 +15,8 @@
 - hyejinggu(신혜진): https://github.com/hyejinggu
 - namuri23(남우리): https://github.com/namuri23
 - jeseung2(연제승): https://github.com/jeseung2
-- 설수현(1~2차 프로젝트 참여 후 3차 프로젝트 중도 하차)
-    
+- suehyunsul(설수현): https://github.com/suehyunsul
+     
 
 ## 사용기술
 프론트엔드
